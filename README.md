@@ -24,7 +24,7 @@ Some companies tried to compile source with JIT to speed up these steps (HipHop,
 
 To speed up packages's dependencies Composer introduced optimization options to build a 'resource catalog' by namespace.
 To speed up the interpretation process php introduced Opcache as opcode cache but first run is still slower.
-Despite all these benefits, some frameworks require around 3000 files to boot, multiplying I/O on storage device and wasting memory.
+Despite all these benefits, some frameworks require around 3000 files to boot, multiplying I/O on storage device and wasting memory.    
 This is frustrating :rage: !  
 We can do better, don't we ?   
 
