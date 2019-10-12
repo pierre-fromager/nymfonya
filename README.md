@@ -88,7 +88,7 @@ We can do better, don't we ?
  * Container injects Constructor controller method as first param.
  * Response modified at any time both by middlewares and controllers.
 
-### Middlewares
+### :star2: Middlewares
 
 Middleware stack must contain at least one.
 
@@ -96,7 +96,7 @@ Middleware stack must contain at least one.
 * Jwt : deal with auth based on Jwt Token.
 * After : terminator to ensure middleware logic is fully functional.
 
-## Usage
+## :boom: Usage
 
 ### Server
 
@@ -126,15 +126,12 @@ php src/index.php '/api/v1/stat/cache' | jq
 ``` bash
 find ./src -name *.php | grep -E -v 'vendor|config|test' | wc -l
 ```
-
-* 36 files
-
 More details with phploc running :
 
 ``` bash
 composer run cq
 ```
-## Security
+## :fire: Security
 
 Develop app is dev job, secure it is one other.  
 
