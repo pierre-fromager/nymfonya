@@ -24,7 +24,7 @@ Some companies tried to compile source with JIT to speed up these steps (HipHop,
 
 To speed up packages's dependencies Composer introduced optimization options to build a 'resource catalog' by namespace.
 To speed up the interpretation process php introduced Opcache as opcode cache but first run is still slower.
-Despite all these benefits, some frameworks require around 3000 files to boot, multiplying I/O on storage device and wasting memory.    
+Despite all these benefits, some frameworks require around 3K files to boot, multiplying I/O on storage device and wasting memory.    
 This is frustrating :rage: !  
 We can do better, don't we ?   
 
@@ -88,7 +88,7 @@ We can do better, don't we ?
  * Container injects Constructor controller method as first param.
  * Response modified at any time both by middlewares and controllers.
 
-### :star2: Middlewares
+### Middlewares
 
 Middleware stack must contain at least one.
 
@@ -121,7 +121,7 @@ php src/index.php '/api/v1/auth/login?login=admin@domain.tld&password=adminpassw
 php src/index.php '/api/v1/stat/cache' | jq
 ```
 
-## Catalog
+## :star2: Catalog
 
 ``` bash
 find ./src -name *.php | grep -E -v 'vendor|config|test' | wc -l
@@ -167,7 +167,7 @@ Change some settings in php.ini
 
 * Read [Linux 25 PHP Security Best Practices For Sys Admins](https://www.cyberciti.biz/tips/php-security-best-practices-tutorial.html)
 
-## Todo
+## :tongue: Todo
 
 ### Core
 
@@ -194,7 +194,7 @@ Change some settings in php.ini
 
 Controller action must be declared as final public.
 
-## Conclusion
+## :tongue: Conclusion
 
 I'm aware it requires improvements on many points and I'm sorry to break most PSR.(⌐■_■)  
 Performance rocks (response 15ms for a 40X at first run, then 6ms).
