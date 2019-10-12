@@ -214,6 +214,6 @@ You can try JIT from Php v7.4 as experimental feature (compile time) !
 Star and or fork then PR to improve it.  
 Test it and be happy or not ¯\\_(ツ)_/¯  
 
-## Extras
+## :panda_face: Extras
 
 * Markdown [Emoji](https://gist.github.com/rxaviers/7360908).
