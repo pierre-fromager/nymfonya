@@ -4,7 +4,7 @@ is not a Symfony app...¯\\_(ツ)_/¯
 
 ## ʕʘ̅͜ʘ̅ʔ Why
 
-I want a zero conf consolable lightweight fast rest backend & I \`ღ´ Php.
+I want a zero conf consolable lightweight fast rest backend & I :blue_heart: Php.
 
 ## Introduction
 
@@ -18,15 +18,15 @@ I can't figure why, maybe a lake of maintainers or people prefered something mor
 Composer package manager, introduced in 2011 changed the way to design php app with the concept of package and dependencie.
 Autoloading RFCs as PSR-0 then PSR-4 were introduced a bit later aligning packages with namespace as vendor/feature.  
 Php is still interpreted and requires sources to be loaded, parsed(AST), assembled(as opcode) then executed in Zend VM @ request time.
-Some companies tried to compile source with JIT to speed up these steps (HipHop, HHVM) but did not ensure compatibility with the native source...sad !
+Some companies tried to compile source with JIT to speed up these steps (HipHop, HHVM) but did not ensure compatibility with the native source...:disappointed: !
 
 ## Situation
 
 To speed up packages's dependencies Composer introduced optimization options to build a 'resource catalog' by namespace.
 To speed up the interpretation process php introduced Opcache as opcode cache but first run is still slower.
 Despite all these benefits, some frameworks require around 3000 files to boot, multiplying I/O on storage device and wasting memory.
-This is frustrating !  
-We can do better, don't we \ö/  
+This is frustrating :rage: !  
+We can do better, don't we :sunglasses: ?   
 
 ## Goals
 
@@ -216,3 +216,7 @@ It should perf x4 face to v7.4 and generate native code (VM + AOT).
 You can try JIT from Php v7.4 as experimental feature (compile time) !  
 Star and or fork then PR to improve it.  
 Test it and be happy or not ¯\\_(ツ)_/¯  
+
+## Extras
+
+* Markdown [Emoji](https://gist.github.com/rxaviers/7360908).
