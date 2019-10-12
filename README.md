@@ -4,11 +4,11 @@ is not a Symfony app...¯\\_(ツ)_/¯
 
 ## ʕʘ̅͜ʘ̅ʔ Why
 
-I want a zero conf consolable lightweight fast rest backend & I :blue_heart: Php.
+I want a zero conf consolable lightweight fast Rest backend & I :blue_heart: Php...OMG !!!
 
 ## Introduction
 
-Involved into back projects based on Symfony or Laravel with Angular as front, I was frustrated about performances.
+Involved into backend projects based on Symfony or Laravel with Angular as front, I was frustrated about performances.
 I turned to micro frameworks like Silex, Slim...to improve more.
 A lot of them have been abandonned in favor of majors actors.
 I can't figure why, maybe a lake of maintainers or people prefered something more generalistic and large feature oriented.
@@ -51,7 +51,7 @@ We can do better, don't we ?
 
 * :sunglasses: Monolithic App.
 * :tropical_fish: Extra packages as feature only.
-* :beer: I would say MVC Controllers.
+* :beer: I would say Mvc.
 * :cyclone: Configs in config/$env.
 * :shell: Run with php >= 7.0.
 
