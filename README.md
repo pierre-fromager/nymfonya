@@ -1,4 +1,4 @@
-# Nymfonya
+# :elephant: Nymfonya
 
 is not a Symfony app...¯\\_(ツ)_/¯
 
