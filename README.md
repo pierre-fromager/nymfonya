@@ -18,7 +18,7 @@ I can't figure why, maybe a lake of maintainers or people prefered something mor
 Composer package manager, introduced in 2011 changed the way to design php app with the concept of package and dependencie.
 Autoloading RFCs as PSR-0 then PSR-4 were introduced a bit later aligning packages with namespace as vendor/feature.  
 Php is still interpreted and requires sources to be loaded, parsed(AST), assembled(as opcode) then executed in Zend VM @ request time.
-Some companies tried to compile source with JIT to speed up these steps (HipHop, HHVM) but did not ensure compatibility with the native source...:disappointed: !
+Some companies tried to compile source with JIT to speed up these steps (HipHop, HHVM) but did not ensure compatibility with the native source... :disappointed: !
 
 ## Situation
 
