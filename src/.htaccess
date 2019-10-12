@@ -1,0 +1,58 @@
+
+SetEnv APP_ENV "dev"
+
+# 50MB
+php_value post_max_size 52428800  
+# 50MB
+php_value upload_max_filesize 52428800 
+# 5 minutes
+php_value max_execution_time 300 
+
+#php_value short_open_tag = 'On'
+
+
+# ----------------------------------------------------------------------
+# | Compression                                                        |
+# ----------------------------------------------------------------------
+
+<IfModule mod_deflate.c>
+    #AddOutputFilterByType DEFLATE application/json
+    <IfModule mod_headers.c>
+        SetEnvIfNoCase ^(Accept-EncodXng|X-cept-Encoding|X{15}|~{15}|-{15})$ ^((gzip|deflate)\s*,?\s*)+|[X~-]{4,13}$ HAVE_Accept-Encoding
+        RequestHeader append Accept-Encoding "gzip,deflate" env=HAVE_Accept-Encoding
+    </IfModule>
+</IfModule>
+
+
+<IfModule mod_mime.c>
+    AddEncoding gzip              svgz
+</IfModule>
+
+<IfModule mod_headers.c>
+    Header unset ETag
+    Header unset Server
+</IfModule>
+FileETag None
+
+<Files ".ht*">
+Order allow,deny
+Deny from all
+Satisfy all
+</Files>
+
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews
+    </IfModule>
+
+    RewriteEngine On
+
+    # Handle Jwt
+    RewriteCond %{HTTP:Authorization} ^(.*)
+    RewriteRule .* - [e=HTTP_AUTHORIZATION:%1]
+    
+    # Handle Front Controller...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule !\.(ico|xml|txt|avi|htm|zip|js|ico|gif|jpg|JPG|png|css|swf|flv|m4v|mp3|mp4|ogv|webm|woff|woff2)$ index.php
+</IfModule>

@@ -1,0 +1,47 @@
+<?php
+
+namespace App\Http\Interfaces;
+
+use App\Http\Response;
+use \App\Http\Headers;
+use \App\Http\Interfaces\IStatus;
+
+interface IResponse extends IStatus
+{
+
+    const _ERROR = 'error';
+    const _ERROR_CODE = 'errorCode';
+    const _ERROR_MSG = 'errorMessage';
+
+    /**
+     * returns header manager
+     *
+     * @return Headers
+     */
+    public function getHeaderManager(): Headers;
+
+    /**
+     * set response content
+     *
+     * @param mixed $content
+     * @return Response
+     */
+    public function setContent($content): Response;
+
+
+    /**
+     * set http code response
+     *
+     * @param integer $code
+     * @return Response
+     */
+    public function setCode(int $code): Response;
+
+
+    /**
+     * send response content to output
+     *
+     * @return Response
+     */
+    public function send(): Response;
+}

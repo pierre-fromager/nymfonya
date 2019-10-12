@@ -1,0 +1,106 @@
+<?php
+
+namespace App\Controllers;
+
+use App\Interfaces\Controllers\IApi;
+use App\Reuse\Controllers\Api;
+use App\Container;
+use App\Http\Headers;
+use App\Http\Request;
+use App\Http\Response;
+use App\Model\Users;
+use App\Tools\Jwt\Token;
+
+final class Config extends Api implements IApi
+{
+
+    const KEY_LENGTH = 64;
+    const _TITLE = 'title';
+    const _ACTION = 'action';
+    const _DATAS = 'datas';
+    const _HOWTO = 'howto';
+
+    /**
+     * instanciate
+     *
+     * @param Container $container
+     */
+    public function __construct(Container $container)
+    {
+        parent::__construct($container);
+    }
+
+    /**
+     * help action
+     *
+     * @Role anonymous
+     * @return Config
+     */
+    final public function help(): Config
+    {
+        $baseUri = $this->baseRootUri();
+        $helpAction = [
+            [
+                self::_TITLE => 'App key generate',
+                self::_ACTION => $baseUri . 'keygen',
+                self::_HOWTO => 'Copy paste result in '
+                    . 'config/$env jwt/secret'
+            ]
+        ];
+        $this->response
+            ->setCode(Response::HTTP_OK)
+            ->setContent($helpAction);
+        return $this;
+    }
+
+    /**
+     * keygen action
+     *
+     * @Role anonymous
+     * @return Config
+     */
+    final public function keygen(): Config
+    {
+        $this->response
+            ->setCode(Response::HTTP_OK)
+            ->setContent(
+                $this->getActionItem(
+                    'App key generate',
+                    __FUNCTION__,
+                    base64_encode(
+                        openssl_random_pseudo_bytes(self::KEY_LENGTH)
+                    )
+                )
+            );
+        return $this;
+    }
+
+    /**
+     * return current base root uri
+     *
+     * @return string
+     */
+    protected function baseRootUri(): string
+    {
+        return dirname($this->request->getUri()) . '/';
+    }
+
+    /**
+     * return array
+     *
+     * @param string $title
+     * @param string $action
+     * @param string $datas
+     * @return array
+     */
+    protected function getActionItem(string $title, string $action, string $datas): array
+    {
+        return [
+            [
+                self::_TITLE => $title,
+                self::_ACTION => $this->baseRootUri() . $action,
+                self::_DATAS => $datas
+            ]
+        ];
+    }
+}

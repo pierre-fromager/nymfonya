@@ -1,0 +1,176 @@
+<?php
+
+/**
+ * Description of App\Tools\Jwt\Token
+ *
+ * @author pierrefromager
+ */
+
+namespace App\Tools\Jwt;
+
+use Firebase\JWT\JWT as Fjwt;
+use App\Config;
+use App\Http\Request;
+
+class Token implements Interfaces\IToken
+{
+    /**
+     * token time value to be issue
+     *
+     * @var int
+     */
+    private $issueAt;
+
+    /**
+     * token time to live
+     *
+     * @var int
+     */
+    private $ttl;
+
+    /**
+     * token delay before issue
+     *
+     * @var int
+     */
+    private $issueAtDelay;
+
+    /**
+     * app config
+     *
+     * @var Config
+     */
+    private $config;
+
+    /**
+     * app request
+     *
+     * @var Request
+     */
+    private $request;
+
+    /**
+     * instanciate
+     *
+     * @param Config $config
+     * @param Request $request
+     */
+    public function __construct(Config $config, Request $request)
+    {
+        $this->config = $config;
+        $this->request = $request;
+        $this->init();
+    }
+
+    /**
+     * encode
+     *
+     * @param string $id
+     * @param string $login
+     * @param string $password
+     * @return string
+     */
+    public function encode(int $id, string $login, string $password)
+    {
+        $tokenId = base64_encode(
+            openssl_random_pseudo_bytes(self::_RANDOM_BYTES_LEN)
+        );
+        $issuedAt = time();
+        $notBefore = $issuedAt + $this->issueAtDelay;  //Adding 10 seconds
+        $expire = $notBefore + $this->ttl; // Adding 60 seconds
+        $serverName = $this->request->getHost();
+        $data = [
+            self::_IAT => $issuedAt, // Issued at: time when the token was generated
+            self::_JTI => $tokenId, // Json Token Id: an unique identifier for the token
+            self::_ISS => $serverName, // Issuer
+            self::_NBF => $notBefore, // Not before
+            self::_EXP => $expire, // Expire
+            self::_DATA => [ // Data related to the signer user
+                self::_DATA_ID => $id, // userid from the users table
+                self::_DATA_LOGIN => $login, // User name
+                self::_DATA_PASSWORD_HASH => password_hash($password, PASSWORD_DEFAULT),
+                self::_DATA_IAT_S => strftime('%c', $issuedAt),
+                self::_DATA_NBF_S => strftime('%c', $notBefore),
+                self::_DATA_EXP_S => strftime('%c', $expire), // Expire
+            ]
+        ];
+        $jwtConfig = $this->getConfig();
+        return Fjwt::encode(
+            $data,
+            $jwtConfig[self::_SECRET],
+            $jwtConfig[self::_ALGO]
+        );
+    }
+
+    /**
+     * decode
+     *
+     * @param string $token
+     * @return mixed
+     */
+    public function decode(string $token = '')
+    {
+        $jwtConfig = $this->getConfig();
+        return Fjwt::decode(
+            $token,
+            $jwtConfig[self::_SECRET],
+            [$jwtConfig[self::_ALGO]]
+        );
+    }
+
+    /**
+     * init
+     */
+    protected function init()
+    {
+        $this->setIssueAt(0);
+        $this->setIssueAtDelay(0);
+        $this->setTtl(0);
+    }
+
+    /**
+     * set token issue at time
+     *
+     * @param integer $dateTime
+     * @return Token
+     */
+    public function setIssueAt(int $dateTime): Token
+    {
+        $this->issueAt = ($dateTime > 0) ? $dateTime : time();
+        return $this;
+    }
+
+    /**
+     * setIssueAtDelay
+     *
+     * @param int $delay
+     */
+    public function setIssueAtDelay(int $delay): Token
+    {
+        $this->issueAtDelay = ($delay > 0) ? $delay : self::_ISSUE_AT_DELAY;
+        return $this;
+    }
+
+    /**
+     * set token ttl
+     *
+     * @param int $ttl
+     */
+    public function setTtl(int $ttl): Token
+    {
+        $this->ttl = ($ttl > 0) ? $ttl : self::_TTL;
+        return $this;
+    }
+
+    /**
+     * get token config
+     *
+     * @return array
+     */
+    private function getConfig(): array
+    {
+        return $this->config->getSettings(
+            self::_CONFIG_KEY
+        );
+    }
+}

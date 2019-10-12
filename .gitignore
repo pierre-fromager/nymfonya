@@ -1,0 +1,3 @@
+/vendor/
+/coverage/
+.php_cs.cache
