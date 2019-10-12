@@ -51,7 +51,7 @@ We can do better, don't we \ö/
 
 * Monolithic App.
 * Extra packages as feature only.
-* I would say MVC bebause Controllers.
+* I would say MVC :beer: Controllers.
 * Configs in config/$env.
 * Run with php >= 7.0.
 
