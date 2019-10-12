@@ -26,7 +26,7 @@ To speed up packages's dependencies Composer introduced optimization options to 
 To speed up the interpretation process php introduced Opcache as opcode cache but first run is still slower.
 Despite all these benefits, some frameworks require around 3000 files to boot, multiplying I/O on storage device and wasting memory.
 This is frustrating :rage: !  
-We can do better, don't we :sunglasses: ?   
+We can do better, don't we ?   
 
 ## Goals
 
@@ -49,11 +49,11 @@ We can do better, don't we :sunglasses: ?
 
 ## Arch
 
-* Monolithic App.
-* Extra packages as feature only.
-* I would say MVC :beer: Controllers.
-* Configs in config/$env.
-* Run with php >= 7.0.
+* :sunglasses: Monolithic App.
+* :tropical_fish: Extra packages as feature only.
+* :beer: I would say MVC Controllers.
+* :cyclone: Configs in config/$env.
+* :shell: Run with php >= 7.0.
 
 ### Container
 
@@ -211,7 +211,7 @@ I attempted to keep the code :
 * linted.
 * type hinted (insofar as php v7.X compatibility).
 
-I can't wait to try Php v8.0 [JIT](https://wiki.php.net/rfc/jit) with [DynAsm](https://luajit.org/dynasm.html).  
+Can't wait trying Php v8.0 [JIT](https://wiki.php.net/rfc/jit) with [DynAsm](https://luajit.org/dynasm.html).  
 It should perf x4 face to v7.4 and generate native code (VM + AOT).  
 You can try JIT from Php v7.4 as experimental feature (compile time) !  
 Star and or fork then PR to improve it.  
