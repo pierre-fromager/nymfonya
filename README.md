@@ -187,7 +187,7 @@ Change some settings in php.ini
 * Model with doctrine, mongodb, elasticsearch.
 * Mail with swiftmailer.
 
-## Naming convention
+## :chicken: Naming convention
 
 * (I)nterface.
 * (T)rait.
