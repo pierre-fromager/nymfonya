@@ -6,21 +6,21 @@ is not a Symfony app...¯\\_(ツ)_/¯
 
 I want a zero conf consolable lightweight fast Rest backend & I :blue_heart: Php...OMG !!!
 
-## Introduction
+## :eyes: Introduction
 
 Involved into backend projects based on Symfony or Laravel with Angular as front, I was frustrated about performances.
 I turned to micro frameworks like Silex, Slim...to improve more.
 A lot of them have been abandonned in favor of majors actors.
 I can't figure why, maybe a lake of maintainers or people prefered something more generalistic and large feature oriented.
 
-## History
+## :droplet: History
 
 Composer package manager, introduced in 2011 changed the way to design php app with the concept of package and dependencie.
 Autoloading RFCs as PSR-0 then PSR-4 were introduced a bit later aligning packages with namespace as vendor/feature.  
 Php is still interpreted and requires sources to be loaded, parsed(AST), assembled(as opcode) then executed in Zend VM @ request time.
 Some companies tried to compile source with JIT to speed up these steps (HipHop, HHVM) but did not ensure compatibility with the native source... :disappointed: !
 
-## Situation
+## :crying_cat_face: Situation
 
 To speed up packages's dependencies Composer introduced optimization options to build a 'resource catalog' by namespace.
 To speed up the interpretation process php introduced Opcache as opcode cache but first run is still slower.
@@ -28,7 +28,7 @@ Despite all these benefits, some frameworks require around 3K files to boot, mul
 This is frustrating :rage: !  
 We can do better, don't we ?   
 
-## Goals
+## :ocean: Goals
 
 * Minimize number of files and filesize at boot time.
 * Minimize the memory usage at boot.
@@ -47,7 +47,7 @@ We can do better, don't we ?
 * Avoid static.
 * Declare class constant in Interface.
 
-## Arch
+## :horse: Arch
 
 * :sunglasses: Monolithic App.
 * :tropical_fish: Extra packages as feature only.
@@ -167,7 +167,7 @@ Change some settings in php.ini
 
 * Read [Linux 25 PHP Security Best Practices For Sys Admins](https://www.cyberciti.biz/tips/php-security-best-practices-tutorial.html)
 
-## :tongue: Todo
+## :hamster: Todo
 
 ### Core
 
