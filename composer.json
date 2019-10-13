@@ -56,6 +56,9 @@
         ],
         "testHeaders": [
             "phpunit --bootstrap tests/bootstrap.php --testsuite Headers"
+        ],
+        "testRoutes": [
+            "phpunit --bootstrap tests/bootstrap.php --testsuite Routes"
         ]
     }
 }

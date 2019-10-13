@@ -4,6 +4,7 @@
             <file>tests/RequestTest.php</file>
             <file>tests/ResponseTest.php</file>
             <file>tests/HeadersTest.php</file>
+            <file>tests/RoutesTest.php</file>
         </testsuite>
         <testsuite name="Request">
             <file>tests/RequestTest.php</file>
@@ -13,6 +14,9 @@
         </testsuite>
         <testsuite name="Headers">
             <file>tests/HeadersTest.php</file>
+        </testsuite>
+        <testsuite name="Routes">
+            <file>tests/RoutesTest.php</file>
         </testsuite>
     </testsuites>
     <filter>
