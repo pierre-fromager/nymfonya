@@ -43,7 +43,12 @@ class Container
         $this->load();
     }
 
-    private function initReporter()
+    /**
+     * init reporter 
+     *
+     * @return void
+     */
+    protected function initReporter(): Container
     {
         $this->reporter = new \stdClass();
         $this->reporter->injected = 0;
@@ -51,15 +56,21 @@ class Container
         $this->reporter->unconstructable = 0;
         $this->reporter->exists = 0;
         $this->reporter->notexists = 0;
+        return $this;
     }
 
-    public function getReporter(): object
+    /**
+     * returns reporter
+     *
+     * @return object
+     */
+    public function getReporter(): stdClass
     {
         return $this->reporter;
     }
 
     /**
-     * return all services's containter
+     * return all services's container
      *
      * @return array
      */
