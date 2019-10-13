@@ -16,14 +16,14 @@ if (function_exists('opcache_get_configuration')) {
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-$env = (php_sapi_name() == App\Config::ENV_CLI)
+$env = (php_sapi_name() === App\Config::ENV_CLI)
     ? App\Config::ENV_CLI
     : App\Config::ENV_DEV;
 
-# Api bundle /api/v1/*
-$app = (new App\Kernel($env, __DIR__))
+# Nymphonia bundle
+$nymphoniaBundle = (new App\Kernel($env, __DIR__))
     ->setNameSpace('\\App\\Controllers\\')
     ->run()
     ->send();
 
-unset($app);
+unset($nymphoniaBundle);

@@ -1,10 +1,9 @@
 {
     "name": "PierInfor/skypass",
-    "description": "Skypass Backend.",
+    "description": "Nymfonya Backend.",
     "keywords": [
-        "airlines",
-        "api",
-        "backend"
+        "backend",
+        "rest"
     ],
     "license": "GNU3",
     "type": "project",
@@ -20,18 +19,9 @@
         "phploc/phploc": "^4.0"
     },
     "autoload": {
-        "classmap": [],
         "psr-4": {
             "App\\": "src/App/"
         }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Tests\\": "tests"
-        },
-        "classmap": [
-            "tests/TestCase.php"
-        ]
     },
     "config": {
         "preferred-install": "dist",
@@ -43,10 +33,22 @@
             "phpcs --standard=PSR2 --warning-severity=0 --extensions=php src/*"
         ],
         "lint": [
-            "phpcbf --standard=PSR2 --warning-severity=0 --extensions=php src/* tests/*"
+            "phpcbf --standard=PSR2 --warning-severity=0 --extensions=php src/*"
         ],
         "cq": [
-            "phploc -vvv --ansi src"
+            "phploc -vvv --ansi src/*"
+        ],
+        "start": [
+            "php -S localhost:8888 src/index.php"
+        ],
+        "coverage": [
+            "phpunit --coverage-html='./coverage' --bootstrap tests/bootstrap.php tests"
+        ],
+        "test": [
+            "phpunit --bootstrap tests/bootstrap.php tests"
+        ],
+        "testRequest": [
+            "phpunit --bootstrap tests/bootstrap.php --testsuite Request"
         ]
     }
 }

@@ -1,8 +1,12 @@
 <?php
 
-namespace App1\Middleware;
+namespace App\Middlewares;
 
-class Tokenizer implements \Pimvc\Http\Interfaces\Layer
+use App\Http\Interfaces\Middleware\ILayer;
+use App\Http\Request;
+use App\Container;
+
+class Tokenizer implements ILayer
 {
     const TOKENIZER_TOKEN = 'token';
     const TOKENIZER_DBPOOL = 'dbPool';
@@ -10,12 +14,13 @@ class Tokenizer implements \Pimvc\Http\Interfaces\Layer
     /**
      * peel
      *
-     * @param type $object
+     * @param Container $container
      * @param \Closure $next
-     * @return type
+     * @return \Closure
      */
-    public function peel($object, \Closure $next)
+    public function peel(Container $container, \Closure $next)
     {
+        /*
         $app = \Pimvc\App::getInstance();
         $params = $app->getRequest()->getQueryTupple();
         $token = (isset($params[self::TOKENIZER_TOKEN])) ? $params[self::TOKENIZER_TOKEN] : null;
@@ -43,7 +48,7 @@ class Tokenizer implements \Pimvc\Http\Interfaces\Layer
         }
         unset($token);
         unset($params);
-        unset($app);
-        return $next($object);
+        unset($app);*/
+        return $next($container);
     }
 }

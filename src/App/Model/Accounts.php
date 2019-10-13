@@ -1,27 +1,25 @@
 <?php
 
-namespace App\Model\Airlines;
+namespace App\Model;
 
-use App\Model\Airlines\Search;
+use App\Model\Search;
 use App\Http\Request;
 
 /**
- * Class App\Model\Airlines\Airports
+ * Class App\Model\Accounts
  *
- * Provides airports list.
- *
- * @see http://arm.64hosts.com/
+ * Provides account list.
  *
  */
-class Airports extends Search
+class Accounts extends Search
 {
     const _CSV = 'csv';
     const _ID = 'id';
-    const _LON = 'lon';
-    const _LAT = 'lat';
     const _NAME = 'name';
-    const AIRPORT_FILENAME = '/assets/airports.' . self::_CSV;
-    const FIELD_SEPARATOR = "\t";
+    const _EMAIL = 'email';
+    const _PASSWORD = 'password';
+    const ACCOUNTS_FILENAME = '/assets/accounts.' . self::_CSV;
+    const FIELD_SEPARATOR = ";";
 
     /**
      * instanciate
@@ -30,7 +28,7 @@ class Airports extends Search
     public function __construct(Request $req)
     {
         parent::__construct($req);
-        $this->setFilename($this->getAppPath($req) . self::AIRPORT_FILENAME);
+        $this->setFilename($this->getAppPath($req) . self::ACCOUNTS_FILENAME);
         $this->separator = self::FIELD_SEPARATOR;
         return $this;
     }
@@ -43,17 +41,11 @@ class Airports extends Search
      */
     protected function setItem(array $data): Search
     {
-        if (count($data) < 3) {
-            //var_dump($data);die;
-        }
-        
-
-        $name = preg_replace('/\s+/', ' ', $data[3]);
         $this->datas[] = [
             self::_ID => $data[0],
-            self::_LAT => (float) $data[1],
-            self::_LON => (float) $data[2],
-            self::_NAME => ltrim(rtrim($name))
+            self::_NAME =>  $data[1],
+            self::_EMAIL =>  $data[2],
+            self::_PASSWORD => $data[3],
         ];
         return $this;
     }

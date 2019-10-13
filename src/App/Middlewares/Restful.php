@@ -1,17 +1,19 @@
 <?php
 
 /**
- * App1\Middleware\Restfull
+ * App\Middlewares\Restfull
  *
- * is a request url rewriter to match action controller from request method
- * according to restfull base requirements
+ * is a request url rewriter to match action controller 
+ * from http verb
  */
 
-namespace App1\Middleware;
+namespace App\Middlewares;
 
-use Pimvc\Http\Request as PimRequest;
+use App\Http\Interfaces\Middleware\ILayer;
+use App\Http\Request;
+use App\Container;
 
-class Restful implements \Pimvc\Http\Interfaces\Layer
+class Restful implements ILayer
 {
     const RESTUL_ERROR = 'error';
     const RESTUL_ERROR_MESSAGE = 'errorMessage';
@@ -26,13 +28,12 @@ class Restful implements \Pimvc\Http\Interfaces\Layer
     const RESTFULL_ACTION_DELETE = 'destroy';
     const RESTFULL_ACTION_OPTIONS = 'preflight';
     const RESTFULL_METHODS_ACTIONS = [
-        PimRequest::REQUEST_METHOD_GET => self::RESTFULL_ACTION_INDEX,
-        PimRequest::REQUEST_METHOD_POST => self::RESTFULL_ACTION_STORE,
-        PimRequest::REQUEST_METHOD_PUT => self::RESTFULL_ACTION_PUT,
-        PimRequest::REQUEST_METHOD_DELETE => self::RESTFULL_ACTION_DELETE,
-        PimRequest::REQUEST_METHOD_OPTIONS => self::RESTFULL_ACTION_OPTIONS
+        Request::METHOD_GET => self::RESTFULL_ACTION_INDEX,
+        Request::METHOD_POST => self::RESTFULL_ACTION_STORE,
+        Request::METHOD_PUT => self::RESTFULL_ACTION_PUT,
+        Request::METHOD_DELETE => self::RESTFULL_ACTION_DELETE,
+        Request::METHOD_OPTIONS => self::RESTFULL_ACTION_OPTIONS
     ];
-
     private $method;
     private $app;
     private $controller;
@@ -42,13 +43,13 @@ class Restful implements \Pimvc\Http\Interfaces\Layer
     /**
      * peel
      *
-     * @param type $object
+     * @param Container $object
      * @param \Closure $next
      * @return type
      */
-    public function peel($object, \Closure $next)
+    public function peel(Container $object, \Closure $next)
     {
-        $this->process();
+        //$this->process();
         return $next($object);
     }
 

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Model\Airlines;
+namespace App\Model;
 
 use App\Http\Request;
 
 /**
- * Class App\Model\Airlines\Search
+ * Class App\Model\Search
  *
  * is abstract search class from csv based file
  *
@@ -137,7 +137,7 @@ abstract class Search
      * add route item to stack from dat
      *
      * @param array $data
-     * @return Routes
+     * @return Search
      */
     abstract protected function setItem(array $data): Search;
 }

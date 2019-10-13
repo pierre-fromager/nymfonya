@@ -1,0 +1,25 @@
+<phpunit colors="true" strict="true">
+    <testsuites>
+        <testsuite name="all">
+            <file>tests/RequestTest.php</file>
+            <file>tests/ResponseTest.php</file>
+        </testsuite>
+        <testsuite name="Request">
+            <file>tests/RequestTest.php</file>
+        </testsuite>
+        <testsuite name="Response">
+            <file>tests/ResponseTest.php</file>
+        </testsuite>
+    </testsuites>
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">./src</directory>
+            <exclude>
+                <directory suffix="Interface.php">.</directory>
+            </exclude>
+        </whitelist>
+        <blacklist>
+            <directory suffix=".php">./vendor</directory>
+        </blacklist>
+    </filter>
+</phpunit>

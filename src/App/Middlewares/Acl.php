@@ -2,7 +2,10 @@
 
 namespace App1\Middleware;
 
-class Acl implements \Pimvc\Http\Interfaces\Layer
+use App\Http\Interfaces\Middleware\ILayer;
+use App\Container;
+
+class Acl implements ILayer
 {
 
     const ACL_DEFAULT_CONTROLLER = 'home';
@@ -21,11 +24,11 @@ class Acl implements \Pimvc\Http\Interfaces\Layer
     /**
      * peel
      *
-     * @param mixed $object
+     * @param Container $object
      * @param \Closure $next
      * @return \Closure
      */
-    public function peel($object, \Closure $next)
+    public function peel(Container $object, \Closure $next)
     {
         $this->process();
         return $next($object);
