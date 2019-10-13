@@ -60,6 +60,9 @@
         "testRoutes": [
             "phpunit --bootstrap tests/bootstrap.php --testsuite Routes"
         ],
+        "testRouter": [
+            "phpunit --bootstrap tests/bootstrap.php --testsuite Router"
+        ],
         "testConfig": [
             "phpunit --bootstrap tests/bootstrap.php --testsuite Config"
         ]

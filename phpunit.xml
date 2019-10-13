@@ -5,6 +5,7 @@
             <file>tests/ResponseTest.php</file>
             <file>tests/HeadersTest.php</file>
             <file>tests/RoutesTest.php</file>
+            <file>tests/RouterTest.php</file>
             <file>tests/ConfigTest.php</file>
         </testsuite>
         <testsuite name="Request">
@@ -18,6 +19,9 @@
         </testsuite>
         <testsuite name="Routes">
             <file>tests/RoutesTest.php</file>
+        </testsuite>
+        <testsuite name="Router">
+            <file>tests/RouterTest.php</file>
         </testsuite>
         <testsuite name="Config">
             <file>tests/ConfigTest.php</file>
