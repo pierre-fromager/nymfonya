@@ -36,7 +36,7 @@ class Response implements IResponse
     {
         $this->headerManager = new Headers();
         $this->headers = [];
-        $this->isCli = php_sapi_name() == 'cli';
+        $this->setIsCli(php_sapi_name() == self::_CLI);
     }
 
     /**
@@ -93,6 +93,19 @@ class Response implements IResponse
         $this->headerManager->send();
         http_response_code($this->code);
         echo $this->content;
+        return $this;
+    }
+
+    /**
+     * set true if we are running from cli
+     * essentially for testing purposes
+     *
+     * @param boolean $isCli
+     * @return Response
+     */
+    protected function setIsCli(bool $isCli): Response
+    {
+        $this->isCli = $isCli;
         return $this;
     }
 }

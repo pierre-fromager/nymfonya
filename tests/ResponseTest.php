@@ -3,6 +3,7 @@
 namespace Tests;
 
 use PHPUnit\Framework\TestCase as PFT;
+use App\Http\Headers;
 use App\Http\Response;
 
 /**
@@ -55,7 +56,7 @@ class ResponseTest extends PFT
         unset($class);
         return $method;
     }
-   
+
     /**
      * testInstance
      * @covers App\Http\Response::__construct
@@ -72,6 +73,7 @@ class ResponseTest extends PFT
     public function constantsProvider()
     {
         return [
+            ['_CLI'],
             ['_ERROR'],
             ['_ERROR_CODE'],
             ['_ERROR_MSG'],
@@ -88,5 +90,61 @@ class ResponseTest extends PFT
         $class = new \ReflectionClass(Response::class);
         $this->assertArrayHasKey($k, $class->getConstants());
         unset($class);
+    }
+
+    /**
+     * testGetHeaderManager
+     * @covers App\Http\Response::getHeaderManager
+     */
+    public function testGetHeaderManager()
+    {
+        $this->assertTrue(
+            $this->instance->getHeaderManager() instanceof Headers
+        );
+    }
+
+    /**
+     * testSetCode
+     * @covers App\Http\Response::setCode
+     */
+    public function testSetCode()
+    {
+        $this->assertTrue(
+            $this->instance->setCode(200) instanceof Response
+        );
+    }
+
+    /**
+     * testSetContent
+     * @covers App\Http\Response::setContent
+     */
+    public function testSetContent()
+    {
+        $this->assertTrue(
+            $this->instance->setContent([]) instanceof Response
+        );
+        $this->assertTrue(
+            $this->instance->setContent(json_encode([])) instanceof Response
+        );
+    }
+
+    /**
+     * testSend
+     * @covers App\Http\Response::send
+     * @covers App\Http\Response::setIsCli
+     * @runInSeparateProcess
+     */
+    public function testSend()
+    {
+        $this->assertTrue(
+            $this->instance->send() instanceof Response
+        );
+        self::getMethod('setIsCli')->invokeArgs(
+            $this->instance,
+            [false]
+        );
+        $this->assertTrue(
+            $this->instance->send() instanceof Response
+        );
     }
 }

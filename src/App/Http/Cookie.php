@@ -44,12 +44,13 @@ class Cookie implements ICookie
     }
 
     /**
-     * refresh cookie from globale
+     * refresh cookie from global
      *
-     * @return void
+     * @return Cookie
      */
-    protected function refreshCookie()
+    protected function refreshCookie(): Cookie
     {
         $this->cookie = $_COOKIE;
+        return $this;
     }
 }
