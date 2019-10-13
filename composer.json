@@ -33,7 +33,7 @@
             "phpcs --standard=PSR2 --warning-severity=0 --extensions=php src/*"
         ],
         "lint": [
-            "phpcbf --standard=PSR2 --warning-severity=0 --extensions=php src/*"
+            "phpcbf --standard=PSR2 --warning-severity=0 --extensions=php src/* tests/*"
         ],
         "cq": [
             "phploc -vvv --ansi src/*"

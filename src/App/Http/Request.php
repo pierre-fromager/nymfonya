@@ -145,9 +145,10 @@ class Request extends Session implements IRequest
      */
     public function getContentType(): string
     {
-        return ($ct = $this->getServer(IHeaders::CONTENT_TYPE))
-            ? $ct
-            : self::APPLICATION_JSON;
+        $ct = $this->getServer(IHeaders::CONTENT_TYPE);
+        return (empty($ct))
+            ? self::APPLICATION_JSON
+            : $ct;
     }
 
     /**
@@ -214,7 +215,7 @@ class Request extends Session implements IRequest
      *
      * @return array
      */
-    protected function getInput()
+    protected function getInput(): array
     {
         $input = [];
         $inputContent = file_get_contents('php://input');

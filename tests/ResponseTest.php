@@ -90,5 +90,4 @@ class ResponseTest extends PFT
         $this->assertArrayHasKey($k, $class->getConstants());
         unset($class);
     }
- 
 }
