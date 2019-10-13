@@ -112,7 +112,7 @@ class RequestTest extends PFT
      */
     public function testGetHost()
     {
-        $this->assertNotEmpty($this->instance->getHost());
+        $this->assertTrue(is_string($this->instance->getHost()));
     }
 
     /**
