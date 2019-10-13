@@ -5,6 +5,7 @@ namespace App\Http\Interfaces;
 interface IRequest
 {
 
+    const _CLI = 'cli';
     const _ARGV = 'argv';
     const METHOD_GET = 'GET';
     const METHOD_HEAD = 'HEAD';

@@ -233,7 +233,7 @@ I attempted to keep the code :
 
 * short.
 * readable and annotated.
-* testable (Wip 15% coverage).
+* testable (Wip 18% coverage).
 * explicit.
 * decoupled.
 * linted.

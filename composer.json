@@ -48,6 +48,9 @@
         "test": [
             "phpunit --bootstrap tests/bootstrap.php tests"
         ],
+        "testCookie": [
+            "phpunit --bootstrap tests/bootstrap.php --testsuite Cookie"
+        ],
         "testRequest": [
             "phpunit --bootstrap tests/bootstrap.php --testsuite Request"
         ],

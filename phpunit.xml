@@ -2,6 +2,7 @@
     <testsuites>
         <testsuite name="all">
             <file>tests/RequestTest.php</file>
+            <file>tests/CookieTest.php</file>
             <file>tests/ResponseTest.php</file>
             <file>tests/HeadersTest.php</file>
             <file>tests/RoutesTest.php</file>
@@ -11,6 +12,9 @@
         <testsuite name="Request">
             <file>tests/RequestTest.php</file>
         </testsuite>
+        <testsuite name="Cookie">
+            <file>tests/CookieTest.php</file>
+        </testsuite>        
         <testsuite name="Response">
             <file>tests/ResponseTest.php</file>
         </testsuite>

@@ -124,7 +124,9 @@ class ResponseTest extends PFT
             $this->instance->setContent([]) instanceof Response
         );
         $this->assertTrue(
-            $this->instance->setContent(json_encode([])) instanceof Response
+            $this->instance->setContent(
+                json_encode([])
+            ) instanceof Response
         );
     }
 

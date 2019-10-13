@@ -140,6 +140,28 @@ class RequestTest extends PFT
             [],
             $this->instance->getParams()
         );
+        self::getMethod('setMethod')->invokeArgs(
+            $this->instance,
+            [Request::METHOD_GET]
+        );
+        $this->assertEquals(
+            $_GET,
+            $this->instance->getParams()
+        );
+        self::getMethod('setMethod')->invokeArgs(
+            $this->instance,
+            [Request::METHOD_POST]
+        );
+        $this->assertTrue(
+            is_string($this->instance->getParam('whatever'))
+        );
+        self::getMethod('setMethod')->invokeArgs(
+            $this->instance,
+            [Request::METHOD_OPTIONS]
+        );
+        $this->assertTrue(
+            is_string($this->instance->getParam('whatever'))
+        );
     }
 
     /**
@@ -181,6 +203,17 @@ class RequestTest extends PFT
      */
     public function testGetUri()
     {
+        self::getMethod('setIsCli')->invokeArgs(
+            $this->instance,
+            [true]
+        );
+        $this->assertTrue(
+            is_string($this->instance->getUri())
+        );
+        self::getMethod('setIsCli')->invokeArgs(
+            $this->instance,
+            [false]
+        );
         $this->assertTrue(
             is_string($this->instance->getUri())
         );
@@ -240,14 +273,48 @@ class RequestTest extends PFT
     }
 
     /**
+     * testSetIsCli
+     * @covers App\Http\Request::setIsCli
+     */
+    public function testSetIsCli()
+    {
+        $r = self::getMethod('setIsCli')->invokeArgs(
+            $this->instance,
+            [true]
+        );
+        $this->assertTrue($r instanceof Request);
+    }
+
+    /**
+     * testSetMethod
+     * @covers App\Http\Request::setMethod
+     */
+    public function testSetMethod()
+    {
+        $r = self::getMethod('setMethod')->invokeArgs(
+            $this->instance,
+            ['POST']
+        );
+        $this->assertTrue(
+            $r instanceof Request
+        );
+    }
+
+    /**
      * testGetArgs
      * @covers App\Http\Request::getArgs
+     * @covers App\Http\Request::getInput
      */
     public function testGetArgs()
     {
         $value = self::getMethod('getArgs')->invokeArgs(
             $this->instance,
             []
+        );
+        $this->assertTrue(is_string($value));
+        self::getMethod('setMethod')->invokeArgs(
+            $this->instance,
+            ['GET']
         );
         $this->assertTrue(is_string($value));
     }
@@ -276,5 +343,18 @@ class RequestTest extends PFT
             []
         );
         $this->assertTrue(is_array($value));
+    }
+
+    /**
+     * testIsCli
+     * @covers App\Http\Request::isCli
+     */
+    public function testIsCli()
+    {
+        $value = self::getMethod('isCli')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertTrue(is_bool($value));
     }
 }

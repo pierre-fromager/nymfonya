@@ -10,6 +10,7 @@ class Request extends Session implements IRequest
 {
 
     protected $server;
+    protected $method;
     protected $isCli;
 
     /**
@@ -18,11 +19,9 @@ class Request extends Session implements IRequest
     public function __construct()
     {
         $this->server = $_SERVER;
+        $this->method = $this->getMethod();
         parent::__construct();
-        $this->isCli = php_sapi_name() == 'cli';
-        if (!$this->isCli) {
-            $this->startSession($this->getFilename());
-        }
+        $this->setIsCli(php_sapi_name() == self::_CLI);
     }
 
     /**
@@ -112,7 +111,7 @@ class Request extends Session implements IRequest
      */
     public function getUri(): string
     {
-        if ($this->isCli === false) {
+        if (false === $this->isCli()) {
             return $this->getServer(self::REQUEST_URI);
         }
         return $this->getArgs();
@@ -228,5 +227,45 @@ class Request extends Session implements IRequest
             parse_str($inputContent, $input);
         }
         return $input;
+    }
+
+    /**
+     * set method
+     * essentially for testing purposes
+     *
+     * @param string $method
+     * @return Request
+     */
+    protected function setMethod(string $method): Request
+    {
+        $this->method = $method;
+        return $this;
+    }
+
+    /**
+     * set true if we are running from cli
+     * essentially for testing purposes
+     *
+     * @param boolean $isCli
+     * @return Request
+     */
+    protected function setIsCli(bool $isCli): Request
+    {
+        $this->isCli = $isCli;
+        if (!$this->isCli()) {
+            $this->startSession($this->getFilename());
+        }
+        return $this;
+    }
+
+    /**
+     * return true id sapi mode
+     * essentially for testing purposes
+     *
+     * @return boolean
+     */
+    protected function isCli(): bool
+    {
+        return $this->isCli;
     }
 }
