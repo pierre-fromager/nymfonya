@@ -3,7 +3,7 @@
 /**
  * App\Middlewares\Restfull
  *
- * is a request url rewriter to match action controller 
+ * is a request url rewriter to match action controller
  * from http verb
  */
 

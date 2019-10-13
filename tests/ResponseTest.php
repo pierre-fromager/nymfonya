@@ -73,13 +73,9 @@ class ResponseTest extends PFT
     public function constantsProvider()
     {
         return [
-            ['USER_AGENT'],
-            ['DOWNLOAD_CALLBACK'],
-            ['BUFFER_SIZE'],
-            ['ADAPTER_CURL'],
-            ['ADAPTER_CONTENTS'],
-            ['ADAPTERS'],
-            ['WHEELS']
+            ['_ERROR'],
+            ['_ERROR_CODE'],
+            ['_ERROR_MSG'],
         ];
     }
 
@@ -93,17 +89,6 @@ class ResponseTest extends PFT
         $class = new \ReflectionClass(Response::class);
         $this->assertArrayHasKey($k, $class->getConstants());
         unset($class);
-    }
-
-    /**
-     * testSetAdapterException
-     * @depends testInstance
-     * @covers App\Http\Downloader::setAdapter
-     */
-    public function testSetAdapterException()
-    {
-        $this->expectException(\Exception::class);
-        $this->instance->setAdapter('badAdapter');
     }
  
 }

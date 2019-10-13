@@ -2,8 +2,8 @@
 
 namespace App\Model;
 
-use App\Model\Search;
 use App\Http\Request;
+use App\Model\Search;
 
 /**
  * Class App\Model\Accounts
@@ -28,7 +28,9 @@ class Accounts extends Search
     public function __construct(Request $req)
     {
         parent::__construct($req);
-        $this->setFilename($this->getAppPath($req) . self::ACCOUNTS_FILENAME);
+        $this->setFilename(
+            $this->getAppPath($req) . self::ACCOUNTS_FILENAME
+        );
         $this->separator = self::FIELD_SEPARATOR;
         return $this;
     }
@@ -43,8 +45,8 @@ class Accounts extends Search
     {
         $this->datas[] = [
             self::_ID => $data[0],
-            self::_NAME =>  $data[1],
-            self::_EMAIL =>  $data[2],
+            self::_NAME => $data[1],
+            self::_EMAIL => $data[2],
             self::_PASSWORD => $data[3],
         ];
         return $this;

@@ -63,7 +63,7 @@ class RequestTest extends PFT
      */
     public function testInstance()
     {
-        $this->assertTrue($this->instance instanceof ReRequestsponse);
+        $this->assertTrue($this->instance instanceof Request);
     }
 
     /**
@@ -106,14 +106,4 @@ class RequestTest extends PFT
         unset($class);
     }
 
-    /**
-     * testSetAdapterException
-     * @depends testInstance
-     * @covers App\Http\Request::setAdapter
-     */
-    public function testSetAdapterException()
-    {
-        $this->expectException(\Exception::class);
-        $this->instance->setAdapter('badAdapter');
-    }
 }
