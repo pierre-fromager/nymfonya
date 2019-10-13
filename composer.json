@@ -59,6 +59,9 @@
         ],
         "testRoutes": [
             "phpunit --bootstrap tests/bootstrap.php --testsuite Routes"
+        ],
+        "testConfig": [
+            "phpunit --bootstrap tests/bootstrap.php --testsuite Config"
         ]
     }
 }
