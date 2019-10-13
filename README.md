@@ -105,6 +105,11 @@ From the root/src of the project, start the server ip:port as below.
 ``` bash
 php -S localhost:8888
 ```
+or from root path
+
+``` bash
+composer run start
+```
 
 ### Cli
 
@@ -131,6 +136,31 @@ More details with phploc running :
 ``` bash
 composer run cq
 ```
+
+## :innocent: Tests
+
+All tests
+``` bash
+composer run test
+```
+
+or targeted test replacing in above command 'test' by :
+
+* testConfig
+* testRequest
+* testHeaders
+* testResponse
+* testRoutes
+* testRouter
+* to be continued...
+
+To get coverage run the command below then browse coverage/index.html file.  
+This requires xdebug to be enable.
+
+``` bash
+composer run coverage
+```
+
 ## :fire: Security
 
 Develop app is dev job, secure it is one other.  
@@ -203,6 +233,7 @@ I attempted to keep the code :
 
 * short.
 * readable and annotated.
+* testable (Wip 15% coverage).
 * explicit.
 * decoupled.
 * linted.
