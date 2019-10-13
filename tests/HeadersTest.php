@@ -12,7 +12,6 @@ class HeadersTest extends PFT
 {
 
     const TEST_ENABLE = true;
-    const PATH_ASSETS = 'assets/';
 
     /**
      * instance

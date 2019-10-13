@@ -20,9 +20,21 @@ class Router implements IRouter
      */
     public function __construct(IRoutes $routes, IRequest $request)
     {
-        $this->routes = $routes;
+        $this->setRoutes($routes);
         $this->request = $request;
         $this->activeRoute = substr($this->request->getUri(), 1);
+        return $this;
+    }
+
+    /**
+     * set routes
+     *
+     * @param IRoutes $routes
+     * @return Router
+     */
+    public function setRoutes(IRoutes $routes): Router
+    {
+        $this->routes = $routes;
         return $this;
     }
 
@@ -34,16 +46,10 @@ class Router implements IRouter
     public function compile(): array
     {
         $routes = $this->routes->get();
-        //echo json_encode($routes);
         $routesLength = count($routes);
         for ($i = 0; $i < $routesLength; $i++) {
             $matches = [];
             $match = preg_match($routes[$i], $this->activeRoute, $matches);
-            //echo json_encode($matches);
-            if ($matches) {
-                //echo json_encode($matches);die;
-            }
-            //var_dump($matches);die;
             if ($match) {
                 array_shift($matches);
                 return $matches;

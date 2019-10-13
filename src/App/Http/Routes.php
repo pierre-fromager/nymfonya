@@ -46,6 +46,24 @@ class Routes implements IRoutes
     public function set(array $routes): Routes
     {
         $this->routes = $routes;
+        $this->validate();
         return $this;
+    }
+
+    /**
+     * validate routes to be an array of regexp string
+     *
+     * @throws Exception
+     * @return void
+     */
+    protected function validate()
+    {
+        $rc = count($this->routes);
+        for ($c = 0; $c < $rc; $c++) {
+            $route = $this->routes[$c];
+            if (@preg_match($route, null) === false) {
+                throw new \Exception('Route invalid ' . $route);
+            }
+        }
     }
 }

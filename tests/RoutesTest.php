@@ -12,7 +12,6 @@ class RoutesTest extends PFT
 {
 
     const TEST_ENABLE = true;
-    const PATH_ASSETS = 'assets/';
 
     /**
      * instance
@@ -20,6 +19,13 @@ class RoutesTest extends PFT
      * @var Routes
      */
     protected $instance;
+
+    /**
+     * rexexp string collection
+     *
+     * @var array
+     */
+    protected $regexRoutes;
 
     /**
      * Sets up the fixture, for example, opens a network connection.
@@ -30,7 +36,8 @@ class RoutesTest extends PFT
         if (!self::TEST_ENABLE) {
             $this->markTestSkipped('Test disabled.');
         }
-        $this->instance = new Routes(['r0']);
+        $this->regexRoutes = ['/^(config)\/(help)$/'];
+        $this->instance = new Routes($this->regexRoutes);
     }
 
     /**
@@ -65,7 +72,7 @@ class RoutesTest extends PFT
     public function testInstance()
     {
         $this->assertTrue($this->instance instanceof Routes);
-        $this->assertEquals($this->instance->get(), ['r0']);
+        $this->assertEquals($this->instance->get(), $this->regexRoutes);
     }
 
     /**
@@ -75,8 +82,40 @@ class RoutesTest extends PFT
      */
     public function testGetSet()
     {
-        $routesArray = ['r1', 'r2'];
+        $routesArray = [
+            '/^(api\/v1\/auth)\/(.*)$/',
+            '/^(config)\/(keygen)$/'
+        ];
         $this->instance->set($routesArray);
         $this->assertEquals($this->instance->get(), $routesArray);
+    }
+
+    /**
+     * testValidate
+     * @covers App\Http\Routes::validate
+     */
+    public function testValidate()
+    {
+        self::getMethod('validate')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $routesArray = [
+            '/^(api\/v1\/auth)\/(.*)$/',
+            '/^(config)\/(keygen)$/'
+        ];
+        $this->instance->set($routesArray);
+        $this->assertTrue($this->instance instanceof Routes);
+    }
+
+    /**
+     * testValidateException
+     * @covers App\Http\Routes::set
+     * @covers App\Http\Routes::validate
+     */
+    public function testValidateException()
+    {
+        $this->expectException(\Exception::class);
+        $this->instance->set(['crappyRegexp']);
     }
 }

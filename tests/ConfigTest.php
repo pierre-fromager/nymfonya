@@ -12,7 +12,6 @@ class ConfigTest extends PFT
 {
 
     const TEST_ENABLE = true;
-    const PATH_ASSETS = 'assets/';
     const CONFIG_PATH = '/../config/';
 
     /**
