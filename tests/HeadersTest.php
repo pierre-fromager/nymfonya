@@ -59,11 +59,13 @@ class HeadersTest extends PFT
 
     /**
      * testInstance
-     * @covers App\Http\Response::__construct
+     * @covers App\Http\Headers::__construct
+     * @covers App\Http\Headers::get
      */
     public function testInstance()
     {
         $this->assertTrue($this->instance instanceof Headers);
+        $this->assertEquals($this->instance->get(), []);
     }
 
     /**
@@ -86,7 +88,7 @@ class HeadersTest extends PFT
 
     /**
      * testConstants
-     * @covers App\Http\Response::__construct
+     * @covers App\Http\Headers::__construct
      * @dataProvider constantsProvider
      */
     public function testConstants($k)
@@ -94,5 +96,68 @@ class HeadersTest extends PFT
         $class = new \ReflectionClass(Headers::class);
         $this->assertArrayHasKey($k, $class->getConstants());
         unset($class);
+    }
+
+    /**
+     * testAdd
+     * @covers App\Http\Headers::add
+     * @covers App\Http\Headers::get
+     */
+    public function testAdd()
+    {
+        $this->instance->add('testkey', 'testvalue');
+        $this->assertEquals(
+            $this->instance->get(),
+            ['testkey' => 'testvalue']
+        );
+    }
+
+    /**
+     * testAddMany
+     * @covers App\Http\Headers::add
+     * @covers App\Http\Headers::get
+     */
+    public function testAddMany()
+    {
+        $headers = [
+            'testkey' => 'testvalue',
+            'testkey1' => 'testvalue1',
+        ];
+        $this->instance->addMany($headers);
+        $this->assertEquals($this->instance->get(), $headers);
+    }
+
+    /**
+     * testRemove
+     * @covers App\Http\Headers::remove
+     * @covers App\Http\Headers::get
+     */
+    public function testRemove()
+    {
+        $headers = [
+            'testkey' => 'testvalue',
+            'testkey1' => 'testvalue1',
+        ];
+        $this->instance->addMany($headers);
+        $this->instance->remove('testkey');
+        $this->assertEquals(
+            $this->instance->get(),
+            ['testkey1' => 'testvalue1']
+        );
+    }
+
+    /**
+     * testSend
+     * @covers App\Http\Headers::addMany
+     * @covers App\Http\Headers::send
+     * @runInSeparateProcess
+     */
+    public function testSend()
+    {
+        $headers = ['hk' => 'hv'];
+        $this->instance->addMany($headers);
+        $this->assertTrue(
+            $this->instance->send() instanceof Headers
+        );
     }
 }

@@ -60,7 +60,7 @@ class Headers implements IHeaders
     public function remove(string $key): Headers
     {
         if (isset($this->headers[$key])) {
-            $this->headers[$key];
+            unset($this->headers[$key]);
         }
         return $this;
     }
