@@ -9,4 +9,5 @@ return [
     '/^(api\/v1\/auth)\/(.*)$/', // 1st group match controller 2nd match action
     '/^(config)\/(help)$/', // 1st group match controller 2nd match action
     '/^(config)\/(keygen)$/', // 1st group match controller 2nd match action
+    '/^(config)\/(account)$/', // 1st group match controller 2nd match action
 ];

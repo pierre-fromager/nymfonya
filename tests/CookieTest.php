@@ -71,9 +71,7 @@ class CookieTest extends PFT
      */
     public function testGetCookie()
     {
-        $this->assertTrue(
-            $this->instance->getCookie('') instanceof string
-        );
+        $this->assertTrue(is_string($this->instance->getCookie('')));
     }
 
     /**

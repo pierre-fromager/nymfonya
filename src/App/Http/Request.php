@@ -11,6 +11,7 @@ class Request extends Session implements IRequest
 
     protected $server;
     protected $method;
+    protected $contentType;
     protected $isCli;
 
     /**
@@ -20,6 +21,7 @@ class Request extends Session implements IRequest
     {
         $this->server = $_SERVER;
         $this->method = $this->getMethod();
+        $this->setContentType(self::APPLICATION_JSON);
         parent::__construct();
         $this->setIsCli(php_sapi_name() == self::_CLI);
     }
@@ -43,33 +45,17 @@ class Request extends Session implements IRequest
      */
     public function getParams(): array
     {
-        $params = [];
-        switch ($this->getMethod()) {
-            case self::METHOD_GET:
-                $params = $_GET;
-                break;
-            case self::METHOD_POST:
-                $params = ($this->isJsonContentType())
-                    ? $this->getInput()
-                    : $_POST;
-                break;
-            case self::METHOD_PUT:
-            case self::METHOD_PATCH:
-            case self::METHOD_DELETE:
-            case self::METHOD_HEAD:
-            case self::METHOD_OPTIONS:
-                $params = $this->getInput();
-                break;
-            case self::METHOD_TRACE:
-                $params = $this->getInput();
-                if ($this->isCli) {
-                    $qs = parse_url($this->getArgs(), PHP_URL_QUERY);
-                    parse_str($qs, $qp);
-                    $params = array_merge($params, $qp);
-                }
-                break;
+        if ($this->method === self::METHOD_GET) {
+            return $_GET;
+        } elseif ($this->method === self::METHOD_POST) {
+            return ($this->isJsonContentType())
+                ? $this->getInput()
+                : $_POST;
+        } elseif ($this->method === self::METHOD_TRACE) {
+            return $this->getCliParams();
+        } else {
+            return $this->getInput();
         }
-        return $params;
     }
 
     /**
@@ -144,10 +130,7 @@ class Request extends Session implements IRequest
      */
     public function getContentType(): string
     {
-        $ct = $this->getServer(IHeaders::CONTENT_TYPE);
-        return (empty($ct))
-            ? self::APPLICATION_JSON
-            : $ct;
+        return $this->contentType;
     }
 
     /**
@@ -205,8 +188,10 @@ class Request extends Session implements IRequest
      */
     protected function isJsonContentType(): bool
     {
-        $lct = strtolower($this->getContentType());
-        return strpos($lct, self::APPLICATION_JSON) !== false;
+        return strpos(
+            strtolower($this->contentType),
+            self::APPLICATION_JSON
+        ) !== false;
     }
 
     /**
@@ -252,7 +237,7 @@ class Request extends Session implements IRequest
     protected function setIsCli(bool $isCli): Request
     {
         $this->isCli = $isCli;
-        if (!$this->isCli()) {
+        if (false === $this->isCli()) {
             $this->startSession($this->getFilename());
         }
         return $this;
@@ -267,5 +252,30 @@ class Request extends Session implements IRequest
     protected function isCli(): bool
     {
         return $this->isCli;
+    }
+
+    /**
+     * set content type
+     *
+     * @param string $ct
+     * @return Request
+     */
+    protected function setContentType(string $ct = ''): Request
+    {
+        $this->contentType = (empty($ct))
+            ? $this->getServer(IHeaders::CONTENT_TYPE)
+            : $ct;
+        return $this;
+    }
+
+    protected function getCliParams(): array
+    {
+        $params = $this->getInput();
+        if ($this->isCli) {
+            $qs = parse_url($this->getArgs(), PHP_URL_QUERY);
+            parse_str($qs, $qp);
+            $params = array_merge($params, $qp);
+        }
+        return $params;
     }
 }

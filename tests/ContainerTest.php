@@ -39,7 +39,7 @@ class ContainerTest extends PFT
             $this->markTestSkipped('Test disabled.');
         }
         $config = new Config(
-            Config::ENV_CLI, 
+            Config::ENV_CLI,
             __DIR__ . self::CONFIG_PATH
         );
         $this->instance = new Container(
