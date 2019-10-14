@@ -38,12 +38,12 @@ class ContainerTest extends PFT
         if (!self::TEST_ENABLE) {
             $this->markTestSkipped('Test disabled.');
         }
-        $config = new Config(
+        $this->config = new Config(
             Config::ENV_CLI,
             __DIR__ . self::CONFIG_PATH
         );
         $this->instance = new Container(
-            $config->getSettings(Config::_SERVICES)
+            $this->config->getSettings(Config::_SERVICES)
         );
     }
 
@@ -173,6 +173,39 @@ class ContainerTest extends PFT
             []
         );
         $this->assertTrue($ld instanceof Container);
+    }
+
+     /**
+     * testSetServiceConfig
+     * @covers App\Container::setServiceConfig
+     */
+    public function testSetServiceConfig()
+    {
+        $ssc = self::getMethod('setServiceConfig')->invokeArgs(
+            $this->instance,
+            [$this->config->getSettings(Config::_SERVICES)]
+        );
+        $this->assertTrue($ssc instanceof Container);
+    }
+
+    /**
+     * testLoadException
+     * @covers App\Container::load
+     */
+    public function testLoadException()
+    {
+        $this->expectException(\Exception::class);
+
+        self::getMethod('setServiceConfig')->invokeArgs(
+            $this->instance,
+            [[]]
+        );
+        //$this->assertTrue($ssc instanceof Container);
+        $ssc = self::getMethod('load')->invokeArgs(
+            $this->instance,
+            []
+        );
+        //$badContainer = $this->instance->load();
     }
 
     /**

@@ -37,7 +37,7 @@ class Container
      */
     public function __construct(array $servicesConfig)
     {
-        $this->servicesConfig = $servicesConfig;
+        $this->setServiceConfig($servicesConfig);
         $this->services = [];
         $this->initReporter();
         $this->load();
@@ -104,7 +104,7 @@ class Container
      */
     protected function load(): Container
     {
-        if (!is_array($this->servicesConfig) && empty($this->servicesConfig)) {
+        if (count($this->servicesConfig) === 0) {
             throw new \Exception('Container config missing');
         }
         foreach ($this->servicesConfig as $serviceName => $serviceParams) {
@@ -132,9 +132,9 @@ class Container
      *
      * @param string $serviceName
      * @param array $serviceParams
-     * @return void
+     * @return Container
      */
-    protected function createCoreService(string $serviceName, array $serviceParams)
+    protected function createCoreService(string $serviceName, array $serviceParams): Container
     {
         if ($this->constructable($serviceName)) {
             if (!$this->hasService($serviceName)) {
@@ -156,6 +156,7 @@ class Container
                 $this->injectService($serviceName, $args);
             }
         }
+        return $this;
     }
 
     /**
@@ -243,5 +244,18 @@ class Container
     protected function isBasicType($value): bool
     {
         return (is_int($value) || is_bool($value));
+    }
+
+    /**
+     * set config for service
+     * testing purpose
+     *
+     * @param array $servicesConfig
+     * @return Container
+     */
+    protected function setServiceConfig(array $servicesConfig): Container
+    {
+        $this->servicesConfig = $servicesConfig;
+        return $this;
     }
 }
