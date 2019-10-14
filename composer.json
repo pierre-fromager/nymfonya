@@ -72,11 +72,14 @@
         "testSession": [
             "phpunit --bootstrap tests/bootstrap.php --testsuite Session"
         ],
+        "testConfig": [
+            "phpunit --bootstrap tests/bootstrap.php --testsuite Config"
+        ],
         "testContainer": [
             "phpunit --bootstrap tests/bootstrap.php --testsuite Container"
         ],
-        "testConfig": [
-            "phpunit --bootstrap tests/bootstrap.php --testsuite Config"
+        "testKernel": [
+            "phpunit --bootstrap tests/bootstrap.php --testsuite Kernel"
         ]
     }
 }

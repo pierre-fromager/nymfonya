@@ -9,8 +9,9 @@
             <file>tests/Http/RouterTest.php</file>
             <file>tests/Http/MiddlewareTest.php</file>
             <file>tests/Http/SessionTest.php</file>
-            <file>tests/ContainerTest.php</file>
             <file>tests/ConfigTest.php</file>
+            <file>tests/ContainerTest.php</file>
+            <file>tests/KernelTest.php</file>
         </testsuite>
         <testsuite name="Request">
             <file>tests/Http/RequestTest.php</file>
@@ -36,11 +37,14 @@
         <testsuite name="Session">
             <file>tests/Http/SessionTest.php</file>
         </testsuite>
+        <testsuite name="Config">
+            <file>tests/ConfigTest.php</file>
+        </testsuite>
         <testsuite name="Container">
             <file>tests/ContainerTest.php</file>
         </testsuite>
-        <testsuite name="Config">
-            <file>tests/ConfigTest.php</file>
+        <testsuite name="Kernel">
+            <file>tests/KernelTest.php</file>
         </testsuite>
     </testsuites>
     <filter>
