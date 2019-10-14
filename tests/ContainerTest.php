@@ -175,7 +175,7 @@ class ContainerTest extends PFT
         $this->assertTrue($ld instanceof Container);
     }
 
-     /**
+    /**
      * testSetServiceConfig
      * @covers App\Container::setServiceConfig
      */
@@ -195,17 +195,14 @@ class ContainerTest extends PFT
     public function testLoadException()
     {
         $this->expectException(\Exception::class);
-
         self::getMethod('setServiceConfig')->invokeArgs(
             $this->instance,
             [[]]
         );
-        //$this->assertTrue($ssc instanceof Container);
-        $ssc = self::getMethod('load')->invokeArgs(
+        self::getMethod('load')->invokeArgs(
             $this->instance,
             []
         );
-        //$badContainer = $this->instance->load();
     }
 
     /**
