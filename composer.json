@@ -81,8 +81,14 @@
         "testKernel": [
             "phpunit --bootstrap tests/bootstrap.php --testsuite Kernel"
         ],
-        "testApiV1Auth": [
+        "testCtrlApiV1Auth": [
             "phpunit --bootstrap tests/bootstrap.php --testsuite ControllerApiV1Auth"
+        ],
+        "testCtrlApiV1Stat": [
+            "phpunit --bootstrap tests/bootstrap.php --testsuite ControllerApiV1Stat"
+        ],
+        "testCtrlConfig": [
+            "phpunit --bootstrap tests/bootstrap.php --testsuite ControllerConfig"
         ]
     }
 }

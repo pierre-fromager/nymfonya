@@ -12,7 +12,9 @@
             <file>tests/ConfigTest.php</file>
             <file>tests/ContainerTest.php</file>
             <file>tests/KernelTest.php</file>
+            <file>tests/Controllers/ConfigTest.php</file>
             <file>tests/Controllers/Api/V1/AuthTest.php</file>
+            <file>tests/Controllers/Api/V1/StatTest.php</file>
         </testsuite>
         <testsuite name="Request">
             <file>tests/Http/RequestTest.php</file>
@@ -49,6 +51,12 @@
         </testsuite>
         <testsuite name="ControllerApiV1Auth">
             <file>tests/Controllers/Api/V1/AuthTest.php</file>
+        </testsuite>
+        <testsuite name="ControllerApiV1Stat">
+            <file>tests/Controllers/Api/V1/StatTest.php</file>
+        </testsuite>
+        <testsuite name="ControllerConfig">
+            <file>tests/Controllers/ConfigTest.php</file>
         </testsuite>
     </testsuites>
     <filter>

@@ -5,12 +5,12 @@ namespace Tests;
 use PHPUnit\Framework\TestCase as PFT;
 use App\Config;
 use App\Container;
-use App\Controllers\Api\V1\Auth as ApiAuthControler;
+use App\Controllers\Api\V1\Stat as ApiStatControler;
 
 /**
- * @covers \App\Controllers\Api\V1\Auth::<public>
+ * @covers \App\Controllers\Api\V1\Stat::<public>
  */
-class ApiV1ControllerAuthTest extends PFT
+class ApiV1ControllerStatTest extends PFT
 {
 
     const TEST_ENABLE = true;
@@ -33,7 +33,7 @@ class ApiV1ControllerAuthTest extends PFT
     /**
      * instance
      *
-     * @var Kernel
+     * @var ApiStatControler
      */
     protected $instance;
 
@@ -53,7 +53,7 @@ class ApiV1ControllerAuthTest extends PFT
         $this->container = new Container(
             $this->config->getSettings(Config::_SERVICES)
         );
-        $this->instance = new ApiAuthControler($this->container);
+        $this->instance = new ApiStatControler($this->container);
     }
 
     /**
@@ -75,7 +75,7 @@ class ApiV1ControllerAuthTest extends PFT
      */
     protected static function getMethod(string $name)
     {
-        $class = new \ReflectionClass(ApiAuthControler::class);
+        $class = new \ReflectionClass(Auth::class);
         $method = $class->getMethod($name);
         $method->setAccessible(true);
         unset($class);
@@ -84,10 +84,10 @@ class ApiV1ControllerAuthTest extends PFT
 
     /**
      * testInstance
-     * @covers App\Controllers\Api\V1\Auth::__construct
+     * @covers App\Controllers\Api\V1\Stat::__construct
      */
     public function testInstance()
     {
-        $this->assertTrue($this->instance instanceof ApiAuthControler);
+        $this->assertTrue($this->instance instanceof ApiStatControler);
     }
 }
