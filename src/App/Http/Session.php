@@ -45,6 +45,9 @@ class Session extends Cookie implements ISession
     public function setSession(string $name, $value, $key = ''): Session
     {
         if ($key) {
+            if (!$this->hasSession($name, $key) || !is_array($this->session[$name])) {
+                $this->session[$name] = [];
+            }
             $this->session[$name][$key] = $value;
         } else {
             $this->session[$name] = $value;

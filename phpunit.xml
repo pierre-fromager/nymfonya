@@ -8,6 +8,7 @@
             <file>tests/Http/RoutesTest.php</file>
             <file>tests/Http/RouterTest.php</file>
             <file>tests/Http/MiddlewareTest.php</file>
+            <file>tests/Http/SessionTest.php</file>
             <file>tests/ContainerTest.php</file>
             <file>tests/ConfigTest.php</file>
         </testsuite>
@@ -31,6 +32,9 @@
         </testsuite>
         <testsuite name="Middleware">
             <file>tests/Http/MiddlewareTest.php</file>
+        </testsuite>
+        <testsuite name="Session">
+            <file>tests/Http/SessionTest.php</file>
         </testsuite>
         <testsuite name="Container">
             <file>tests/ContainerTest.php</file>
