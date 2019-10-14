@@ -46,7 +46,7 @@ class Middleware
             $layers = [$layers];
         }
         if (!is_array($layers)) {
-            throw new InvalidArgumentException(
+            throw new \InvalidArgumentException(
                 get_class($layers) . self::$excMsg
             );
         }
@@ -93,7 +93,7 @@ class Middleware
      * @param  Closure $core the core function
      * @return Closure
      */
-    private function createCoreFunction(Closure $core): Closure
+    protected function createCoreFunction(Closure $core): Closure
     {
         return function ($object) use ($core) {
             return $core($object);
@@ -108,7 +108,7 @@ class Middleware
      * @param  ILayer $layer
      * @return Closure
      */
-    private function createLayer(Closure $nextLayer, ILayer $layer): Closure
+    protected function createLayer(Closure $nextLayer, ILayer $layer): Closure
     {
         return function ($object) use ($nextLayer, $layer) {
             return $layer->peel($object, $nextLayer);

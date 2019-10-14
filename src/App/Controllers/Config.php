@@ -76,6 +76,21 @@ final class Config extends Api implements IApi
     }
 
     /**
+     * account action
+     *
+     * @Role anonymous
+     * @return Config
+     */
+    final public function account(): Config
+    {
+        $line = readline("Command: ");
+        $this->response
+            ->setCode(Response::HTTP_OK)
+            ->setContent(['error'=> false , 'command' => $line]);
+        return $this;
+    }
+
+    /**
      * return current base root uri
      *
      * @return string

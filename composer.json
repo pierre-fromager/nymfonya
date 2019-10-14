@@ -66,6 +66,12 @@
         "testRouter": [
             "phpunit --bootstrap tests/bootstrap.php --testsuite Router"
         ],
+        "testMiddleware": [
+            "phpunit --bootstrap tests/bootstrap.php --testsuite Middleware"
+        ],
+        "testContainer": [
+            "phpunit --bootstrap tests/bootstrap.php --testsuite Container"
+        ],
         "testConfig": [
             "phpunit --bootstrap tests/bootstrap.php --testsuite Config"
         ]

@@ -10,5 +10,3 @@ $there = __DIR__;
 $loader = require $there . '/../vendor/autoload.php';
 $loader->add('Tests', $there);
 echo 'Testing...' . "\n";
-
-//var_dump($_SERVER);die;

@@ -1,31 +1,39 @@
 <phpunit colors="true" strict="true">
     <testsuites>
         <testsuite name="all">
-            <file>tests/RequestTest.php</file>
-            <file>tests/CookieTest.php</file>
-            <file>tests/ResponseTest.php</file>
-            <file>tests/HeadersTest.php</file>
-            <file>tests/RoutesTest.php</file>
-            <file>tests/RouterTest.php</file>
+            <file>tests/Http/RequestTest.php</file>
+            <file>tests/Http/CookieTest.php</file>
+            <file>tests/Http/ResponseTest.php</file>
+            <file>tests/Http/HeadersTest.php</file>
+            <file>tests/Http/RoutesTest.php</file>
+            <file>tests/Http/RouterTest.php</file>
+            <file>tests/Http/MiddlewareTest.php</file>
+            <file>tests/ContainerTest.php</file>
             <file>tests/ConfigTest.php</file>
         </testsuite>
         <testsuite name="Request">
-            <file>tests/RequestTest.php</file>
+            <file>tests/Http/RequestTest.php</file>
         </testsuite>
         <testsuite name="Cookie">
-            <file>tests/CookieTest.php</file>
-        </testsuite>        
+            <file>tests/Http/CookieTest.php</file>
+        </testsuite>
         <testsuite name="Response">
-            <file>tests/ResponseTest.php</file>
+            <file>tests/Http/ResponseTest.php</file>
         </testsuite>
         <testsuite name="Headers">
-            <file>tests/HeadersTest.php</file>
+            <file>tests/Http/HeadersTest.php</file>
         </testsuite>
         <testsuite name="Routes">
-            <file>tests/RoutesTest.php</file>
+            <file>tests/Http/RoutesTest.php</file>
         </testsuite>
         <testsuite name="Router">
-            <file>tests/RouterTest.php</file>
+            <file>tests/Http/RouterTest.php</file>
+        </testsuite>
+        <testsuite name="Middleware">
+            <file>tests/Http/MiddlewareTest.php</file>
+        </testsuite>
+        <testsuite name="Container">
+            <file>tests/ContainerTest.php</file>
         </testsuite>
         <testsuite name="Config">
             <file>tests/ConfigTest.php</file>

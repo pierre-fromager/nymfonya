@@ -44,7 +44,7 @@ class Container
     }
 
     /**
-     * init reporter 
+     * init reporter
      *
      * @return void
      */
