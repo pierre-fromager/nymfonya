@@ -163,6 +163,38 @@ class ContainerTest extends PFT
     }
 
     /**
+     * testLoad
+     * @covers App\Container::load
+     */
+    public function testLoad()
+    {
+        $ld = self::getMethod('load')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertTrue($ld instanceof Container);
+    }
+
+    /**
+     * testCreate
+     * @covers App\Container::create
+     */
+    public function testCreate()
+    {
+        $cr = self::getMethod('create')->invokeArgs(
+            $this->instance,
+            [
+                \App\Config::class,
+                [
+                    self::CONFIG_PATH . \App\Config::ENV_CLI,
+                    \App\Http\Request::class
+                ]
+            ]
+        );
+        $this->assertTrue($cr instanceof Container);
+    }
+
+    /**
      * testIsBasicType
      * @covers App\Container::isBasicType
      */

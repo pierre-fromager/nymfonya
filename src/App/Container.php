@@ -84,6 +84,7 @@ class Container
      *
      * @param string $serviceName
      * @return object
+     * @throws Exception
      */
     public function getService(string $serviceName)
     {
@@ -96,11 +97,12 @@ class Container
     }
 
     /**
-     * Undocumented function
+     * load service from config service
      *
-     * @return void
+     * @return Container
+     * @throws Exception
      */
-    protected function load()
+    protected function load(): Container
     {
         if (!is_array($this->servicesConfig) && empty($this->servicesConfig)) {
             throw new \Exception('Container config missing');
@@ -108,6 +110,7 @@ class Container
         foreach ($this->servicesConfig as $serviceName => $serviceParams) {
             $this->create($serviceName, $serviceParams);
         }
+        return $this;
     }
 
     /**
@@ -115,12 +118,13 @@ class Container
      *
      * @param string $serviceName
      * @param array $serviceParams
-     * @return void
+     * @return Container
      */
-    protected function create(string $serviceName, array $serviceParams)
+    protected function create(string $serviceName, array $serviceParams): Container
     {
         $this->createDependencies($serviceParams);
         $this->createCoreService($serviceName, $serviceParams);
+        return $this;
     }
 
     /**
@@ -158,9 +162,9 @@ class Container
      * create dependent services
      *
      * @param array $serviceParams
-     * @return void
+     * @return Container
      */
-    protected function createDependencies(array $serviceParams)
+    protected function createDependencies(array $serviceParams): Container
     {
         foreach ($serviceParams as $serviceParam) {
             if (is_array($serviceParam)) {
@@ -171,6 +175,7 @@ class Container
                 $this->injectService($serviceParam, []);
             }
         }
+        return $this;
     }
 
     /**
@@ -178,9 +183,9 @@ class Container
      *
      * @param string $serviceName
      * @param array $serviceParams
-     * @return void
+     * @return Container
      */
-    protected function injectService($serviceName, array $serviceParams)
+    protected function injectService($serviceName, array $serviceParams): Container
     {
         if ($this->constructable($serviceName)) {
             if (!$this->hasService($serviceName)) {
@@ -188,6 +193,7 @@ class Container
                 $this->services[$serviceName] = new $serviceName(...$serviceParams);
             }
         }
+        return $this;
     }
 
     /**
