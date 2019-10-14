@@ -13,6 +13,7 @@ class Request extends Session implements IRequest
     protected $method;
     protected $contentType;
     protected $isCli;
+    protected $params;
 
     /**
      * instanciate
@@ -22,6 +23,7 @@ class Request extends Session implements IRequest
         $this->server = $_SERVER;
         $this->method = $this->getMethod();
         $this->setContentType(self::APPLICATION_JSON);
+        $this->setParams();
         parent::__construct();
         $this->setIsCli(php_sapi_name() == self::_CLI);
     }
@@ -39,23 +41,13 @@ class Request extends Session implements IRequest
     }
 
     /**
-     * returns http params
+     * returns http param for a given key
      *
      * @return array
      */
     public function getParams(): array
     {
-        if ($this->method === self::METHOD_GET) {
-            return $_GET;
-        } elseif ($this->method === self::METHOD_POST) {
-            return ($this->isJsonContentType())
-                ? $this->getInput()
-                : $_POST;
-        } elseif ($this->method === self::METHOD_TRACE) {
-            return $this->getCliParams();
-        } else {
-            return $this->getInput();
-        }
+        return $this->params;
     }
 
     /**
@@ -65,8 +57,8 @@ class Request extends Session implements IRequest
      */
     public function getParam(string $key): string
     {
-        return isset($this->getParams()[$key])
-            ? $this->getParams()[$key]
+        return isset($this->params[$key])
+            ? $this->params[$key]
             : '';
     }
 
@@ -97,10 +89,9 @@ class Request extends Session implements IRequest
      */
     public function getUri(): string
     {
-        if (false === $this->isCli()) {
-            return $this->getServer(self::REQUEST_URI);
-        }
-        return $this->getArgs();
+        return ($this->isCli())
+            ? $this->getArgs()
+            : $this->getServer(self::REQUEST_URI);
     }
 
     /**
@@ -268,6 +259,11 @@ class Request extends Session implements IRequest
         return $this;
     }
 
+    /**
+     * get params in cli mode
+     *
+     * @return array
+     */
     protected function getCliParams(): array
     {
         $params = $this->getInput();
@@ -277,5 +273,39 @@ class Request extends Session implements IRequest
             $params = array_merge($params, $qp);
         }
         return $params;
+    }
+
+    /**
+     * set an entry in params for key value
+     *
+     * @param string $key
+     * @param string $value
+     * @return Request
+     */
+    protected function setParam(string $key, string $value): Request
+    {
+        $this->params[$key] = $value;
+        return $this;
+    }
+
+    /**
+     * set http params
+     *
+     * @return array
+     */
+    protected function setParams(): Request
+    {
+        if ($this->method === self::METHOD_GET) {
+            $this->params = $_GET;
+        } elseif ($this->method === self::METHOD_POST) {
+            $this->params = ($this->isJsonContentType())
+                ? $this->getInput()
+                : $_POST;
+        } elseif ($this->method === self::METHOD_TRACE) {
+            $this->params = $this->getCliParams();
+        } else {
+            $this->params =  $this->getInput();
+        }
+        return $this;
     }
 }

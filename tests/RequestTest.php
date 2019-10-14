@@ -186,13 +186,103 @@ class RequestTest extends PFT
     }
 
     /**
-     * testGetParam
-     * @covers App\Http\Request::getParam
+     * testSetParams
+     * @covers App\Http\Request::setParams
      */
-    public function testGetParam()
+    public function testSetParams()
     {
-        $this->assertTrue(is_string($this->instance->getParam('whatever')));
+        self::getMethod('setMethod')->invokeArgs(
+            $this->instance,
+            [Request::METHOD_GET]
+        );
+        $req = self::getMethod('setParams')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertTrue($req instanceof Request);
+        $this->assertEquals(
+            $_GET,
+            $this->instance->getParams()
+        );
+        self::getMethod('setMethod')->invokeArgs(
+            $this->instance,
+            [Request::METHOD_POST]
+        );
+        $req = self::getMethod('setParams')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertTrue($req instanceof Request);
+        $this->assertEquals(
+            $_POST,
+            $this->instance->getParams()
+        );
+        $this->assertTrue(
+            is_array($this->instance->getParams())
+        );
+        self::getMethod('setMethod')->invokeArgs(
+            $this->instance,
+            [Request::METHOD_OPTIONS]
+        );
+        $req = self::getMethod('setParams')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertTrue(
+            is_array($this->instance->getParams())
+        );
+        $value = self::getMethod('setContentType')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertTrue($value instanceof Request);
+        self::getMethod('setMethod')->invokeArgs(
+            $this->instance,
+            [Request::METHOD_TRACE]
+        );
+        $req = self::getMethod('setParams')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $cliParams = self::getMethod('getCliParams')->invokeArgs(
+            $this->instance,
+            [Request::METHOD_TRACE]
+        );
+        $this->assertEquals(
+            $cliParams,
+            $this->instance->getParams()
+        );
+    }
+
+    /**
+     * testSetGetParam
+     * @covers App\Http\Request::getParam
+     * @covers App\Http\Request::setParam
+     * @covers App\Http\Request::getParams
+     */
+    public function testSetGetParam()
+    {
+        $req = self::getMethod('setParams')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertTrue($req instanceof Request);
+        $this->assertTrue(
+            is_string($this->instance->getParam('whatever'))
+        );
         $this->assertEquals('', $this->instance->getParam('whatever'));
+        $req = self::getMethod('setParam')->invokeArgs(
+            $this->instance,
+            ['whatever', 'whatevervalue']
+        );
+        $this->assertEquals(
+            'whatevervalue',
+            $this->instance->getParam('whatever')
+        );
+        $this->assertEquals(
+            ['whatever' => 'whatevervalue'],
+            $this->instance->getParams()
+        );
     }
 
     /**
