@@ -15,6 +15,7 @@ class KernelTest extends PFT
     const TEST_ENABLE = true;
     const CONFIG_PATH = '/../config/';
     const KERNEL_PATH = '/../src/';
+    const KERNEL_NS = '\\App\\Controllers\\';
 
     /**
      * config
@@ -43,6 +44,7 @@ class KernelTest extends PFT
             Config::ENV_CLI,
             __DIR__ . self::KERNEL_PATH
         );
+        $this->instance->setNameSpace(self::KERNEL_NS);
     }
 
     /**
@@ -76,5 +78,49 @@ class KernelTest extends PFT
     public function testInstance()
     {
         $this->assertTrue($this->instance instanceof Kernel);
+    }
+
+    /**
+     * testRun
+     * @covers App\Kernel::run
+     */
+    public function testRun()
+    {
+        $kr = $this->instance->run();
+        $this->assertTrue($kr instanceof Kernel);
+    }
+
+    /**
+     * testSend
+     * @covers App\Kernel::send
+     */
+    public function testSend()
+    {
+        $kr = $this->instance->run();
+        $ks = $this->instance->send();
+        $this->assertTrue($ks instanceof Kernel);
+    }
+
+    /**
+     * testGetInstance
+     * @covers App\Kernel::getInstance
+     */
+    public function testGetInstance()
+    {
+        $kgi = $this->instance->getInstance();
+        $this->assertTrue($kgi instanceof Kernel);
+    }
+
+    /**
+     * testSetNameSpace
+     * @covers App\Kernel::setNameSpace
+     */
+    public function testSetNameSpace()
+    {
+        $sns = self::getMethod('setNameSpace')->invokeArgs(
+            $this->instance,
+            [self::KERNEL_NS]
+        );
+        $this->assertTrue($sns instanceof Kernel);
     }
 }
