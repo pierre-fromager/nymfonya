@@ -43,7 +43,7 @@ class ContainerTest extends PFT
             __DIR__ . self::CONFIG_PATH
         );
         $this->instance = new Container(
-            $config->getSettings('services')
+            $config->getSettings(Config::_SERVICES)
         );
     }
 
@@ -78,5 +78,110 @@ class ContainerTest extends PFT
     public function testInstance()
     {
         $this->assertTrue($this->instance instanceof Container);
+    }
+
+    /**
+     * testInitReporter
+     * @covers App\Container::initReporter
+     * @covers App\Container::getReporter
+     */
+    public function testInitReporter()
+    {
+        $ir = self::getMethod('initReporter')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertTrue($ir instanceof Container);
+        $this->assertTrue(
+            $this->instance->getReporter() instanceof \stdClass
+        );
+    }
+
+    /**
+     * testGetServices
+     * @covers App\Container::getServices
+     */
+    public function testGetServices()
+    {
+        $this->assertTrue(is_array($this->instance->getServices()));
+    }
+
+    /**
+     * testGetService
+     * @covers App\Container::getService
+     */
+    public function testGetService()
+    {
+        $service = $this->instance->getService(\App\Http\Request::class);
+        $this->assertTrue($service instanceof \App\Http\Request);
+    }
+
+    /**
+     * testGetServiceException
+     * @covers App\Container::getService
+     */
+    public function testGetServiceException()
+    {
+        $this->expectException(\Exception::class);
+        $this->instance->getService('UnknownService');
+    }
+
+    /**
+     * testConstructable
+     * @covers App\Container::constructable
+     */
+    public function testConstructable()
+    {
+        $cInt = self::getMethod('constructable')->invokeArgs(
+            $this->instance,
+            [1]
+        );
+        $this->assertFalse($cInt);
+        $cBool = self::getMethod('constructable')->invokeArgs(
+            $this->instance,
+            [true]
+        );
+        $this->assertFalse($cBool);
+    }
+
+    /**
+     * testHasService
+     * @covers App\Container::hasService
+     */
+    public function testHasService()
+    {
+        $hsReq = self::getMethod('hasService')->invokeArgs(
+            $this->instance,
+            [\App\Http\Request::class]
+        );
+        $this->assertTrue($hsReq);
+        $hsMdl = self::getMethod('hasService')->invokeArgs(
+            $this->instance,
+            [\App\Model\Search::class]
+        );
+        $this->assertFalse($hsMdl);
+    }
+
+    /**
+     * testIsBasicType
+     * @covers App\Container::isBasicType
+     */
+    public function testIsBasicType()
+    {
+        $ibtInt = self::getMethod('isBasicType')->invokeArgs(
+            $this->instance,
+            [1]
+        );
+        $this->assertTrue($ibtInt);
+        $ibtBool = self::getMethod('isBasicType')->invokeArgs(
+            $this->instance,
+            [true]
+        );
+        $this->assertTrue($ibtBool);
+        $ibtStr = self::getMethod('isBasicType')->invokeArgs(
+            $this->instance,
+            ['strstring']
+        );
+        $this->assertFalse($ibtStr);
     }
 }
