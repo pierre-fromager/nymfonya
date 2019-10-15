@@ -10,7 +10,7 @@ ini_set('session.save_path', realpath(__DIR__ . '/../session'));
 // ini_set('opcache.enable', 0); # opcache force enable in rare cases
 
 if (function_exists('opcache_get_configuration')) {
-    ini_set('opcache.memory_consumption', 1);
+    ini_set('opcache.memory_consumption', 2);
     ini_set('opcache.load_comments', false);
 }
 

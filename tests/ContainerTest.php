@@ -5,6 +5,7 @@ namespace Tests;
 use PHPUnit\Framework\TestCase as PFT;
 use App\Config;
 use App\Container;
+use stdClass;
 
 /**
  * @covers \App\Container::<public>
@@ -240,10 +241,68 @@ class ContainerTest extends PFT
             [true]
         );
         $this->assertTrue($ibtBool);
+        $ibtObj = self::getMethod('isBasicType')->invokeArgs(
+            $this->instance,
+            [new \stdClass()]
+        );
+        $this->assertTrue($ibtObj);
         $ibtStr = self::getMethod('isBasicType')->invokeArgs(
             $this->instance,
             ['strstring']
         );
         $this->assertFalse($ibtStr);
+    }
+
+    /**
+     * testCreateCoreService
+     * @covers App\Container::createCoreService
+     */
+    public function testCreateCoreService()
+    {
+        $ccs = self::getMethod('createCoreService')->invokeArgs(
+            $this->instance,
+            [
+                \App\Controllers\Config::class,
+                [$this->instance]
+            ]
+        );
+        $this->assertTrue($ccs instanceof Container);
+    }
+
+    /**
+     * testCreateDependencies
+     * @covers App\Container::createDependencies
+     */
+    public function testCreateDependencies()
+    {
+        $cd = self::getMethod('createDependencies')->invokeArgs(
+            $this->instance,
+            [
+                [[]]
+            ]
+        );
+        $this->assertTrue($cd instanceof Container);
+        $cd = self::getMethod('createDependencies')->invokeArgs(
+            $this->instance,
+            [
+                [[true, new \stdClass(), 'string']]
+            ]
+        );
+        $this->assertTrue($cd instanceof Container);
+    }
+
+    /**
+     * testInjectService
+     * @covers App\Container::injectService
+     */
+    public function testInjectService()
+    {
+        $cd = self::getMethod('injectService')->invokeArgs(
+            $this->instance,
+            [
+                'key', ['value1','value2']
+            ]
+        );
+        $this->assertTrue($cd instanceof Container);
     }
 }

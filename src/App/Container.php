@@ -182,7 +182,7 @@ class Container
     /**
      * inject service in container
      *
-     * @param string $serviceName
+     * @param mixed $serviceName
      * @param array $serviceParams
      * @return Container
      */
@@ -243,7 +243,7 @@ class Container
      */
     protected function isBasicType($value): bool
     {
-        return (is_int($value) || is_bool($value));
+        return (is_int($value) || is_bool($value) || is_object($value));
     }
 
     /**
