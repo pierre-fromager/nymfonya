@@ -227,18 +227,71 @@ class KernelTest extends PFT
             []
         );
         $this->assertFalse($ge);
+    }
 
-        //$logger = $this->instance->getService(\Monolog\Logger::class);
-        //$this->assertTrue($logger instanceof \Monolog\Logger);
-        //var_dump($logger);
-        /*
-        foreach ($logger->getHandlers() as $handler) {
-            var_dump($handler);
-            if ($handler instanceof TestHandler) {
-                $testHandler = $handler;
-                break;
-            }
-        }
-        $this->assertFalse($testHandler->hasCritical());*/
+    /**
+     * testSetGetRequest
+     * @covers App\Kernel::setRequest
+     * @covers App\Kernel::getRequest
+     */
+    public function testSetGetRequest()
+    {
+        self::getMethod('setRequest')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertTrue(
+            $this->instance->getService(\App\Http\Request::class)
+                instanceof \App\Http\Request
+        );
+        $gr = self::getMethod('getRequest')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertTrue($gr instanceof \App\Http\Request);
+    }
+
+    /**
+     * testSetGetResponse
+     * @covers App\Kernel::setResponse
+     * @covers App\Kernel::getResponse
+     */
+    public function testSetGetResponse()
+    {
+        self::getMethod('setResponse')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertTrue(
+            $this->instance->getService(\App\Http\Response::class)
+                instanceof \App\Http\Response
+        );
+        $gr = self::getMethod('getResponse')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertTrue($gr instanceof \App\Http\Response);
+    }
+
+    /**
+     * testSetGetRouter
+     * @covers App\Kernel::setRouter
+     * @covers App\Kernel::getRouter
+     */
+    public function testSetGetRouter()
+    {
+        self::getMethod('setRouter')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertTrue(
+            $this->instance->getService(\App\Http\Router::class)
+                instanceof \App\Http\Router
+        );
+        $gr = self::getMethod('getRouter')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertTrue($gr instanceof \App\Http\Router);
     }
 }

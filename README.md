@@ -244,7 +244,7 @@ I attempted to keep the code :
 
 * short.
 * readable and annotated.
-* testable (Wip 42% methods coverage).
+* testable (Wip 50% methods coverage).
 * explicit.
 * decoupled.
 * linted.

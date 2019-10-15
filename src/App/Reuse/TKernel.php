@@ -309,7 +309,7 @@ trait TKernel
     }
 
     /**
-     * set app request
+     * set request
      *
      */
     protected function setRequest()
@@ -318,7 +318,16 @@ trait TKernel
     }
 
     /**
-     * set app response
+     * return request
+     *
+     */
+    protected function getRequest()
+    {
+        return $this->req;
+    }
+
+    /**
+     * set response
      *
      */
     protected function setResponse()
@@ -327,12 +336,30 @@ trait TKernel
     }
 
     /**
-     * set app router
+     * return reponse
+     *
+     */
+    protected function getResponse()
+    {
+        return $this->res;
+    }
+
+    /**
+     * set router
      *
      */
     protected function setRouter()
     {
         $this->router = $this->getService(\App\Http\Router::class);
+    }
+
+    /**
+     * return router
+     *
+     */
+    protected function getRouter()
+    {
+        return $this->router;
     }
 
     /**
