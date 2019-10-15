@@ -81,13 +81,37 @@ class KernelTest extends PFT
     }
 
     /**
-     * testRun
+     * testRunOk
      * @covers App\Kernel::run
      */
-    public function testRun()
+    public function testRunOk()
     {
-        $kr = $this->instance->run();
+        $routerGroups = ['config', 'help'];
+        $kr = $this->instance->run($routerGroups);
         $this->assertTrue($kr instanceof Kernel);
+        $res = $kr->getService(\App\Http\Response::class);
+        $this->assertTrue($res instanceof \App\Http\Response);
+        $this->assertEquals(
+            $res->getCode(),
+            \App\Http\Response::HTTP_OK
+        );
+    }
+
+    /**
+     * testRunNok
+     * @covers App\Kernel::run
+     */
+    public function testRunNok()
+    {
+        $routerGroups = ['badctrl', 'messup'];
+        $kr = $this->instance->run($routerGroups);
+        $this->assertTrue($kr instanceof Kernel);
+        $res = $kr->getService(\App\Http\Response::class);
+        $this->assertTrue($res instanceof \App\Http\Response);
+        $this->assertEquals(
+            $res->getCode(),
+            \App\Http\Response::HTTP_NOT_FOUND
+        );
     }
 
     /**
@@ -97,7 +121,8 @@ class KernelTest extends PFT
     public function testSend()
     {
         $kr = $this->instance->run();
-        $ks = $this->instance->send();
+        $this->assertTrue($kr instanceof Kernel);
+        $ks = $kr->send();
         $this->assertTrue($ks instanceof Kernel);
     }
 

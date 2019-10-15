@@ -65,11 +65,15 @@ class Kernel
     /**
      * run app
      *
+     * @param array $routerGroups
      * @return Kernel
      */
-    public function run(): Kernel
+    public function run(array $groups = []): Kernel
     {
-        if ($routerGroups = $this->router->compile()) {
+        $routerGroups = ($groups)
+            ? $groups
+            : $this->router->compile();
+        if ($routerGroups) {
             $this->setClassname($routerGroups);
             if (class_exists($this->className)) {
                 $this->controller = new $this->className($this->container);

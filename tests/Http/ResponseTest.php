@@ -104,13 +104,22 @@ class ResponseTest extends PFT
     }
 
     /**
-     * testSetCode
+     * testSetGetCode
      * @covers App\Http\Response::setCode
+     * @covers App\Http\Response::getCode
      */
-    public function testSetCode()
+    public function testSetGetCode()
     {
+        $this->assertEquals(
+            $this->instance->getCode(),
+            Response::HTTP_NOT_FOUND
+        );
         $this->assertTrue(
             $this->instance->setCode(200) instanceof Response
+        );
+        $this->assertEquals(
+            $this->instance->getCode(),
+            Response::HTTP_OK
         );
     }
 

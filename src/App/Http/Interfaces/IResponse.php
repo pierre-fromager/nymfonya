@@ -29,7 +29,6 @@ interface IResponse extends IStatus
      */
     public function setContent($content): Response;
 
-
     /**
      * set http code response
      *
@@ -38,6 +37,12 @@ interface IResponse extends IStatus
      */
     public function setCode(int $code): Response;
 
+    /**
+     * return http code response
+     *
+     * @return integer
+     */
+    public function getCode(): int;
 
     /**
      * send response content to output
