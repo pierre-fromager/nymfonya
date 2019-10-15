@@ -17,7 +17,8 @@
         "phpspec/prophecy": "~1.0",
         "squizlabs/php_codesniffer": "*",
         "friendsofphp/php-cs-fixer": "^2.13",
-        "phploc/phploc": "^4.0"
+        "phploc/phploc": "^4.0",
+        "phpmd/phpmd" : "@stable"
     },
     "autoload": {
         "psr-4": {
@@ -39,6 +40,9 @@
         "cq": [
             "phploc -vvv --ansi src/*"
         ],
+        "md": [
+            "phpmd ./src text codesize,unusedcode,naming"
+        ],        
         "start": [
             "php -S localhost:8888 src/index.php"
         ],

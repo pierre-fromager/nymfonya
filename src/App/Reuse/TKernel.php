@@ -4,6 +4,7 @@ namespace App\Reuse;
 
 use App\Kernel;
 use App\Config;
+use App\Container;
 use App\Http\Request;
 use App\Http\Response;
 use App\Http\Router;
@@ -36,7 +37,7 @@ trait TKernel
     /**
      * service container
      *
-     * @var array
+     * @var Container
      */
     protected $container;
 
@@ -160,10 +161,14 @@ trait TKernel
     /**
      * init kernel
      *
+     * @param string $env
+     * @param string $path
      * @return void
      */
-    protected function init()
+    protected function init(string $env, string $path)
     {
+        $this->env = $env;
+        $this->path = $path;
         $this->error = true;
         $this->errorCode = Response::HTTP_NOT_FOUND;
         $this->errorMsg = 'Not Found';
@@ -292,6 +297,15 @@ trait TKernel
         $this->container = new \App\Container(
             $this->config->getSettings(Config::_SERVICES)
         );
+    }
+
+    /**
+     * get service container
+     *
+     */
+    protected function getContainer(): Container
+    {
+        return $this->container;
     }
 
     /**

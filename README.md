@@ -126,17 +126,22 @@ php src/index.php '/api/v1/auth/login?login=admin@domain.tld&password=adminpassw
 php src/index.php '/api/v1/stat/cache' | jq
 ```
 
-## :star2: Catalog
+## :star2: Code
 
+### Catalog
 ``` bash
 find ./src -name *.php | grep -E -v 'vendor|config|test' | wc -l
 ```
-More details with phploc running :
-
+### Complexity
+* run phploc
 ``` bash
 composer run cq
 ```
-
+### Messed
+* run phpmd (messed detector)
+``` bash
+composer run md
+```
 ## :innocent: Tests
 
 All tests

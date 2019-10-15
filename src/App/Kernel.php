@@ -26,9 +26,7 @@ class Kernel
      */
     public function __construct(string $env, string $path)
     {
-        $this->path = $path;
-        $this->env = $env;
-        $this->init();
+        $this->init($env, $path);
         self::$instance = $this;
     }
 

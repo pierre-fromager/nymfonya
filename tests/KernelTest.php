@@ -148,4 +148,55 @@ class KernelTest extends PFT
         );
         $this->assertTrue($sns instanceof Kernel);
     }
+
+    /**
+     * testInit
+     * @covers App\Kernel::init
+     * @covers App\Kernel::getContainer
+     */
+    public function testInit()
+    {
+        self::getMethod('init')->invokeArgs(
+            $this->instance,
+            [
+                Config::ENV_CLI,
+                __DIR__ . self::KERNEL_PATH
+            ]
+        );
+        $this->assertTrue(
+            $this->instance->getService(\App\Http\Request::class)
+                instanceof \App\Http\Request
+        );
+        $this->assertTrue(
+            $this->instance->getService(\App\Http\Response::class)
+                instanceof \App\Http\Response
+        );
+        $this->assertTrue(
+            $this->instance->getService(\Monolog\Logger::class)
+                instanceof \Monolog\Logger
+        );
+        $gc = self::getMethod('getContainer')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertTrue($gc instanceof \App\Container);
+    }
+
+    /**
+     * testSetGetContainer
+     * @covers App\Kernel::setContainer
+     * @covers App\Kernel::getContainer
+     */
+    public function testSetGetContainer()
+    {
+        self::getMethod('setContainer')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $gc = self::getMethod('getContainer')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertTrue($gc instanceof \App\Container);
+    }
 }
