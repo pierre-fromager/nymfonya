@@ -138,19 +138,19 @@ class Container
     {
         if ($this->constructable($serviceName)) {
             if (!$this->hasService($serviceName)) {
-                $args = array_map(function ($v) {
-                    if (is_array($v)) {
-                        $sv = [];
-                        foreach ($v as $i) {
-                            $sv[] = ($this->constructable($i))
+                $args = array_map(function ($value) {
+                    if (is_array($value)) {
+                        $values = [];
+                        foreach ($value as $i) {
+                            $values[] = ($this->constructable($i))
                                 ? $this->services[$i]
                                 : $i;
                         }
-                        return $sv;
+                        return $values;
                     } else {
-                        return ($this->constructable($v))
-                            ? $this->services[$v]
-                            : $v;
+                        return ($this->constructable($value))
+                            ? $this->services[$value]
+                            : $value;
                     }
                 }, $serviceParams);
                 $this->injectService($serviceName, $args);

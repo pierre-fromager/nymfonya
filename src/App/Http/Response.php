@@ -37,7 +37,7 @@ class Response implements IResponse
         $this->headerManager = new Headers();
         $this->headers = [];
         $this->code = self::HTTP_NOT_FOUND;
-        $this->content = [];
+        $this->content = '';
         $this->setIsCli(php_sapi_name() == self::_CLI);
     }
 

@@ -117,6 +117,7 @@ class KernelTest extends PFT
     /**
      * testSend
      * @covers App\Kernel::send
+     * @runInSeparateProcess
      */
     public function testSend()
     {

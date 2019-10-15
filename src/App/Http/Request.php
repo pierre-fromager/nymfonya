@@ -248,14 +248,14 @@ class Request extends Session implements IRequest
     /**
      * set content type
      *
-     * @param string $ct
+     * @param string $contentType
      * @return Request
      */
-    protected function setContentType(string $ct = ''): Request
+    protected function setContentType(string $contentType = ''): Request
     {
-        $this->contentType = (empty($ct))
+        $this->contentType = (empty($contentType))
             ? $this->getServer(IHeaders::CONTENT_TYPE)
-            : $ct;
+            : $contentType;
         return $this;
     }
 
@@ -268,9 +268,9 @@ class Request extends Session implements IRequest
     {
         $params = $this->getInput();
         if ($this->isCli) {
-            $qs = parse_url($this->getArgs(), PHP_URL_QUERY);
-            parse_str($qs, $qp);
-            $params = array_merge($params, $qp);
+            $queryString = parse_url($this->getArgs(), PHP_URL_QUERY);
+            parse_str($queryString, $queryParams);
+            $params = array_merge($params, $queryParams);
         }
         return $params;
     }

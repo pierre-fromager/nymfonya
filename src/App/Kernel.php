@@ -51,12 +51,12 @@ class Kernel
     /**
      * set controller namespace
      *
-     * @param string $ns
+     * @param string $ctrlNamespace
      * @return Kernel
      */
-    public function setNameSpace(string $ns): Kernel
+    public function setNameSpace(string $ctrlNamespace): Kernel
     {
-        $this->nameSpace = $ns;
+        $this->nameSpace = $ctrlNamespace;
         return $this;
     }
 

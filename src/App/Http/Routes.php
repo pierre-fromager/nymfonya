@@ -58,8 +58,8 @@ class Routes implements IRoutes
      */
     protected function validate()
     {
-        $rc = count($this->routes);
-        for ($c = 0; $c < $rc; $c++) {
+        $count = count($this->routes);
+        for ($c = 0; $c < $count; $c++) {
             $route = $this->routes[$c];
             if (@preg_match($route, null) === false) {
                 throw new \Exception('Route invalid ' . $route);
