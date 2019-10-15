@@ -53,9 +53,9 @@ abstract class Search
       *
       * @param Request $r
       */
-    public function __construct(Request $r)
+    public function __construct(Request $req)
     {
-        $this->req = $r;
+        $this->req = $req;
         $this->datas = [];
         return $this;
     }

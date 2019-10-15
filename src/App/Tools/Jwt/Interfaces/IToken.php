@@ -31,7 +31,7 @@ interface IToken
     const _ISSUE_AT_DELAY = 10; // secs
     const _TTL = 60; // secs
 
-    public function encode(int $id, string $login, string $password);
+    public function encode(int $uid, string $login, string $password);
 
     public function decode(string $token = '');
 

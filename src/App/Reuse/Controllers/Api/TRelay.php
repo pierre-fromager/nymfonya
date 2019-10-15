@@ -26,31 +26,31 @@ trait TRelay
      */
     protected function apiRelayRequest(string $method, string $url, array $headers = [], $datas = [])
     {
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_VERBOSE, false);
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_POST, ($method == Request::METHOD_POST));
-        curl_setopt($ch, CURLOPT_TIMEOUT, 300);
-        curl_setopt($ch, CURLOPT_USERAGENT, self::USER_AGENT);
-        curl_setopt($ch, CURLOPT_BUFFERSIZE, self::BUFFER_SIZE);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        $cha = curl_init();
+        curl_setopt($cha, CURLOPT_VERBOSE, false);
+        curl_setopt($cha, CURLOPT_URL, $url);
+        curl_setopt($cha, CURLOPT_POST, ($method == Request::METHOD_POST));
+        curl_setopt($cha, CURLOPT_TIMEOUT, 300);
+        curl_setopt($cha, CURLOPT_USERAGENT, self::USER_AGENT);
+        curl_setopt($cha, CURLOPT_BUFFERSIZE, self::BUFFER_SIZE);
+        curl_setopt($cha, CURLOPT_HTTPHEADER, $headers);
         if ($this->apiRelayOptionHeader) {
-            curl_setopt($ch, CURLOPT_VERBOSE, 1);
-            curl_setopt($ch, CURLOPT_HEADER, 1);
+            curl_setopt($cha, CURLOPT_VERBOSE, 1);
+            curl_setopt($cha, CURLOPT_HEADER, 1);
         }
         if ($method == Request::METHOD_POST && $datas) {
             curl_setopt(
-                $ch,
+                $cha,
                 CURLOPT_POSTFIELDS,
                 http_build_query($datas)
             );
         }
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        $this->apiRelayResponse = curl_exec($ch);
-        $this->apiRelayHttpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_setopt($cha, CURLOPT_RETURNTRANSFER, 1);
+        $this->apiRelayResponse = curl_exec($cha);
+        $this->apiRelayHttpCode = curl_getinfo($cha, CURLINFO_HTTP_CODE);
         if ($this->apiRelayOptionHeader) {
             $this->apiRelayHeaders = [];
-            $headerSize = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+            $headerSize = curl_getinfo($cha, CURLINFO_HEADER_SIZE);
             $rawHeaders = substr($this->apiRelayResponse, 0, $headerSize);
             $this->apiRelayHeaders = explode("\r\n\r\n", $rawHeaders, 2);
             $this->apiRelayResponse = substr(
@@ -58,6 +58,6 @@ trait TRelay
                 $headerSize
             );
         }
-        curl_close($ch);
+        curl_close($cha);
     }
 }

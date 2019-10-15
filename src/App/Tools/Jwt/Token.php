@@ -65,12 +65,12 @@ class Token implements Interfaces\IToken
     /**
      * encode
      *
-     * @param string $id
+     * @param string $uid
      * @param string $login
      * @param string $password
      * @return string
      */
-    public function encode(int $id, string $login, string $password)
+    public function encode(int $uid, string $login, string $password): string
     {
         $tokenId = base64_encode(
             openssl_random_pseudo_bytes(self::_RANDOM_BYTES_LEN)
@@ -86,7 +86,7 @@ class Token implements Interfaces\IToken
             self::_NBF => $notBefore, // Not before
             self::_EXP => $expire, // Expire
             self::_DATA => [ // Data related to the signer user
-                self::_DATA_ID => $id, // userid from the users table
+                self::_DATA_ID => $uid, // userid from the users table
                 self::_DATA_LOGIN => $login, // User name
                 self::_DATA_PASSWORD_HASH => password_hash($password, PASSWORD_DEFAULT),
                 self::_DATA_IAT_S => strftime('%c', $issuedAt),

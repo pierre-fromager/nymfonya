@@ -282,8 +282,8 @@ trait TKernel
      */
     protected function setActions()
     {
-        $actions = array_map(function ($v) {
-            return $v->name;
+        $actions = array_map(function ($method) {
+            return $method->name;
         }, $this->reflector->getMethods(\ReflectionMethod::IS_FINAL));
         $this->actions = array_merge($actions, [Kernel::_PREFLIGHT]);
     }

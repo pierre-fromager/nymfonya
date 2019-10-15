@@ -36,13 +36,13 @@ final class Stat extends Api implements IApi
         ]);
         if ($status) {
             $path = dirname(dirname($this->request->getFilename()));
-            $scripts = array_filter($status['scripts'], function ($v) use ($path) {
-                return strpos($v['full_path'], $path) !== false;
+            $scripts = array_filter($status['scripts'], function ($val) use ($path) {
+                return strpos($val['full_path'], $path) !== false;
                 return true;
             });
             $status['scripts'] = array_values($scripts);
-            $bytes = array_reduce($status['scripts'], function ($c, $v) {
-                return $c + $v['memory_consumption'];
+            $bytes = array_reduce($status['scripts'], function ($stack, $val) {
+                return $stack + $val['memory_consumption'];
             });
             $scriptCount = count($scripts);
             unset($scripts);
@@ -59,9 +59,9 @@ final class Stat extends Api implements IApi
                     ]
                 );
             unset($scriptCount);
-            unset($cacheStatus);
             unset($scripts);
         }
+        unset($status);
         return $this;
     }
 }

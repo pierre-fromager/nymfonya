@@ -54,8 +54,8 @@ class Users
      */
     public function auth(string $email, string $password): array
     {
-        $ac = count($this->accounts);
-        for ($c = 0; $c < $ac; $c++) {
+        $acNumber = count($this->accounts);
+        for ($c = 0; $c < $acNumber; $c++) {
             $user = $this->accounts[$c];
             if ($user[self::_EMAIL] === $email
                 && $password === $user[self::_PASSWORD]
@@ -69,11 +69,11 @@ class Users
     /**
      * return user array for a given user id
      *
-     * @param integer $id
+     * @param integer $uid
      * @return array
      */
-    public function getById(int $id): array
+    public function getById(int $uid): array
     {
-        return isset($this->accounts[$id]) ? $this->accounts[$id] : [];
+        return isset($this->accounts[$uid]) ? $this->accounts[$uid] : [];
     }
 }

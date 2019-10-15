@@ -57,7 +57,7 @@ class Restful implements ILayer
      * process
      *
      */
-    private function process()
+    protected function process()
     {
         $this->app = \Pimvc\App::getInstance();
         $this->method = $this->app->getRequest()->getMethod();
@@ -72,7 +72,7 @@ class Restful implements ILayer
      *
      * @return boolean
      */
-    private function isValid()
+    protected function isValid()
     {
         return ($this->isValidMethod() && $this->required());
     }
@@ -82,7 +82,7 @@ class Restful implements ILayer
      *
      * @return boolean
      */
-    private function isValidMethod()
+    protected function isValidMethod()
     {
         $methods = self::RESTFULL_METHODS_ACTIONS;
         return isset($methods[$this->method]);
@@ -93,7 +93,7 @@ class Restful implements ILayer
      *
      * @return boolean
      */
-    private function required()
+    protected function required()
     {
         return (bool) ($this->uriPrefix() === self::RESTFULL_URI_PREFIX);
     }
@@ -103,7 +103,7 @@ class Restful implements ILayer
      *
      * @return string
      */
-    private function uriPrefix()
+    protected function uriPrefix()
     {
         return substr(
             $this->app->getRequest()->getUri(),
@@ -115,7 +115,7 @@ class Restful implements ILayer
     /**
      * setCar
      */
-    private function setCar()
+    protected function setCar()
     {
         $prerouting = $this->app->getRouter()->compile();
         if ($prerouting === null) {
@@ -136,7 +136,7 @@ class Restful implements ILayer
      * @param int $httpCode
      * @param string $errorMessage
      */
-    private function dispatchError($httpCode, $errorMessage)
+    protected function dispatchError($httpCode, $errorMessage)
     {
         $resp = $this->app->getResponse();
         $resp->setType($resp::TYPE_JSON);
@@ -145,14 +145,14 @@ class Restful implements ILayer
             self::RESTUL_ERROR => true,
             self::RESTUL_ERROR_MESSAGE => $errorMessage
         ]);
-        $resp->dispatch($andDie = true);
+        $resp->dispatch(true);
     }
 
     /**
      * rewriteUri
      *
      */
-    private function rewriteUri()
+    protected function rewriteUri()
     {
         $this->action = self::RESTFULL_METHODS_ACTIONS[$this->method];
         $rewritedUri = $this->controller . '/' . $this->action;
@@ -167,7 +167,7 @@ class Restful implements ILayer
      * log
      *
      */
-    private function log()
+    protected function log()
     {
         if (self::RESTFULL_DEBUG) {
             $this->app->getLogger()->log(

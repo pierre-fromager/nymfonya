@@ -113,11 +113,11 @@ class Jwt implements ILayer
         $isOptionsMethod = ($this->request->getMethod() == Request::METHOD_OPTIONS);
         $corsHeadersKeys = array_keys($this->headers);
         $hasOrigin = in_array('Origin', $corsHeadersKeys);
-        $hasAccessControlRequestMethod = in_array(
+        $hasACRequestMethod = in_array(
             'Access-Control-Request-Method',
             $corsHeadersKeys
         );
-        return ($isOptionsMethod && $hasOrigin && $hasAccessControlRequestMethod);
+        return ($isOptionsMethod && $hasOrigin && $hasACRequestMethod);
     }
 
     /**
@@ -146,8 +146,8 @@ class Jwt implements ILayer
     private function getUser(int $userId)
     {
         $authModel = new \App\Model\Users($this->config);
-        $r = $authModel->getById($userId);
-        return isset($r[0]) ? $r[0] : false;
+        $userList = $authModel->getById($userId);
+        return isset($userList[0]) ? $userList[0] : false;
     }
 
     /**

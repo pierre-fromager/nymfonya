@@ -21,13 +21,13 @@ class After implements ILayer
      */
     public function peel(Container $container, \Closure $next)
     {
-        $r = $next($container);
+        $res = $next($container);
         $this->init($container);
         $this->logger->debug('After middleware');
         $this->response->getHeaderManager()->add(
             self::_SIGN,
             microtime(true)
         );
-        return $r;
+        return $res;
     }
 }
