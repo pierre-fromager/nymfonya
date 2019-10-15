@@ -121,10 +121,18 @@ class KernelTest extends PFT
      */
     public function testSend()
     {
+        $this->setOutputCallback(function () {
+        });
         $kr = $this->instance->run();
         $this->assertTrue($kr instanceof Kernel);
         $ks = $kr->send();
         $this->assertTrue($ks instanceof Kernel);
+        self::getMethod('setError')->invokeArgs(
+            $this->instance,
+            [true]
+        );
+        $kse = $kr->send();
+        $this->assertTrue($kse instanceof Kernel);
     }
 
     /**
@@ -199,5 +207,28 @@ class KernelTest extends PFT
             []
         );
         $this->assertTrue($gc instanceof \App\Container);
+    }
+
+    /**
+     * testSetGetError
+     * @covers App\Kernel::setError
+     * @covers App\Kernel::getError
+     */
+    public function testSetGetError()
+    {
+        $ges = self::getMethod('getError')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertTrue($ges);
+        self::getMethod('setError')->invokeArgs(
+            $this->instance,
+            [true]
+        );
+        $ge = self::getMethod('getError')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertTrue($ge);
     }
 }

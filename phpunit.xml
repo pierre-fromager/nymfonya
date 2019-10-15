@@ -64,6 +64,7 @@
             <directory suffix=".php">./src</directory>
             <exclude>
                 <directory suffix="Interface.php">.</directory>
+                <file>./src/index.php</file>
             </exclude>
         </whitelist>
         <blacklist>

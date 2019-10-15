@@ -96,7 +96,7 @@ class Kernel
     public function send(): Kernel
     {
         $logger = $this->getService(\Monolog\Logger::class);
-        if ($this->error) {
+        if ($this->getError()) {
             $this->res
                 ->setCode($this->errorCode)
                 ->setContent([

@@ -147,6 +147,8 @@ class ResponseTest extends PFT
      */
     public function testSend()
     {
+        $this->setOutputCallback(function () {
+        });
         $this->assertTrue(
             $this->instance->send() instanceof Response
         );

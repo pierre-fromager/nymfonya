@@ -392,4 +392,22 @@ trait TKernel
     {
         $this->path = dirname($this->req->getFilename());
     }
+
+    /**
+     * set kernel error
+     *
+     */
+    protected function setError(bool $error)
+    {
+        $this->error = $error;
+    }
+
+    /**
+     * return kernel error
+     *
+     */
+    protected function getError(): bool
+    {
+        return $this->error;
+    }
 }
