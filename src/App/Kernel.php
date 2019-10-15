@@ -116,18 +116,4 @@ class Kernel
         $this->getService(\App\Http\Response::class)->send();
         return $this;
     }
-
-    /**
-     * kernel facade
-     *
-     * @return Kernel
-     * @throws \Exception
-     */
-    public static function getInstance(): Kernel
-    {
-        if (!self::$instance instanceof Kernel) {
-            throw new \Exception('Kernel not ready');
-        }
-        return self::$instance;
-    }
 }

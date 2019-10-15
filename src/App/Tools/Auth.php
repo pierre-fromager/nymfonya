@@ -2,7 +2,7 @@
 
 namespace App\Tools;
 
-use App\Kernel;
+use App\Container;
 use App\Model\Users;
 
 class Auth
@@ -13,10 +13,11 @@ class Auth
     /**
      * instanciate
      */
-    public function __construct()
+    public function __construct(Container $container)
     {
-        $container = Kernel::getInstance()->getContainer();
-        $this->userModel = new Users($container[\App\Config::class]);
+        $this->userModel = new Users(
+            $container->getService(\App\Config::class)
+        );
     }
 
     /**

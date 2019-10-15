@@ -117,6 +117,8 @@ class KernelTest extends PFT
     /**
      * testSend
      * @covers App\Kernel::send
+     * @covers App\Kernel::setError
+     * @covers App\Kernel::getError
      * @runInSeparateProcess
      */
     public function testSend()
@@ -129,20 +131,15 @@ class KernelTest extends PFT
         $this->assertTrue($ks instanceof Kernel);
         self::getMethod('setError')->invokeArgs(
             $this->instance,
-            [true]
+            [false]
         );
-        $kse = $kr->send();
+        $ge = self::getMethod('getError')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertFalse($ge);
+        $kse = $this->instance->send();
         $this->assertTrue($kse instanceof Kernel);
-    }
-
-    /**
-     * testGetInstance
-     * @covers App\Kernel::getInstance
-     */
-    public function testGetInstance()
-    {
-        $kgi = $this->instance->getInstance();
-        $this->assertTrue($kgi instanceof Kernel);
     }
 
     /**
@@ -223,12 +220,25 @@ class KernelTest extends PFT
         $this->assertTrue($ges);
         self::getMethod('setError')->invokeArgs(
             $this->instance,
-            [true]
+            [false]
         );
         $ge = self::getMethod('getError')->invokeArgs(
             $this->instance,
             []
         );
-        $this->assertTrue($ge);
+        $this->assertFalse($ge);
+
+        //$logger = $this->instance->getService(\Monolog\Logger::class);
+        //$this->assertTrue($logger instanceof \Monolog\Logger);
+        //var_dump($logger);
+        /*
+        foreach ($logger->getHandlers() as $handler) {
+            var_dump($handler);
+            if ($handler instanceof TestHandler) {
+                $testHandler = $handler;
+                break;
+            }
+        }
+        $this->assertFalse($testHandler->hasCritical());*/
     }
 }
