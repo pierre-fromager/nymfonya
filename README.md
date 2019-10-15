@@ -133,15 +133,21 @@ php src/index.php '/api/v1/stat/cache' | jq
 find ./src -name *.php | grep -E -v 'vendor|config|test' | wc -l
 ```
 ### Complexity
+
 * run phploc
+
 ``` bash
 composer run cq
 ```
+
 ### Messed
+
 * run phpmd (messed detector)
+
 ``` bash
 composer run md
 ```
+
 ## :innocent: Tests
 
 All tests
