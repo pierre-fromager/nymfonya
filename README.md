@@ -140,9 +140,9 @@ find ./src -name *.php | grep -E -v 'vendor|config|test' | wc -l
 composer run cq
 ```
 
-### Messed
+### Mess
 
-* run phpmd (messed detector)
+* run phpmd (mess detector)
 
 ``` bash
 composer run md
@@ -150,7 +150,7 @@ composer run md
 
 ## :innocent: Tests
 
-All tests
+Run phpunit all tests.  
 ``` bash
 composer run test
 ```
