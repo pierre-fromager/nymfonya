@@ -4,6 +4,7 @@ namespace Tests;
 
 use PHPUnit\Framework\TestCase as PFT;
 use App\Config;
+use App\Http\Request;
 use App\Kernel;
 
 /**
@@ -330,6 +331,7 @@ class KernelTest extends PFT
      * @covers App\Kernel::setClassname
      * @covers App\Kernel::setReflector
      * @covers App\Kernel::getReflector
+     * @covers App\Kernel::getFinalMethods
      */
     public function testSetGetReflector()
     {
@@ -346,6 +348,11 @@ class KernelTest extends PFT
             []
         );
         $this->assertTrue($gr instanceof \ReflectionClass);
+        $fms = self::getMethod('getFinalMethods')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertTrue(is_array($fms));
     }
 
     /**
@@ -394,6 +401,116 @@ class KernelTest extends PFT
         $this->assertTrue(is_array($gas1));
         $this->assertNotEquals($gas1, $gas0);
         $this->assertTrue(count($gas1) > 1);
-        $this->assertTrue(in_array('preflight', $gas1));
+        $this->assertTrue(in_array(Kernel::_PREFLIGHT, $gas1));
+    }
+
+    /**
+     * testSetGetLogger
+     * @covers App\Kernel::setLogger
+     * @covers App\Kernel::getLogger
+     */
+    public function testSetGetLogger()
+    {
+        self::getMethod('setLogger')->invokeArgs($this->instance, []);
+        $lo = self::getMethod('getLogger')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertTrue($lo instanceof \Monolog\Logger);
+        $hs = $lo->getHandlers();
+        $this->assertTrue(is_array($hs));
+        $hs0 = $hs[0];
+        $this->assertTrue(
+            $hs0 instanceof \Monolog\Handler\RotatingFileHandler
+        );
+    }
+
+    /**
+     * testSetGetPath
+     * @covers App\Kernel::setPath
+     * @covers App\Kernel::getPath
+     */
+    public function testSetGetPath()
+    {
+        $gp0 = self::getMethod('getPath')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertNotEmpty($gp0);
+        self::getMethod('setPath')->invokeArgs(
+            $this->instance,
+            ['']
+        );
+        $gp1 = self::getMethod('getPath')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertEmpty($gp1);
+    }
+
+    /**
+     * testIsPreflight
+     * @covers App\Kernel::isPreflight
+     */
+    public function testIsPreflight()
+    {
+        $ip0 = self::getMethod('isPreflight')->invokeArgs(
+            $this->instance,
+            [Request::METHOD_GET]
+        );
+        $this->assertFalse($ip0);
+        $ip1 = self::getMethod('isPreflight')->invokeArgs(
+            $this->instance,
+            [Request::METHOD_POST]
+        );
+        $this->assertFalse($ip1);
+        $ip2 = self::getMethod('isPreflight')->invokeArgs(
+            $this->instance,
+            [Request::METHOD_OPTIONS]
+        );
+        $this->assertTrue($ip2);
+    }
+
+    /**
+     * testSetAction
+     * @covers App\Kernel::setAction
+     * @covers App\Kernel::getAction
+     */
+    public function testSetAction()
+    {
+        $ga0 = self::getMethod('getAction')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertEmpty($ga0);
+        self::getMethod('setAction')->invokeArgs(
+            $this->instance,
+            [['config', 'help'], Request::METHOD_GET]
+        );
+        $ga1 = self::getMethod('getAction')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertNotEmpty($ga1);
+        $this->assertEquals($ga1, 'help');
+        self::getMethod('setAction')->invokeArgs(
+            $this->instance,
+            [['config', 'help'], Request::METHOD_OPTIONS]
+        );
+        $ga2 = self::getMethod('getAction')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertNotEmpty($ga2);
+        $this->assertEquals($ga2, Kernel::_PREFLIGHT);
+        self::getMethod('setAction')->invokeArgs(
+            $this->instance,
+            [['config'], Request::METHOD_POST]
+        );
+        $ga3 = self::getMethod('getAction')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertEmpty($ga3);
     }
 }

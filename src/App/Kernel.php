@@ -77,7 +77,10 @@ class Kernel
                 $this->controller = new $this->className($this->container);
                 $this->setReflector();
                 $this->setActions();
-                $this->setAction($routerGroups);
+                $this->setAction(
+                    $routerGroups,
+                    $this->getRequest()->getMethod()
+                );
                 //->setActionAnnotations();
                 $this->setMiddleware();
             } else {

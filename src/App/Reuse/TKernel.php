@@ -8,6 +8,7 @@ use App\Container;
 use App\Http\Request;
 use App\Http\Response;
 use App\Http\Router;
+use App\Http\Middleware;
 use Monolog\Logger;
 use \ReflectionClass;
 
@@ -182,6 +183,7 @@ trait TKernel
         $this->setRouter();
         $this->className = '';
         $this->actions = [];
+        $this->action = '';
     }
 
     /**
@@ -218,11 +220,13 @@ trait TKernel
      */
     protected function setMiddleware()
     {
-        $middlwaresClasses = $this->config->getSettings(Config::_MIDDLEWARES);
+        $middlwaresClasses = $this->config->getSettings(
+            Config::_MIDDLEWARES
+        );
         foreach ($middlwaresClasses as $name => $middleware) {
             $this->middlewares[$name] = new $middleware;
         }
-        $this->middleware = new \App\Http\Middleware();
+        $this->middleware = new Middleware();
         $this->middleware->layer($this->middlewares)->peel(
             $this->container,
             function ($container) {
@@ -275,18 +279,41 @@ trait TKernel
     }
 
     /**
-     * set controller action from router groups
+     * set controller action from router groups and request method
      *
      * @param array $routerGroups
+     * @param string $reqMethod
+     * @return void
      */
-    protected function setAction(array $routerGroups)
+    protected function setAction(array $routerGroups, string $reqMethod)
     {
-        $req = $this->getService(\App\Http\Request::class);
-        $isPreflight = ($req->getMethod() == Request::METHOD_OPTIONS);
-        $action = isset($routerGroups[1]) ? strtolower($routerGroups[1]) : '';
-        $this->action = ($isPreflight)
-            ? Kernel::_PREFLIGHT
-            : $action;
+        if ($reqMethod == Request::METHOD_OPTIONS) {
+            $this->action = Kernel::_PREFLIGHT;
+            return;
+        }
+        $this->action = isset($routerGroups[1])
+            ? strtolower($routerGroups[1])
+            : '';
+    }
+
+    /**
+     * return core controller action
+     *
+     * @return string
+     */
+    protected function getAction(): string
+    {
+        return $this->action;
+    }
+
+    /**
+     * return true if request methof is OPTIONS
+     *
+     * @return boolean
+     */
+    protected function isPreflight(string $reqMethod): bool
+    {
+        return $reqMethod == Request::METHOD_OPTIONS;
     }
 
     /**
@@ -295,10 +322,23 @@ trait TKernel
      */
     protected function setActions()
     {
-        $actions = array_map(function ($method) {
+        $methods = $this->getFinalMethods();
+        $methodsName = array_map(function ($method) {
             return $method->name;
-        }, $this->reflector->getMethods(\ReflectionMethod::IS_FINAL));
-        $this->actions = array_merge($actions, [Kernel::_PREFLIGHT]);
+        }, $methods);
+        $this->actions = array_merge($methodsName, [Kernel::_PREFLIGHT]);
+    }
+
+    /**
+     * get final methods for the current classname
+     *
+     * @return array
+     */
+    protected function getFinalMethods(): array
+    {
+        return $this->getReflector()->getMethods(
+            \ReflectionMethod::IS_FINAL
+        );
     }
 
     /**
@@ -450,6 +490,16 @@ trait TKernel
         }
         unset($handlers);
         \Monolog\ErrorHandler::register($this->logger);
+    }
+
+    /**
+     * return monolog logger with handlers set
+     *
+     * @return Logger
+     */
+    protected function getLogger(): Logger
+    {
+        return $this->logger;
     }
 
     /**
