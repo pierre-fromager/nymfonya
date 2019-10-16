@@ -15,6 +15,7 @@ class ToolsJwtTokenTest extends PFT
 
     const TEST_ENABLE = true;
     const CONFIG_PATH = '/../../../config/';
+    const PAYLOAD = [0, 'gogo', 'dancer'];
 
     /**
      * config instance
@@ -51,6 +52,7 @@ class ToolsJwtTokenTest extends PFT
             Config::ENV_CLI,
             __DIR__ . self::CONFIG_PATH
         );
+        //var_dump($this->config);die;
         $this->request = new Request();
         $this->instance = new Token(
             $this->config,
@@ -86,10 +88,92 @@ class ToolsJwtTokenTest extends PFT
 
     /**
      * testInstance
-     * @covers App\Container::__construct
+     * @covers App\Tools\Jwt\Token::__construct
      */
     public function testInstance()
     {
         $this->assertTrue($this->instance instanceof Token);
+    }
+
+    /**
+     * testEncode
+     * @covers App\Tools\Jwt\Token::encode
+     */
+    public function testEncode()
+    {
+        $te = $this->instance->encode(0, 'gogo', 'dancer');
+        $this->assertTrue(is_string($te));
+        $this->assertNotEmpty($te);
+    }
+
+    /**
+     * testGetConfig
+     * @covers App\Tools\Jwt\Token::getConfig
+     */
+    public function testGetConfig()
+    {
+        $tc = self::getMethod('getConfig')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertTrue(is_array($tc));
+    }
+
+    /**
+     * testGetConfigSecret
+     * @covers App\Tools\Jwt\Token::getConfigSecret
+     */
+    public function testGetConfigSecret()
+    {
+        $gcs = self::getMethod('getConfigSecret')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertTrue(is_string($gcs));
+        $this->assertNotEmpty($gcs);
+    }
+
+    /**
+     * testGetConfigAlgo
+     * @covers App\Tools\Jwt\Token::getConfigAlgo
+     */
+    public function testGetConfigAlgo()
+    {
+        $gca = self::getMethod('getConfigAlgo')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertTrue(is_string($gca));
+        $this->assertNotEmpty($gca);
+    }
+
+    /**
+     * testGetToEncodePayload
+     * @covers App\Tools\Jwt\Token::getToEncodePayload
+     */
+    public function testGetToEncodeData()
+    {
+        $gted = self::getMethod('getToEncodePayload')->invokeArgs(
+            $this->instance,
+            self::PAYLOAD
+        );
+        $this->assertTrue(is_array($gted));
+    }
+
+    /**
+     * testGetToEncodePayload
+     * @covers App\Tools\Jwt\Token::encode
+     * @covers App\Tools\Jwt\Token::decode
+     */
+    public function testDecode()
+    {
+        $this->instance->setIssueAt(time());
+        $this->instance->setIssueAtDelay(-100);
+        $this->instance->setTtl(1200);
+        $te = $this->instance->encode(0, 'gogo', 'dancer');
+        $this->assertTrue(is_string($te));
+        $this->assertNotEmpty($te);
+        $dot = $this->instance->decode($te);
+        $this->assertTrue(is_object($dot));
     }
 }

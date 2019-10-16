@@ -59,7 +59,9 @@ class Token implements Interfaces\IToken
     {
         $this->config = $config;
         $this->request = $request;
-        $this->init();
+        $this->setIssueAt(0);
+        $this->setIssueAtDelay(0);
+        $this->setTtl(0);
     }
 
     /**
@@ -72,14 +74,34 @@ class Token implements Interfaces\IToken
      */
     public function encode(int $uid, string $login, string $password): string
     {
+        return Fjwt::encode(
+            $this->getToEncodePayload($uid, $login, $password),
+            $this->getConfigSecret(),
+            $this->getConfigAlgo()
+        );
+    }
+
+    /**
+     * return to encode payload datas
+     *
+     * @param integer $uid
+     * @param string $login
+     * @param string $password
+     * @return array
+     */
+    protected function getToEncodePayload(
+        int $uid,
+        string $login,
+        string $password
+    ): array {
         $tokenId = base64_encode(
             openssl_random_pseudo_bytes(self::_RANDOM_BYTES_LEN)
         );
-        $issuedAt = time();
+        $issuedAt = time() - 100;
         $notBefore = $issuedAt + $this->issueAtDelay;  //Adding 10 seconds
         $expire = $notBefore + $this->ttl; // Adding 60 seconds
         $serverName = $this->request->getHost();
-        $data = [
+        return [
             self::_IAT => $issuedAt, // Issued at: time when the token was generated
             self::_JTI => $tokenId, // Json Token Id: an unique identifier for the token
             self::_ISS => $serverName, // Issuer
@@ -94,12 +116,6 @@ class Token implements Interfaces\IToken
                 self::_DATA_EXP_S => strftime('%c', $expire), // Expire
             ]
         ];
-        $jwtConfig = $this->getConfig();
-        return Fjwt::encode(
-            $data,
-            $jwtConfig[self::_SECRET],
-            $jwtConfig[self::_ALGO]
-        );
     }
 
     /**
@@ -110,22 +126,31 @@ class Token implements Interfaces\IToken
      */
     public function decode(string $token = '')
     {
-        $jwtConfig = $this->getConfig();
         return Fjwt::decode(
             $token,
-            $jwtConfig[self::_SECRET],
-            [$jwtConfig[self::_ALGO]]
+            $this->getConfigSecret(),
+            [$this->getConfigAlgo()]
         );
     }
 
     /**
-     * init
+     * return secret from jwt config
+     *
+     * @return string
      */
-    protected function init()
+    protected function getConfigSecret(): string
     {
-        $this->setIssueAt(0);
-        $this->setIssueAtDelay(0);
-        $this->setTtl(0);
+        return $this->getConfig()[self::_SECRET];
+    }
+
+    /**
+     * return algo from jwt config
+     *
+     * @return string
+     */
+    protected function getConfigAlgo(): string
+    {
+        return $this->getConfig()[self::_ALGO];
     }
 
     /**
@@ -167,7 +192,7 @@ class Token implements Interfaces\IToken
      *
      * @return array
      */
-    private function getConfig(): array
+    protected function getConfig(): array
     {
         return $this->config->getSettings(
             self::_CONFIG_KEY
