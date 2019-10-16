@@ -93,6 +93,9 @@
         ],
         "testCtrlConfig": [
             "phpunit --bootstrap tests/bootstrap.php --testsuite ControllerConfig"
+        ],
+        "testToolsJwtToken": [
+            "phpunit --bootstrap tests/bootstrap.php --testsuite ToolsJwtToken"
         ]
     }
 }

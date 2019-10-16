@@ -15,6 +15,7 @@
             <file>tests/Controllers/ConfigTest.php</file>
             <file>tests/Controllers/Api/V1/AuthTest.php</file>
             <file>tests/Controllers/Api/V1/StatTest.php</file>
+            <file>tests/Tools/Jwt/TokenTest.php</file>
         </testsuite>
         <testsuite name="Request">
             <file>tests/Http/RequestTest.php</file>
@@ -57,6 +58,9 @@
         </testsuite>
         <testsuite name="ControllerConfig">
             <file>tests/Controllers/ConfigTest.php</file>
+        </testsuite>
+        <testsuite name="ToolsJwtToken">
+            <file>tests/Tools/Jwt/TokenTest.php</file>
         </testsuite>
     </testsuites>
     <filter>
