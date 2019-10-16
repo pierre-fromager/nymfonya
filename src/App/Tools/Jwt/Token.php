@@ -124,7 +124,7 @@ class Token implements Interfaces\IToken
      * @param string $token
      * @return mixed
      */
-    public function decode(string $token = '')
+    public function decode(string $token)
     {
         return Fjwt::decode(
             $token,

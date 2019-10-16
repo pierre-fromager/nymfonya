@@ -31,13 +31,43 @@ interface IToken
     const _ISSUE_AT_DELAY = 10; // secs
     const _TTL = 60; // secs
 
-    public function encode(int $uid, string $login, string $password);
+    /**
+     * return encoded token for userid login and password
+     *
+     * @param string $uid
+     * @param string $login
+     * @param string $password
+     * @return string
+     */
+    public function encode(int $uid, string $login, string $password): string;
 
-    public function decode(string $token = '');
+    /**
+     * return decoded token
+     *
+     * @param string $token
+     * @return mixed
+     */
+    public function decode(string $token);
 
+    /**
+     * set token issue at time
+     *
+     * @param integer $dateTime
+     * @return Token
+     */
     public function setIssueAt(int $dateTime): Token;
 
+    /**
+     * setIssueAtDelay
+     *
+     * @param int $delay
+     */
     public function setIssueAtDelay(int $delay): Token;
-
+    
+    /**
+     * set token ttl
+     *
+     * @param int $ttl
+     */
     public function setTtl(int $ttl): Token;
 }
