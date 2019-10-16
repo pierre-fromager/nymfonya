@@ -52,7 +52,6 @@ class ToolsJwtTokenTest extends PFT
             Config::ENV_CLI,
             __DIR__ . self::CONFIG_PATH
         );
-        //var_dump($this->config);die;
         $this->request = new Request();
         $this->instance = new Token(
             $this->config,
@@ -145,6 +144,25 @@ class ToolsJwtTokenTest extends PFT
         );
         $this->assertTrue(is_string($gca));
         $this->assertNotEmpty($gca);
+    }
+
+    /**
+     * testSetGetToken
+     * @covers App\Tools\Jwt\Token::getToken
+     * @covers App\Tools\Jwt\Token::setToken
+     */
+    public function testSetGetToken()
+    {
+        $gca = self::getMethod('getToken')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertEmpty($gca);
+        $gcane = self::getMethod('setToken')->invokeArgs(
+            $this->instance,
+            ['tokentestcontent']
+        );
+        $this->assertNotEmpty($gcane);
     }
 
     /**

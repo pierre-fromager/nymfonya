@@ -11,6 +11,7 @@ namespace App\Tools\Jwt;
 use Firebase\JWT\JWT as Fjwt;
 use App\Config;
 use App\Http\Request;
+use Exception;
 
 class Token implements Interfaces\IToken
 {
@@ -36,18 +37,25 @@ class Token implements Interfaces\IToken
     private $issueAtDelay;
 
     /**
-     * app config
+     * config
      *
      * @var Config
      */
     private $config;
 
     /**
-     * app request
+     * request
      *
      * @var Request
      */
     private $request;
+
+    /**
+     * token
+     *
+     * @var String
+     */
+    private $token;
 
     /**
      * instanciate
@@ -59,9 +67,32 @@ class Token implements Interfaces\IToken
     {
         $this->config = $config;
         $this->request = $request;
+        $this->token = '';
         $this->setIssueAt(0);
         $this->setIssueAtDelay(0);
         $this->setTtl(0);
+    }
+
+    /**
+     * set token string
+     *
+     * @param string $token
+     * @return void
+     */
+    protected function setToken(string $token): Token
+    {
+        $this->token = $token;
+        return $this;
+    }
+
+    /**
+     * get token string
+     *
+     * @return string
+     */
+    protected function getToken(): string
+    {
+        return $this->token;
     }
 
     /**
@@ -74,11 +105,12 @@ class Token implements Interfaces\IToken
      */
     public function encode(int $uid, string $login, string $password): string
     {
-        return Fjwt::encode(
+        $this->setToken(Fjwt::encode(
             $this->getToEncodePayload($uid, $login, $password),
             $this->getConfigSecret(),
             $this->getConfigAlgo()
-        );
+        ));
+        return $this->token;
     }
 
     /**
@@ -127,7 +159,7 @@ class Token implements Interfaces\IToken
     public function decode(string $token)
     {
         return Fjwt::decode(
-            $token,
+            $this->getToken(),
             $this->getConfigSecret(),
             [$this->getConfigAlgo()]
         );
