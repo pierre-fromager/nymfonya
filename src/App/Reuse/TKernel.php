@@ -184,6 +184,7 @@ trait TKernel
         $this->className = '';
         $this->actions = [];
         $this->action = '';
+        $this->actionAnnotations = '';
     }
 
     /**
@@ -247,6 +248,16 @@ trait TKernel
                 ->getMethod($this->action)
                 ->getDocComment();
         }
+    }
+
+    /**
+     * return action docblock as string
+     *
+     * @return string
+     */
+    protected function getActionAnnotations(): string
+    {
+        return $this->actionAnnotations;
     }
 
     /**

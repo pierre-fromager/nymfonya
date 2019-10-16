@@ -17,6 +17,7 @@ class KernelTest extends PFT
     const CONFIG_PATH = '/../config/';
     const KERNEL_PATH = '/../src/';
     const KERNEL_NS = '\\App\\Controllers\\';
+    const CTRL_ACT = ['config', 'help'];
 
     /**
      * config
@@ -337,7 +338,7 @@ class KernelTest extends PFT
     {
         self::getMethod('setClassname')->invokeArgs(
             $this->instance,
-            [['config', 'help']]
+            [self::CTRL_ACT]
         );
         self::getMethod('setReflector')->invokeArgs(
             $this->instance,
@@ -373,7 +374,7 @@ class KernelTest extends PFT
         $this->assertEquals('', $gc0);
         self::getMethod('setClassname')->invokeArgs(
             $this->instance,
-            [['config', 'help']]
+            [self::CTRL_ACT]
         );
         $gc1 = self::getMethod('getClassname')->invokeArgs(
             $this->instance,
@@ -485,7 +486,7 @@ class KernelTest extends PFT
         $this->assertEmpty($ga0);
         self::getMethod('setAction')->invokeArgs(
             $this->instance,
-            [['config', 'help'], Request::METHOD_GET]
+            [self::CTRL_ACT, Request::METHOD_GET]
         );
         $ga1 = self::getMethod('getAction')->invokeArgs(
             $this->instance,
@@ -495,7 +496,7 @@ class KernelTest extends PFT
         $this->assertEquals($ga1, 'help');
         self::getMethod('setAction')->invokeArgs(
             $this->instance,
-            [['config', 'help'], Request::METHOD_OPTIONS]
+            [self::CTRL_ACT, Request::METHOD_OPTIONS]
         );
         $ga2 = self::getMethod('getAction')->invokeArgs(
             $this->instance,
@@ -512,5 +513,117 @@ class KernelTest extends PFT
             []
         );
         $this->assertEmpty($ga3);
+    }
+
+    /**
+     * testIsValidActionOk
+     * @covers App\Kernel::isValidAction
+     * @covers App\Kernel::setActions
+     * @covers App\Kernel::setAction
+     */
+    public function testIsValidActionOk()
+    {
+        self::getMethod('setClassname')->invokeArgs(
+            $this->instance,
+            [self::CTRL_ACT]
+        );
+        self::getMethod('setReflector')->invokeArgs(
+            $this->instance,
+            []
+        );
+        self::getMethod('setActions')->invokeArgs(
+            $this->instance,
+            []
+        );
+        self::getMethod('setAction')->invokeArgs(
+            $this->instance,
+            [self::CTRL_ACT, Request::METHOD_GET]
+        );
+        $iva0 = self::getMethod('isValidAction')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertTrue($iva0);
+    }
+
+    /**
+     * testIsValidActionNok
+     * @covers App\Kernel::setClassname
+     * @covers App\Kernel::setReflector
+     * @covers App\Kernel::setActions
+     * @covers App\Kernel::setAction
+     * @covers App\Kernel::isValidAction
+     */
+    public function testIsValidActionNok()
+    {
+        self::getMethod('setClassname')->invokeArgs(
+            $this->instance,
+            [['config']]
+        );
+        self::getMethod('setReflector')->invokeArgs(
+            $this->instance,
+            []
+        );
+        self::getMethod('setActions')->invokeArgs(
+            $this->instance,
+            []
+        );
+        self::getMethod('setAction')->invokeArgs(
+            $this->instance,
+            [['config'], Request::METHOD_GET]
+        );
+        $iva0 = self::getMethod('isValidAction')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertFalse($iva0);
+    }
+
+    /**
+     * testSetGetActionAnnotations
+     * @covers App\Kernel::getActionAnnotations
+     * @covers App\Kernel::setClassname
+     * @covers App\Kernel::setReflector
+     * @covers App\Kernel::setActions
+     * @covers App\Kernel::setAction
+     * @covers App\Kernel::setActionAnnotations
+     */
+    public function testSetGetActionAnnotations()
+    {
+        $gaa0 = self::getMethod('getActionAnnotations')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertEmpty($gaa0);
+        self::getMethod('setClassname')->invokeArgs(
+            $this->instance,
+            [self::CTRL_ACT]
+        );
+        self::getMethod('setReflector')->invokeArgs(
+            $this->instance,
+            []
+        );
+        self::getMethod('setActions')->invokeArgs(
+            $this->instance,
+            []
+        );
+        self::getMethod('setAction')->invokeArgs(
+            $this->instance,
+            [self::CTRL_ACT, Request::METHOD_GET]
+        );
+        $iva = self::getMethod('isValidAction')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertTrue($iva);
+        self::getMethod('setActionAnnotations')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $gaa1 = self::getMethod('getActionAnnotations')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertNotEmpty($gaa1);
     }
 }
