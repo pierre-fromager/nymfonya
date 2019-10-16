@@ -294,4 +294,106 @@ class KernelTest extends PFT
         );
         $this->assertTrue($gr instanceof \App\Http\Router);
     }
+
+    /**
+     * testSetGetConfig
+     * @covers App\Kernel::init
+     * @covers App\Kernel::setConfig
+     * @covers App\Kernel::getConfig
+     * @covers App\Kernel::getPath
+     */
+    public function testSetGetConfig()
+    {
+        $kp = __DIR__ . self::KERNEL_PATH;
+        self::getMethod('init')->invokeArgs(
+            $this->instance,
+            [Config::ENV_CLI, $kp]
+        );
+        self::getMethod('setConfig')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $gc = self::getMethod('getConfig')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertTrue($gc instanceof \App\Config);
+        $gp = self::getMethod('getPath')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertEquals($gp, $kp);
+    }
+
+    /**
+     * testSetGetReflector
+     * @covers App\Kernel::setClassname
+     * @covers App\Kernel::setReflector
+     * @covers App\Kernel::getReflector
+     */
+    public function testSetGetReflector()
+    {
+        self::getMethod('setClassname')->invokeArgs(
+            $this->instance,
+            [['config', 'help']]
+        );
+        self::getMethod('setReflector')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $gr = self::getMethod('getReflector')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertTrue($gr instanceof \ReflectionClass);
+    }
+
+    /**
+     * testGetSetActions
+     * @covers App\Kernel::setClassname
+     * @covers App\Kernel::getClassname
+     * @covers App\Kernel::setReflector
+     * @covers App\Kernel::setActions
+     * @covers App\Kernel::getActions
+     */
+    public function testGetSetActions()
+    {
+        $gc0 = self::getMethod('getClassname')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertTrue(is_string($gc0));
+        $this->assertEquals('', $gc0);
+        self::getMethod('setClassname')->invokeArgs(
+            $this->instance,
+            [['config', 'help']]
+        );
+        $gc1 = self::getMethod('getClassname')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertNotEquals($gc0, $gc1);
+        $gas0 = self::getMethod('getActions')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertTrue(is_array($gas0));
+        $this->assertEquals([], $gas0);
+        self::getMethod('setReflector')->invokeArgs(
+            $this->instance,
+            []
+        );
+        self::getMethod('setActions')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $gas1 = self::getMethod('getActions')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertTrue(is_array($gas1));
+        $this->assertNotEquals($gas1, $gas0);
+        $this->assertTrue(count($gas1) > 1);
+        $this->assertTrue(in_array('preflight', $gas1));
+    }
 }

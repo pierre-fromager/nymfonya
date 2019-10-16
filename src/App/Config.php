@@ -98,7 +98,13 @@ class Config implements IConfig
     {
         $filename = realpath($this->getFilename());
         if (false === $this->check($filename)) {
-            throw new \Exception(self::CONFIG_ERROR_MISSING . $this->env);
+            throw new \Exception(
+                sprintf(
+                    self::CONFIG_ERROR_MISSING . '%s on %s',
+                    $this->env,
+                    $this->path
+                )
+            );
         }
         $this->settings = require $this->getFilename();
         return $this;

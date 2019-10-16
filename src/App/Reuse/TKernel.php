@@ -9,6 +9,7 @@ use App\Http\Request;
 use App\Http\Response;
 use App\Http\Router;
 use Monolog\Logger;
+use \ReflectionClass;
 
 trait TKernel
 {
@@ -172,13 +173,15 @@ trait TKernel
         $this->error = true;
         $this->errorCode = Response::HTTP_NOT_FOUND;
         $this->errorMsg = 'Not Found';
+        $this->setPath($path);
         $this->setConfig();
         $this->setContainer();
         $this->setRequest();
         $this->setResponse();
         $this->setLogger();
-        $this->setPath();
         $this->setRouter();
+        $this->className = '';
+        $this->actions = [];
     }
 
     /**
@@ -262,6 +265,16 @@ trait TKernel
     }
 
     /**
+     * return reflexion class on current classname
+     *
+     * @return ReflectionClass
+     */
+    protected function getReflector(): ReflectionClass
+    {
+        return $this->reflector;
+    }
+
+    /**
      * set controller action from router groups
      *
      * @param array $routerGroups
@@ -286,6 +299,15 @@ trait TKernel
             return $method->name;
         }, $this->reflector->getMethods(\ReflectionMethod::IS_FINAL));
         $this->actions = array_merge($actions, [Kernel::_PREFLIGHT]);
+    }
+
+    /**
+     * return public final actions from controller class name
+     *
+     */
+    protected function getActions(): array
+    {
+        return $this->actions;
     }
 
     /**
@@ -357,7 +379,7 @@ trait TKernel
      * return router
      *
      */
-    protected function getRouter()
+    protected function getRouter(): Router
     {
         return $this->router;
     }
@@ -377,6 +399,15 @@ trait TKernel
     }
 
     /**
+     * set controller class name
+     *
+     */
+    protected function getClassname(): string
+    {
+        return $this->className;
+    }
+
+    /**
      * set app config
      *
      */
@@ -386,6 +417,16 @@ trait TKernel
             $this->env,
             $this->path . Kernel::PATH_CONFIG
         );
+    }
+
+    /**
+     * returns config
+     *
+     * @return Config
+     */
+    protected function getConfig(): Config
+    {
+        return $this->config;
     }
 
     /**
@@ -415,9 +456,19 @@ trait TKernel
      * set app root path
      *
      */
-    protected function setPath()
+    protected function setPath(string $path)
     {
-        $this->path = dirname($this->req->getFilename());
+        $this->path = $path;
+    }
+
+    /**
+     * return kernel run path
+     *
+     * @return string
+     */
+    protected function getPath(): string
+    {
+        return $this->path;
     }
 
     /**
