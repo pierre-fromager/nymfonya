@@ -90,4 +90,15 @@ class ApiV1ControllerStatTest extends PFT
     {
         $this->assertTrue($this->instance instanceof ApiStatControler);
     }
+
+    /**
+     * testCacheAction
+     * @covers App\Controllers\Api\V1\Stat::cache
+     */
+    public function testCacheAction()
+    {
+        $this->assertTrue(
+            $this->instance->cache() instanceof ApiStatControler
+        );
+    }
 }
