@@ -90,4 +90,54 @@ class ApiV1ControllerAuthTest extends PFT
     {
         $this->assertTrue($this->instance instanceof ApiAuthControler);
     }
+
+    /**
+     * testLoginAction
+     * @covers App\Controllers\Api\V1\Auth::login
+     */
+    public function testLoginAction()
+    {
+        $this->assertTrue(
+            $this->instance->login() instanceof ApiAuthControler
+        );
+    }
+
+    /**
+     * testSetErrorResponse
+     * @covers App\Controllers\Api\V1\Auth::setErrorResponse
+     */
+    public function testSetErrorResponse()
+    {
+        $ser = self::getMethod('setErrorResponse')->invokeArgs(
+            $this->instance,
+            [404, 'not found']
+        );
+        $this->assertTrue($ser instanceof ApiAuthControler);
+    }
+
+    /**
+     * testIsValidLogin
+     * @covers App\Controllers\Api\V1\Auth::isValidLogin
+     */
+    public function testIsValidLogin()
+    {
+        $ivl = self::getMethod('isValidLogin')->invokeArgs(
+            $this->instance,
+            ['login', 'password']
+        );
+        $this->assertTrue(is_bool($ivl));
+    }
+
+    /**
+     * testIsLoginMethodAllowed
+     * @covers App\Controllers\Api\V1\Auth::isLoginMethodAllowed
+     */
+    public function testIsLoginMethodAllowed()
+    {
+        $ivl = self::getMethod('isLoginMethodAllowed')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertTrue(is_bool($ivl));
+    }
 }

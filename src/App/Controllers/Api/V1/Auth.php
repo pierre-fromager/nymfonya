@@ -75,7 +75,7 @@ final class Auth extends AbstractApi implements IApi
      *
      * @return boolean
      */
-    private function isLoginMethodAllowed(): bool
+    protected function isLoginMethodAllowed(): bool
     {
         return in_array(
             $this->request->getMethod(),
