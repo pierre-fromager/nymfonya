@@ -6,6 +6,7 @@ interface IRequest
 {
 
     const _CLI = 'cli';
+    const _CLID = 'phpdbg';
     const _ARGV = 'argv';
     const METHOD_GET = 'GET';
     const METHOD_HEAD = 'HEAD';
