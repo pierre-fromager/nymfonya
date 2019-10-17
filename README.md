@@ -165,11 +165,18 @@ or targeted test replacing in above command 'test' by :
 * testRouter
 * to be continued...
 
-To get coverage run the command below then browse coverage/index.html file.  
-This requires xdebug to be enable.
+To get the code coverage the command below then browse coverage/index.html file.  
+
+To run xdebug driver (xdebug required).  
 
 ``` bash
-composer run coverage
+composer run cov
+```
+
+To run phpdbg driver (phpdbg required).  
+
+``` bash
+composer run covdbg
 ```
 
 ## :fire: Security

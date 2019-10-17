@@ -46,8 +46,11 @@
         "start": [
             "php -S localhost:8888 src/index.php"
         ],
-        "coverage": [
+        "cov": [
             "phpunit --coverage-html='./coverage' --bootstrap tests/bootstrap.php tests"
+        ],
+        "covdbg": [
+            "/opt/php-7.3/bin/phpdbg -qrr ./vendor/bin/phpunit --coverage-html='./coverage' --bootstrap tests/bootstrap.php tests"
         ],
         "test": [
             "phpunit --bootstrap tests/bootstrap.php tests"
