@@ -35,7 +35,7 @@
             "phpcs --standard=PSR2 --warning-severity=0 --extensions=php src/*"
         ],
         "lint": [
-            "phpcbf --standard=PSR2 --warning-severity=0 --extensions=php src/* tests/*"
+            "phpcbf --standard=PSR2 --warning-severity=10 --extensions=php src/* tests/*"
         ],
         "cq": [
             "phploc -vvv --ansi src/*"
@@ -94,11 +94,17 @@
         "testCtrlApiV1Stat": [
             "phpunit --bootstrap tests/bootstrap.php --testsuite ControllerApiV1Stat"
         ],
+        "testAbstractApiController": [
+            "phpunit --bootstrap tests/bootstrap.php --testsuite AbstractControllerApi"
+        ],
         "testCtrlConfig": [
             "phpunit --bootstrap tests/bootstrap.php --testsuite ControllerConfig"
         ],
         "testToolsJwtToken": [
             "phpunit --bootstrap tests/bootstrap.php --testsuite ToolsJwtToken"
+        ],
+        "testToolsCrypt": [
+            "phpunit --bootstrap tests/bootstrap.php --testsuite ToolsCrypt"
         ]
     }
 }

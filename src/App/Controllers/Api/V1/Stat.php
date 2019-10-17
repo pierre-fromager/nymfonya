@@ -3,12 +3,11 @@
 namespace App\Controllers\Api\V1;
 
 use App\Interfaces\Controllers\IApi;
-use App\Reuse\Controllers\Api;
-use App\Http\Request;
+use App\Reuse\Controllers\AbstractApi;
 use App\Http\Response;
 use App\Container;
 
-final class Stat extends Api implements IApi
+final class Stat extends AbstractApi implements IApi
 {
 
     /**

@@ -5,16 +5,16 @@ namespace Tests;
 use PHPUnit\Framework\TestCase as PFT;
 use App\Config;
 use App\Container;
-use App\Controllers\Api\V1\Auth as ApiAuthControler;
+use App\Reuse\Controllers\AbstractApi;
 
 /**
- * @covers \App\Controllers\Api\V1\Auth::<public>
+ * @covers \App\Reuse\Controllers\AbstractApi::<public>
  */
-class ApiV1ControllerAuthTest extends PFT
+class ReuseControllersAbstractApi extends PFT
 {
 
     const TEST_ENABLE = true;
-    const CONFIG_PATH = '/../../../../config/';
+    const CONFIG_PATH = '/../../../config/';
 
     /**
      * config
@@ -33,7 +33,7 @@ class ApiV1ControllerAuthTest extends PFT
     /**
      * instance
      *
-     * @var ApiAuthControler
+     * @var Kernel
      */
     protected $instance;
 
@@ -53,7 +53,13 @@ class ApiV1ControllerAuthTest extends PFT
         $this->container = new Container(
             $this->config->getSettings(Config::_SERVICES)
         );
-        $this->instance = new ApiAuthControler($this->container);
+        $this->instance = new class ($this->container) extends AbstractApi
+        {
+            public function __construct(Container $container)
+            {
+                parent::__construct($container);
+            }
+        };
     }
 
     /**
@@ -75,7 +81,7 @@ class ApiV1ControllerAuthTest extends PFT
      */
     protected static function getMethod(string $name)
     {
-        $class = new \ReflectionClass(ApiAuthControler::class);
+        $class = new \ReflectionClass(AbstractApi::class);
         $method = $class->getMethod($name);
         $method->setAccessible(true);
         unset($class);
@@ -84,10 +90,35 @@ class ApiV1ControllerAuthTest extends PFT
 
     /**
      * testInstance
-     * @covers App\Controllers\Api\V1\Auth::__construct
+     * @covers App\Reuse\Controllers\AbstractApi::__construct
      */
     public function testInstance()
     {
-        $this->assertTrue($this->instance instanceof ApiAuthControler);
+        $this->assertTrue($this->instance instanceof AbstractApi);
+    }
+
+    /**
+     * testPreflightAction
+     * @covers App\Reuse\Controllers\AbstractApi::preflight
+     */
+    public function testPreflightAction()
+    {
+        $this->assertTrue(
+            $this->instance->preflight() instanceof AbstractApi
+        );
+    }
+
+    /**
+     * testGetService
+     * @covers App\Reuse\Controllers\AbstractApi::getService
+     */
+    public function testGetService()
+    {
+        $gs = self::getMethod('getService')->invokeArgs(
+            $this->instance,
+            [\Monolog\Logger::class]
+        );
+        $this->assertTrue(is_object($gs));
+        $this->assertTrue($gs instanceof \Monolog\Logger);
     }
 }

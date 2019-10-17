@@ -7,7 +7,7 @@ use App\Container;
 use App\Http\Request;
 use App\Http\Response;
 
-abstract class Api implements IApi
+abstract class AbstractApi implements IApi
 {
 
     use \App\Reuse\Controllers\Api\TFileCache;

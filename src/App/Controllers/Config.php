@@ -3,15 +3,11 @@
 namespace App\Controllers;
 
 use App\Interfaces\Controllers\IApi;
-use App\Reuse\Controllers\Api;
+use App\Reuse\Controllers\AbstractApi;
 use App\Container;
-use App\Http\Headers;
-use App\Http\Request;
 use App\Http\Response;
-use App\Model\Users;
-use App\Tools\Jwt\Token;
 
-final class Config extends Api implements IApi
+final class Config extends AbstractApi implements IApi
 {
 
     const KEY_LENGTH = 64;

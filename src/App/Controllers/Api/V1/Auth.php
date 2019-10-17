@@ -3,7 +3,7 @@
 namespace App\Controllers\Api\V1;
 
 use App\Interfaces\Controllers\IApi;
-use App\Reuse\Controllers\Api;
+use App\Reuse\Controllers\AbstractApi;
 use App\Container;
 use App\Http\Headers;
 use App\Http\Request;
@@ -11,7 +11,7 @@ use App\Http\Response;
 use App\Model\Users;
 use App\Tools\Jwt\Token;
 
-final class Auth extends Api implements IApi
+final class Auth extends AbstractApi implements IApi
 {
 
     /**
