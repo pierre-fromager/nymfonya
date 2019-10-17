@@ -26,10 +26,7 @@ class Request extends Session implements IRequest
         $this->setParams();
         parent::__construct();
         $sapiName = php_sapi_name();
-        $this->setIsCli(
-            $sapiName == self::_CLI
-            || $sapiName == self::_CLID
-        );
+        $this->setIsCli($sapiName == self::_CLI || $sapiName == self::_CLID);
     }
 
     /**
@@ -244,7 +241,7 @@ class Request extends Session implements IRequest
      *
      * @return boolean
      */
-    protected function isCli(): bool
+    public function isCli(): bool
     {
         return $this->isCli;
     }

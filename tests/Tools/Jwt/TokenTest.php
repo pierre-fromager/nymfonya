@@ -38,7 +38,6 @@ class ToolsJwtTokenTest extends PFT
      */
     protected $instance;
 
-
     /**
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
@@ -53,10 +52,7 @@ class ToolsJwtTokenTest extends PFT
             __DIR__ . self::CONFIG_PATH
         );
         $this->request = new Request();
-        $this->instance = new Token(
-            $this->config,
-            $this->request
-        );
+        $this->instance = new Token($this->config, $this->request);
     }
 
     /**

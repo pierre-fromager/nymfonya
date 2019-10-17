@@ -52,6 +52,7 @@ final class Stat extends Api implements IApi
                     [
                         'error' => false,
                         'datas' => [
+                            'php_version' => phpversion(),
                             'nb_files' => $scriptCount,
                             'memory_used' => $bytes,
                             'status' => $status

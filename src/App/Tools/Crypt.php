@@ -67,55 +67,60 @@ class Crypt
     }
 
     /**
-     * Encrypts (but does not authenticate) a message
+     * encrypt content
      *
-     * @param string $message - plaintext message
-     * @param boolean $encode - set to TRUE to return a base64-encoded
-     * @return string (raw binary)
+     * @param mixed $content
+     * @param boolean $encode
+     * @return mixed
      */
-    public function encrypt(string $message, bool $encode = true): string
+    public function encrypt($content, bool $encode = true)
     {
         $nonceSize = openssl_cipher_iv_length($this->method);
         $nonce = openssl_random_pseudo_bytes($nonceSize);
-        $ciphertext = openssl_encrypt(
-            $message,
+        $cryptedContent = openssl_encrypt(
+            $content,
             $this->method,
             $this->key,
             OPENSSL_RAW_DATA,
             $nonce
         );
         if ($encode) {
-            return base64_encode($nonce . $ciphertext);
+            return base64_encode($nonce . $cryptedContent);
         }
-        return $nonce . $ciphertext;
+        return $nonce . $cryptedContent;
     }
 
     /**
-     * Decrypts (but does not verify) a message
+     * decrypt content
      *
-     * @param string $message - ciphertext message
-     * @param boolean $encoded - are we expecting an encoded string?
-     * @return string
+     * @param mixed content
+     * @param boolean $encoded
+     * @return mixed
      */
-    public function decrypt(string $message, bool $encoded = true): string
+    public function decrypt($content, bool $encoded = true)
     {
         if ($encoded) {
-            $message = base64_decode($message, true);
-            if ($message === false) {
+            $content = @base64_decode($content, true);
+            if ($content === false) {
                 throw new \Exception(self::ERR_MSG_ENCRYPTION_FAIL);
             }
         }
         $nonceSize = openssl_cipher_iv_length($this->method);
-        $nonce = mb_substr($message, 0, $nonceSize, self::BIT_8);
-        $ciphertext = mb_substr($message, $nonceSize, null, self::BIT_8);
-        $plaintext = openssl_decrypt(
-            $ciphertext,
+        $nonce = mb_substr($content, 0, $nonceSize, self::BIT_8);
+        $cryptedContent = mb_substr(
+            $content,
+            $nonceSize,
+            null,
+            self::BIT_8
+        );
+        $decrypted = openssl_decrypt(
+            $cryptedContent,
             $this->method,
             $this->key,
             OPENSSL_RAW_DATA,
             $nonce
         );
-        return $plaintext;
+        return $decrypted;
     }
 
     /**

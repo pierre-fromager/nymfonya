@@ -98,7 +98,6 @@ class Kernel
      */
     public function send(): Kernel
     {
-        $logger = $this->getService(\Monolog\Logger::class);
         if ($this->getError()) {
             $this->res
                 ->setCode($this->errorCode)
@@ -112,11 +111,11 @@ class Kernel
                     Headers::CONTENT_TYPE,
                     'application/json; charset=utf-8'
                 );
-            $logger->warning($this->errorMsg);
+            $this->getLogger()->warning($this->errorMsg);
         } else {
-            $logger->debug('Response sent');
+            $this->getLogger()->debug('Response sent');
         }
-        $this->getService(\App\Http\Response::class)->send();
+        $this->getResponse()->send();
         return $this;
     }
 }

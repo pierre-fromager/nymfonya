@@ -394,7 +394,7 @@ trait TKernel
      * return request
      *
      */
-    protected function getRequest()
+    protected function getRequest():Request
     {
         return $this->req;
     }
@@ -412,7 +412,7 @@ trait TKernel
      * return reponse
      *
      */
-    protected function getResponse()
+    protected function getResponse():Response
     {
         return $this->res;
     }
@@ -500,7 +500,8 @@ trait TKernel
             }
         }
         unset($handlers);
-        \Monolog\ErrorHandler::register($this->logger);
+        //if($this->getRequest()->)
+        //\Monolog\ErrorHandler::register($this->logger);
     }
 
     /**

@@ -386,6 +386,7 @@ class RequestTest extends PFT
     /**
      * testSetIsCli
      * @covers App\Http\Request::setIsCli
+     * @covers App\Http\Request::isCli
      * @runInSeparateProcess
      */
     public function testSetIsCli()
@@ -395,11 +396,13 @@ class RequestTest extends PFT
             [true]
         );
         $this->assertTrue($r instanceof Request);
+        $this->assertTrue($this->instance->isCli());
         $r = self::getMethod('setIsCli')->invokeArgs(
             $this->instance,
             [false]
         );
         $this->assertTrue($r instanceof Request);
+        $this->assertFalse($this->instance->isCli());
     }
 
     /**
