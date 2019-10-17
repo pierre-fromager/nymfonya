@@ -75,7 +75,7 @@ class ApiV1ControllerConfigTest extends PFT
      */
     protected static function getMethod(string $name)
     {
-        $class = new \ReflectionClass(Auth::class);
+        $class = new \ReflectionClass(ConfigControler::class);
         $method = $class->getMethod($name);
         $method->setAccessible(true);
         unset($class);
@@ -89,5 +89,79 @@ class ApiV1ControllerConfigTest extends PFT
     public function testInstance()
     {
         $this->assertTrue($this->instance instanceof ConfigControler);
+    }
+
+    /**
+     * testHelp
+     * @covers App\Controllers\Config::help
+     */
+    public function testHelp()
+    {
+        $this->assertTrue(
+            $this->instance->help() instanceof ConfigControler
+        );
+    }
+
+    /**
+     * testKeygen
+     * @covers App\Controllers\Config::keygen
+     */
+    public function testKeygen()
+    {
+        $this->assertTrue(
+            $this->instance->keygen() instanceof ConfigControler
+        );
+    }
+
+    /**
+     * testAccount
+     * @covers App\Controllers\Config::account
+     */
+    public function testAccount()
+    {
+        $this->assertTrue(
+            $this->instance->account() instanceof ConfigControler
+        );
+    }
+
+    /**
+     * testHasReadLine
+     * @covers App\Controllers\Config::hasReadLine
+     */
+    public function testHasReadLine()
+    {
+        $hrl = self::getMethod('hasReadLine')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertTrue(is_bool($hrl));
+    }
+
+    /**
+     * testBaseRootUri
+     * @covers App\Controllers\Config::baseRootUri
+     */
+    public function testBaseRootUri()
+    {
+        $bri = self::getMethod('baseRootUri')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertTrue(is_string($bri));
+        $this->assertNotEmpty($bri);
+    }
+
+    /**
+     * testGetActionItem
+     * @covers App\Controllers\Config::getActionItem
+     */
+    public function testGetActionItem()
+    {
+        $gai = self::getMethod('getActionItem')->invokeArgs(
+            $this->instance,
+            ['t', 'a', 'd']
+        );
+        $this->assertTrue(is_array($gai));
+        $this->assertNotEmpty($gai);
     }
 }

@@ -500,7 +500,6 @@ trait TKernel
             }
         }
         unset($handlers);
-        //if($this->getRequest()->)
         //\Monolog\ErrorHandler::register($this->logger);
     }
 

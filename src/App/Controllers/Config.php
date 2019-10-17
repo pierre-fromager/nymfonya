@@ -83,10 +83,13 @@ final class Config extends Api implements IApi
      */
     final public function account(): Config
     {
-        $line = readline("Command: ");
+        $line = 'Undefined function readline';
+        if ($this->hasReadLine()) {
+            $line = readline("Command: ");
+        }
         $this->response
             ->setCode(Response::HTTP_OK)
-            ->setContent(['error'=> false , 'command' => $line]);
+            ->setContent(['error' => false, 'command' => $line]);
         return $this;
     }
 
@@ -117,5 +120,15 @@ final class Config extends Api implements IApi
                 self::_DATAS => $datas
             ]
         ];
+    }
+
+    /**
+     * return true if php was configured with --readline option
+     *
+     * @return boolean
+     */
+    protected function hasReadLine(): bool
+    {
+        return function_exists("readline");
     }
 }
