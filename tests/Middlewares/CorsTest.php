@@ -7,13 +7,13 @@ use App\Config;
 use App\Container;
 use App\Http\Middleware;
 use App\Http\Interfaces\Middleware\ILayer;
-use App\Middlewares\Jwt as JwtMiddleware;
+use App\Middlewares\Cors as CorsMiddleware;
 use App\Tools\Jwt\Token;
 
 /**
- * @covers \App\Middlewares\Jwt::<public>
+ * @covers \App\Middlewares\Cors::<public>
  */
-class AppMiddlewaresJwtTest extends PFT
+class AppMiddlewaresCorsTest extends PFT
 {
 
     const TEST_ENABLE = true;
@@ -71,7 +71,7 @@ class AppMiddlewaresJwtTest extends PFT
         $this->container = new Container(
             $this->config->getSettings(Config::_SERVICES)
         );
-        $this->layer = new JwtMiddleware();
+        $this->layer = new CorsMiddleware();
         $this->instance = new Middleware();
         $this->layerReflector = new \ReflectionObject($this->layer);
     }
@@ -137,7 +137,7 @@ class AppMiddlewaresJwtTest extends PFT
 
     /**
      * testPeel
-     * @covers App\Middlewares\Jwt::peel
+     * @covers App\Middlewares\Cors::peel
      */
     public function testPeel()
     {
@@ -146,7 +146,7 @@ class AppMiddlewaresJwtTest extends PFT
 
     /**
      * testInit
-     * @covers App\Middlewares\Jwt::init
+     * @covers App\Middlewares\Cors::init
      */
     public function testInit()
     {
@@ -158,8 +158,8 @@ class AppMiddlewaresJwtTest extends PFT
 
     /**
      * testProcess
-     * @covers App\Middlewares\Jwt::setEnabled
-     * @covers App\Middlewares\Jwt::process
+     * @covers App\Middlewares\Cors::setEnabled
+     * @covers App\Middlewares\Cors::process
      */
     public function testProcess()
     {
@@ -171,87 +171,8 @@ class AppMiddlewaresJwtTest extends PFT
     }
 
     /**
-     * testIsPreflight
-     * @covers App\Middlewares\Jwt::isPreflight
-     */
-    public function testIsPreflight()
-    {
-        $peelReturn = $this->peelLayer();
-        $ip = $this->invokeMethod($this->layer, 'isPreflight', []);
-        $this->assertTrue(is_bool($ip));
-        $this->assertTrue($peelReturn instanceof Container);
-    }
-
-    /**
-     * testIsValidCredential
-     * @covers App\Middlewares\Jwt::isValidCredential
-     */
-    public function testIsValidCredential()
-    {
-        $peelReturn = $this->peelLayer();
-        $accounts = $this->config->getSettings(Config::_ACCOUNTS);
-        $user0 = $accounts[0];
-        $user0['login'] = $user0['email'];
-        $user0['status'] = 'valid';
-        $req = $this->container->getService(
-            \App\Http\Request::class
-        );
-        $jwtToken = new Token($this->config, $req);
-        $jwtToken
-            ->setIssueAt(time())
-            ->setIssueAtDelay(-100)
-            ->setTtl(1200);
-        $tokenGen = $jwtToken->encode(
-            0,
-            $user0['email'],
-            $user0['password']
-        );
-        $decodedToken = $jwtToken->decode($tokenGen);
-        $ivc = $this->invokeMethod(
-            $this->layer,
-            'isValidCredential',
-            [$decodedToken, $user0]
-        );
-        $this->assertTrue(is_bool($ivc));
-        $this->assertTrue($ivc);
-        $this->assertTrue($peelReturn instanceof Container);
-    }
-
-    /**
-     * testGetUser
-     * @covers App\Middlewares\Jwt::getUser
-     */
-    public function testGetUser()
-    {
-        $peelReturn = $this->peelLayer();
-        $gus = $this->invokeMethod(
-            $this->layer,
-            'getUser',
-            [0]
-        );
-        $this->assertTrue(is_array($gus));
-        $this->assertTrue($peelReturn instanceof Container);
-    }
-
-    /**
-     * testIsValidAuthorization
-     * @covers App\Middlewares\Jwt::isValidAuthorization
-     */
-    public function testIsValidAuthorization()
-    {
-        $peelReturn = $this->peelLayer();
-        $iva = $this->invokeMethod(
-            $this->layer,
-            'isValidAuthorization',
-            []
-        );
-        $this->assertTrue(is_bool($iva));
-        $this->assertTrue($peelReturn instanceof Container);
-    }
-
-    /**
      * testRequired
-     * @covers App\Middlewares\Jwt::required
+     * @covers App\Middlewares\Cors::required
      */
     public function testRequired()
     {
@@ -263,7 +184,7 @@ class AppMiddlewaresJwtTest extends PFT
 
     /**
      * testIsExclude
-     * @covers App\Middlewares\Jwt::isExclude
+     * @covers App\Middlewares\Cors::isExclude
      */
     public function testIsExclude()
     {
@@ -275,7 +196,7 @@ class AppMiddlewaresJwtTest extends PFT
 
     /**
      * testRequestUriPrefix
-     * @covers App\Middlewares\Jwt::requestUriPrefix
+     * @covers App\Middlewares\Cors::requestUriPrefix
      */
     public function testRequestUriPrefix()
     {

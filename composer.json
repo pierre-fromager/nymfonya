@@ -108,6 +108,9 @@
         ],
         "testMiddlewareJwt": [
             "phpunit --bootstrap tests/bootstrap.php --testsuite MiddlewareJwt"
+        ],
+        "testMiddlewareCors": [
+            "phpunit --bootstrap tests/bootstrap.php --testsuite MiddlewareCors"
         ]
     }
 }
