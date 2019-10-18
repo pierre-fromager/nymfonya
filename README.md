@@ -179,7 +179,9 @@ To run phpdbg driver (phpdbg required).
 composer run covdbg
 ```
 
-![Coverage sample](assets/img/coverage.png)
+![Coverage main](assets/img/coverage.png)
+
+![Coverage dashboard](assets/img/dashboard.png)
 
 ## :fire: Security
 
