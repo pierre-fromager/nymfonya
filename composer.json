@@ -105,6 +105,9 @@
         ],
         "testToolsCrypt": [
             "phpunit --bootstrap tests/bootstrap.php --testsuite ToolsCrypt"
+        ],
+        "testMiddlewareJwt": [
+            "phpunit --bootstrap tests/bootstrap.php --testsuite MiddlewareJwt"
         ]
     }
 }

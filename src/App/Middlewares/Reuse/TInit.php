@@ -92,4 +92,15 @@ trait TInit
         $this->enabled = $this->configParams[get_called_class()]['enabled'];
         $this->prefix = $this->configParams[get_called_class()]['prefix'];
     }
+
+    /**
+     * set enabled from $enable
+     *
+     * @param boolean $enable
+     * @return void
+     */
+    protected function setEnabled(bool $enable)
+    {
+        $this->enabled = $enable;
+    }
 }

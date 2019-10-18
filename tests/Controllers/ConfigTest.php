@@ -119,6 +119,8 @@ class ApiV1ControllerConfigTest extends PFT
      */
     public function testAccount()
     {
+        $this->setOutputCallback(function () {
+        });
         $this->assertTrue(
             $this->instance->account() instanceof ConfigControler
         );

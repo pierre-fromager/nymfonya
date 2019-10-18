@@ -126,6 +126,7 @@ class ApiV1ControllerAuthTest extends PFT
             ['login', 'password']
         );
         $this->assertTrue(is_bool($ivl));
+        $this->assertTrue($ivl);
     }
 
     /**
@@ -139,5 +140,6 @@ class ApiV1ControllerAuthTest extends PFT
             []
         );
         $this->assertTrue(is_bool($ivl));
+        $this->assertTrue($ivl);
     }
 }

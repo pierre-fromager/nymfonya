@@ -44,7 +44,7 @@ class Jwt implements ILayer
      * process
      *
      */
-    private function process()
+    protected function process()
     {
         if ($this->enabled) {
             $this->response->getHeaderManager()->add(
@@ -108,7 +108,7 @@ class Jwt implements ILayer
      *
      * @return bool
      */
-    private function isPreflight(): bool
+    protected function isPreflight(): bool
     {
         $isOptionsMethod = ($this->request->getMethod() == Request::METHOD_OPTIONS);
         $corsHeadersKeys = array_keys($this->headers);
@@ -127,7 +127,7 @@ class Jwt implements ILayer
      * @param array $user
      * @return boolean
      */
-    private function isValidCredential($decodedToken, $user): bool
+    protected function isValidCredential($decodedToken, $user): bool
     {
         $login = $decodedToken->{Token::TOKEN_DATA}->{Token::TOKEN_DATA_LOGIN};
         $passwordHash = $decodedToken->{Token::TOKEN_DATA}->{Token::TOKEN_DATA_PASSWORD_HASH};
@@ -143,7 +143,7 @@ class Jwt implements ILayer
      * @param int $userId
      * @return array | false
      */
-    private function getUser(int $userId)
+    protected function getUser(int $userId)
     {
         $authModel = new \App\Model\Users($this->config);
         $userList = $authModel->getById($userId);
@@ -155,7 +155,7 @@ class Jwt implements ILayer
      *
      * @return boolean
      */
-    private function isValidAuthorization()
+    protected function isValidAuthorization()
     {
         return (isset($this->headers[self::_AUTORIZATION])
             && !empty($this->headers[self::_AUTORIZATION]));
@@ -166,7 +166,7 @@ class Jwt implements ILayer
      *
      * @return boolean
      */
-    private function required(): bool
+    protected function required(): bool
     {
         return (!$this->isExclude()
             && $this->requestUriPrefix() === $this->prefix);
@@ -177,7 +177,7 @@ class Jwt implements ILayer
      *
      * @return boolean
      */
-    private function isExclude()
+    protected function isExclude()
     {
         $disallowed = $this->configParams[\App\Middlewares\Jwt::class]['exclude'];
         for ($c = 0; $c < count($disallowed); ++$c) {
@@ -195,7 +195,7 @@ class Jwt implements ILayer
      *
      * @return string
      */
-    private function requestUriPrefix()
+    protected function requestUriPrefix()
     {
         return substr($this->request->getUri(), 0, strlen($this->prefix));
     }
