@@ -141,13 +141,13 @@ class Jwt implements ILayer
      * getUser
      *
      * @param int $userId
-     * @return array | false
+     * @return array
      */
-    protected function getUser(int $userId)
+    protected function getUser(int $userId): array
     {
         $authModel = new \App\Model\Users($this->config);
         $userList = $authModel->getById($userId);
-        return isset($userList[0]) ? $userList[0] : false;
+        return isset($userList[0]) ? $userList[0] : $userList;
     }
 
     /**
@@ -155,7 +155,7 @@ class Jwt implements ILayer
      *
      * @return boolean
      */
-    protected function isValidAuthorization()
+    protected function isValidAuthorization(): bool
     {
         return (isset($this->headers[self::_AUTORIZATION])
             && !empty($this->headers[self::_AUTORIZATION]));
@@ -177,7 +177,7 @@ class Jwt implements ILayer
      *
      * @return boolean
      */
-    protected function isExclude()
+    protected function isExclude(): bool
     {
         $disallowed = $this->configParams[\App\Middlewares\Jwt::class]['exclude'];
         for ($c = 0; $c < count($disallowed); ++$c) {
@@ -195,7 +195,7 @@ class Jwt implements ILayer
      *
      * @return string
      */
-    protected function requestUriPrefix()
+    protected function requestUriPrefix(): string
     {
         return substr($this->request->getUri(), 0, strlen($this->prefix));
     }

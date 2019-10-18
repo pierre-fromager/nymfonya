@@ -176,7 +176,76 @@ class AppMiddlewaresJwtTest extends PFT
     public function testIsPreflight()
     {
         $peelReturn = $this->peelLayer();
-        $this->invokeMethod($this->layer, 'isPreflight', []);
+        $ip = $this->invokeMethod($this->layer, 'isPreflight', []);
+        $this->assertTrue(is_bool($ip));
+        $this->assertTrue($peelReturn instanceof Container);
+    }
+
+    /**
+     * tesGetUser
+     * @covers App\Middlewares\Jwt::getUser
+     */
+    public function tesGetUser()
+    {
+        $peelReturn = $this->peelLayer();
+        $gus = $this->invokeMethod(
+            $this->layer,
+            'getUser',
+            [0]
+        );
+        $this->assertTrue(is_array($gus));
+        $this->assertTrue($peelReturn instanceof Container);
+    }
+
+    /**
+     * tesIsValidAuthorization
+     * @covers App\Middlewares\Jwt::isValidAuthorization
+     */
+    public function tesIsValidAuthorization()
+    {
+        $peelReturn = $this->peelLayer();
+        $iva = $this->invokeMethod(
+            $this->layer,
+            'isValidAuthorization',
+            []
+        );
+        $this->assertTrue(is_bool($iva));
+        $this->assertTrue($peelReturn instanceof Container);
+    }
+
+    /**
+     * testRequired
+     * @covers App\Middlewares\Jwt::required
+     */
+    public function testRequired()
+    {
+        $peelReturn = $this->peelLayer();
+        $requ = $this->invokeMethod($this->layer, 'required', []);
+        $this->assertTrue(is_bool($requ));
+        $this->assertTrue($peelReturn instanceof Container);
+    }
+
+    /**
+     * testIsExclude
+     * @covers App\Middlewares\Jwt::isExclude
+     */
+    public function testIsExclude()
+    {
+        $peelReturn = $this->peelLayer();
+        $ie = $this->invokeMethod($this->layer, 'isExclude', []);
+        $this->assertTrue(is_bool($ie));
+        $this->assertTrue($peelReturn instanceof Container);
+    }
+
+    /**
+     * testRequestUriPrefix
+     * @covers App\Middlewares\Jwt::requestUriPrefix
+     */
+    public function testRequestUriPrefix()
+    {
+        $peelReturn = $this->peelLayer();
+        $rup = $this->invokeMethod($this->layer, 'requestUriPrefix', []);
+        $this->assertTrue(is_string($rup));
         $this->assertTrue($peelReturn instanceof Container);
     }
 }
