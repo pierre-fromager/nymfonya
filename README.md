@@ -179,6 +179,8 @@ To run phpdbg driver (phpdbg required).
 composer run covdbg
 ```
 
+![Coverage sample](assets/img/coverage.png)
+
 ## :fire: Security
 
 Develop app is dev job, secure it is one other.  
