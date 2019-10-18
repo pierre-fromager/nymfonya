@@ -144,6 +144,18 @@ class AppMiddlewaresJwtTest extends PFT
     }
 
     /**
+     * testInit
+     * @covers App\Middlewares\Jwt::init
+     */
+    public function testInit()
+    {
+        $peelReturn = $this->peelLayer();
+        $this->invokeMethod($this->layer, 'init', [$this->container]);
+        $this->assertTrue($peelReturn instanceof Container);
+        unset($rl);
+    }
+
+    /**
      * testIsPreflight
      * @covers App\Middlewares\Jwt::setEnabled
      * @covers App\Middlewares\Jwt::process
