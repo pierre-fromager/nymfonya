@@ -57,8 +57,8 @@ class Jwt implements ILayer
                         $authorization = $this->headers[self::_AUTORIZATION];
                         list($bearer, $token) = explode(' ', $authorization);
                         $decodedToken = Token::decode($token);
-                        if (isset($decodedToken->{Token::TOKEN_DATA}->{Token::TOKEN_DATA_ID})) {
-                            $userId = $decodedToken->{Token::TOKEN_DATA}->{Token::TOKEN_DATA_ID};
+                        if (isset($decodedToken->{Token::_DATA}->{Token::_DATA_ID})) {
+                            $userId = $decodedToken->{Token::_DATA}->{Token::_DATA_ID};
                             $user = $this->getUser($userId);
                             if ($user !== false) {
                                 if ($this->isValidCredential($decodedToken, $user)) {
@@ -129,9 +129,9 @@ class Jwt implements ILayer
      */
     protected function isValidCredential($decodedToken, $user): bool
     {
-        $login = $decodedToken->{Token::TOKEN_DATA}->{Token::TOKEN_DATA_LOGIN};
-        $passwordHash = $decodedToken->{Token::TOKEN_DATA}->{Token::TOKEN_DATA_PASSWORD_HASH};
-        $checkLogin = ($login === $user[Token::TOKEN_DATA_LOGIN]);
+        $login = $decodedToken->{Token::_DATA}->{Token::_DATA_LOGIN};
+        $passwordHash = $decodedToken->{Token::_DATA}->{Token::_DATA_PASSWORD_HASH};
+        $checkLogin = ($login === $user[Token::_DATA_LOGIN]);
         $checkPassword = password_verify($user[self::_PASSWORD], $passwordHash);
         $checkStatus = ($user[self::_USER_STATUS] === self::_STATUS_VALID);
         return ($checkLogin && $checkPassword && $checkStatus);

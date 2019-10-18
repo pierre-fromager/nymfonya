@@ -8,6 +8,7 @@ use App\Container;
 use App\Http\Middleware;
 use App\Http\Interfaces\Middleware\ILayer;
 use App\Middlewares\Jwt as JwtMiddleware;
+use App\Tools\Jwt\Token;
 
 /**
  * @covers \App\Middlewares\Jwt::<public>
@@ -182,10 +183,45 @@ class AppMiddlewaresJwtTest extends PFT
     }
 
     /**
-     * tesGetUser
+     * testIsValidCredential
+     * @covers App\Middlewares\Jwt::isValidCredential
+     */
+    public function testIsValidCredential()
+    {
+        $peelReturn = $this->peelLayer();
+        $accounts = $this->config->getSettings(Config::_ACCOUNTS);
+        $user0 = $accounts[0];
+        $user0['login'] = $user0['email'];
+        $user0['status'] = 'valid';
+        $req = $this->container->getService(
+            \App\Http\Request::class
+        );
+        $jwtToken = new Token($this->config, $req);
+        $jwtToken
+            ->setIssueAt(time())
+            ->setIssueAtDelay(-100)
+            ->setTtl(1200);
+        $tokenGen = $jwtToken->encode(
+            0,
+            $user0['email'],
+            $user0['password']
+        );
+        $decodedToken = $jwtToken->decode($tokenGen);
+        $ivc = $this->invokeMethod(
+            $this->layer,
+            'isValidCredential',
+            [$decodedToken, $user0]
+        );
+        $this->assertTrue(is_bool($ivc));
+        $this->assertTrue($ivc);
+        $this->assertTrue($peelReturn instanceof Container);
+    }
+
+    /**
+     * testGetUser
      * @covers App\Middlewares\Jwt::getUser
      */
-    public function tesGetUser()
+    public function testGetUser()
     {
         $peelReturn = $this->peelLayer();
         $gus = $this->invokeMethod(
@@ -198,10 +234,10 @@ class AppMiddlewaresJwtTest extends PFT
     }
 
     /**
-     * tesIsValidAuthorization
+     * testIsValidAuthorization
      * @covers App\Middlewares\Jwt::isValidAuthorization
      */
-    public function tesIsValidAuthorization()
+    public function testIsValidAuthorization()
     {
         $peelReturn = $this->peelLayer();
         $iva = $this->invokeMethod(

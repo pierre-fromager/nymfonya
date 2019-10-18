@@ -27,6 +27,7 @@ interface IConfig
     const _PATH = 'path';
     const _ROUTES = 'routes';
     const _SERVICES = 'services';
+    const _ACCOUNTS = 'accounts';
 
     /**
      * set config environment
