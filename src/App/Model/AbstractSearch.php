@@ -5,12 +5,12 @@ namespace App\Model;
 use App\Http\Request;
 
 /**
- * Class App\Model\Search
+ * Class App\Model\AbstractSearch
  *
  * is abstract search class from csv based file
  *
  */
-abstract class Search
+abstract class AbstractSearch
 {
 
     /**
@@ -75,7 +75,7 @@ abstract class Search
      * @param string $filename
      * @return Search
      */
-    public function setFilename(string $filename): Search
+    public function setFilename(string $filename): AbstractSearch
     {
         $this->filename = $filename;
         return $this;
@@ -87,7 +87,7 @@ abstract class Search
      * @param string $filter
      * @return Search
      */
-    public function setFilter(string $filter): Search
+    public function setFilter(string $filter): AbstractSearch
     {
         $this->filter = $filter;
         return $this;
@@ -99,7 +99,7 @@ abstract class Search
      * @param string $separator
      * @return Search
      */
-    public function setSeparator(string $separator): Search
+    public function setSeparator(string $separator): AbstractSearch
     {
         $this->separator = $separator;
         return $this;
@@ -110,7 +110,7 @@ abstract class Search
      *
      * @return Search
      */
-    public function readFromStream(): Search
+    public function readFromStream(): AbstractSearch
     {
         $stream = new \SplFileObject($this->filename);
         $lines = new \RegexIterator($stream, $this->filter);
@@ -137,7 +137,7 @@ abstract class Search
      * add route item to stack from dat
      *
      * @param array $data
-     * @return Search
+     * @return AbstractSearch
      */
-    abstract protected function setItem(array $data): Search;
+    abstract protected function setItem(array $data): AbstractSearch;
 }

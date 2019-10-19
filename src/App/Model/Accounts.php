@@ -3,15 +3,14 @@
 namespace App\Model;
 
 use App\Http\Request;
-use App\Model\Search;
+use App\Model\AbstractSearch;
 
 /**
  * Class App\Model\Accounts
  *
  * Provides account list.
- *
  */
-class Accounts extends Search
+class Accounts extends AbstractSearch
 {
     const _CSV = 'csv';
     const _ID = 'id';
@@ -36,12 +35,12 @@ class Accounts extends Search
     }
 
     /**
-     * add airport item to stack
+     * add account item to stack
      *
      * @param array $data
      * @return Search
      */
-    protected function setItem(array $data): Search
+    protected function setItem(array $data): AbstractSearch
     {
         $this->datas[] = [
             self::_ID => $data[0],

@@ -105,7 +105,9 @@ class MiddlewareTest extends PFT
      */
     public function testLayer()
     {
-        $r = $this->instance->layer(new \App\Middlewares\Aft($this->container));
+        $r = $this->instance->layer(
+            new \App\Middlewares\After($this->container)
+        );
         $this->assertTrue($r instanceof Middleware);
         $r = $this->instance->layer(new Middleware());
         $this->assertTrue($r instanceof Middleware);
@@ -164,7 +166,7 @@ class MiddlewareTest extends PFT
                 function ($v) {
                     return $v + 1;
                 },
-                new \App\Middlewares\Aft($this->container)
+                new \App\Middlewares\After($this->container)
             ]
         );
         $this->assertTrue($value instanceof \Closure);
