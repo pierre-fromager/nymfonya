@@ -54,8 +54,11 @@ class Jwt implements ILayer
             if ($this->required()) {
                 if ($this->isValidAuthorization()) {
                     try {
-                        $authorization = $this->headers[self::_AUTORIZATION];
-                        list($bearer, $token) = explode(' ', $authorization);
+                        $tokenFragments = explode(
+                            ' ',
+                            $this->headers[self::_AUTORIZATION]
+                        );
+                        $token = $tokenFragments[1];
                         $decodedToken = Token::decode($token);
                         if (isset($decodedToken->{Token::_DATA}->{Token::_DATA_ID})) {
                             $userId = $decodedToken->{Token::_DATA}->{Token::_DATA_ID};

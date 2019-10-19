@@ -6,7 +6,7 @@ return [
         'name' => 'Admin Sys',
         'email' => 'admin@domain.tld',
         'password' => 'adminpassword',
-        'valid' => true,
+        'status' => 'valid',
         'role' => 'admin'
     ],
     [
@@ -14,7 +14,7 @@ return [
         'name' => 'Classic User',
         'email' => 'user@domain.tld',
         'password' => 'useruser',
-        'valid' => true,
+        'status' => 'valid',
         'role' => 'user'
     ],
     [
@@ -22,7 +22,7 @@ return [
         'name' => 'Pro User',
         'email' => 'pro@domain.tld',
         'password' => 'propro',
-        'valid' => true,
+        'status' => 'valid',
         'role' => 'pro'
     ],
 ];

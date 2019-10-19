@@ -192,7 +192,6 @@ class AppMiddlewaresJwtTest extends PFT
         $accounts = $this->config->getSettings(Config::_ACCOUNTS);
         $user0 = $accounts[0];
         $user0['login'] = $user0['email'];
-        $user0['status'] = 'valid';
         $req = $this->container->getService(
             \App\Http\Request::class
         );
