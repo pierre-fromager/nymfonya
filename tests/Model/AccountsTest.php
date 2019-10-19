@@ -55,10 +55,9 @@ class AppModelAccountsTest extends PFT
         if (!self::TEST_ENABLE) {
             $this->markTestSkipped('Test disabled.');
         }
-        /*
         $this->filename = realpath(
             __DIR__ . self::ASSET_PATH . self::CSV_FILENAME
-        );*/
+        );
         $this->config = new Config(
             Config::ENV_CLI,
             __DIR__ . self::CONFIG_PATH
@@ -134,5 +133,48 @@ class AppModelAccountsTest extends PFT
             []
         );
         $this->assertTrue($ini instanceof Accounts);
+    }
+
+    /**
+     * testGetAccountsFilename
+     * @covers App\Model\Accounts::getAccountsFilename
+     */
+    public function testGetAccountsFilename()
+    {
+        $gaf = self::getMethod('getAccountsFilename')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertTrue(is_string($gaf));
+        $this->assertNotEmpty($gaf);
+    }
+
+    /**
+     * testSetItem
+     * @covers App\Model\Accounts::setItem
+     */
+    public function testSetItem()
+    {
+        $ini = self::getMethod('setItem')->invokeArgs(
+            $this->instance,
+            [
+                [0, 1, 2, 3, 4, 5]
+            ]
+        );
+        $this->assertTrue($ini instanceof Accounts);
+    }
+
+    /**
+     * testCreateFile
+     * @covers App\Model\Accounts::createFile
+     */
+    public function testCreateFile()
+    {
+        @unlink($this->filename);
+        $cfi = self::getMethod('createFile')->invokeArgs(
+            $this->instance,
+            [$this->filename]
+        );
+        $this->assertTrue($cfi instanceof Accounts);
     }
 }

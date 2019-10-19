@@ -53,7 +53,7 @@ class Accounts extends AbstractSearch
     protected function init(): AbstractSearch
     {
         $this->setFilename($this->getAccountsFilename());
-        $this->createFile();
+        $this->createFile($this->filename);
         $this->setFilter(self::FILTER_ALL);
         $this->setSeparator(self::FIELD_SEPARATOR);
         return $this;
@@ -93,11 +93,12 @@ class Accounts extends AbstractSearch
     /**
      * create csv file account from config accounts setting
      *
+     * @param string $filename
      * @return AbstractSearch
      */
-    protected function createFile(): AbstractSearch
+    protected function createFile(string $filename): AbstractSearch
     {
-        if (!file_exists($this->filename)) {
+        if (!file_exists($filename)) {
             $crypt = new Crypt($this->config);
             $accounts = $this->config->getSettings(Config::_ACCOUNTS);
             $accounts = array_map(function ($ac) use ($crypt) {
@@ -107,7 +108,7 @@ class Accounts extends AbstractSearch
                 );
                 return $ac;
             }, $accounts);
-            $fp = fopen($this->filename, 'w');
+            $fp = fopen($filename, 'w');
             foreach ($accounts as $record) {
                 fputcsv($fp, array_values($record));
             }
