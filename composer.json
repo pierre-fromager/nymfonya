@@ -114,6 +114,9 @@
         ],
         "testModelSearchAbstract": [
             "phpunit --bootstrap tests/bootstrap.php --testsuite ModelSearchAbstract"
+        ],
+        "testModelAccounts": [
+            "phpunit --bootstrap tests/bootstrap.php --testsuite ModelAccounts"
         ]
     }
 }

@@ -2,8 +2,10 @@
 
 namespace App\Model;
 
-use App\Http\Request;
+use App\Container;
+use App\Config;
 use App\Model\AbstractSearch;
+use App\Tools\Crypt;
 
 /**
  * Class App\Model\Accounts
@@ -12,33 +14,68 @@ use App\Model\AbstractSearch;
  */
 class Accounts extends AbstractSearch
 {
-    const _CSV = 'csv';
     const _ID = 'id';
     const _NAME = 'name';
     const _EMAIL = 'email';
     const _PASSWORD = 'password';
-    const ACCOUNTS_FILENAME = '/assets/accounts.' . self::_CSV;
-    const FIELD_SEPARATOR = ";";
+    const _STATUS = 'status';
+    const _ROLE = 'role';
+    const PATH_ASSETS_MODEL = '/../assets/model/';
+    const ACCOUNTS_FILENAME = '/accounts.csv';
+    const FIELD_SEPARATOR = ',';
+    const FILTER_ALL = '/^(.*),(.*),(.*),(.*),(.*)/';
+
+    /**
+     * config
+     *
+     * @var Config
+     */
+    protected $config;
 
     /**
      * instanciate
      *
      */
-    public function __construct(Request $req)
+    public function __construct(Container $container)
     {
-        parent::__construct($req);
-        $this->setFilename(
-            $this->getAppPath($req) . self::ACCOUNTS_FILENAME
-        );
-        $this->separator = self::FIELD_SEPARATOR;
+        parent::__construct($container);
+        $this->config = $this->getService(\App\Config::class);
+        $this->init();
         return $this;
+    }
+
+    /**
+     * init
+     *
+     * @param string $assetsPath
+     * @return AbstractSearch
+     */
+    protected function init(): AbstractSearch
+    {
+        $this->setFilename($this->getAccountsFilename());
+        $this->createFile();
+        $this->setFilter(self::FILTER_ALL);
+        $this->setSeparator(self::FIELD_SEPARATOR);
+        return $this;
+    }
+
+    /**
+     * return csv file accounts filename
+     *
+     * @return string
+     */
+    protected function getAccountsFilename(): string
+    {
+        return realpath(
+            $this->config->getPath() . self::PATH_ASSETS_MODEL
+        )  . self::ACCOUNTS_FILENAME;
     }
 
     /**
      * add account item to stack
      *
      * @param array $data
-     * @return Search
+     * @return AbstractSearch
      */
     protected function setItem(array $data): AbstractSearch
     {
@@ -47,18 +84,36 @@ class Accounts extends AbstractSearch
             self::_NAME => $data[1],
             self::_EMAIL => $data[2],
             self::_PASSWORD => $data[3],
+            self::_STATUS => $data[4],
+            self::_ROLE => $data[5]
         ];
         return $this;
     }
 
     /**
-     * returns app path from request
+     * create csv file account from config accounts setting
      *
-     * @param Request $req
-     * @return string
+     * @return AbstractSearch
      */
-    private function getAppPath(Request $req): string
+    protected function createFile(): AbstractSearch
     {
-        return dirname(dirname($req->getFilename()));
+        if (!file_exists($this->filename)) {
+            $crypt = new Crypt($this->config);
+            $accounts = $this->config->getSettings(Config::_ACCOUNTS);
+            $accounts = array_map(function ($ac) use ($crypt) {
+                $ac[self::_PASSWORD] = $crypt->encrypt(
+                    $ac[self::_PASSWORD],
+                    true
+                );
+                return $ac;
+            }, $accounts);
+            $fp = fopen($this->filename, 'w');
+            foreach ($accounts as $record) {
+                fputcsv($fp, array_values($record));
+            }
+            fclose($fp);
+            unset($fp, $accounts, $crypt);
+        }
+        return $this;
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Model;
 
-use App\Http\Request;
+use App\Container;
 
 /**
  * Class App\Model\AbstractSearch
@@ -42,22 +42,33 @@ abstract class AbstractSearch
     protected $separator;
 
     /**
-     * request
+     * container
      *
-     * @var Request
+     * @var Container
      */
-    protected $req;
+    protected $container;
 
-     /**
-      * instanciate
-      *
-      * @param Request $r
-      */
-    public function __construct(Request $req)
+    /**
+     * instanciate
+     *
+     * @param Container $container
+     */
+    public function __construct(Container $container)
     {
-        $this->req = $req;
+        $this->container = $container;
         $this->datas = [];
         return $this;
+    }
+
+    /**
+     * return service for serviceName
+     *
+     * @param string $serviceName
+     * @return mixed
+     */
+    public function getService(string $serviceName)
+    {
+        return $this->container->getService($serviceName);
     }
 
     /**

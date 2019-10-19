@@ -4,7 +4,7 @@ namespace Tests;
 
 use PHPUnit\Framework\TestCase as PFT;
 use App\Config;
-use App\Http\Request;
+use App\Container;
 
 use App\Model\AbstractSearch;
 
@@ -17,14 +17,21 @@ class AppModelSearchTest extends PFT
     const TEST_ENABLE = true;
     const CONFIG_PATH = '/../../config/';
     const ASSET_PATH = '/../../assets/tests/model/';
-    const CSV_FILENAME = 'accounts.csv';
+    const CSV_FILENAME = '/accounts.csv';
 
     /**
-     * request
+     * config
      *
-     * @var Request
+     * @var Config
      */
-    protected $request;
+    protected $config;
+
+    /**
+     * container
+     *
+     * @var Container
+     */
+    protected $container;
 
     /**
      * csv filename
@@ -50,16 +57,22 @@ class AppModelSearchTest extends PFT
             $this->markTestSkipped('Test disabled.');
         }
         $this->filename = realpath(
-            __DIR__ . self::ASSET_PATH . self::CSV_FILENAME
+            __DIR__ . self::ASSET_PATH
+        ) . self::CSV_FILENAME;
+        $this->config = new Config(
+            Config::ENV_CLI,
+            __DIR__ . self::CONFIG_PATH
         );
         $this->createCsv();
-        $this->request = new Request();
-        $this->instance = new class ($this->request) extends AbstractSearch
+        $this->container = new Container(
+            $this->config->getSettings(Config::_SERVICES)
+        );
+        $this->instance = new class ($this->container) extends AbstractSearch
         {
             protected $inst;
-            public function __construct(Request $req)
+            public function __construct(Container $container)
             {
-                parent::__construct($req);
+                parent::__construct($container);
                 $this->inst = $this;
             }
             protected function setItem(array $item): AbstractSearch
@@ -78,11 +91,7 @@ class AppModelSearchTest extends PFT
     protected function createCsv()
     {
         if (!file_exists($this->filename)) {
-            $config = new Config(
-                Config::ENV_CLI,
-                __DIR__ . self::CONFIG_PATH
-            );
-            $accounts = $config->getSettings(Config::_ACCOUNTS);
+            $accounts = $this->config->getSettings(Config::_ACCOUNTS);
             $fp = fopen($this->filename, 'w');
             foreach ($accounts as $record) {
                 fputcsv($fp, array_values($record));
@@ -162,6 +171,19 @@ class AppModelSearchTest extends PFT
         $this->expectException(\Exception::class);
         $this->assertTrue(
             $this->instance->readFromStream() instanceof AbstractSearch
+        );
+    }
+
+    /**
+     * testGetService
+     * @covers App\Model\AbstractSearch::getService
+     */
+    public function testGetService()
+    {
+        $this->assertTrue(
+            $this->instance->getService(
+                \App\Config::class
+            ) instanceof Config
         );
     }
 

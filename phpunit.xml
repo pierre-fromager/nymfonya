@@ -21,6 +21,7 @@
             <file>tests/Middlewares/JwtTest.php</file>
             <file>tests/Middlewares/CorsTest.php</file>
             <file>tests/Model/SearchTest.php</file>
+            <file>tests/Model/AccountsTest.php</file>
         </testsuite>
         <testsuite name="Request">
             <file>tests/Http/RequestTest.php</file>
@@ -82,6 +83,9 @@
         <testsuite name="ModelSearchAbstract">
             <file>tests/Model/SearchTest.php</file>
         </testsuite>
+        <testsuite name="ModelAccounts">
+            <file>tests/Model/AccountsTest.php</file>
+        </testsuite>        
     </testsuites>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
