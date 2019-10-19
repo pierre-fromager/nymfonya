@@ -61,15 +61,6 @@ abstract class AbstractSearch
     }
 
     /**
-     * destroy instance
-     *
-     */
-    public function __destruct()
-    {
-        $this->datas = [];
-    }
-
-    /**
      * set file name
      *
      * @param string $filename
@@ -118,8 +109,7 @@ abstract class AbstractSearch
             $data = explode($this->separator, $line);
             $this->setItem($data);
         }
-        unset($lines);
-        unset($stream);
+        unset($lines, $stream);
         return $this;
     }
 

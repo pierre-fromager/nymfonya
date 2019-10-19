@@ -3,7 +3,9 @@
 namespace Tests;
 
 use PHPUnit\Framework\TestCase as PFT;
+use App\Config;
 use App\Http\Request;
+
 use App\Model\AbstractSearch;
 
 /**
@@ -13,6 +15,9 @@ class AppModelSearchTest extends PFT
 {
 
     const TEST_ENABLE = true;
+    const CONFIG_PATH = '/../../config/';
+    const ASSET_PATH = '/../../assets/tests/model/';
+    const CSV_FILENAME = 'accounts.csv';
 
     /**
      * request
@@ -20,6 +25,13 @@ class AppModelSearchTest extends PFT
      * @var Request
      */
     protected $request;
+
+    /**
+     * csv filename
+     *
+     * @var string
+     */
+    protected $filename;
 
     /**
      * instance
@@ -37,23 +49,47 @@ class AppModelSearchTest extends PFT
         if (!self::TEST_ENABLE) {
             $this->markTestSkipped('Test disabled.');
         }
+        $this->filename = realpath(
+            __DIR__ . self::ASSET_PATH . self::CSV_FILENAME
+        );
+        $this->createCsv();
         $this->request = new Request();
         $this->instance = new class ($this->request) extends AbstractSearch
         {
-
             protected $inst;
-
             public function __construct(Request $req)
             {
                 parent::__construct($req);
                 $this->inst = $this;
             }
-
             protected function setItem(array $item): AbstractSearch
             {
+                $this->datas[] = $item;
                 return $this->inst;
             }
         };
+    }
+
+    /**
+     * create csv test file if not exists
+     *
+     * @return void
+     */
+    protected function createCsv()
+    {
+        if (!file_exists($this->filename)) {
+            $config = new Config(
+                Config::ENV_CLI,
+                __DIR__ . self::CONFIG_PATH
+            );
+            $accounts = $config->getSettings(Config::_ACCOUNTS);
+            $fp = fopen($this->filename, 'w');
+            foreach ($accounts as $record) {
+                fputcsv($fp, array_values($record));
+            }
+            fclose($fp);
+            unset($fp, $accounts, $config);
+        }
     }
 
     /**
@@ -73,5 +109,79 @@ class AppModelSearchTest extends PFT
     public function testInstance()
     {
         $this->assertTrue($this->instance instanceof AbstractSearch);
+    }
+
+    /**
+     * testSetFilename
+     * @covers App\Model\AbstractSearch::setFilename
+     */
+    public function testSetFilename()
+    {
+        $this->assertTrue(
+            $this->instance->setFilename('') instanceof AbstractSearch
+        );
+    }
+
+    /**
+     * testSetFilter
+     * @covers App\Model\AbstractSearch::setFilter
+     */
+    public function testSetFilter()
+    {
+        $this->assertTrue(
+            $this->instance->setFilter('') instanceof AbstractSearch
+        );
+    }
+
+    /**
+     * testSetSeparator
+     * @covers App\Model\AbstractSearch::setSeparator
+     */
+    public function testSetSeparator()
+    {
+        $this->assertTrue(
+            $this->instance->setSeparator('') instanceof AbstractSearch
+        );
+    }
+
+    /**
+     * testGet
+     * @covers App\Model\AbstractSearch::get
+     */
+    public function testGet()
+    {
+        $this->assertTrue(is_array($this->instance->get('')));
+    }
+
+    /**
+     * testReadFromStreamException
+     * @covers App\Model\AbstractSearch::readFromStream
+     */
+    public function testReadFromStreamException()
+    {
+        $this->expectException(\Exception::class);
+        $this->assertTrue(
+            $this->instance->readFromStream() instanceof AbstractSearch
+        );
+    }
+
+    /**
+     * testReadFromStream
+     * @covers App\Model\AbstractSearch::readFromStream
+     */
+    public function testReadFromStream()
+    {
+        $sfn = $this->instance->setFilename($this->filename);
+        $this->assertTrue($sfn instanceof AbstractSearch);
+        $sft = $this->instance->setFilter('/^(.*),(.*),(.*),(.*),(.*)/');
+        $this->assertTrue($sft instanceof AbstractSearch);
+        $sse = $this->instance->setseparator(',');
+        $this->assertTrue($sse instanceof AbstractSearch);
+        $rff = $this->instance->readFromStream();
+        $this->assertTrue($rff instanceof AbstractSearch);
+        $datas = $this->instance->get();
+        $this->assertTrue(is_array($datas));
+        $this->assertNotEmpty($datas);
+        $this->assertTrue(count($datas[0]) === 6);
     }
 }
