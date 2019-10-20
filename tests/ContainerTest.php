@@ -128,6 +128,41 @@ class ContainerTest extends PFT
     }
 
     /**
+     * testSetService
+     * @covers App\Container::setService
+     * @covers App\Container::getService
+     */
+    public function testSetService()
+    {
+        $serviceClassname = 'dummy';
+        $this->instance->setService($serviceClassname, new stdClass());
+        $this->assertTrue(
+            $this->instance->getService($serviceClassname)
+                instanceof stdClass
+        );
+    }
+
+    /**
+     * testSetServiceNoClassException
+     * @covers App\Container::setService
+     */
+    public function testSetServiceNoClassException()
+    {
+        $this->expectException(\Exception::class);
+        $this->instance->setService('', new stdClass());
+    }
+
+    /**
+     * testSetServiceNotObjectException
+     * @covers App\Container::setService
+     */
+    public function testSetServiceNotObjectException()
+    {
+        $this->expectException(\Exception::class);
+        $this->instance->setService(\App\Http\Request::class, null);
+    }
+
+    /**
      * testConstructable
      * @covers App\Container::constructable
      */
@@ -300,7 +335,7 @@ class ContainerTest extends PFT
         $cd = self::getMethod('injectService')->invokeArgs(
             $this->instance,
             [
-                'key', ['value1','value2']
+                'key', ['value1', 'value2']
             ]
         );
         $this->assertTrue($cd instanceof Container);
