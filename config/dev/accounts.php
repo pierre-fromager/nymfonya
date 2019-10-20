@@ -5,7 +5,7 @@ return [
         'id' => 0,
         'name' => 'Admin Sys',
         'email' => 'admin@domain.tld',
-        'password' => 'adminpassword',
+        'password' => 'adminadmin',
         'status' => 'valid',
         'role' => 'admin'
     ],

@@ -97,6 +97,27 @@ class Container
     }
 
     /**
+     * set an object instance for a service name
+     * this should be used in test to mock a service
+     * or update an existing service yet instanciated
+     *
+     * @param string $serviceName
+     * @param mixed $inst
+     * @return Container
+     * @throws Exception
+     */
+    public function setService(string $serviceName, $inst): Container
+    {
+        if (empty($serviceName) || !is_object($inst)) {
+            throw new \Exception(
+                sprintf('Container invalid argument')
+            );
+        }
+        $this->services[$serviceName] = $inst;
+        return $this;
+    }
+
+    /**
      * load service from config service
      *
      * @return Container

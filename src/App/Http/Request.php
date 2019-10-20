@@ -292,10 +292,15 @@ class Request extends Session implements IRequest
     /**
      * set http params
      *
-     * @return array
+     * @param array $params
+     * @return Request
      */
-    protected function setParams(): Request
+    protected function setParams(array $params = []): Request
     {
+        if ($params) {
+            $this->params = $params;
+            return $this;
+        }
         if ($this->method === self::METHOD_GET) {
             $this->params = $_GET;
         } elseif ($this->method === self::METHOD_POST) {

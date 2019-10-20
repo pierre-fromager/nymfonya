@@ -66,4 +66,14 @@ abstract class AbstractApi implements IApi
     {
         return $this->container->getService($serviceName);
     }
+
+    /**
+     * return container instance
+     *
+     * @return Container
+     */
+    protected function getContainer(): Container
+    {
+        return $this->container;
+    }
 }
