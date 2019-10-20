@@ -168,12 +168,13 @@ class ContainerTest extends PFT
      */
     public function testConstructable()
     {
-        $cInt = self::getMethod('constructable')->invokeArgs(
+        $checkedMethod = 'constructable';
+        $cInt = self::getMethod($checkedMethod)->invokeArgs(
             $this->instance,
             [1]
         );
         $this->assertFalse($cInt);
-        $cBool = self::getMethod('constructable')->invokeArgs(
+        $cBool = self::getMethod($checkedMethod)->invokeArgs(
             $this->instance,
             [true]
         );
@@ -186,12 +187,13 @@ class ContainerTest extends PFT
      */
     public function testHasService()
     {
-        $hsReq = self::getMethod('hasService')->invokeArgs(
+        $checkedMethod = 'hasService';
+        $hsReq = self::getMethod($checkedMethod)->invokeArgs(
             $this->instance,
             [\App\Http\Request::class]
         );
         $this->assertTrue($hsReq);
-        $hsMdl = self::getMethod('hasService')->invokeArgs(
+        $hsMdl = self::getMethod($checkedMethod)->invokeArgs(
             $this->instance,
             [\App\Model\Search::class]
         );
@@ -204,7 +206,8 @@ class ContainerTest extends PFT
      */
     public function testLoad()
     {
-        $ld = self::getMethod('load')->invokeArgs(
+        $checkedMethod = 'load';
+        $ld = self::getMethod($checkedMethod)->invokeArgs(
             $this->instance,
             []
         );
@@ -217,7 +220,8 @@ class ContainerTest extends PFT
      */
     public function testSetServiceConfig()
     {
-        $ssc = self::getMethod('setServiceConfig')->invokeArgs(
+        $checkedMethod = 'setServiceConfig';
+        $ssc = self::getMethod($checkedMethod)->invokeArgs(
             $this->instance,
             [$this->config->getSettings(Config::_SERVICES)]
         );
@@ -247,7 +251,8 @@ class ContainerTest extends PFT
      */
     public function testCreate()
     {
-        $cr = self::getMethod('create')->invokeArgs(
+        $checkedMethod = 'create';
+        $cr = self::getMethod($checkedMethod)->invokeArgs(
             $this->instance,
             [
                 \App\Config::class,
@@ -266,22 +271,23 @@ class ContainerTest extends PFT
      */
     public function testIsBasicType()
     {
-        $ibtInt = self::getMethod('isBasicType')->invokeArgs(
+        $checkedMethod = 'isBasicType';
+        $ibtInt = self::getMethod($checkedMethod)->invokeArgs(
             $this->instance,
             [1]
         );
         $this->assertTrue($ibtInt);
-        $ibtBool = self::getMethod('isBasicType')->invokeArgs(
+        $ibtBool = self::getMethod($checkedMethod)->invokeArgs(
             $this->instance,
             [true]
         );
         $this->assertTrue($ibtBool);
-        $ibtObj = self::getMethod('isBasicType')->invokeArgs(
+        $ibtObj = self::getMethod($checkedMethod)->invokeArgs(
             $this->instance,
             [new \stdClass()]
         );
         $this->assertTrue($ibtObj);
-        $ibtStr = self::getMethod('isBasicType')->invokeArgs(
+        $ibtStr = self::getMethod($checkedMethod)->invokeArgs(
             $this->instance,
             ['strstring']
         );
@@ -310,14 +316,15 @@ class ContainerTest extends PFT
      */
     public function testCreateDependencies()
     {
-        $cd = self::getMethod('createDependencies')->invokeArgs(
+        $checkedMethod = 'createDependencies';
+        $cd = self::getMethod($checkedMethod)->invokeArgs(
             $this->instance,
             [
                 [[]]
             ]
         );
         $this->assertTrue($cd instanceof Container);
-        $cd = self::getMethod('createDependencies')->invokeArgs(
+        $cd = self::getMethod($checkedMethod)->invokeArgs(
             $this->instance,
             [
                 [[true, new \stdClass(), 'string']]
@@ -332,7 +339,8 @@ class ContainerTest extends PFT
      */
     public function testInjectService()
     {
-        $cd = self::getMethod('injectService')->invokeArgs(
+        $checkedMethod = 'injectService';
+        $cd = self::getMethod($checkedMethod)->invokeArgs(
             $this->instance,
             [
                 'key', ['value1', 'value2']
