@@ -12,13 +12,13 @@ use App\Controllers\Api\V1\Auth as ApiAuthControler;
 
 /**
  * ApiV1ControllerAuthTest
- * 
- * Tests a single login final public action 
+ *
+ * Tests a single login final public action
  * and associated protected methods.
  * This illustrates how to mock an object and update Container
  * with mocked object (Request).
  * Response is tested to match code requirements.
- * 
+ *
  * @covers \App\Controllers\Api\V1\Auth::<public>
  */
 class ApiV1ControllerAuthTest extends PFT
@@ -227,9 +227,17 @@ class ApiV1ControllerAuthTest extends PFT
     {
         $ser = self::getMethod('setErrorResponse')->invokeArgs(
             $this->instance,
-            [404, 'not found']
+            [Response::HTTP_NOT_FOUND, 'not found']
         );
         $this->assertTrue($ser instanceof ApiAuthControler);
+        $res = self::getMethod('getService')->invokeArgs(
+            $this->instance,
+            [\App\Http\Response::class]
+        );
+        $this->assertEquals(
+            $res->getCode(),
+            Response::HTTP_NOT_FOUND
+        );
     }
 
     /**
