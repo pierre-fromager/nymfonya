@@ -5,7 +5,6 @@ namespace Tests;
 use PHPUnit\Framework\TestCase as PFT;
 use App\Config;
 use App\Container;
-use stdClass;
 
 /**
  * @covers \App\Container::<public>
@@ -135,10 +134,10 @@ class ContainerTest extends PFT
     public function testSetService()
     {
         $serviceClassname = 'dummy';
-        $this->instance->setService($serviceClassname, new stdClass());
+        $this->instance->setService($serviceClassname, new \stdClass());
         $this->assertTrue(
             $this->instance->getService($serviceClassname)
-                instanceof stdClass
+                instanceof \stdClass
         );
     }
 
@@ -149,7 +148,7 @@ class ContainerTest extends PFT
     public function testSetServiceNoClassException()
     {
         $this->expectException(\Exception::class);
-        $this->instance->setService('', new stdClass());
+        $this->instance->setService('', new \stdClass());
     }
 
     /**
