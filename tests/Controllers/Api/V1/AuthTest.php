@@ -11,6 +11,14 @@ use App\Http\Response;
 use App\Controllers\Api\V1\Auth as ApiAuthControler;
 
 /**
+ * ApiV1ControllerAuthTest
+ * 
+ * Tests a single login final public action 
+ * and associated protected methods.
+ * This illustrates how to mock an object and update Container
+ * with mocked object (Request).
+ * Response is tested to match code requirements.
+ * 
  * @covers \App\Controllers\Api\V1\Auth::<public>
  */
 class ApiV1ControllerAuthTest extends PFT
@@ -58,32 +66,6 @@ class ApiV1ControllerAuthTest extends PFT
     }
 
     /**
-     * init setup with or without mocked request
-     * success when true set valid credentials on request params
-     *
-     * @param boolean $withMock
-     * @param boolean $success
-     * @return void
-     */
-    protected function init(bool $withMock = false, bool $success = false)
-    {
-        $this->config = new Config(
-            Config::ENV_CLI,
-            __DIR__ . self::CONFIG_PATH
-        );
-        $this->container = new Container(
-            $this->config->getSettings(Config::_SERVICES)
-        );
-        if ($withMock) {
-            $this->container->setService(
-                \App\Http\Request::class,
-                $this->getMockedRequest($success)
-            );
-        }
-        $this->instance = new ApiAuthControler($this->container);
-    }
-
-    /**
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
@@ -110,6 +92,32 @@ class ApiV1ControllerAuthTest extends PFT
     }
 
     /**
+     * init setup with or without mocked request
+     * success when true set valid credentials on request params
+     *
+     * @param boolean $withMock
+     * @param boolean $success
+     * @return void
+     */
+    protected function init(bool $withMock = false, bool $success = false)
+    {
+        $this->config = new Config(
+            Config::ENV_CLI,
+            __DIR__ . self::CONFIG_PATH
+        );
+        $this->container = new Container(
+            $this->config->getSettings(Config::_SERVICES)
+        );
+        if ($withMock) {
+            $this->container->setService(
+                \App\Http\Request::class,
+                $this->getMockedRequest($success)
+            );
+        }
+        $this->instance = new ApiAuthControler($this->container);
+    }
+
+    /**
      * returns mocked request following success param
      * when success is true valid credentials params get setted valid
      * for login and password or invalid credentials provided.
@@ -118,13 +126,13 @@ class ApiV1ControllerAuthTest extends PFT
      */
     protected function getMockedRequest(bool $success): MockObject
     {
-        $credentialValues = function ($value) use ($success) {
+        $credentialValues = function ($arg0) use ($success) {
             if (!$success) {
-                return ($value == self::_LOGIN)
+                return ($arg0 == self::_LOGIN)
                     ? self::INVALID_LOGIN
                     : self::INVALID_PASSWORD;
             }
-            return ($value == self::_LOGIN)
+            return ($arg0 == self::_LOGIN)
                 ? self::VALID_LOGIN
                 : self::VALID_PASSWORD;
         };
