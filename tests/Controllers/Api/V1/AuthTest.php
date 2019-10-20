@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase as PFT;
 use PHPUnit\Framework\MockObject\MockObject;
 use App\Config;
 use App\Container;
+use App\Http\Request;
 use App\Http\Response;
 use App\Controllers\Api\V1\Auth as ApiAuthControler;
 
@@ -20,6 +21,8 @@ class ApiV1ControllerAuthTest extends PFT
     const _LOGIN = 'login';
     const VALID_LOGIN = 'admin@domain.tld';
     const VALID_PASSWORD = 'adminadmin';
+    const INVALID_LOGIN = 'badlogin@domain.tld';
+    const INVALID_PASSWORD = 'badpassword';
 
     /**
      * config
@@ -56,6 +59,7 @@ class ApiV1ControllerAuthTest extends PFT
 
     /**
      * init setup with or without mocked request
+     * success when true set valid credentials on request params
      *
      * @param boolean $withMock
      * @param boolean $success
@@ -106,28 +110,32 @@ class ApiV1ControllerAuthTest extends PFT
     }
 
     /**
-     * returns mocked request
+     * returns mocked request following success param
+     * when success is true valid credentials params get setted valid
+     * for login and password or invalid credentials provided.
      *
      * @return MockObject
      */
     protected function getMockedRequest(bool $success): MockObject
     {
-
-        $mockRequest = $this->createMock('App\Http\Request');
-        $mockRequest->method('getMethod')->willReturn('TRACE');
+        $credentialValues = function ($value) use ($success) {
+            if (!$success) {
+                return ($value == self::_LOGIN)
+                    ? self::INVALID_LOGIN
+                    : self::INVALID_PASSWORD;
+            }
+            return ($value == self::_LOGIN)
+                ? self::VALID_LOGIN
+                : self::VALID_PASSWORD;
+        };
+        $mockRequest = $this->createMock(
+            \App\Http\Request::class
+        );
+        $mockRequest->method('getMethod')->willReturn(
+            Request::METHOD_TRACE
+        );
         $mockRequest->method('getParam')->will(
-            $this->returnCallback(
-                function ($value) use ($success) {
-                    if (!$success) {
-                        return ($value == self::_LOGIN)
-                            ? 'badlogin'
-                            : 'baddpassword';
-                    }
-                    return ($value == self::_LOGIN)
-                        ? self::VALID_LOGIN
-                        : self::VALID_PASSWORD;
-                }
-            )
+            $this->returnCallback($credentialValues)
         );
         return $mockRequest;
     }
