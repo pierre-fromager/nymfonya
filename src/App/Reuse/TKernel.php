@@ -210,7 +210,7 @@ trait TKernel
             $this->logger->debug($this->errorMsg);
         } else {
             $this->error = true;
-            $this->errorMsg = 'Unkown endpoint';
+            $this->errorMsg = 'Unknown endpoint';
             $this->errorCode = Response::HTTP_BAD_REQUEST;
         }
     }
