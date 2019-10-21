@@ -234,8 +234,8 @@ trait TKernel
         $middlwaresClasses = $this->config->getSettings(
             Config::_MIDDLEWARES
         );
-        foreach ($middlwaresClasses as $name => $middleware) {
-            $this->middlewares[$name] = new $middleware;
+        foreach ($middlwaresClasses as $className => $middlewareParams) {
+            $this->middlewares[$className] = new $className;
         }
         $this->middleware = new Middleware();
         $this->middleware->layer($this->middlewares)->peel(

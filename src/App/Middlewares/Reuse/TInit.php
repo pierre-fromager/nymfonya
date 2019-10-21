@@ -25,7 +25,7 @@ trait TInit
      * @var Config
      */
     protected $config;
-    
+
     /**
      * config middlewares params
      *
@@ -75,22 +75,24 @@ trait TInit
      */
     private $prefix;
 
-     /**
-      * init minimal requirements settings
-      *
-      * @param array $container
-      * @return void
-      */
+    /**
+     * init minimal requirements settings
+     *
+     * @param array $container
+     * @return void
+     */
     protected function init(Container $container)
     {
         $this->config = $container->getService(\App\Config::class);
-        $this->configParams = $this->config->getSettings('middlewaresParams');
+        $this->configParams =  $this->config->getSettings(
+            Config::_MIDDLEWARES
+        )[get_called_class()];
         $this->request = $container->getService(\App\Http\Request::class);
         $this->headers = $this->request->getHeaders();
         $this->response = $container->getService(\App\Http\Response::class);
         $this->logger = $container->getService(\Monolog\Logger::class);
-        $this->enabled = $this->configParams[get_called_class()]['enabled'];
-        $this->prefix = $this->configParams[get_called_class()]['prefix'];
+        $this->enabled = $this->configParams['enabled'];
+        $this->prefix = $this->configParams['prefix'];
     }
 
     /**

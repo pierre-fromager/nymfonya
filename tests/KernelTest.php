@@ -660,6 +660,9 @@ class KernelTest extends PFT
 
     /**
      * testExecuteSuccess
+     *
+     * execute an existing controller action
+     *
      * @covers App\Kernel::setClassname
      * @covers App\Kernel::setReflector
      * @covers App\Kernel::setActions
@@ -706,6 +709,9 @@ class KernelTest extends PFT
 
     /**
      * testExecuteFailed
+     *
+     * execute an existing controller but unknown action
+     *
      * @covers App\Kernel::setClassname
      * @covers App\Kernel::setReflector
      * @covers App\Kernel::setActions

@@ -92,7 +92,7 @@ class Cors implements ILayer
      */
     protected function isExclude(): bool
     {
-        $disallowed = $this->configParams[get_called_class()]['exclude'];
+        $disallowed = $this->configParams['exclude'];
         for ($c = 0; $c < count($disallowed); ++$c) {
             $composed = $this->prefix . $disallowed[$c];
             $isAuth = ($composed == $this->request->getUri());

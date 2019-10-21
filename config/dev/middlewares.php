@@ -1,7 +1,19 @@
 <?php
 
 return [
-    'cors' => App\Middlewares\Cors::class,
-    'jwt' => App\Middlewares\Jwt::class,
-    'aft' => App\Middlewares\After::class,
+    App\Middlewares\Cors::class => [
+        'enabled' => true,
+        'prefix' => '/api/v1/',
+        'exclude' => ['auth/login', 'user/register'],
+    ],
+    App\Middlewares\Jwt::class => [
+        'enabled' => false,
+        'prefix' => '/api/v1/',
+        'exclude' => ['auth/login', 'user/register'],
+    ],
+    App\Middlewares\After::class => [
+        'enabled' => true,
+        'prefix' => '/api/v1/',
+        'exclude' => ['auth/login', 'user/register'],
+    ],
 ];

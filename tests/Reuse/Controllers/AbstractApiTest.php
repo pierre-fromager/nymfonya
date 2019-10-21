@@ -134,5 +134,5 @@ class ReuseControllersAbstractApi extends PFT
         );
         $this->assertTrue(is_object($gc));
         $this->assertTrue($gc instanceof Container);
-    }    
+    }
 }
