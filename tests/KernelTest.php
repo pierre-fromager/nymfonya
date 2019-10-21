@@ -626,4 +626,127 @@ class KernelTest extends PFT
         );
         $this->assertNotEmpty($gaa1);
     }
+
+    /**
+     * testSetMiddleware
+     * @covers App\Kernel::setMiddleware
+     */
+    public function testSetMiddleware()
+    {
+        self::getMethod('setClassname')->invokeArgs(
+            $this->instance,
+            [self::CTRL_ACT]
+        );
+        self::getMethod('setReflector')->invokeArgs(
+            $this->instance,
+            []
+        );
+        self::getMethod('setActions')->invokeArgs(
+            $this->instance,
+            []
+        );
+        self::getMethod('setAction')->invokeArgs(
+            $this->instance,
+            [self::CTRL_ACT, Request::METHOD_TRACE]
+        );
+        $iva0 = self::getMethod('isValidAction')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertTrue($iva0);
+        self::getMethod('setMiddleware')->invokeArgs($this->instance, []);
+        $this->assertNotEmpty($this->instance instanceof Kernel);
+    }
+
+    /**
+     * testExecuteSuccess
+     * @covers App\Kernel::setClassname
+     * @covers App\Kernel::setReflector
+     * @covers App\Kernel::setActions
+     * @covers App\Kernel::getActions
+     * @covers App\Kernel::setAction
+     * @covers App\Kernel::isValidAction
+     * @covers App\Kernel::getClassname
+     * @covers App\Kernel::setController
+     * @covers App\Kernel::getController
+     * @covers App\Kernel::execute
+     * @covers App\Kernel::getError
+     * @covers App\Kernel::getErrorMsg
+     */
+    public function testExecuteSuccess()
+    {
+        self::getMethod('setClassname')->invokeArgs($this->instance, [self::CTRL_ACT]);
+        self::getMethod('setReflector')->invokeArgs($this->instance, []);
+        self::getMethod('setActions')->invokeArgs($this->instance, []);
+        $gas = self::getMethod('getActions')->invokeArgs($this->instance, []);
+        $this->assertNotEmpty($gas);
+        $this->assertTrue(is_array($gas));
+        $expectedActions = ['preflight', 'help', 'account', 'keygen'];
+        sort($expectedActions);
+        sort($gas);
+        $this->assertEquals($gas, $expectedActions);
+        self::getMethod('setAction')->invokeArgs(
+            $this->instance,
+            [self::CTRL_ACT, Request::METHOD_GET]
+        );
+        $iva0 = self::getMethod('isValidAction')->invokeArgs($this->instance, []);
+        $this->assertTrue($iva0);
+        $cla = self::getMethod('getClassname')->invokeArgs($this->instance, []);
+        $this->assertTrue(class_exists($cla));
+        self::getMethod('setController')->invokeArgs($this->instance, []);
+        $gctr = self::getMethod('getController')->invokeArgs($this->instance, []);
+        $this->assertTrue(is_object($gctr));
+        self::getMethod('execute')->invokeArgs($this->instance, []);
+        $gerr = self::getMethod('getError')->invokeArgs($this->instance, []);
+        $germ = self::getMethod('getErrorMsg')->invokeArgs($this->instance, []);
+        $this->assertEquals($germ, 'Execute successfully');
+        $this->assertFalse($gerr);
+        $this->assertNotEmpty($this->instance instanceof Kernel);
+    }
+
+    /**
+     * testExecuteFailed
+     * @covers App\Kernel::setClassname
+     * @covers App\Kernel::setReflector
+     * @covers App\Kernel::setActions
+     * @covers App\Kernel::getActions
+     * @covers App\Kernel::setAction
+     * @covers App\Kernel::isValidAction
+     * @covers App\Kernel::getClassname
+     * @covers App\Kernel::setController
+     * @covers App\Kernel::getController
+     * @covers App\Kernel::execute
+     * @covers App\Kernel::getError
+     * @covers App\Kernel::getErrorMsg
+     */
+    public function testExecuteFailed()
+    {
+        self::getMethod('setClassname')->invokeArgs($this->instance, [self::CTRL_ACT]);
+        self::getMethod('setReflector')->invokeArgs($this->instance, []);
+        self::getMethod('setActions')->invokeArgs($this->instance, []);
+        $gas = self::getMethod('getActions')->invokeArgs($this->instance, []);
+        $this->assertNotEmpty($gas);
+        $this->assertTrue(is_array($gas));
+        $expectedActions = ['preflight', 'help', 'account', 'keygen'];
+        sort($expectedActions);
+        sort($gas);
+        $this->assertEquals($gas, $expectedActions);
+        self::getMethod('setAction')->invokeArgs(
+            $this->instance,
+            [['config','badaction'], Request::METHOD_GET]
+        );
+        $iva0 = self::getMethod('isValidAction')->invokeArgs($this->instance, []);
+        $this->assertFalse($iva0);
+        $cla = self::getMethod('getClassname')->invokeArgs($this->instance, []);
+        $this->assertTrue(class_exists($cla));
+        self::getMethod('setController')->invokeArgs($this->instance, []);
+        $gctr = self::getMethod('getController')->invokeArgs($this->instance, []);
+        $this->assertTrue(is_object($gctr));
+        self::getMethod('execute')->invokeArgs($this->instance, []);
+        $gerr = self::getMethod('getError')->invokeArgs($this->instance, []);
+        $germ = self::getMethod('getErrorMsg')->invokeArgs($this->instance, []);
+        $this->assertEquals($germ, 'Unkown endpoint');
+        $this->assertTrue($gerr);
+        $this->assertNotEmpty($this->instance instanceof Kernel);
+    }
 }

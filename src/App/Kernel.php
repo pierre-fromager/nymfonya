@@ -74,7 +74,7 @@ class Kernel
         if ($routerGroups) {
             $this->setClassname($routerGroups);
             if (class_exists($this->className)) {
-                $this->controller = new $this->className($this->container);
+                $this->setController();
                 $this->setReflector();
                 $this->setActions();
                 $this->setAction(

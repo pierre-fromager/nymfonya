@@ -85,7 +85,7 @@
             "phpunit --bootstrap tests/bootstrap.php --testsuite Container"
         ],
         "testKernel": [
-            "phpunit --bootstrap tests/bootstrap.php --testsuite Kernel"
+            "phpunit --debug --bootstrap tests/bootstrap.php --testsuite Kernel"
         ],
         "testCtrlApiV1Auth": [
             "phpunit --bootstrap tests/bootstrap.php --testsuite ControllerApiV1Auth"

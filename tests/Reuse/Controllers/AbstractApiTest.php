@@ -121,4 +121,18 @@ class ReuseControllersAbstractApi extends PFT
         $this->assertTrue(is_object($gs));
         $this->assertTrue($gs instanceof \Monolog\Logger);
     }
+
+    /**
+     * testGetContainer
+     * @covers App\Reuse\Controllers\AbstractApi::getContainer
+     */
+    public function testGetContainer()
+    {
+        $gc = self::getMethod('getContainer')->invokeArgs(
+            $this->instance,
+            [\Monolog\Logger::class]
+        );
+        $this->assertTrue(is_object($gc));
+        $this->assertTrue($gc instanceof Container);
+    }    
 }

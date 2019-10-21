@@ -194,7 +194,7 @@ trait TKernel
      */
     protected function execute()
     {
-        if ($this->isValidAction()) {
+        if ($this->isValidAction() && is_object($this->controller)) {
             $resExec = call_user_func_array(
                 [$this->controller, $this->action],
                 []
@@ -213,6 +213,16 @@ trait TKernel
             $this->errorMsg = 'Unkown endpoint';
             $this->errorCode = Response::HTTP_BAD_REQUEST;
         }
+    }
+
+    /**
+     * return controller instance
+     *
+     * @return mixed
+     */
+    protected function getController()
+    {
+        return $this->controller;
     }
 
     /**
@@ -268,6 +278,16 @@ trait TKernel
     protected function isValidAction(): bool
     {
         return in_array($this->action, $this->actions);
+    }
+
+    /**
+     * instanciate controller for a classname
+     *
+     * @return void
+     */
+    protected function setController()
+    {
+        $this->controller = new $this->className($this->container);
     }
 
     /**
@@ -394,7 +414,7 @@ trait TKernel
      * return request
      *
      */
-    protected function getRequest():Request
+    protected function getRequest(): Request
     {
         return $this->req;
     }
@@ -412,7 +432,7 @@ trait TKernel
      * return reponse
      *
      */
-    protected function getResponse():Response
+    protected function getResponse(): Response
     {
         return $this->res;
     }
@@ -548,5 +568,14 @@ trait TKernel
     protected function getError(): bool
     {
         return $this->error;
+    }
+
+    /**
+     * return kernel error message
+     *
+     */
+    protected function getErrorMsg(): string
+    {
+        return $this->errorMsg;
     }
 }
