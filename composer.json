@@ -114,6 +114,9 @@
         "testMiddlewareCors": [
             "phpunit --bootstrap tests/bootstrap.php --testsuite MiddlewareCors"
         ],
+        "testMiddlewareAfter": [
+            "phpunit --bootstrap tests/bootstrap.php --testsuite MiddlewareAfter"
+        ],
         "testModelSearchAbstract": [
             "phpunit --bootstrap tests/bootstrap.php --testsuite ModelSearchAbstract"
         ],

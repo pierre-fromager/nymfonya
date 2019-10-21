@@ -163,7 +163,7 @@ or targeted test replacing in above command 'test' by :
 * testResponse
 * testRoutes
 * testRouter
-* to be continued...
+* ...@see composer.json
 
 To get the code coverage the command below then browse coverage/index.html file.  
 
@@ -255,7 +255,7 @@ I attempted to keep the code :
 
 * short.
 * readable and annotated.
-* testable (Wip 50% methods coverage).
+* testable (Wip 91% methods coverage).
 * explicit.
 * decoupled.
 * linted.

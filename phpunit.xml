@@ -21,6 +21,7 @@
             <file>tests/Reuse/Controllers/AbstractApiTest.php</file>
             <file>tests/Middlewares/JwtTest.php</file>
             <file>tests/Middlewares/CorsTest.php</file>
+            <file>tests/Middlewares/AfterTest.php</file>
             <file>tests/Model/SearchTest.php</file>
             <file>tests/Model/AccountsTest.php</file>
         </testsuite>
@@ -84,6 +85,9 @@
         <testsuite name="MiddlewareCors">
             <file>tests/Middlewares/CorsTest.php</file>
         </testsuite>
+        <testsuite name="MiddlewareAfter">
+            <file>tests/Middlewares/AfterTest.php</file>
+        </testsuite>        
         <testsuite name="ModelSearchAbstract">
             <file>tests/Model/SearchTest.php</file>
         </testsuite>
