@@ -17,6 +17,7 @@
             <file>tests/Controllers/Api/V1/StatTest.php</file>
             <file>tests/Tools/Jwt/TokenTest.php</file>
             <file>tests/Tools/CryptTest.php</file>
+            <file>tests/Tools/AuthTest.php</file>
             <file>tests/Reuse/Controllers/AbstractApiTest.php</file>
             <file>tests/Middlewares/JwtTest.php</file>
             <file>tests/Middlewares/CorsTest.php</file>
@@ -73,6 +74,9 @@
         </testsuite>
         <testsuite name="ToolsCrypt">
             <file>tests/Tools/CryptTest.php</file>
+        </testsuite>
+        <testsuite name="ToolsAuth">
+            <file>tests/Tools/AuthTest.php</file>
         </testsuite>
         <testsuite name="MiddlewareJwt">
             <file>tests/Middlewares/JwtTest.php</file>
