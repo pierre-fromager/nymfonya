@@ -10,6 +10,7 @@ interface IResponse extends IStatus
 {
 
     const _CLI = 'cli';
+    const _CLID = 'phpdbg';
     const _ERROR = 'error';
     const _ERROR_CODE = 'errorCode';
     const _ERROR_MSG = 'errorMessage';

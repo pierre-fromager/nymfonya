@@ -187,7 +187,10 @@ class RequestTest extends PFT
 
     /**
      * testSetParams
+     * @covers App\Http\Request::setMethod
      * @covers App\Http\Request::setParams
+     * @covers App\Http\Request::getParams
+     * @covers App\Http\Request::getCliParams
      */
     public function testSetParams()
     {
@@ -195,13 +198,36 @@ class RequestTest extends PFT
             $this->instance,
             [Request::METHOD_GET]
         );
+        $forcedParams = ['p1' => 'v1', 'p2' => 'v2'];
+        $req = self::getMethod('setParams')->invokeArgs(
+            $this->instance,
+            [$forcedParams]
+        );
+        $this->assertTrue($req instanceof Request);
+        $this->assertEquals(
+            $forcedParams,
+            $this->instance->getParams()
+        );
         $req = self::getMethod('setParams')->invokeArgs(
             $this->instance,
             []
         );
         $this->assertTrue($req instanceof Request);
         $this->assertEquals(
-            $_GET,
+            [],
+            $this->instance->getParams()
+        );
+        self::getMethod('setMethod')->invokeArgs(
+            $this->instance,
+            [Request::METHOD_POST]
+        );
+        $req = self::getMethod('setParams')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertTrue($req instanceof Request);
+        $this->assertEquals(
+            $_POST,
             $this->instance->getParams()
         );
         self::getMethod('setMethod')->invokeArgs(

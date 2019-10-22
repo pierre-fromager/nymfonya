@@ -10,7 +10,8 @@
     "require": {
         "php": ">=7.0.0",
         "firebase/php-jwt": "^3.0 || ^4.0 || ^5.0",
-        "monolog/monolog": "^1.25"
+        "monolog/monolog": "^1.25",
+        "respect/validation": "^1.1"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.5",
@@ -47,82 +48,82 @@
             "php -S localhost:8888 src/index.php"
         ],
         "cov": [
-            "phpunit --coverage-html='./coverage' --bootstrap tests/bootstrap.php tests"
+            "phpunit --coverage-html='./coverage' tests"
         ],
         "covdbg": [
-            "phpdbg -qrr ./vendor/bin/phpunit --coverage-html='./coverage' --bootstrap tests/bootstrap.php tests"
+            "phpdbg -qrr ./vendor/bin/phpunit --coverage-html='./coverage' tests"
         ],
         "test": [
-            "phpunit --bootstrap tests/bootstrap.php tests"
+            "phpunit tests"
         ],
         "testCookie": [
-            "phpunit --bootstrap tests/bootstrap.php --testsuite Cookie"
+            "phpunit --testsuite Cookie"
         ],
         "testRequest": [
-            "phpunit --debug --bootstrap tests/bootstrap.php --testsuite Request"
+            "phpunit --debug --testsuite Request"
         ],
         "testResponse": [
-            "phpunit --bootstrap tests/bootstrap.php --testsuite Response"
+            "phpunit --testsuite Response"
         ],
         "testHeaders": [
-            "phpunit --bootstrap tests/bootstrap.php --testsuite Headers"
+            "phpunit --testsuite Headers"
         ],
         "testRoutes": [
-            "phpunit --bootstrap tests/bootstrap.php --testsuite Routes"
+            "phpunit --testsuite Routes"
         ],
         "testRouter": [
-            "phpunit --bootstrap tests/bootstrap.php --testsuite Router"
+            "phpunit --testsuite Router"
         ],
         "testMiddleware": [
-            "phpunit --bootstrap tests/bootstrap.php --testsuite Middleware"
+            "phpunit --testsuite Middleware"
         ],
         "testSession": [
-            "phpunit --bootstrap tests/bootstrap.php --testsuite Session"
+            "phpunit --testsuite Session"
         ],
         "testConfig": [
-            "phpunit --bootstrap tests/bootstrap.php --testsuite Config"
+            "phpunit --testsuite Config"
         ],
         "testContainer": [
-            "phpunit --bootstrap tests/bootstrap.php --testsuite Container"
+            "phpunit --testsuite Container"
         ],
         "testKernel": [
-            "phpunit --debug --bootstrap tests/bootstrap.php --testsuite Kernel"
+            "phpunit --debug --testsuite Kernel"
         ],
         "testCtrlApiV1Auth": [
-            "phpunit --bootstrap tests/bootstrap.php --testsuite ControllerApiV1Auth"
+            "phpunit --testsuite ControllerApiV1Auth"
         ],
         "testCtrlApiV1Stat": [
-            "phpunit --bootstrap tests/bootstrap.php --testsuite ControllerApiV1Stat"
+            "phpunit --testsuite ControllerApiV1Stat"
         ],
         "testAbstractApiController": [
-            "phpunit --bootstrap tests/bootstrap.php --testsuite AbstractControllerApi"
+            "phpunit --testsuite AbstractControllerApi"
         ],
         "testCtrlConfig": [
-            "phpunit --bootstrap tests/bootstrap.php --testsuite ControllerConfig"
+            "phpunit --testsuite ControllerConfig"
         ],
         "testToolsJwtToken": [
-            "phpunit --bootstrap tests/bootstrap.php --testsuite ToolsJwtToken"
+            "phpunit --testsuite ToolsJwtToken"
         ],
         "testToolsCrypt": [
-            "phpunit --bootstrap tests/bootstrap.php --testsuite ToolsCrypt"
+            "phpunit --testsuite ToolsCrypt"
         ],
         "testToolsAuth": [
-            "phpunit --bootstrap tests/bootstrap.php --testsuite ToolsAuth"
+            "phpunit --testsuite ToolsAuth"
         ],
         "testMiddlewareJwt": [
-            "phpunit --bootstrap tests/bootstrap.php --testsuite MiddlewareJwt"
+            "phpunit --testsuite MiddlewareJwt"
         ],
         "testMiddlewareCors": [
-            "phpunit --bootstrap tests/bootstrap.php --testsuite MiddlewareCors"
+            "phpunit --testsuite MiddlewareCors"
         ],
         "testMiddlewareAfter": [
-            "phpunit --bootstrap tests/bootstrap.php --testsuite MiddlewareAfter"
+            "phpunit --testsuite MiddlewareAfter"
         ],
         "testModelSearchAbstract": [
-            "phpunit --bootstrap tests/bootstrap.php --testsuite ModelSearchAbstract"
+            "phpunit --testsuite ModelSearchAbstract"
         ],
         "testModelAccounts": [
-            "phpunit --bootstrap tests/bootstrap.php --testsuite ModelAccounts"
+            "phpunit --testsuite ModelAccounts"
         ]
     }
 }
