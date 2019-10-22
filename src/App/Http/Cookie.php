@@ -39,8 +39,7 @@ class Cookie implements ICookie
     public function setCookie(string $name, string $value, int $ttl): Cookie
     {
         setcookie($name, $value, time() + $ttl);
-        $this->refreshCookie();
-        return $this;
+        return $this->refreshCookie();
     }
 
     /**
