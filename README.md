@@ -167,21 +167,26 @@ or targeted test replacing in above command 'test' by :
 
 To get the code coverage the command below then browse coverage/index.html file.  
 
-To run xdebug driver (xdebug required).  
+To run xdebug driver (xdebug required), considered as fat and buggy.  
 
 ``` bash
 composer run cov
 ```
 
-To run phpdbg driver (phpdbg required).  
+To run phpdbg driver (phpdbg required), faster and precise.  
 
 ``` bash
 composer run covdbg
 ```
 
+You can also use a very fast driver [PCOV](https://github.com/krakjoe/pcov).  
+Check S.Bergmann [travis config](https://github.com/sebastianbergmann/php-code-coverage/blob/master/.travis.yml).
+
 ![Coverage main](assets/img/coverage.png)
 
 ![Coverage dashboard](assets/img/dashboard.png)
+
+I'm working on travis CI config.
 
 ## :fire: Security
 
@@ -233,6 +238,7 @@ Change some settings in php.ini
 * Implement Bundle concept.
 * Implement Controller forward method.
 * Implement Response redirect 30X.
+* Travis setup.
 
 ### Extra packages  
 
