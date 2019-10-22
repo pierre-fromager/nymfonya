@@ -192,13 +192,10 @@ trait TKernel
      *
      * @return void
      */
-    protected function execute()
+    protected function execute(...$args)
     {
         if ($this->isValidAction() && is_object($this->controller)) {
-            $resExec = call_user_func_array(
-                [$this->controller, $this->action],
-                []
-            );
+            $resExec = $this->invokeAction($args);
             $this->error = ($resExec === false);
             $this->errorCode = ($this->error)
                 ? Response::HTTP_INTERNAL_SERVER_ERROR
@@ -213,6 +210,18 @@ trait TKernel
             $this->errorMsg = 'Unknown endpoint';
             $this->errorCode = Response::HTTP_BAD_REQUEST;
         }
+    }
+
+    /**
+     * invoke action from a controller an return exec code.
+     * for testing purpose return retValue if false
+     *
+     * @param boolean $forceRetValue
+     * @return mixed
+     */
+    protected function invokeAction(...$args)
+    {
+        return call_user_func_array([$this->controller, $this->action], $args);
     }
 
     /**
@@ -241,7 +250,7 @@ trait TKernel
         $this->middleware->layer($this->middlewares)->peel(
             $this->container,
             function ($container) {
-                $this->execute();
+                $this->execute(null);
                 return $container;
             }
         );

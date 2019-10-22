@@ -50,6 +50,16 @@ final class Config extends AbstractApi implements IApi
     }
 
     /**
+     * false action
+     *
+     * @return boolean
+     */
+    final public function false()
+    {
+        return false;
+    }
+
+    /**
      * keygen action
      *
      * @Role anonymous

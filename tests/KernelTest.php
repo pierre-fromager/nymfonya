@@ -18,6 +18,7 @@ class KernelTest extends PFT
     const KERNEL_PATH = '/../src/';
     const KERNEL_NS = '\\App\\Controllers\\';
     const CTRL_ACT = ['config', 'help'];
+    const CTRL_ACTIONS = ['false', 'preflight', 'help', 'account', 'keygen'];
 
     /**
      * config
@@ -684,7 +685,7 @@ class KernelTest extends PFT
         $gas = self::getMethod('getActions')->invokeArgs($this->instance, []);
         $this->assertNotEmpty($gas);
         $this->assertTrue(is_array($gas));
-        $expectedActions = ['preflight', 'help', 'account', 'keygen'];
+        $expectedActions = self::CTRL_ACTIONS;
         sort($expectedActions);
         sort($gas);
         $this->assertEquals($gas, $expectedActions);
@@ -733,13 +734,13 @@ class KernelTest extends PFT
         $gas = self::getMethod('getActions')->invokeArgs($this->instance, []);
         $this->assertNotEmpty($gas);
         $this->assertTrue(is_array($gas));
-        $expectedActions = ['preflight', 'help', 'account', 'keygen'];
+        $expectedActions = self::CTRL_ACTIONS;
         sort($expectedActions);
         sort($gas);
         $this->assertEquals($gas, $expectedActions);
         self::getMethod('setAction')->invokeArgs(
             $this->instance,
-            [['config','badaction'], Request::METHOD_GET]
+            [['config', 'badaction'], Request::METHOD_GET]
         );
         $iva0 = self::getMethod('isValidAction')->invokeArgs($this->instance, []);
         $this->assertFalse($iva0);
@@ -753,6 +754,89 @@ class KernelTest extends PFT
         $germ = self::getMethod('getErrorMsg')->invokeArgs($this->instance, []);
         $this->assertEquals($germ, 'Unknown endpoint');
         $this->assertTrue($gerr);
-        $this->assertNotEmpty($this->instance instanceof Kernel);
+        $this->assertTrue($this->instance instanceof Kernel);
+        self::getMethod('execute')->invokeArgs($this->instance, []);
+        $gerr1 = self::getMethod('getError')->invokeArgs($this->instance, []);
+        $germ1 = self::getMethod('getErrorMsg')->invokeArgs($this->instance, []);
+        $this->assertEquals($germ1, 'Unknown endpoint');
+        $this->assertTrue($gerr1);
+        $this->assertTrue($this->instance instanceof Kernel);
+    }
+
+    /**
+     * testInvokeAction
+     * @covers App\Kernel::setClassname
+     * @covers App\Kernel::setReflector
+     * @covers App\Kernel::setActions
+     * @covers App\Kernel::setAction
+     * @covers App\Kernel::isValidAction
+     * @covers App\Kernel::getClassname
+     * @covers App\Kernel::setController
+     * @covers App\Kernel::invokeAction
+     */
+    public function testInvokeAction()
+    {
+        self::getMethod('setClassname')->invokeArgs($this->instance, [self::CTRL_ACT]);
+        self::getMethod('setReflector')->invokeArgs($this->instance, []);
+        self::getMethod('setActions')->invokeArgs($this->instance, []);
+        self::getMethod('setAction')->invokeArgs(
+            $this->instance,
+            [self::CTRL_ACT, Request::METHOD_GET]
+        );
+        self::getMethod('setController')->invokeArgs($this->instance, []);
+        $ia0 = self::getMethod('invokeAction')->invokeArgs($this->instance, [false]);
+        $this->assertTrue(is_object($ia0));
+        //$this->assertFalse($ia0);
+        $ia1 = self::getMethod('invokeAction')->invokeArgs($this->instance, []);
+        $this->assertTrue(is_object($ia1));
+    }
+
+    /**
+     * testExecuteInternalError
+     *
+     * execute an existing controller but unknown action
+     *
+     * @covers App\Kernel::setClassname
+     * @covers App\Kernel::setReflector
+     * @covers App\Kernel::setActions
+     * @covers App\Kernel::getActions
+     * @covers App\Kernel::setAction
+     * @covers App\Kernel::isValidAction
+     * @covers App\Kernel::getClassname
+     * @covers App\Kernel::setController
+     * @covers App\Kernel::getController
+     * @covers App\Kernel::execute
+     * @covers App\Kernel::getError
+     * @covers App\Kernel::getErrorMsg
+     */
+    public function testExecuteInternalError()
+    {
+        self::getMethod('setClassname')->invokeArgs($this->instance, [self::CTRL_ACT]);
+        self::getMethod('setReflector')->invokeArgs($this->instance, []);
+        self::getMethod('setActions')->invokeArgs($this->instance, []);
+        $gas = self::getMethod('getActions')->invokeArgs($this->instance, []);
+        $this->assertNotEmpty($gas);
+        $this->assertTrue(is_array($gas));
+        $expectedActions = self::CTRL_ACTIONS;
+        sort($expectedActions);
+        sort($gas);
+        $this->assertEquals($gas, $expectedActions);
+        self::getMethod('setAction')->invokeArgs(
+            $this->instance,
+            [['config', 'false'], Request::METHOD_TRACE]
+        );
+        $iva0 = self::getMethod('isValidAction')->invokeArgs($this->instance, []);
+        $this->assertTrue($iva0);
+        $cla = self::getMethod('getClassname')->invokeArgs($this->instance, []);
+        $this->assertTrue(class_exists($cla));
+        self::getMethod('setController')->invokeArgs($this->instance, []);
+        $gctr = self::getMethod('getController')->invokeArgs($this->instance, []);
+        $this->assertTrue(is_object($gctr));
+        self::getMethod('execute')->invokeArgs($this->instance, []);
+        $gerr1 = self::getMethod('getError')->invokeArgs($this->instance, []);
+        $this->assertTrue($gerr1);
+        $germ1 = self::getMethod('getErrorMsg')->invokeArgs($this->instance, []);
+        $this->assertEquals($germ1, 'Execute failed');
+        $this->assertTrue($this->instance instanceof Kernel);
     }
 }
