@@ -35,7 +35,6 @@ class Response implements IResponse
     public function __construct()
     {
         $this->headerManager = new Headers();
-        $this->headers = [];
         $this->code = self::HTTP_NOT_FOUND;
         $this->content = '';
         $sapiName = php_sapi_name();

@@ -16,17 +16,38 @@ class Request extends Session implements IRequest
     protected $params;
 
     /**
+     * headers list
+     *
+     * @var Headers
+     */
+    protected $headerManager;
+
+    /**
      * instanciate
      */
     public function __construct()
     {
+        $this->headerManager = new Headers();
         $this->server = $_SERVER;
         $this->method = $this->getMethod();
         $this->setContentType(self::APPLICATION_JSON);
         $this->setParams();
         parent::__construct();
         $sapiName = php_sapi_name();
-        $this->setIsCli($sapiName == self::_CLI || $sapiName == self::_CLID);
+        $this->setIsCli(
+            $sapiName == self::_CLI
+                || $sapiName == self::_CLID
+        );
+    }
+
+    /**
+     * returns header manager
+     *
+     * @return Headers
+     */
+    public function getHeaderManager(): Headers
+    {
+        return $this->headerManager;
     }
 
     /**
@@ -145,7 +166,20 @@ class Request extends Session implements IRequest
      */
     public function getHeaders(): array
     {
-        return ($this->isCli) ? [] : getallheaders();
+        return $this->headerManager->get();
+    }
+
+    /**
+     * return request headers
+     *
+     * @return array
+     */
+    protected function setHeaders(): Request
+    {
+        $this->headerManager->addMany(
+            $this->isCli ? [] : getallheaders()
+        );
+        return $this;
     }
 
     /**

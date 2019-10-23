@@ -58,8 +58,7 @@ final class Stat extends AbstractApi implements IApi
                         ]
                     ]
                 );
-            unset($scriptCount);
-            unset($scripts);
+            unset($scriptCount, $scripts, $bytes);
         }
         unset($status);
         return $this;
@@ -73,17 +72,21 @@ final class Stat extends AbstractApi implements IApi
      */
     final public function filecache(): Stat
     {
+        $path = realpath($this->getCachePath());
+        $files = glob($path . '/*');
         $this->response
             ->setCode(Response::HTTP_OK)
             ->setContent(
                 [
                     'error' => false,
                     'datas' => [
-                        'cache_path' => $this->getCachePath(),
-                        'cache_files' => glob($this->getCachePath() . '/*'),
+                        'cache_path' => $path,
+                        'cache_hits' => count($files),
+                        'cache_files' => $files,
                     ]
                 ]
             );
+        unset($path, $files);
         return $this;
     }
 }
