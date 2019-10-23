@@ -29,8 +29,11 @@ final class Test extends AbstractApi implements IApi
     final public function jwtaction(): Test
     {
         $this->response->setCode(Response::HTTP_OK)->setContent([
-            Response::_ERROR => true,
-            Response::_ERROR_MSG => 'Bearer Auth header accepted'
+            Response::_ERROR => false,
+            Response::_ERROR_MSG => 'Bearer Auth header accepted',
+            'datas' => [
+                'user' => $this->request->getSession('auth', 'user')
+            ]
         ]);
         return $this;
     }

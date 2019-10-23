@@ -69,10 +69,7 @@ class Jwt implements ILayer
                             $user = $this->getUser($userId);
                             if ($user !== false) {
                                 if ($this->isValidCredential($decodedToken, $user)) {
-                                    //new authTools(
-                                    //    $user[Token::TOKEN_DATA_LOGIN],
-                                    //    $user[self::_PASSWORD]
-                                    //);
+                                    $this->request->setSession('auth', $user, 'user');
                                 } else {
                                     $this->sendError(403);
                                 }
