@@ -108,9 +108,7 @@ class ApiV1ControllerConfigTest extends PFT
      */
     public function testFalse()
     {
-        $this->assertTrue(
-            $this->instance->false() instanceof ConfigControler
-        );
+        $this->assertFalse($this->instance->false());
     }
 
     /**
