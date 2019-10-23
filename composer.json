@@ -87,7 +87,7 @@
             "phpunit --testsuite Container"
         ],
         "testKernel": [
-            "phpunit --debug --testsuite Kernel"
+            "phpunit --testsuite Kernel"
         ],
         "testCtrlApiV1Auth": [
             "phpunit --testsuite ControllerApiV1Auth"

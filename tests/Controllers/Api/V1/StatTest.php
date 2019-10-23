@@ -92,13 +92,24 @@ class ApiV1ControllerStatTest extends PFT
     }
 
     /**
-     * testCacheAction
-     * @covers App\Controllers\Api\V1\Stat::cache
+     * testOpcacheAction
+     * @covers App\Controllers\Api\V1\Stat::opcache
      */
-    public function testCacheAction()
+    public function testOpcacheAction()
     {
         $this->assertTrue(
-            $this->instance->cache() instanceof ApiStatControler
+            $this->instance->opcache() instanceof ApiStatControler
+        );
+    }
+
+    /**
+     * testFilecacheAction
+     * @covers App\Controllers\Api\V1\Stat::filecache
+     */
+    public function testFilecacheAction()
+    {
+        $this->assertTrue(
+            $this->instance->filecache() instanceof ApiStatControler
         );
     }
 }

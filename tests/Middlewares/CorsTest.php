@@ -3,12 +3,13 @@
 namespace Tests;
 
 use PHPUnit\Framework\TestCase as PFT;
+use PHPUnit\Framework\MockObject\MockObject;
 use App\Config;
+use App\Http\Response;
 use App\Container;
 use App\Http\Middleware;
 use App\Http\Interfaces\Middleware\ILayer;
 use App\Middlewares\Cors as CorsMiddleware;
-use App\Tools\Jwt\Token;
 
 /**
  * @covers \App\Middlewares\Cors::<public>
@@ -18,7 +19,6 @@ class AppMiddlewaresCorsTest extends PFT
 
     const TEST_ENABLE = true;
     const CONFIG_PATH = '/../../config/';
-
 
     /**
      * config
@@ -64,6 +64,11 @@ class AppMiddlewaresCorsTest extends PFT
         if (!self::TEST_ENABLE) {
             $this->markTestSkipped('Test disabled.');
         }
+        $this->init();
+    }
+
+    protected function init(bool $withMock = false, bool $withProcess = false)
+    {
         $this->config = new Config(
             Config::ENV_CLI,
             __DIR__ . self::CONFIG_PATH
@@ -71,9 +76,32 @@ class AppMiddlewaresCorsTest extends PFT
         $this->container = new Container(
             $this->config->getSettings(Config::_SERVICES)
         );
+        if ($withMock) {
+            $this->container->setService(
+                \App\Http\Request::class,
+                $this->getMockedRequest($withProcess)
+            );
+        }
         $this->layer = new CorsMiddleware();
         $this->instance = new Middleware();
         $this->layerReflector = new \ReflectionObject($this->layer);
+    }
+
+    /**
+     * returns mocked request following success param
+     * when success is true valid credentials params get setted valid
+     * for login and password or invalid credentials provided.
+     *
+     * @return MockObject
+     */
+    protected function getMockedRequest(bool $withProcess): MockObject
+    {
+        $uri = ($withProcess)
+            ? '/api/v1/stat/opcache'
+            : '/api/v1/stat/filecache';
+        $mockRequest = $this->createMock(\App\Http\Request::class);
+        $mockRequest->method('getUri')->willReturn($uri);
+        return $mockRequest;
     }
 
     /**
@@ -163,11 +191,13 @@ class AppMiddlewaresCorsTest extends PFT
      */
     public function testProcess()
     {
+        $this->init(true, true);
         $peelReturn = $this->peelLayer();
         $this->invokeMethod($this->layer, 'setEnabled', [true]);
         $this->invokeMethod($this->layer, 'process', []);
         $this->assertTrue($peelReturn instanceof Container);
-        unset($rl);
+        $res = $this->container->getService(\App\Http\Response::class);
+        $this->assertEquals($res->getCode(), Response::HTTP_NOT_FOUND);
     }
 
     /**
@@ -176,10 +206,18 @@ class AppMiddlewaresCorsTest extends PFT
      */
     public function testRequired()
     {
+        $this->init(true, true);
         $peelReturn = $this->peelLayer();
-        $requ = $this->invokeMethod($this->layer, 'required', []);
-        $this->assertTrue(is_bool($requ));
         $this->assertTrue($peelReturn instanceof Container);
+        $requ0 = $this->invokeMethod($this->layer, 'required', []);
+        $this->assertTrue(is_bool($requ0));
+        $this->assertTrue($requ0);
+        $this->init(true, false);
+        $peelReturn = $this->peelLayer();
+        $this->assertTrue($peelReturn instanceof Container);
+        $requ1 = $this->invokeMethod($this->layer, 'required', []);
+        $this->assertTrue(is_bool($requ1));
+        $this->assertFalse($requ1);
     }
 
     /**
@@ -189,9 +227,16 @@ class AppMiddlewaresCorsTest extends PFT
     public function testIsExclude()
     {
         $peelReturn = $this->peelLayer();
-        $ie = $this->invokeMethod($this->layer, 'isExclude', []);
-        $this->assertTrue(is_bool($ie));
         $this->assertTrue($peelReturn instanceof Container);
+        $ie0 = $this->invokeMethod($this->layer, 'isExclude', []);
+        $this->assertTrue(is_bool($ie0));
+        $this->assertFalse($ie0);
+        $this->init(true, false);
+        $peelReturn = $this->peelLayer();
+        $this->assertTrue($peelReturn instanceof Container);
+        $ie1 = $this->invokeMethod($this->layer, 'isExclude', []);
+        $this->assertTrue(is_bool($ie1));
+        $this->assertTrue($ie1);
     }
 
     /**

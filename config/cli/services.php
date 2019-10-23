@@ -1,7 +1,7 @@
 <?php
 
 return [
-    \App\Config::class => [\App\Config::ENV_DEV, __DIR__ . '/../'],
+    \App\Config::class => [\App\Config::ENV_CLI, __DIR__ . '/../'],
     \App\Http\Request::class => [],
     \App\Http\Response::class => [],
     \App\Http\Routes::class => [include(__DIR__ . '/routes.php')],

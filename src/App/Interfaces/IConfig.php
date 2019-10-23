@@ -38,6 +38,13 @@ interface IConfig
     public function setEnv(string $env = self::ENV_DEV): Config;
 
     /**
+     * returns env
+     *
+     * @return string
+     */
+    public function getEnv(): string;
+
+    /**
      * set config path
      *
      * @param string $path

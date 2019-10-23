@@ -21,12 +21,12 @@ final class Stat extends AbstractApi implements IApi
     }
 
     /**
-     * stat
+     * opcache
      *
      * @Role anonymous
      * @return Stat
      */
-    final public function cache(): Stat
+    final public function opcache(): Stat
     {
         $status = opcache_get_status();
         $this->response->setCode(Response::HTTP_OK)->setContent([
@@ -62,6 +62,28 @@ final class Stat extends AbstractApi implements IApi
             unset($scripts);
         }
         unset($status);
+        return $this;
+    }
+
+    /**
+     * filecache
+     *
+     * @Role anonymous
+     * @return Stat
+     */
+    final public function filecache(): Stat
+    {
+        $this->response
+            ->setCode(Response::HTTP_OK)
+            ->setContent(
+                [
+                    'error' => false,
+                    'datas' => [
+                        'cache_path' => $this->getCachePath(),
+                        'cache_files' => glob($this->getCachePath() . '/*'),
+                    ]
+                ]
+            );
         return $this;
     }
 }

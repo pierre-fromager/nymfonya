@@ -261,7 +261,7 @@ I attempted to keep the code :
 
 * short.
 * readable and annotated.
-* testable (Wip 91% methods coverage).
+* testable (Wip 93% methods coverage).
 * explicit.
 * decoupled.
 * linted.

@@ -46,6 +46,16 @@ class Config implements IConfig
     }
 
     /**
+     * returns env
+     *
+     * @return string
+     */
+    public function getEnv(): string
+    {
+        return $this->env;
+    }
+
+    /**
      * set config path
      *
      * @param string $path
