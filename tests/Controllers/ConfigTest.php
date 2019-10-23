@@ -103,6 +103,17 @@ class ApiV1ControllerConfigTest extends PFT
     }
 
     /**
+     * testFalse
+     * @covers App\Controllers\Config::false
+     */
+    public function testFalse()
+    {
+        $this->assertTrue(
+            $this->instance->false() instanceof ConfigControler
+        );
+    }
+
+    /**
      * testKeygen
      * @covers App\Controllers\Config::keygen
      */
