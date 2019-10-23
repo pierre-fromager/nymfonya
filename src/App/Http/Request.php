@@ -33,6 +33,7 @@ class Request extends Session implements IRequest
         $this->setContentType(self::APPLICATION_JSON);
         $this->setParams();
         parent::__construct();
+        $this->setHeaders();
         $sapiName = php_sapi_name();
         $this->setIsCli(
             $sapiName == self::_CLI

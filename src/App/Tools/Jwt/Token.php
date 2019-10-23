@@ -159,7 +159,7 @@ class Token implements Interfaces\IToken
     public function decode(string $token)
     {
         return Fjwt::decode(
-            $this->getToken(),
+            $token,
             $this->getConfigSecret(),
             [$this->getConfigAlgo()]
         );

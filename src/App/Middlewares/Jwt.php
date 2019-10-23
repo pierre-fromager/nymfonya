@@ -53,13 +53,17 @@ class Jwt implements ILayer
             );
             if ($this->required()) {
                 if ($this->isValidAuthorization()) {
+                    $toolJwtToken = new \App\Tools\Jwt\Token(
+                        $this->config,
+                        $this->request
+                    );
                     try {
                         $tokenFragments = explode(
                             ' ',
                             $this->headers[self::_AUTORIZATION]
                         );
-                        $token = $tokenFragments[1];
-                        $decodedToken = Token::decode($token);
+                        $token = trim($tokenFragments[1]);
+                        $decodedToken = $toolJwtToken->decode($token);
                         if (isset($decodedToken->{Token::_DATA}->{Token::_DATA_ID})) {
                             $userId = $decodedToken->{Token::_DATA}->{Token::_DATA_ID};
                             $user = $this->getUser($userId);
@@ -134,9 +138,9 @@ class Jwt implements ILayer
     {
         $login = $decodedToken->{Token::_DATA}->{Token::_DATA_LOGIN};
         $passwordHash = $decodedToken->{Token::_DATA}->{Token::_DATA_PASSWORD_HASH};
-        $checkLogin = ($login === $user[Token::_DATA_LOGIN]);
+        $checkLogin = ($login === $user['email']);
         $checkPassword = password_verify($user[self::_PASSWORD], $passwordHash);
-        $checkStatus = ($user[self::_USER_STATUS] === self::_STATUS_VALID);
+        $checkStatus = ($user['status'] === 'valid');
         return ($checkLogin && $checkPassword && $checkStatus);
     }
 

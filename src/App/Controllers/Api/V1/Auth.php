@@ -63,6 +63,7 @@ final class Auth extends AbstractApi implements IApi
                 );
             return $this;
         }
+        //die;
         $logger->warning(__FUNCTION__ . ' Auth failed');
         return $this->setErrorResponse(
             Response::HTTP_UNAUTHORIZED,

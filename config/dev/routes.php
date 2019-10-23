@@ -28,4 +28,5 @@ return [
     '/^(api\/v1\/auth)\/(.*)$/', // 1st group match controller 2nd match action
     '/^(api\/v1\/stat)\/(opcache)$/', // 1st group match controller 2nd match action
     '/^(api\/v1\/stat)\/(filecache)$/', // 1st group match controller 2nd match action
+    '/^(api\/v1\/test)\/(jwtaction)$/', // 1st group match controller 2nd match action
 ];
