@@ -27,6 +27,11 @@ class Request extends Session implements IRequest
      */
     public function __construct()
     {
+        $sapiName = php_sapi_name();
+        $this->setIsCli(
+            $sapiName == self::_CLI
+                || $sapiName == self::_CLID
+        );
         $this->headerManager = new Headers();
         $this->server = $_SERVER;
         $this->method = $this->getMethod();
@@ -34,11 +39,6 @@ class Request extends Session implements IRequest
         $this->setParams();
         parent::__construct();
         $this->setHeaders();
-        $sapiName = php_sapi_name();
-        $this->setIsCli(
-            $sapiName == self::_CLI
-                || $sapiName == self::_CLID
-        );
     }
 
     /**
