@@ -20,8 +20,9 @@ class Jwt implements ILayer
 
     const _SIGN = 'X-Middleware-Jwt';
     const _PASSWORD = 'password';
+    const _EMAIL = 'email';
     const _USER_STATUS = 'status';
-    const _STATUS_VALID = 'valid';
+    const _VALID = 'valid';
     const _AUTORIZATION = 'Authorization';
     const _ERROR = 'error';
     const _ERROR_MESSAGE = 'errorMessage';
@@ -71,13 +72,13 @@ class Jwt implements ILayer
                                 if ($this->isValidCredential($decodedToken, $user)) {
                                     $this->request->setSession('auth', $user, 'user');
                                 } else {
-                                    $this->sendError(403, 'Bad credentials');
+                                    $this->sendError(403, 'bad credentials');
                                 }
                             } else {
-                                $this->sendError(403, 'Bad user');
+                                $this->sendError(403, 'bad user');
                             }
                         } else {
-                            $this->sendError(403, 'Malformed token');
+                            $this->sendError(403, 'malformed token');
                         }
                     } catch (\Exception $e) {
                         $this->sendError(500, $e->getMessage());
@@ -101,7 +102,7 @@ class Jwt implements ILayer
     {
         $errorMsg = [
             self::_ERROR => true,
-            self::_ERROR_MESSAGE => 'Auth failed ' . $errMsg
+            self::_ERROR_MESSAGE => 'Auth failed : ' . $errMsg
         ];
         $this->response
             ->setCode($errorCode)
@@ -138,9 +139,9 @@ class Jwt implements ILayer
     {
         $login = $decodedToken->{Token::_DATA}->{Token::_DATA_LOGIN};
         $passwordHash = $decodedToken->{Token::_DATA}->{Token::_DATA_PASSWORD_HASH};
-        $checkLogin = ($login === $user['email']);
+        $checkLogin = ($login === $user[self::_EMAIL]);
         $checkPassword = password_verify($user[self::_PASSWORD], $passwordHash);
-        $checkStatus = ($user['status'] === 'valid');
+        $checkStatus = ($user[self::_USER_STATUS] === self::_VALID);
         return ($checkLogin && $checkPassword && $checkStatus);
     }
 
@@ -186,7 +187,7 @@ class Jwt implements ILayer
      */
     protected function isExclude(): bool
     {
-        $disallowed = $this->configParams['exclude'];
+        $disallowed = $this->configParams[self::_EXCLUDE];
         for ($c = 0; $c < count($disallowed); ++$c) {
             $composed = $this->prefix . $disallowed[$c];
             $isAuth = ($composed == $this->request->getUri());

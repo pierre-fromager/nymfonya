@@ -30,7 +30,7 @@ final class Test extends AbstractApi implements IApi
     {
         $this->response->setCode(Response::HTTP_OK)->setContent([
             Response::_ERROR => false,
-            Response::_ERROR_MSG => 'Bearer Auth header accepted',
+            Response::_ERROR_MSG => 'Jwt auth succeeded',
             'datas' => [
                 'user' => $this->request->getSession('auth', 'user')
             ]
