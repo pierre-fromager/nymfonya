@@ -71,20 +71,20 @@ class Jwt implements ILayer
                                 if ($this->isValidCredential($decodedToken, $user)) {
                                     $this->request->setSession('auth', $user, 'user');
                                 } else {
-                                    $this->sendError(403);
+                                    $this->sendError(403, 'Bad credentials');
                                 }
                             } else {
-                                $this->sendError(403);
+                                $this->sendError(403, 'Bad user');
                             }
                         } else {
-                            $this->sendError(403);
+                            $this->sendError(403, 'Malformed token');
                         }
                     } catch (\Exception $e) {
-                        $this->sendError(500);
+                        $this->sendError(500, $e->getMessage());
                     }
                 } else {
                     if (!$this->isPreflight()) {
-                        $this->sendError(401);
+                        $this->sendError(401, '');
                     }
                 }
             }
@@ -97,13 +97,16 @@ class Jwt implements ILayer
      * @param integer $errorCode
      * @return void
      */
-    protected function sendError(int $errorCode)
+    protected function sendError(int $errorCode, string $errMsg)
     {
+        $errorMsg = [
+            self::_ERROR => true,
+            self::_ERROR_MESSAGE => 'Auth failed ' . $errMsg
+        ];
         $this->response
             ->setCode($errorCode)
-            ->setContent(
-                [self::_ERROR => true, self::_ERROR_MESSAGE => 'Auth failed']
-            )->send();
+            ->setContent($errorMsg)
+            ->send();
         die;
     }
 
