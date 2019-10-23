@@ -2,6 +2,7 @@
 
 namespace Tests;
 
+use App\Http\Headers;
 use PHPUnit\Framework\TestCase as PFT;
 use App\Http\Request;
 
@@ -538,5 +539,31 @@ class RequestTest extends PFT
             []
         );
         $this->assertTrue(is_array($value));
+    }
+
+    /**
+     * testGetCliParams
+     * @covers App\Http\Request::getCliParams
+     */
+    public function testGetHeaderManager()
+    {
+        $ret = self::getMethod('getHeaderManager')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertTrue($ret instanceof Headers);
+    }
+
+    /**
+     * testSetHeaders
+     * @covers App\Http\Request::setHeaders
+     */
+    public function testSetHeaders()
+    {
+        $ret = self::getMethod('setHeaders')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertTrue($ret instanceof Request);
     }
 }
