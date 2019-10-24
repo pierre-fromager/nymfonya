@@ -156,6 +156,19 @@ class ConfigTest extends PFT
     }
 
     /**
+     * testGenEnv
+     * @covers App\Config::getEnv
+     */
+    public function testGenEnv()
+    {
+        $env = self::getMethod('getEnv')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertTrue(is_string($env));
+    }
+
+    /**
      * testGetAllowedEnv
      * @covers App\Config::getAllowedEnv
      */
