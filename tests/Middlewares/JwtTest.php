@@ -308,6 +308,28 @@ class AppMiddlewaresJwtTest extends PFT
         );
     }
 
+     /**
+     * testProcessFailedUnauthorized
+     * @covers App\Middlewares\Jwt::setEnabled
+     * @covers App\Middlewares\Jwt::process
+     */
+    public function testProcessFailedUnauthorized()
+    {
+        $this->setOutputCallback(function () {
+        });
+        $this->init(true, true, $this->getUser(false, 200));
+        $peelReturn = $this->peelLayer();
+        $this->invokeMethod($this->layer, 'setEnabled', [true]);
+        $this->invokeMethod($this->layer, 'process', []);
+        $this->assertTrue($peelReturn instanceof Container);
+        $res = $peelReturn->getService(\App\Http\Response::class);
+        $this->assertEquals($res->getCode(), 500);
+        $this->assertEquals(
+            $res->getContent(),
+            '{"error":true,"errorMessage":"Auth failed : Undefined index: email"}'
+        );
+    }
+
     /**
      * testIsPreflight
      * @covers App\Middlewares\Jwt::isPreflight

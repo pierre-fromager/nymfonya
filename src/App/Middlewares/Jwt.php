@@ -72,10 +72,6 @@ class Jwt implements ILayer
                     } catch (\Exception $e) {
                         $this->sendError(500, $e->getMessage());
                     }
-                } else {
-                    if (!$this->isPreflight()) {
-                        $this->sendError(401, '');
-                    }
                 }
             }
         }
@@ -168,7 +164,8 @@ class Jwt implements ILayer
     protected function required(): bool
     {
         return (!$this->isExclude()
-            && $this->requestUriPrefix() === $this->prefix);
+            && $this->requestUriPrefix() === $this->prefix
+            && !$this->isPreflight());
     }
 
     /**
