@@ -56,12 +56,8 @@ class Jwt implements ILayer
                 if ($this->isValidAuthorization()) {
                     $toolJwtToken = new Token($this->config, $this->request);
                     try {
-                        $tokenFragments = explode(
-                            ' ',
-                            $this->headers[self::_AUTORIZATION]
-                        );
-                        $token = trim($tokenFragments[1]);
-                        $decodedToken = $toolJwtToken->decode($token);
+                        $tFrags = explode(' ', $this->headers[self::_AUTORIZATION]);
+                        $decodedToken = $toolJwtToken->decode(trim($tFrags[1]));
                         if (isset($decodedToken->{Token::_DATA}->{Token::_DATA_ID})) {
                             $userId = $decodedToken->{Token::_DATA}->{Token::_DATA_ID};
                             $user = $this->getUser($userId);
@@ -71,11 +67,7 @@ class Jwt implements ILayer
                                 } else {
                                     $this->sendError(403, 'bad credentials');
                                 }
-                            } else {
-                                $this->sendError(403, 'bad user');
                             }
-                        } else {
-                            $this->sendError(403, 'malformed token');
                         }
                     } catch (\Exception $e) {
                         $this->sendError(500, $e->getMessage());
