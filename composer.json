@@ -111,7 +111,7 @@
             "phpunit --testsuite ToolsAuth"
         ],
         "testMiddlewareJwt": [
-            "phpunit --testsuite MiddlewareJwt"
+            "phpunit --debug  --testsuite MiddlewareJwt"
         ],
         "testMiddlewareCors": [
             "phpunit --testsuite MiddlewareCors"

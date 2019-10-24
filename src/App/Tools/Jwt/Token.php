@@ -11,7 +11,6 @@ namespace App\Tools\Jwt;
 use Firebase\JWT\JWT as Fjwt;
 use App\Config;
 use App\Http\Request;
-use Exception;
 
 class Token implements Interfaces\IToken
 {

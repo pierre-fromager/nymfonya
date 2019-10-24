@@ -31,6 +31,13 @@ interface IResponse extends IStatus
     public function setContent($content): Response;
 
     /**
+     * return content string
+     *
+     * @return string
+     */
+    public function getContent(): string;
+
+    /**
      * set http code response
      *
      * @param integer $code

@@ -117,18 +117,19 @@ class AppMiddlewaresJwtTest extends PFT
      *
      * @return MockObject
      */
-    protected function getMockedRequest(bool $withProcess): MockObject
+    protected function getMockedRequest(bool $withProcess, array $user): MockObject
     {
         $uri = ($withProcess)
             ? '/api/v1/stat/filecache'
             : '/api/v1/auth/login';
+        $userPayload = ($user) ? $user : $this->getUser($withProcess);
         $mockRequest = $this->createMock(\App\Http\Request::class);
         $mockRequest->method('getUri')->willReturn($uri);
         $mockRequest->method('isCli')->willReturn(true);
         $mockRequest->method('getHeaders')->willReturn(
             [
                 JwtMiddleware::_AUTORIZATION => 'Bearer '
-                    . $this->getToken($this->getUser($withProcess))
+                    . $this->getToken($userPayload)
             ]
         );
         return $mockRequest;
@@ -141,10 +142,8 @@ class AppMiddlewaresJwtTest extends PFT
      * @param boolean $withProcess
      * @return void
      */
-    protected function init(bool $withMock = false, bool $withProcess = false)
+    protected function init(bool $withMock = false, bool $withProcess = false, $user = [])
     {
-        $this->setOutputCallback(function () {
-        });
         $this->config = new Config(
             Config::ENV_CLI,
             __DIR__ . self::CONFIG_PATH
@@ -155,14 +154,12 @@ class AppMiddlewaresJwtTest extends PFT
         if ($withMock) {
             $this->container->setService(
                 \App\Http\Request::class,
-                $this->getMockedRequest($withProcess)
+                $this->getMockedRequest($withProcess, $user)
             );
         }
         $this->tokenTool = new Token(
             $this->config,
-            $this->container->getService(
-                \App\Http\Request::class
-            )
+            $this->container->getService(\App\Http\Request::class)
         );
         $this->layer = new JwtMiddleware();
         $this->instance = new Middleware();
@@ -182,7 +179,7 @@ class AppMiddlewaresJwtTest extends PFT
             ->setIssueAtDelay(-100)
             ->setTtl(1200);
         return $this->tokenTool->encode(
-            0,
+            $user['id'],
             $user['email'],
             $user['password']
         );
@@ -193,11 +190,14 @@ class AppMiddlewaresJwtTest extends PFT
      *
      * @return array
      */
-    protected function getUser(bool $valid = true): array
+    protected function getUser(bool $valid = true, int $uid = 0): array
     {
         $accounts = $this->config->getSettings(Config::_ACCOUNTS);
         $user = $accounts[0];
-        $user['login'] = ($valid) ? $user['email'] : 'bademail@domain.tld';
+        $user['id'] = ($uid === 0) ? $user['id'] : 200;
+        $user['email'] = ($valid) ? $user['email'] : 'bademail@domain.tld';
+        $user['login'] = $user['email'];
+        unset($accounts);
         return $user;
     }
 
@@ -245,7 +245,7 @@ class AppMiddlewaresJwtTest extends PFT
         $peelReturn = $this->peelLayer();
         $this->invokeMethod($this->layer, 'init', [$this->container]);
         $this->assertTrue($peelReturn instanceof Container);
-        unset($rl);
+        unset($peelReturn);
     }
 
     /**
@@ -255,6 +255,7 @@ class AppMiddlewaresJwtTest extends PFT
      */
     public function testProcessSuccess()
     {
+        $this->setOutputCallback(function () { });
         $this->init(true, true);
         $peelReturn = $this->peelLayer();
         $this->invokeMethod($this->layer, 'setEnabled', [true]);
@@ -263,17 +264,45 @@ class AppMiddlewaresJwtTest extends PFT
     }
 
     /**
-     * testProcessFailed
+     * testProcessFailedBadCredential
      * @covers App\Middlewares\Jwt::setEnabled
      * @covers App\Middlewares\Jwt::process
      */
-    public function testProcessFailed()
+    public function testProcessFailedBadCredential()
     {
-        $this->init(true, false);
+        $this->setOutputCallback(function () { });
+        $this->init(true, true, $this->getUser(false));
         $peelReturn = $this->peelLayer();
         $this->invokeMethod($this->layer, 'setEnabled', [true]);
         $this->invokeMethod($this->layer, 'process', []);
         $this->assertTrue($peelReturn instanceof Container);
+        $res = $peelReturn->getService(\App\Http\Response::class);
+        $this->assertEquals($res->getCode(), 403);
+        $this->assertEquals(
+            $res->getContent(),
+            '{"error":true,"errorMessage":"Auth failed : bad credentials"}'
+        );
+    }
+
+    /**
+     * testProcessFailedBadUser
+     * @covers App\Middlewares\Jwt::setEnabled
+     * @covers App\Middlewares\Jwt::process
+     */
+    public function testProcessFailedBadUser()
+    {
+        $this->setOutputCallback(function () { });
+        $this->init(true, true, $this->getUser(false, 200));
+        $peelReturn = $this->peelLayer();
+        $this->invokeMethod($this->layer, 'setEnabled', [true]);
+        $this->invokeMethod($this->layer, 'process', []);
+        $this->assertTrue($peelReturn instanceof Container);
+        $res = $peelReturn->getService(\App\Http\Response::class);
+        $this->assertEquals($res->getCode(), 500);
+        $this->assertEquals(
+            $res->getContent(),
+            '{"error":true,"errorMessage":"Auth failed : Undefined index: email"}'
+        );
     }
 
     /**
@@ -388,10 +417,10 @@ class AppMiddlewaresJwtTest extends PFT
      */
     public function testSendError()
     {
-        //$this->init(true,false);
+        $this->setOutputCallback(function () { });
         $peelReturn = $this->peelLayer();
         $this->invokeMethod($this->layer, 'sendError', [
-            500,'error message'
+            500, 'error message'
         ]);
         $this->assertTrue($peelReturn instanceof Container);
         $res = $peelReturn->getService(\App\Http\Response::class);
