@@ -255,7 +255,8 @@ class AppMiddlewaresJwtTest extends PFT
      */
     public function testProcessSuccess()
     {
-        $this->setOutputCallback(function () { });
+        $this->setOutputCallback(function () {
+        });
         $this->init(true, true);
         $peelReturn = $this->peelLayer();
         $this->invokeMethod($this->layer, 'setEnabled', [true]);
@@ -270,7 +271,8 @@ class AppMiddlewaresJwtTest extends PFT
      */
     public function testProcessFailedBadCredential()
     {
-        $this->setOutputCallback(function () { });
+        $this->setOutputCallback(function () {
+        });
         $this->init(true, true, $this->getUser(false));
         $peelReturn = $this->peelLayer();
         $this->invokeMethod($this->layer, 'setEnabled', [true]);
@@ -291,7 +293,8 @@ class AppMiddlewaresJwtTest extends PFT
      */
     public function testProcessFailedBadUser()
     {
-        $this->setOutputCallback(function () { });
+        $this->setOutputCallback(function () {
+        });
         $this->init(true, true, $this->getUser(false, 200));
         $peelReturn = $this->peelLayer();
         $this->invokeMethod($this->layer, 'setEnabled', [true]);
@@ -417,7 +420,8 @@ class AppMiddlewaresJwtTest extends PFT
      */
     public function testSendError()
     {
-        $this->setOutputCallback(function () { });
+        $this->setOutputCallback(function () {
+        });
         $peelReturn = $this->peelLayer();
         $this->invokeMethod($this->layer, 'sendError', [
             500, 'error message'
