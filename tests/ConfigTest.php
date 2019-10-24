@@ -129,10 +129,7 @@ class ConfigTest extends PFT
      */
     public function testGetFilename()
     {
-        $value = self::getMethod('getFilename')->invokeArgs(
-            $this->instance,
-            []
-        );
+        $value = self::getMethod('getFilename')->invokeArgs($this->instance, []);
         $this->assertTrue(is_string($value));
         $this->assertNotEmpty($value);
     }
@@ -147,10 +144,7 @@ class ConfigTest extends PFT
             $this->instance,
             []
         );
-        $check = self::getMethod('check')->invokeArgs(
-            $this->instance,
-            [$filename]
-        );
+        $check = self::getMethod('check')->invokeArgs($this->instance, [$filename]);
         $this->assertTrue(is_bool($check));
         $this->assertTrue($check);
     }
@@ -161,11 +155,9 @@ class ConfigTest extends PFT
      */
     public function testGenEnv()
     {
-        $env = self::getMethod('getEnv')->invokeArgs(
-            $this->instance,
-            []
-        );
+        $env = self::getMethod('getEnv')->invokeArgs($this->instance, []);
         $this->assertTrue(is_string($env));
+        $this->assertNotEmpty($env);
     }
 
     /**
