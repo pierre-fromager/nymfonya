@@ -70,6 +70,16 @@ class Response implements IResponse
     }
 
     /**
+     * return content string
+     *
+     * @return string
+     */
+    public function getContent(): string
+    {
+        return $this->content;
+    }
+
+    /**
      * set http code response
      *
      * @param integer $code

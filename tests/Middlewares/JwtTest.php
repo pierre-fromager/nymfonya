@@ -3,10 +3,12 @@
 namespace Tests;
 
 use PHPUnit\Framework\TestCase as PFT;
+use PHPUnit\Framework\MockObject\MockObject;
 use App\Config;
 use App\Container;
 use App\Http\Middleware;
 use App\Http\Interfaces\Middleware\ILayer;
+use App\Http\Response;
 use App\Middlewares\Jwt as JwtMiddleware;
 use App\Tools\Jwt\Token;
 
@@ -49,6 +51,13 @@ class AppMiddlewaresJwtTest extends PFT
     protected $layerReflector;
 
     /**
+     * $tokenTool
+     *
+     * @var Token
+     */
+    protected $tokenTool;
+
+    /**
      * instance
      *
      * @var Middleware
@@ -64,16 +73,7 @@ class AppMiddlewaresJwtTest extends PFT
         if (!self::TEST_ENABLE) {
             $this->markTestSkipped('Test disabled.');
         }
-        $this->config = new Config(
-            Config::ENV_CLI,
-            __DIR__ . self::CONFIG_PATH
-        );
-        $this->container = new Container(
-            $this->config->getSettings(Config::_SERVICES)
-        );
-        $this->layer = new JwtMiddleware();
-        $this->instance = new Middleware();
-        $this->layerReflector = new \ReflectionObject($this->layer);
+        $this->init();
     }
 
     /**
@@ -86,6 +86,7 @@ class AppMiddlewaresJwtTest extends PFT
         $this->container = null;
         $this->config = null;
         $this->layerReflector = null;
+        $this->tokenTool = null;
     }
 
     /**
@@ -107,6 +108,97 @@ class AppMiddlewaresJwtTest extends PFT
         $met = $this->layerReflector->getMethod($name);
         $met->setAccessible(true);
         return $met->invokeArgs($layer, $params);
+    }
+
+    /**
+     * returns mocked request following success param
+     * when success is true valid credentials params get setted valid
+     * for login and password or invalid credentials provided.
+     *
+     * @return MockObject
+     */
+    protected function getMockedRequest(bool $withProcess): MockObject
+    {
+        $uri = ($withProcess)
+            ? '/api/v1/stat/filecache'
+            : '/api/v1/auth/login';
+        $mockRequest = $this->createMock(\App\Http\Request::class);
+        $mockRequest->method('getUri')->willReturn($uri);
+        $mockRequest->method('isCli')->willReturn(true);
+        $mockRequest->method('getHeaders')->willReturn(
+            [
+                JwtMiddleware::_AUTORIZATION => 'Bearer '
+                    . $this->getToken($this->getUser($withProcess))
+            ]
+        );
+        return $mockRequest;
+    }
+
+    /**
+     * init test with or without request mocked
+     *
+     * @param boolean $withMock
+     * @param boolean $withProcess
+     * @return void
+     */
+    protected function init(bool $withMock = false, bool $withProcess = false)
+    {
+        $this->setOutputCallback(function () {
+        });
+        $this->config = new Config(
+            Config::ENV_CLI,
+            __DIR__ . self::CONFIG_PATH
+        );
+        $this->container = new Container(
+            $this->config->getSettings(Config::_SERVICES)
+        );
+        if ($withMock) {
+            $this->container->setService(
+                \App\Http\Request::class,
+                $this->getMockedRequest($withProcess)
+            );
+        }
+        $this->tokenTool = new Token(
+            $this->config,
+            $this->container->getService(
+                \App\Http\Request::class
+            )
+        );
+        $this->layer = new JwtMiddleware();
+        $this->instance = new Middleware();
+        $this->layerReflector = new \ReflectionObject($this->layer);
+    }
+
+    /**
+     * return a token user
+     *
+     * @param array $user
+     * @return string
+     */
+    protected function getToken(array $user): string
+    {
+        $this->tokenTool
+            ->setIssueAt(time())
+            ->setIssueAtDelay(-100)
+            ->setTtl(1200);
+        return $this->tokenTool->encode(
+            0,
+            $user['email'],
+            $user['password']
+        );
+    }
+
+    /**
+     * returns a user with validity
+     *
+     * @return array
+     */
+    protected function getUser(bool $valid = true): array
+    {
+        $accounts = $this->config->getSettings(Config::_ACCOUNTS);
+        $user = $accounts[0];
+        $user['login'] = ($valid) ? $user['email'] : 'bademail@domain.tld';
+        return $user;
     }
 
     /**
@@ -157,17 +249,31 @@ class AppMiddlewaresJwtTest extends PFT
     }
 
     /**
-     * testProcess
+     * testProcessSuccess
      * @covers App\Middlewares\Jwt::setEnabled
      * @covers App\Middlewares\Jwt::process
      */
-    public function testProcess()
+    public function testProcessSuccess()
     {
+        $this->init(true, true);
         $peelReturn = $this->peelLayer();
         $this->invokeMethod($this->layer, 'setEnabled', [true]);
         $this->invokeMethod($this->layer, 'process', []);
         $this->assertTrue($peelReturn instanceof Container);
-        unset($rl);
+    }
+
+    /**
+     * testProcessFailed
+     * @covers App\Middlewares\Jwt::setEnabled
+     * @covers App\Middlewares\Jwt::process
+     */
+    public function testProcessFailed()
+    {
+        $this->init(true, false);
+        $peelReturn = $this->peelLayer();
+        $this->invokeMethod($this->layer, 'setEnabled', [true]);
+        $this->invokeMethod($this->layer, 'process', []);
+        $this->assertTrue($peelReturn instanceof Container);
     }
 
     /**
@@ -189,27 +295,13 @@ class AppMiddlewaresJwtTest extends PFT
     public function testIsValidCredential()
     {
         $peelReturn = $this->peelLayer();
-        $accounts = $this->config->getSettings(Config::_ACCOUNTS);
-        $user0 = $accounts[0];
-        $user0['login'] = $user0['email'];
-        $req = $this->container->getService(
-            \App\Http\Request::class
-        );
-        $jwtToken = new Token($this->config, $req);
-        $jwtToken
-            ->setIssueAt(time())
-            ->setIssueAtDelay(-100)
-            ->setTtl(1200);
-        $tokenGen = $jwtToken->encode(
-            0,
-            $user0['email'],
-            $user0['password']
-        );
-        $decodedToken = $jwtToken->decode($tokenGen);
+        $validUser = $this->getUser();
+        $tokenGen = $this->getToken($validUser);
+        $decodedToken = $this->tokenTool->decode($tokenGen);
         $ivc = $this->invokeMethod(
             $this->layer,
             'isValidCredential',
-            [$decodedToken, $user0]
+            [$decodedToken, $validUser]
         );
         $this->assertTrue(is_bool($ivc));
         $this->assertTrue($ivc);
@@ -270,6 +362,12 @@ class AppMiddlewaresJwtTest extends PFT
         $ie = $this->invokeMethod($this->layer, 'isExclude', []);
         $this->assertTrue(is_bool($ie));
         $this->assertTrue($peelReturn instanceof Container);
+
+        $this->init(true, false);
+        $peelReturn = $this->peelLayer();
+        $ie = $this->invokeMethod($this->layer, 'isExclude', []);
+        $this->assertTrue(is_bool($ie));
+        $this->assertTrue($peelReturn instanceof Container);
     }
 
     /**
@@ -282,5 +380,26 @@ class AppMiddlewaresJwtTest extends PFT
         $rup = $this->invokeMethod($this->layer, 'requestUriPrefix', []);
         $this->assertTrue(is_string($rup));
         $this->assertTrue($peelReturn instanceof Container);
+    }
+
+    /**
+     * testSendError
+     * @covers App\Middlewares\Jwt::sendError
+     */
+    public function testSendError()
+    {
+        //$this->init(true,false);
+        $peelReturn = $this->peelLayer();
+        $this->invokeMethod($this->layer, 'sendError', [
+            500,'error message'
+        ]);
+        $this->assertTrue($peelReturn instanceof Container);
+        $res = $peelReturn->getService(\App\Http\Response::class);
+        $this->assertTrue($res instanceof Response);
+        $this->assertEquals($res->getCode(), 500);
+        $this->assertEquals(
+            $res->getContent(),
+            '{"error":true,"errorMessage":"Auth failed : error message"}'
+        );
     }
 }

@@ -7,7 +7,7 @@ return [
         'exclude' => ['stat/filecache'],
     ],
     \App\Middlewares\Jwt::class => [
-        'enabled' => false,
+        'enabled' => true,
         'prefix' => '/api/v1/',
         'exclude' => ['auth/login', 'user/register'],
     ],

@@ -54,10 +54,7 @@ class Jwt implements ILayer
             );
             if ($this->required()) {
                 if ($this->isValidAuthorization()) {
-                    $toolJwtToken = new \App\Tools\Jwt\Token(
-                        $this->config,
-                        $this->request
-                    );
+                    $toolJwtToken = new Token($this->config, $this->request);
                     try {
                         $tokenFragments = explode(
                             ' ',
@@ -108,7 +105,9 @@ class Jwt implements ILayer
             ->setCode($errorCode)
             ->setContent($errorMsg)
             ->send();
-        die;
+        if (false === $this->request->isCli()) {
+            die;
+        }
     }
 
     /**
@@ -190,8 +189,8 @@ class Jwt implements ILayer
         $disallowed = $this->configParams[self::_EXCLUDE];
         for ($c = 0; $c < count($disallowed); ++$c) {
             $composed = $this->prefix . $disallowed[$c];
-            $isAuth = ($composed == $this->request->getUri());
-            if ($isAuth) {
+            $isExclude = ($composed == $this->request->getUri());
+            if ($isExclude) {
                 return true;
             }
         }
