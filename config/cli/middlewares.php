@@ -9,11 +9,11 @@ return [
     \App\Middlewares\Jwt::class => [
         'enabled' => true,
         'prefix' => '/api/v1/',
-        'exclude' => ['auth/login', 'user/register'],
+        'exclude' => ['auth/login', 'test/pokerelay'],
     ],
     \App\Middlewares\After::class => [
         'enabled' => true,
         'prefix' => '/api/v1/',
-        'exclude' => ['auth/login', 'user/register'],
+        'exclude' => ['auth/login'],
     ],
 ];

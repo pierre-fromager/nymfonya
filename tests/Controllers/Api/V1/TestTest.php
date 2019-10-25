@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase as PFT;
 use App\Config;
 use App\Container;
 use App\Controllers\Api\V1\Test as ApiTestControler;
+use App\Http\Response;
 use PHPUnit\Util\Test;
 
 /**
@@ -76,7 +77,7 @@ class ApiV1ControllerTestTest extends PFT
      */
     protected static function getMethod(string $name)
     {
-        $class = new \ReflectionClass(Test::class);
+        $class = new \ReflectionClass(ApiTestControler::class);
         $method = $class->getMethod($name);
         $method->setAccessible(true);
         unset($class);
@@ -101,5 +102,123 @@ class ApiV1ControllerTestTest extends PFT
         $this->assertTrue(
             $this->instance->jwtaction() instanceof ApiTestControler
         );
+    }
+
+    /**
+     * testPokeRelayAction
+     * @covers App\Controllers\Api\V1\Test::pokerelay
+     */
+    public function testPokeRelayAction()
+    {
+        $this->assertTrue(
+            $this->instance->pokerelay() instanceof ApiTestControler
+        );
+    }
+
+    /**
+     * testPokemonApiRelayNoCache
+     * @covers App\Controllers\Api\V1\Test::pokemonApiRelay
+     * @covers App\Controllers\Api\V1\Test::apiRelayRequest
+     */
+    public function testPokemonApiRelayNoCache()
+    {
+        self::getMethod('clearCache')->invokeArgs($this->instance, []);
+        $par = self::getMethod('pokemonApiRelay')->invokeArgs(
+            $this->instance,
+            ['https://pokeapi.co/api/v2/pokemon/ditto/']
+        );
+        $this->assertTrue($par instanceof ApiTestControler);
+        $res = self::getMethod('getService')->invokeArgs(
+            $this->instance,
+            [\App\Http\Response::class]
+        );
+        $this->assertNotEmpty($res->getContent());
+        $this->assertEquals($res->getCode(), Response::HTTP_OK);
+    }
+
+    /**
+     * testPokemonApiRelayWithCache
+     * @covers App\Controllers\Api\V1\Test::pokemonApiRelay
+     */
+    public function testPokemonApiRelayWithCache()
+    {
+        $par = self::getMethod('pokemonApiRelay')->invokeArgs(
+            $this->instance,
+            ['https://pokeapi.co/api/v2/pokemon/ditto/']
+        );
+        $this->assertTrue($par instanceof ApiTestControler);
+        $res = self::getMethod('getService')->invokeArgs(
+            $this->instance,
+            [\App\Http\Response::class]
+        );
+        $this->assertNotEmpty($res->getContent());
+        $this->assertEquals($res->getCode(), Response::HTTP_OK);
+    }
+
+    /**
+     * testGetCachePath
+     * @covers App\Controllers\Api\V1\Test::getCachePath
+     */
+    public function testGetCachePath()
+    {
+        $gcp = self::getMethod('getCachePath')->invokeArgs($this->instance, []);
+        $this->assertTrue(is_string($gcp));
+        $this->assertNotEmpty($gcp);
+    }
+
+    /**
+     * testGetCacheFilename
+     * @covers App\Controllers\Api\V1\Test::getCacheFilename
+     */
+    public function testGetCacheFilename()
+    {
+        $gcp = self::getMethod('getCacheFilename')->invokeArgs($this->instance, []);
+        $this->assertTrue(is_string($gcp));
+        $this->assertNotEmpty($gcp);
+    }
+
+    /**
+     * testExpiredSetGetClearCache
+     * @covers App\Controllers\Api\V1\Test::clearCache
+     * @covers App\Controllers\Api\V1\Test::cacheExpired
+     * @covers App\Controllers\Api\V1\Test::setCache
+     * @covers App\Controllers\Api\V1\Test::getCache
+     */
+    public function testExpiredSetGetClearCache()
+    {
+        $cacheContentString = 'ok content';
+        $cc = '';
+        self::getMethod('clearCache')->invokeArgs($this->instance, []);
+        $ce0 = self::getMethod('cacheExpired')->invokeArgs($this->instance, []);
+        $this->assertTrue(is_bool($ce0));
+        if ($ce0) {
+            self::getMethod('setCache')->invokeArgs(
+                $this->instance,
+                [$cacheContentString]
+            );
+            $cc = $cacheContentString;
+        } else {
+            $cc =  self::getMethod('getCache')->invokeArgs(
+                $this->instance,
+                []
+            );
+        }
+        $this->assertEquals($cc, $cacheContentString);
+        $cc = '';
+        $ce1 = self::getMethod('cacheExpired')->invokeArgs($this->instance, []);
+        $this->assertTrue(is_bool($ce1));
+        if ($ce1) {
+            self::getMethod('setCache')->invokeArgs(
+                $this->instance,
+                [$cacheContentString]
+            );
+        } else {
+            $cc =  self::getMethod('getCache')->invokeArgs(
+                $this->instance,
+                []
+            );
+        }
+        $this->assertEquals($cc, $cacheContentString);
+        $this->assertTrue($this->instance instanceof ApiTestControler);
     }
 }
