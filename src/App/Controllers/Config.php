@@ -91,7 +91,7 @@ final class Config extends AbstractApi implements IApi
     {
         $line = 'Undefined function readline';
         if ($this->hasReadLine()) {
-            $line = readline("Command: ");
+            //$line = readline("Command: ");
         }
         $this->response
             ->setCode(Response::HTTP_OK)
