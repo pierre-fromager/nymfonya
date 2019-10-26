@@ -1,6 +1,9 @@
 # :elephant: Nymfonya
 
-is not a Symfony app...¯\\_(ツ)_/¯
+is not a Symfony app...¯\\_(ツ)_/¯  
+
+[![Build](https://api.travis-ci.org/pierre-fromager/nymfonya.svg?branch=master)](https://travis-ci.org/pierre-fromager/nymfonya)  
+
 
 ## ʕʘ̅͜ʘ̅ʔ Why
 
