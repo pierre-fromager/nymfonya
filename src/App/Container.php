@@ -46,7 +46,7 @@ class Container
     /**
      * init reporter
      *
-     * @return void
+     * @return Container
      */
     protected function initReporter(): Container
     {

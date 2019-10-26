@@ -36,7 +36,7 @@ final class Auth extends AbstractApi implements IApi
         $logger = $this->getService(\Monolog\Logger::class);
         $login = $this->request->getParam('login');
         $password = $this->request->getParam('password');
-        if (false == $this->isValidLogin($login, $password)) {
+        if (false === $this->isValidLogin($login, $password)) {
             $logger->warning(__FUNCTION__ . ' Invalid arguments');
             return $this->setErrorResponse(
                 Response::HTTP_BAD_REQUEST,

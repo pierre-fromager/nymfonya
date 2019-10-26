@@ -23,11 +23,11 @@ class Response implements IResponse
     protected $code;
 
     /**
-     * headers list
+     * is cli
      *
-     * @var Headers
+     * @var Boolean
      */
-    protected $headerManager;
+    protected $isCli;
 
     /**
      * instanciate

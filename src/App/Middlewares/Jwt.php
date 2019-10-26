@@ -3,7 +3,6 @@
 namespace App\Middlewares;
 
 use App\Http\Request;
-use App\Tools\User\Auth as authTools;
 use App\Tools\Jwt\Token;
 use App\Http\Interfaces\Middleware\ILayer;
 use App\Container;

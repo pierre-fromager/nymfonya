@@ -21,7 +21,7 @@ class Routes implements IRoutes
      */
     public function __construct(array $routes = [])
     {
-        if ($routes) {
+        if (!empty($routes)) {
             $this->set($routes);
         }
         return $this;

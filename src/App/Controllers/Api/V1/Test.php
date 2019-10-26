@@ -70,7 +70,7 @@ final class Test extends AbstractApi implements IApi
                     //'Authorization: Bearer ' . $this->token
                 ]
             );
-            if ($this->apiRelayHttpCode == Response::HTTP_OK) {
+            if ($this->apiRelayHttpCode === Response::HTTP_OK) {
                 $this->setCache($this->apiRelayResponse);
             }
         } else {

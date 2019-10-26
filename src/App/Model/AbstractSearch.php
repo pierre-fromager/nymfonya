@@ -75,7 +75,7 @@ abstract class AbstractSearch
      * set file name
      *
      * @param string $filename
-     * @return Search
+     * @return AbstractSearch
      */
     public function setFilename(string $filename): AbstractSearch
     {
@@ -87,7 +87,7 @@ abstract class AbstractSearch
      * set regex filter
      *
      * @param string $filter
-     * @return Search
+     * @return AbstractSearch
      */
     public function setFilter(string $filter): AbstractSearch
     {
@@ -99,7 +99,7 @@ abstract class AbstractSearch
      * set field separator
      *
      * @param string $separator
-     * @return Search
+     * @return AbstractSearch
      */
     public function setSeparator(string $separator): AbstractSearch
     {
@@ -110,7 +110,7 @@ abstract class AbstractSearch
     /**
      * stack items from streamed asset file
      *
-     * @return Search
+     * @return AbstractSearch
      */
     public function readFromStream(): AbstractSearch
     {

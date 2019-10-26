@@ -2,7 +2,9 @@
 
 is not a Symfony app...¯\\_(ツ)_/¯  
 
-[![Build](https://api.travis-ci.org/pierre-fromager/nymfonya.svg?branch=master)](https://travis-ci.org/pierre-fromager/nymfonya)  
+[![TravsisBadgeBuild](https://api.travis-ci.org/pierre-fromager/nymfonya.svg?branch=master)](https://travis-ci.org/pierre-fromager/nymfonya)
+[![ScrutinizerCq](https://scrutinizer-ci.com/g/pierre-fromager/nymfonya/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/pierre-fromager/nymfonya/)
+[![ScrutinizerCi](https://scrutinizer-ci.com/g/pierre-fromager/nymfonya/badges/code-intelligence.svg?b=master)](https://scrutinizer-ci.com/code-intelligence)  
 
 
 ## ʕʘ̅͜ʘ̅ʔ Why

@@ -16,7 +16,7 @@ trait TFileCache
     protected function cacheExpired(): bool
     {
         $this->cacheFilename = $this->getCacheFilename();
-        return (file_exists($this->cacheFilename) == false)
+        return (file_exists($this->cacheFilename) === false)
             ? true
             : filemtime($this->cacheFilename) < (time() - $this->cacheTtl);
     }

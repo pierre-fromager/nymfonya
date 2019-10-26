@@ -246,8 +246,7 @@ trait TKernel
         foreach ($middlwaresClasses as $className => $middlewareParams) {
             $this->middlewares[$className] = new $className;
         }
-        $this->middleware = new Middleware();
-        $this->middleware->layer($this->middlewares)->peel(
+        (new Middleware())->layer($this->middlewares)->peel(
             $this->container,
             function ($container) {
                 $this->execute(null);

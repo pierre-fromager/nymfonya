@@ -33,11 +33,10 @@ final class Stat extends AbstractApi implements IApi
             Response::_ERROR => true,
             Response::_ERROR_MSG => 'Opcache disable'
         ]);
-        if ($status) {
+        if (is_array($status)) {
             $path = dirname(dirname($this->request->getFilename()));
             $scripts = array_filter($status['scripts'], function ($val) use ($path) {
                 return strpos($val['full_path'], $path) !== false;
-                return true;
             });
             $status['scripts'] = array_values($scripts);
             $bytes = array_reduce($status['scripts'], function ($stack, $val) {

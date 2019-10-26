@@ -23,7 +23,18 @@ class Crypt
     const ERR_MSG_ENCRYPTION_FAIL = 'Encryption failure';
     const DEFAULT_ALGO = 'aes-256-ctr';
 
+    /**
+     * method is crypt algo
+     *
+     * @var String
+     */
     private $method = self::DEFAULT_ALGO;
+
+    /**
+     * crypt key
+     *
+     * @var String
+     */
     private $key = '';
 
     /**
@@ -93,7 +104,7 @@ class Crypt
     /**
      * decrypt content
      *
-     * @param mixed content
+     * @param mixed $content
      * @param boolean $encoded
      * @return mixed
      */
