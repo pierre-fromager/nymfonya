@@ -186,8 +186,6 @@ Check S.Bergmann [travis config](https://github.com/sebastianbergmann/php-code-c
 
 ![Coverage dashboard](assets/img/dashboard.png)
 
-I'm working on travis CI config.
-
 ## :fire: Security
 
 Develop app is dev job, secure it is one other.  
@@ -238,7 +236,6 @@ Change some settings in php.ini
 * Implement Bundle concept.
 * Implement Controller forward method.
 * Implement Response redirect 30X.
-* Travis setup.
 
 ### Extra packages  
 
