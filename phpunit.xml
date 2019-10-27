@@ -87,13 +87,13 @@
         </testsuite>
         <testsuite name="MiddlewareAfter">
             <file>tests/Middlewares/AfterTest.php</file>
-        </testsuite>        
+        </testsuite>
         <testsuite name="ModelSearchAbstract">
             <file>tests/Model/SearchTest.php</file>
         </testsuite>
         <testsuite name="ModelAccounts">
             <file>tests/Model/AccountsTest.php</file>
-        </testsuite>        
+        </testsuite>
     </testsuites>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
@@ -106,5 +106,14 @@
         <blacklist>
             <directory suffix=".php">./vendor</directory>
         </blacklist>
+        <logging>
+            <log type="coverage-html" target="./coverage" lowUpperBound="35" highLowerBound="70"/>
+            <log type="coverage-clover" target="./coverage.xml"/>
+            <log type="coverage-php" target="./coverage.serialized"/>
+            <log type="coverage-text" target="php://stdout" showUncoveredFiles="false"/>
+            <log type="junit" target="./logfile.xml" logIncompleteSkipped="false"/>
+            <log type="testdox-html" target="./testdox.html"/>
+            <log type="testdox-text" target="./testdox.txt"/>
+        </logging>
     </filter>
 </phpunit>
