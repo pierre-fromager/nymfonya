@@ -1,4 +1,13 @@
+
+filter:
+    excluded_paths: [vendor/*, tests/*]
+
+checks:
+    php:
+        code_rating: true
+        duplication: true
+
 tools:
     php_cs_fixer: false
     external_code_coverage:
-        timeout: 600
+        timeout: 1800
