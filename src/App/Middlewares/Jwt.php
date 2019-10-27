@@ -175,7 +175,8 @@ class Jwt implements ILayer
     protected function isExclude(): bool
     {
         $disallowed = $this->configParams[self::_EXCLUDE];
-        for ($c = 0; $c < count($disallowed); ++$c) {
+        $count = count($disallowed);
+        for ($c = 0; $c < $count; ++$c) {
             $composed = $this->prefix . $disallowed[$c];
             $isExclude = ($composed == $this->request->getUri());
             if ($isExclude) {
