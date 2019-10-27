@@ -52,7 +52,7 @@ trait TRelay
             $this->apiRelayResponse = ($error) ? 'Api relay error' : $result;
             $curlInfoCode = ($error) ? 500 : curl_getinfo($cha, CURLINFO_HTTP_CODE);
             $this->apiRelayHttpCode = ($curlInfoCode === false) ? 500 : $curlInfoCode;
-            if ($this->apiRelayOptionHeader) {
+            if ($this->apiRelayOptionHeader && false === $error) {
                 $this->apiRelayHeaders = [];
                 $headerSize = curl_getinfo($cha, CURLINFO_HEADER_SIZE);
                 $rawHeaders = substr($this->apiRelayResponse, 0, $headerSize);
