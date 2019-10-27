@@ -228,11 +228,8 @@ Change some settings in php.ini
 ### Core
 
 * Refacto Request to use behind a proxy.
-* Unit tests.
 * Console tool.
-* Profiler.
 * More middlewares before Acl, Waf, after Transfos...
-* Remove uggly static methods.
 * Isolate http & core as packages.
 * Implement Bundle concept.
 * Implement Controller forward method.
