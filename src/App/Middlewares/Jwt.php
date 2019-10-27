@@ -60,12 +60,16 @@ class Jwt implements ILayer
                         if (isset($decodedToken->{Token::_DATA}->{Token::_DATA_ID})) {
                             $userId = $decodedToken->{Token::_DATA}->{Token::_DATA_ID};
                             $user = $this->getUser($userId);
-                            if ($user !== false) {
+
+
+                            if (!empty($user)) {
                                 if ($this->isValidCredential($decodedToken, $user)) {
                                     $this->request->setSession('auth', $user, 'user');
                                 } else {
                                     $this->sendError(403, 'bad credentials');
                                 }
+                            } else {
+                                $this->sendError(403, 'bad user');
                             }
                         }
                     } catch (\Exception $e) {

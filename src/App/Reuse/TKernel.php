@@ -476,9 +476,9 @@ trait TKernel
     {
         $this->className = $this->nameSpace
             . implode(
-                '\\',
-                array_map('ucfirst', explode('/', $routerGroups[0]))
-            );
+            '\\',
+            array_map('ucfirst', explode('/', $routerGroups[0]))
+        );
     }
 
     /**

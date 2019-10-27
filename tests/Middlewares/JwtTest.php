@@ -301,14 +301,14 @@ class AppMiddlewaresJwtTest extends PFT
         $this->invokeMethod($this->layer, 'process', []);
         $this->assertTrue($peelReturn instanceof Container);
         $res = $peelReturn->getService(\App\Http\Response::class);
-        $this->assertEquals($res->getCode(), 500);
+        $this->assertEquals($res->getCode(), 403);
         $this->assertEquals(
             $res->getContent(),
-            '{"error":true,"errorMessage":"Auth failed : Undefined index: email"}'
+            '{"error":true,"errorMessage":"Auth failed : bad user"}'
         );
     }
 
-     /**
+    /**
      * testProcessFailedUnauthorized
      * @covers App\Middlewares\Jwt::setEnabled
      * @covers App\Middlewares\Jwt::process
@@ -323,10 +323,10 @@ class AppMiddlewaresJwtTest extends PFT
         $this->invokeMethod($this->layer, 'process', []);
         $this->assertTrue($peelReturn instanceof Container);
         $res = $peelReturn->getService(\App\Http\Response::class);
-        $this->assertEquals($res->getCode(), 500);
+        $this->assertEquals($res->getCode(), 403);
         $this->assertEquals(
             $res->getContent(),
-            '{"error":true,"errorMessage":"Auth failed : Undefined index: email"}'
+            '{"error":true,"errorMessage":"Auth failed : bad user"}'
         );
     }
 
