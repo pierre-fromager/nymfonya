@@ -3,9 +3,8 @@
 is not a Symfony app...¯\\_(ツ)_/¯  
 
 [![TravsisBadgeBuild](https://api.travis-ci.org/pierre-fromager/nymfonya.svg?branch=master)](https://travis-ci.org/pierre-fromager/nymfonya)
-[![ScrutinizerCq](https://scrutinizer-ci.com/g/pierre-fromager/nymfonya/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/pierre-fromager/nymfonya/)
-[![ScrutinizerCi](https://scrutinizer-ci.com/g/pierre-fromager/nymfonya/badges/code-intelligence.svg?b=master)](https://scrutinizer-ci.com/code-intelligence)  
-
+[![CoverageCi](https://scrutinizer-ci.com/g/pierre-fromager/nymfonya/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/pierre-fromager/nymfonya/)
+[![ScrutinizerCq](https://scrutinizer-ci.com/g/pierre-fromager/nymfonya/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/pierre-fromager/nymfonya/)  
 
 ## ʕʘ̅͜ʘ̅ʔ Why
 
@@ -187,9 +186,6 @@ composer run covdbg
 You can also use a very fast driver [PCOV](https://github.com/krakjoe/pcov).  
 Check S.Bergmann [travis config](https://github.com/sebastianbergmann/php-code-coverage/blob/master/.travis.yml).
 
-![Coverage main](assets/img/coverage.png)
-
-![Coverage dashboard](assets/img/dashboard.png)
 
 ## :fire: Security
 
