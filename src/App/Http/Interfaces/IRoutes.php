@@ -2,6 +2,8 @@
 
 namespace App\Http\Interfaces;
 
+use App\Http\Routes;
+
 interface IRoutes
 {
     /**
@@ -22,7 +24,7 @@ interface IRoutes
      * set routes from array
      *
      * @param array $routes
-     * @return void
+     * @return Routes
      */
-    public function set(array $routes);
+    public function set(array $routes): Routes;
 }

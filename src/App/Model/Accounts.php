@@ -109,12 +109,13 @@ class Accounts extends AbstractSearch
                 return $ac;
             }, $accounts);
             $handler = fopen($filename, 'w');
-            if ($handler !== false) {
+            $error = (false === $handler);
+            if ($error === false) {
                 foreach ($accounts as $record) {
                     fputcsv($handler, array_values($record));
                 }
+                fclose($handler);
             }
-            fclose($handler);
             unset($handler, $accounts, $crypt);
         }
         return $this;

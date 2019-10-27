@@ -262,9 +262,13 @@ trait TKernel
     protected function setActionAnnotations()
     {
         if ($this->isValidAction()) {
-            $this->actionAnnotations = $this->reflector
+            $docComments = $this->reflector
                 ->getMethod($this->action)
                 ->getDocComment();
+            $this->actionAnnotations = (false === $docComments)
+                ? ''
+                : $docComments;
+            unset($docComments);
         }
     }
 

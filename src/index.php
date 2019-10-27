@@ -11,7 +11,7 @@ ini_set('session.save_path', realpath(__DIR__ . '/../session'));
 
 if (function_exists('opcache_get_configuration')) {
     ini_set('opcache.memory_consumption', 2);
-    ini_set('opcache.load_comments', false);
+    ini_set('opcache.load_comments', '1');
 }
 
 require_once __DIR__ . '/../vendor/autoload.php';

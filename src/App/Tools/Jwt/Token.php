@@ -76,7 +76,7 @@ class Token implements Interfaces\IToken
      * set token string
      *
      * @param string $token
-     * @return void
+     * @return Token
      */
     protected function setToken(string $token): Token
     {
