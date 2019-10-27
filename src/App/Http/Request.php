@@ -173,7 +173,7 @@ class Request extends Session implements IRequest
     /**
      * return request headers
      *
-     * @return array
+     * @return Request
      */
     protected function setHeaders(): Request
     {
@@ -186,7 +186,7 @@ class Request extends Session implements IRequest
     /**
      * build uri from cli args
      *
-     * @return void
+     * @return string
      */
     protected function getArgs(): string
     {

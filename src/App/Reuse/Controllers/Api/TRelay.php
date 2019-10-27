@@ -47,7 +47,8 @@ trait TRelay
         }
         curl_setopt($cha, CURLOPT_RETURNTRANSFER, 1);
         $this->apiRelayResponse = curl_exec($cha);
-        $this->apiRelayHttpCode = curl_getinfo($cha, CURLINFO_HTTP_CODE);
+        $curlInfoCode = curl_getinfo($cha, CURLINFO_HTTP_CODE);
+        $this->apiRelayHttpCode = ($curlInfoCode === false) ? 500 : $curlInfoCode;
         if ($this->apiRelayOptionHeader) {
             $this->apiRelayHeaders = [];
             $headerSize = curl_getinfo($cha, CURLINFO_HEADER_SIZE);

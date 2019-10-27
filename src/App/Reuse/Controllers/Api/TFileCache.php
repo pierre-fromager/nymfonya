@@ -57,10 +57,10 @@ trait TFileCache
         if ($fromRequest) {
             @unlink($this->getCacheFilename());
         } else {
-            $fileList = array_filter(
-                glob($this->getCachePath() . '*'),
-                'is_file'
-            );
+            $files = glob($this->getCachePath() . '*');
+            $fileList = is_array($files)
+                ? array_filter($files, 'is_file')
+                : [];
             $counter = count($fileList);
             for ($c = 0; $c < $counter; $c++) {
                 unlink($fileList[$c]);

@@ -54,7 +54,6 @@ class Routes implements IRoutes
      * validate routes to be an array of regexp string
      *
      * @throws Exception
-     * @return void
      */
     protected function validate()
     {
