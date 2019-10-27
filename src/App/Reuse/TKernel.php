@@ -263,9 +263,12 @@ trait TKernel
     {
         if ($this->isValidAction()) {
             $refMethod = $this->reflector->getMethod($this->action);
-            $this->actionAnnotations = (false === $refMethod)
+            $docComment = $refMethod->getDocComment();
+            $hasComment = (false === $refMethod && false === $docComment);
+            $this->actionAnnotations = ($hasComment)
                 ? ''
-                : $refMethod->getDocComment();
+                : $docComment;
+            unset($refMethod, $docComment, $hasComment);
         }
     }
 
@@ -473,9 +476,9 @@ trait TKernel
     {
         $this->className = $this->nameSpace
             . implode(
-            '\\',
-            array_map('ucfirst', explode('/', $routerGroups[0]))
-        );
+                '\\',
+                array_map('ucfirst', explode('/', $routerGroups[0]))
+            );
     }
 
     /**
