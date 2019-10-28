@@ -73,6 +73,8 @@ class Jwt implements ILayer
                     } catch (\Exception $e) {
                         $this->sendError(500, $e->getMessage());
                     }
+                } else {
+                    $this->sendError(403, 'Token required');
                 }
             }
         }

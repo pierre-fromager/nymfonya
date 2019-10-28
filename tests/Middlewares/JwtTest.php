@@ -136,6 +136,20 @@ class AppMiddlewaresJwtTest extends PFT
     }
 
     /**
+     * returns mocked request for a given uri
+     * no additionals headers provided.
+     *
+     * @return MockObject
+     */
+    protected function getMockedRequestUri(string $uri): MockObject
+    {
+        $mockRequest = $this->createMock(\App\Http\Request::class);
+        $mockRequest->method('getUri')->willReturn($uri);
+        $mockRequest->method('isCli')->willReturn(true);
+        return $mockRequest;
+    }
+
+    /**
      * init test with or without request mocked
      *
      * @param boolean $withMock
@@ -331,6 +345,31 @@ class AppMiddlewaresJwtTest extends PFT
     }
 
     /**
+     * testProcessMissingToken
+     * @covers App\Middlewares\Jwt::setEnabled
+     * @covers App\Middlewares\Jwt::process
+     */
+    public function testProcessMissingToken()
+    {
+        $this->setOutputCallback(function () {
+        });
+        $this->container->setService(
+            \App\Http\Request::class,
+            $this->getMockedRequestUri('/api/v1/stat/filecache')
+        );
+        $peelReturn = $this->peelLayer();
+        $this->invokeMethod($this->layer, 'setEnabled', [true]);
+        $this->invokeMethod($this->layer, 'process', []);
+        $this->assertTrue($peelReturn instanceof Container);
+        $res = $peelReturn->getService(\App\Http\Response::class);
+        $this->assertEquals($res->getCode(), 403);
+        $this->assertEquals(
+            $res->getContent(),
+            '{"error":true,"errorMessage":"Auth failed : Token required"}'
+        );
+    }
+
+    /**
      * testIsPreflight
      * @covers App\Middlewares\Jwt::isPreflight
      */
@@ -391,6 +430,17 @@ class AppMiddlewaresJwtTest extends PFT
             []
         );
         $this->assertTrue(is_bool($iva));
+        $this->assertFalse($iva);
+        $this->assertTrue($peelReturn instanceof Container);
+        $this->init(true, true);
+        $peelReturn = $this->peelLayer();
+        $iva = $this->invokeMethod(
+            $this->layer,
+            'isValidAuthorization',
+            []
+        );
+        $this->assertTrue(is_bool($iva));
+        $this->assertTrue($iva);
         $this->assertTrue($peelReturn instanceof Container);
     }
 
