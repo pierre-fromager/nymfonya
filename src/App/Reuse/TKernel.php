@@ -240,10 +240,11 @@ trait TKernel
      */
     protected function setMiddleware()
     {
-        $middlwaresClasses = $this->config->getSettings(
+        $middlwaresConfig = $this->config->getSettings(
             Config::_MIDDLEWARES
         );
-        foreach ($middlwaresClasses as $className => $middlewareParams) {
+        $middlwaresClasses = array_keys($middlwaresConfig);
+        foreach ($middlwaresClasses as $className) {
             $this->middlewares[$className] = new $className;
         }
         (new Middleware())->layer($this->middlewares)->peel(

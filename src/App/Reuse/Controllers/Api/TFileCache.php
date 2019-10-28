@@ -55,7 +55,10 @@ trait TFileCache
     protected function clearCache(bool $fromRequest = false)
     {
         if ($fromRequest) {
-            @unlink($this->getCacheFilename());
+            $filename = $this->getCacheFilename();
+            if (is_writable($filename)) {
+                @unlink($this->getCacheFilename());
+            }
         } else {
             $files = glob($this->getCachePath() . '*');
             $fileList = is_array($files)
