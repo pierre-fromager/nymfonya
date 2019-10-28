@@ -264,11 +264,11 @@ trait TKernel
         if ($this->isValidAction()) {
             $refMethod = $this->reflector->getMethod($this->action);
             $docComment = $refMethod->getDocComment();
-            $hasComment = (false === $refMethod && false === $docComment);
-            $this->actionAnnotations = ($hasComment)
+            $noComment = (false === $refMethod || false === $docComment);
+            $this->actionAnnotations = ($noComment)
                 ? ''
-                : $docComment;
-            unset($refMethod, $docComment, $hasComment);
+                : (string) $docComment;
+            unset($refMethod, $docComment, $noComment);
         }
     }
 

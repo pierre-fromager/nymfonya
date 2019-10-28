@@ -3,6 +3,7 @@
 namespace App\Reuse\Controllers\Api;
 
 use App\Http\Request;
+use App\Interfaces\Controllers\IApi;
 
 trait TRelay
 {
@@ -32,8 +33,8 @@ trait TRelay
             curl_setopt($cha, CURLOPT_URL, $url);
             curl_setopt($cha, CURLOPT_POST, ($method == Request::METHOD_POST));
             curl_setopt($cha, CURLOPT_TIMEOUT, 300);
-            curl_setopt($cha, CURLOPT_USERAGENT, self::USER_AGENT);
-            curl_setopt($cha, CURLOPT_BUFFERSIZE, self::BUFFER_SIZE);
+            curl_setopt($cha, CURLOPT_USERAGENT, IApi::USER_AGENT);
+            curl_setopt($cha, CURLOPT_BUFFERSIZE, IApi::BUFFER_SIZE);
             curl_setopt($cha, CURLOPT_HTTPHEADER, $headers);
             if ($this->apiRelayOptionHeader) {
                 curl_setopt($cha, CURLOPT_VERBOSE, 1);
