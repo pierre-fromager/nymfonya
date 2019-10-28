@@ -14,20 +14,12 @@ class Kernel
     use \App\Reuse\TKernel;
 
     /**
-     * app instance
-     *
-     * @var Kernel
-     */
-    private static $instance;
-
-    /**
      * instanciate
      *
      */
     public function __construct(string $env, string $path)
     {
         $this->init($env, $path);
-        self::$instance = $this;
     }
 
     /**

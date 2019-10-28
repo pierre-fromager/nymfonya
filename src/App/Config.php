@@ -18,7 +18,6 @@ class Config implements IConfig
     protected $path;
     protected $env;
     protected $settings;
-    protected static $instance;
 
     /**
      * instanciate

@@ -40,7 +40,7 @@ trait TRelay
                 curl_setopt($cha, CURLOPT_VERBOSE, 1);
                 curl_setopt($cha, CURLOPT_HEADER, 1);
             }
-            if ($method == Request::METHOD_POST && $datas) {
+            if (Request::METHOD_POST == $method && !empty($datas)) {
                 curl_setopt(
                     $cha,
                     CURLOPT_POSTFIELDS,
@@ -52,7 +52,7 @@ trait TRelay
             $error = (false === $result);
             $this->apiRelayResponse = ($error) ? 'Api relay error' : $result;
             $curlInfoCode = ($error) ? 500 : curl_getinfo($cha, CURLINFO_HTTP_CODE);
-            $this->apiRelayHttpCode = ($curlInfoCode === false) ? 500 : $curlInfoCode;
+            $this->apiRelayHttpCode = (false === $curlInfoCode) ? 500 : $curlInfoCode;
             if ($this->apiRelayOptionHeader && false === $error) {
                 $this->apiRelayHeaders = [];
                 $headerSize = curl_getinfo($cha, CURLINFO_HEADER_SIZE);
