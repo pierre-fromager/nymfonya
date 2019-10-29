@@ -18,13 +18,6 @@ class Uploader
     const UPLOAD_ERR_UNKOWN = 'Erreur inconnue.';
 
     /**
-     * container
-     *
-     * @var Container
-     */
-    protected $container;
-
-    /**
      * file
      *
      * @var array
@@ -105,11 +98,9 @@ class Uploader
     /**
      * instanciate
      *
-     * @param Container $container
      */
-    public function __construct(Container $container)
+    public function __construct()
     {
-        $this->container = $container;
         $this->file = $_FILES;
         $this->error = false;
         $this->errorMsg = '';
@@ -225,7 +216,7 @@ class Uploader
      * set files infos
      *
      */
-    protected function setFileInfos()
+    protected function setFileInfos(): Uploader
     {
         $isValid = isset($this->file[self::FIELD])
             && !empty($this->file[self::FIELD]);
