@@ -11,8 +11,7 @@ return [
         'prefix' => '/api/v1/',
         'exclude' => [
             'auth/login', 
-            'user/register', 
-            //'test/jwtaction'
+            'test/upload', 
         ],
     ],
     App\Middlewares\After::class => [

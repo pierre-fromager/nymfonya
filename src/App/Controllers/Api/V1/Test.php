@@ -7,6 +7,7 @@ use App\Reuse\Controllers\AbstractApi;
 use App\Http\Response;
 use App\Http\Request;
 use App\Container;
+use App\Tools\File\Uploader;
 
 final class Test extends AbstractApi implements IApi
 {
@@ -41,6 +42,26 @@ final class Test extends AbstractApi implements IApi
     }
 
     /**
+     * upload
+     *
+     * @return Test
+     */
+    final public function upload(): Test
+    {
+        $upload = new Uploader($this->getContainer());
+        $appPath = dirname(dirname($this->request->getFilename()));
+        $upload->setTargetPath($appPath . '/assets/upload/')->process();
+        $resCodeError = $upload->getError()
+            ? Response::HTTP_INTERNAL_SERVER_ERROR
+            : Response::HTTP_OK;
+        $this->response->setCode($resCodeError)->setContent(
+            $upload->getInfos()
+        );
+        unset($upload);
+        return $this;
+    }
+
+    /**
      * pokerelay
      *
      * @see https://pokeapi.co/
@@ -59,7 +80,7 @@ final class Test extends AbstractApi implements IApi
      * @param string $url
      * @return Test
      */
-    protected function pokemonApiRelay(string $url):Test
+    protected function pokemonApiRelay(string $url): Test
     {
         if ($this->cacheExpired()) {
             $this->apiRelayRequest(

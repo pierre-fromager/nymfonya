@@ -114,6 +114,7 @@ class AppMiddlewaresJwtTest extends PFT
      * returns mocked request following success param
      * when success is true valid credentials params get setted valid
      * for login and password or invalid credentials provided.
+     * First uri filecache requires token, login not.
      *
      * @return MockObject
      */

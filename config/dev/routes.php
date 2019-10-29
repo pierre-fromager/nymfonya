@@ -10,4 +10,5 @@ return [
     '/^(api\/v1\/stat)\/(filecache)$/', // 1st group match controller 2nd match action
     '/^(api\/v1\/test)\/(jwtaction)$/', // 1st group match controller 2nd match action
     '/^(api\/v1\/test)\/(pokerelay)$/', // 1st group match controller 2nd match action
+    '/^(api\/v1\/test)\/(upload)$/', // 1st group match controller 2nd match action
 ];

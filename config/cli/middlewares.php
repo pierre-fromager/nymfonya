@@ -9,7 +9,9 @@ return [
     \App\Middlewares\Jwt::class => [
         'enabled' => true,
         'prefix' => '/api/v1/',
-        'exclude' => ['auth/login', 'test/pokerelay'],
+        'exclude' => [
+            'auth/login', 'test/pokerelay',
+        ],
     ],
     \App\Middlewares\After::class => [
         'enabled' => true,
