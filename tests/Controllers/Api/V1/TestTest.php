@@ -116,6 +116,17 @@ class ApiV1ControllerTestTest extends PFT
     }
 
     /**
+     * testUploadAction
+     * @covers App\Controllers\Api\V1\Test::upload
+     */
+    public function testUploadAction()
+    {
+        $this->assertTrue(
+            $this->instance->upload() instanceof ApiTestControler
+        );
+    }
+
+    /**
      * testPokemonApiRelayNoCache
      * @covers App\Controllers\Api\V1\Test::pokemonApiRelay
      * @covers App\Controllers\Api\V1\Test::apiRelayRequest

@@ -110,6 +110,9 @@
         "testToolsAuth": [
             "phpunit --testsuite ToolsAuth"
         ],
+        "testToolsFileUploader": [
+            "phpunit --testsuite ToolsFileUploader"
+        ],        
         "testMiddlewareJwt": [
             "phpunit --debug  --testsuite MiddlewareJwt"
         ],

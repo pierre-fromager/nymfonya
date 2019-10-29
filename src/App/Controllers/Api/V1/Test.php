@@ -48,9 +48,10 @@ final class Test extends AbstractApi implements IApi
      */
     final public function upload(): Test
     {
-        $upload = new Uploader($this->getContainer());
         $appPath = dirname(dirname($this->request->getFilename()));
-        $upload->setTargetPath($appPath . '/assets/upload/')->process();
+        $upload = (new Uploader())
+            ->setTargetPath($appPath . '/assets/upload/')
+            ->process();
         $resCodeError = $upload->getError()
             ? Response::HTTP_INTERNAL_SERVER_ERROR
             : Response::HTTP_OK;
