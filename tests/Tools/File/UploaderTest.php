@@ -56,6 +56,19 @@ class ToolsFileUploaderTest extends PFT
         return $method;
     }
 
+    protected function getFakeFile(): array
+    {
+        return [
+            'file' => [
+                'name' => 'test.csv',
+                'tmp_name' => 'test.csv',
+                'error' => 0,
+                'type' => 'text/csv',
+                'size' => 1000,
+            ]
+        ];
+    }
+
     /**
      * testInstance
      * @covers App\Tools\File\Uploader::__construct
@@ -63,6 +76,37 @@ class ToolsFileUploaderTest extends PFT
     public function testInstance()
     {
         $this->assertTrue($this->instance instanceof Uploader);
+    }
+
+    /**
+     * constantsProvider
+     * @return Array
+     */
+    public function constantsProvider()
+    {
+        return [
+            ['FIELD'],
+            ['UPLOAD_ERR_INI_SIZE'],
+            ['UPLOAD_ERR_FORM_SIZE'],
+            ['UPLOAD_ERR_NO_TMP_DIR'],
+            ['UPLOAD_ERR_CANT_WRITE'],
+            ['UPLOAD_ERR_EXTENSION'],
+            ['UPLOAD_ERR_PARTIAL'],
+            ['UPLOAD_ERR_NO_FILE'],
+            ['UPLOAD_ERR_UNKOWN'],
+        ];
+    }
+
+    /**
+     * testConstants
+     * @covers App\Tools\File\Uploader::__construct
+     * @dataProvider constantsProvider
+     */
+    public function testConstants($k)
+    {
+        $class = new \ReflectionClass(Uploader::class);
+        $this->assertArrayHasKey($k, $class->getConstants());
+        unset($class);
     }
 
     /**
@@ -87,6 +131,7 @@ class ToolsFileUploaderTest extends PFT
     /**
      * testProcess
      * @covers App\Tools\File\Uploader::process
+     * @covers App\Tools\File\Uploader::setFile
      */
     public function testProcess()
     {
@@ -96,6 +141,14 @@ class ToolsFileUploaderTest extends PFT
         $this->assertEquals(
             $this->instance->getError(),
             UPLOAD_ERR_NO_FILE
+        );
+        $sfe = self::getMethod('setFile')->invokeArgs(
+            $this->instance,
+            [$this->getFakeFile()]
+        );
+        $this->assertTrue($sfe instanceof Uploader);
+        $this->assertTrue(
+            $this->instance->process() instanceof Uploader
         );
     }
 
@@ -129,10 +182,78 @@ class ToolsFileUploaderTest extends PFT
      */
     public function testSetFileInfos()
     {
+        $sfe = self::getMethod('setFile')->invokeArgs(
+            $this->instance,
+            [$this->getFakeFile()]
+        );
+        $this->assertTrue($sfe instanceof Uploader);
         $sfi = self::getMethod('setFileInfos')->invokeArgs(
             $this->instance,
             []
         );
         $this->assertTrue($sfi instanceof Uploader);
+    }
+
+    /**
+     * testSetFile
+     * @covers App\Tools\File\Uploader::setFile
+     */
+    public function testSetFile()
+    {
+        $sfe = self::getMethod('setFile')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertTrue($sfe instanceof Uploader);
+    }
+
+    /**
+     * errorProvider
+     * @return Array
+     */
+    public function errorProvider()
+    {
+        return [
+            [UPLOAD_ERR_INI_SIZE, Uploader::UPLOAD_ERR_INI_SIZE],
+            [UPLOAD_ERR_FORM_SIZE, Uploader::UPLOAD_ERR_FORM_SIZE],
+            [UPLOAD_ERR_NO_TMP_DIR, Uploader::UPLOAD_ERR_NO_TMP_DIR],
+            [UPLOAD_ERR_CANT_WRITE, Uploader::UPLOAD_ERR_CANT_WRITE],
+            [UPLOAD_ERR_EXTENSION, Uploader::UPLOAD_ERR_EXTENSION],
+            [UPLOAD_ERR_PARTIAL, Uploader::UPLOAD_ERR_PARTIAL],
+            [UPLOAD_ERR_NO_FILE, Uploader::UPLOAD_ERR_NO_FILE],
+            [2000, Uploader::UPLOAD_ERR_UNKOWN],
+        ];
+    }
+
+    /**
+     * testSetErrorCode
+     * @covers App\Tools\File\Uploader::setErrorCode
+     * @covers App\Tools\File\Uploader::getInfos
+     * @covers App\Tools\File\Uploader::setErrorMessage
+     * @dataProvider errorProvider
+     */
+    public function testSetErrorCode($code, $expMsg)
+    {
+        self::getMethod('setErrorCode')->invokeArgs($this->instance, [$code]);
+        self::getMethod('setErrorMessage')->invokeArgs($this->instance, []);
+        $this->assertEquals($this->instance->getInfos()['errorMsg'], $expMsg);
+    }
+
+    /**
+     * testSetErrorCodeNoError
+     * @covers App\Tools\File\Uploader::setFile
+     * @covers App\Tools\File\Uploader::setErrorCode
+     * @covers App\Tools\File\Uploader::getInfos
+     * @covers App\Tools\File\Uploader::setErrorMessage
+     */
+    public function testSetErrorCodeNoError()
+    {
+        self::getMethod('setFile')->invokeArgs(
+            $this->instance,
+            [$this->getFakeFile()]
+        );
+        self::getMethod('setErrorCode')->invokeArgs($this->instance, [0]);
+        self::getMethod('setErrorMessage')->invokeArgs($this->instance, []);
+        $this->assertEquals($this->instance->getInfos()['errorMsg'], '');
     }
 }

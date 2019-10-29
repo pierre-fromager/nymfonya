@@ -2,8 +2,6 @@
 
 namespace App\Tools\File;
 
-use App\Container;
-
 class Uploader
 {
 
@@ -101,11 +99,8 @@ class Uploader
      */
     public function __construct()
     {
-        $this->file = $_FILES;
-        $this->error = false;
-        $this->errorMsg = '';
-        $this->setFileInfos();
-        $this->setErrorMessage();
+        $this->setErrorCode(UPLOAD_ERR_NO_FILE);
+        $this->setFile();
     }
 
     /**
@@ -142,9 +137,7 @@ class Uploader
             $destFilename = $this->targetPath . $this->filename;
             $result = move_uploaded_file($this->filetmpname, $destFilename);
             if (false === $result) {
-                $this->error = true;
-                $this->errorCode = UPLOAD_ERR_CANT_WRITE;
-                $this->setErrorMessage();
+                $this->setErrorCode(UPLOAD_ERR_CANT_WRITE);
             }
         }
         return $this;
@@ -173,6 +166,32 @@ class Uploader
     }
 
     /**
+     * set file either from global $_FILES or $files
+     *
+     * @return Uploader
+     */
+    protected function setFile(array $files = []): Uploader
+    {
+        $this->file = (!empty($files)) ? $files : $_FILES;
+        $this->setFileInfos();
+        return $this;
+    }
+
+    /**
+     * set error code
+     *
+     * @param integer $errorCode
+     * @return Uploader
+     */
+    protected function setErrorCode(int $errorCode): Uploader
+    {
+        $this->errorCode = $errorCode;
+        $this->error = ($errorCode != 0);
+        $this->setErrorMessage();
+        return $this;
+    }
+
+    /**
      * set error message from error code
      *
      * @return Uploader
@@ -180,15 +199,15 @@ class Uploader
     protected function setErrorMessage(): Uploader
     {
         if ($this->error === false) {
+            $this->errorMsg = '';
             return $this;
         }
-        $maxSize = ini_get('upload_max_filesize');
         switch ($this->errorCode) {
             case UPLOAD_ERR_INI_SIZE:
-                $this->errorMsg = self::UPLOAD_ERR_INI_SIZE . $maxSize . '.';
+                $this->errorMsg = self::UPLOAD_ERR_INI_SIZE;
                 break;
             case UPLOAD_ERR_FORM_SIZE:
-                $this->errorMsg = self::UPLOAD_ERR_FORM_SIZE . $maxSize . '.';
+                $this->errorMsg = self::UPLOAD_ERR_FORM_SIZE;
                 break;
             case UPLOAD_ERR_NO_TMP_DIR:
                 $this->errorMsg = self::UPLOAD_ERR_NO_TMP_DIR;
@@ -206,7 +225,7 @@ class Uploader
                 $this->errorMsg = self::UPLOAD_ERR_NO_FILE;
                 break;
             default:
-                $this->errorMsg = 'Unknown Error';
+                $this->errorMsg = self::UPLOAD_ERR_UNKOWN;
                 break;
         }
         return $this;
@@ -220,8 +239,8 @@ class Uploader
     {
         $isValid = isset($this->file[self::FIELD])
             && !empty($this->file[self::FIELD]);
-        $this->error = (false === $isValid);
         if ($isValid) {
+            $this->setErrorCode(0);
             $fileInfo = $this->file[self::FIELD];
             $this->filename = $fileInfo['name'];
             $basename = basename($this->filename);
@@ -233,8 +252,7 @@ class Uploader
             $this->filesize = $fileInfo['size'];
             unset($fileInfo);
         } else {
-            $this->errorCode = UPLOAD_ERR_NO_FILE;
-            $this->setErrorMessage();
+            $this->setErrorCode(UPLOAD_ERR_NO_FILE);
         }
         return $this;
     }
