@@ -42,7 +42,7 @@ final class Test extends AbstractApi implements IApi
     }
 
     /**
-     * upload
+     * upload with jwt bearer
      *
      * @return Test
      */

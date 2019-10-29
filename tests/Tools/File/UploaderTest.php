@@ -56,6 +56,11 @@ class ToolsFileUploaderTest extends PFT
         return $method;
     }
 
+    /**
+     * return an expected fake global $_FILES
+     *
+     * @return array
+     */
     protected function getFakeFile(): array
     {
         return [

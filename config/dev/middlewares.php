@@ -10,13 +10,12 @@ return [
         'enabled' => true,
         'prefix' => '/api/v1/',
         'exclude' => [
-            'auth/login', 
-            'test/upload', 
+            'auth/login',
         ],
     ],
     App\Middlewares\After::class => [
         'enabled' => true,
         'prefix' => '/api/v1/',
-        'exclude' => ['auth/login', 'user/register'],
+        'exclude' => [],
     ],
 ];

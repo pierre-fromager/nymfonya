@@ -13,5 +13,4 @@ return [
     '/^(config)\/(keygen)$/', // 1st group match controller 2nd match action
     '/^(config)\/(account)$/', // 1st group match controller 2nd match action
     '/^(config)\/(false)$/', // 1st group match controller 2nd match action
-    
 ];
