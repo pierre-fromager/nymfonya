@@ -57,7 +57,7 @@ trait TFileCache
         if ($fromRequest) {
             $filename = $this->getCacheFilename();
             if (is_writable($filename)) {
-                @unlink($this->getCacheFilename());
+                @unlink($filename);
             }
         } else {
             $files = glob($this->getCachePath() . '*');

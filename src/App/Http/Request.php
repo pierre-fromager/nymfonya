@@ -332,7 +332,7 @@ class Request extends Session implements IRequest
      */
     protected function setParams(array $params = []): Request
     {
-        if ($params) {
+        if (!empty($params)) {
             $this->params = $params;
             return $this;
         }
