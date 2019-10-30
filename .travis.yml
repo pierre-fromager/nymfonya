@@ -25,7 +25,7 @@ install:
   - travis_retry composer install --no-interaction
 
 script:
-  - phpdbg -qrr ./vendor/bin/phpunit --coverage-clover='coverage.clover'
+  - phpdbg -qrr vendor/bin/phpunit --coverage-clover=coverage.clover
 
 after_success:
   - wget https://scrutinizer-ci.com/ocular.phar
