@@ -345,7 +345,7 @@ class Request extends Session implements IRequest
         } elseif ($this->method === self::METHOD_TRACE) {
             $this->params = $this->getCliParams();
         } else {
-            $this->params =  $this->getInput();
+            $this->params = $this->getInput();
         }
         return $this;
     }

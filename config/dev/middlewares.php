@@ -11,7 +11,7 @@ return [
         'prefix' => '/api/v1/',
         'exclude' => [
             'auth/login', 'stat/opcache', 'stat/filecache',
-            'restful' ,'restful/index', 'test/pokerelay'
+            'restful', 'restful/index', 'test/pokerelay'
         ],
     ],
     App\Middlewares\Restful::class => [

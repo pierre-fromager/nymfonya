@@ -35,11 +35,11 @@ final class Stat extends AbstractApi implements IApi
         ]);
         if ($status) {
             $path = dirname(dirname($this->request->getFilename()));
-            $scripts = array_filter($status['scripts'], function ($val) use ($path) {
+            $scripts = array_filter($status['scripts'], function($val) use ($path) {
                 return strpos($val['full_path'], $path) !== false;
             });
             $status['scripts'] = array_values($scripts);
-            $bytes = array_reduce($status['scripts'], function ($stack, $val) {
+            $bytes = array_reduce($status['scripts'], function($stack, $val) {
                 return $stack + $val['memory_consumption'];
             });
             $scriptCount = count($scripts);

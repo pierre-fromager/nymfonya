@@ -159,7 +159,7 @@ class Container
     {
         if ($this->constructable($serviceName)) {
             if (!$this->hasService($serviceName)) {
-                $args = array_map(function ($value) {
+                $args = array_map(function($value) {
                     if (is_array($value)) {
                         $values = [];
                         foreach ($value as $i) {

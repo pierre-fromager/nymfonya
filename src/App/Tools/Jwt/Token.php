@@ -129,7 +129,7 @@ class Token implements Interfaces\IToken
             openssl_random_pseudo_bytes(self::_RANDOM_BYTES_LEN)
         );
         $issuedAt = time() - 100;
-        $notBefore = $issuedAt + $this->issueAtDelay;  //Adding 10 seconds
+        $notBefore = $issuedAt + $this->issueAtDelay; //Adding 10 seconds
         $expire = $notBefore + $this->ttl; // Adding 60 seconds
         $serverName = $this->request->getHost();
         return [
@@ -138,7 +138,7 @@ class Token implements Interfaces\IToken
             self::_ISS => $serverName, // Issuer
             self::_NBF => $notBefore, // Not before
             self::_EXP => $expire, // Expire
-            self::_DATA => [ // Data related to the signer user
+            self::_DATA => [// Data related to the signer user
                 self::_DATA_ID => $uid, // userid from the users table
                 self::_DATA_LOGIN => $login, // User name
                 self::_DATA_PASSWORD_HASH => password_hash($password, PASSWORD_DEFAULT),
