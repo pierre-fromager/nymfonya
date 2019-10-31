@@ -212,8 +212,9 @@ class AppMiddlewaresCorsTest extends PFT
      */
     public function testProcessRequestOptionsMethod()
     {
+        $fakeUri = '/api/v1/test/pokerelay';
         $mockRequest = $this->createMock(\App\Http\Request::class);
-        $mockRequest->method('getUri')->willReturn('/api/v1/test/pokerelay');
+        $mockRequest->method('getUri')->willReturn($fakeUri);
         $mockRequest->method('getMethod')->willReturn(Request::METHOD_OPTIONS);
         $this->container->setService(\App\Http\Request::class, $mockRequest);
         $peelReturn = $this->peelLayer();
@@ -228,7 +229,7 @@ class AppMiddlewaresCorsTest extends PFT
      */
     public function testCaUri()
     {
-        $fakeUri = 'test/pokerelay';
+        $fakeUri = '/api/v1/test/pokerelay';
         $mockRequest = $this->createMock(\App\Http\Request::class);
         $mockRequest->method('getUri')->willReturn($fakeUri);
         $mockRequest->method('getMethod')->willReturn(Request::METHOD_OPTIONS);
@@ -236,7 +237,7 @@ class AppMiddlewaresCorsTest extends PFT
         $peelReturn = $this->peelLayer();
         $cau = $this->invokeMethod($this->layer, 'caUri', []);
         $this->assertNotEmpty($cau);
-        $this->assertEquals($cau, $fakeUri);
+        $this->assertEquals($cau, 'test/pokerelay');
         $this->assertTrue($peelReturn instanceof Container);
     }
 

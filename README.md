@@ -6,6 +6,9 @@ is not a Symfony app...¯\\_(ツ)_/¯
 [![CoverageCi](https://scrutinizer-ci.com/g/pierre-fromager/nymfonya/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/pierre-fromager/nymfonya/)
 [![ScrutinizerCq](https://scrutinizer-ci.com/g/pierre-fromager/nymfonya/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/pierre-fromager/nymfonya/)  
 
+
+![logo](assets/img/nymfonya-logo.png)
+
 ## ʕʘ̅͜ʘ̅ʔ Why
 
 I want a zero conf consolable lightweight fast Rest backend & I :blue_heart: Php...OMG !!!

@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase as PFT;
 use App\Config;
 use App\Container;
 use App\Controllers\Api\V1\Test as ApiTestControler;
+use App\Http\Request;
 use App\Http\Response;
 use PHPUnit\Util\Test;
 
@@ -145,6 +146,30 @@ class ApiV1ControllerTestTest extends PFT
         );
         $this->assertNotEmpty($res->getContent());
         $this->assertEquals($res->getCode(), Response::HTTP_OK);
+    }
+
+    /**
+     * testPokemonApiRelayRequest
+     * @covers App\Controllers\Api\V1\Test::apiRelayRequest
+     */
+    public function testPokemonApiRelayRequest()
+    {
+        $par = self::getMethod('apiRelayRequest')->invokeArgs(
+            $this->instance,
+            [
+                Request::METHOD_POST,
+                'https://pokeapi.co/api/v2/pokemon/ditto/',
+                [], ['id' => 2]
+            ]
+        );
+        $this->assertTrue($par instanceof ApiTestControler);
+        /*
+        $res = self::getMethod('getService')->invokeArgs(
+            $this->instance,
+            [\App\Http\Response::class]
+        );
+        $this->assertNotEmpty($res->getContent());
+        $this->assertEquals($res->getCode(), Response::HTTP_OK);*/
     }
 
     /**

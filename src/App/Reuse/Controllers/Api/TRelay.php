@@ -23,9 +23,9 @@ trait TRelay
      * @param string $url
      * @param array $headers
      * @param array $datas
-     * @return void
+     * @return parent
      */
-    protected function apiRelayRequest(string $method, string $url, array $headers = [], $datas = [])
+    protected function apiRelayRequest(string $method, string $url, array $headers = [], $datas = []): parent
     {
         $cha = curl_init();
         if (false !== $cha) {
@@ -40,6 +40,7 @@ trait TRelay
                 curl_setopt($cha, CURLOPT_VERBOSE, 1);
                 curl_setopt($cha, CURLOPT_HEADER, 1);
             }
+            var_dump($method, $datas);
             if (Request::METHOD_POST == $method && !empty($datas)) {
                 curl_setopt(
                     $cha,
@@ -67,5 +68,6 @@ trait TRelay
                 curl_close($cha);
             }
         }
+        return $this;
     }
 }

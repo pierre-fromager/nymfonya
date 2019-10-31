@@ -84,14 +84,11 @@ final class Test extends AbstractApi implements IApi
     protected function pokemonApiRelay(string $url): Test
     {
         if ($this->cacheExpired()) {
-            $this->apiRelayRequest(
-                Request::METHOD_GET,
-                $url,
-                [
-                    'Accept: application/json',
-                    //'Authorization: Bearer ' . $this->token
-                ]
-            );
+            $apiHeaders = [
+                'Accept: application/json',
+                //'Authorization: Bearer ' . $this->token
+            ];
+            $this->apiRelayRequest(Request::METHOD_GET, $url, $apiHeaders);
             if ($this->apiRelayHttpCode === Response::HTTP_OK) {
                 $this->setCache($this->apiRelayResponse);
             }
