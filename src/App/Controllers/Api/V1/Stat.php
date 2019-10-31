@@ -28,12 +28,14 @@ final class Stat extends AbstractApi implements IApi
      */
     final public function opcache(): Stat
     {
+        $this->response
+            ->setCode(Response::HTTP_SERVICE_UNAVAILABLE)
+            ->setContent([
+                Response::_ERROR => true,
+                Response::_ERROR_MSG => 'Opcache disable'
+            ]);
         $status = opcache_get_status();
-        $this->response->setCode(Response::HTTP_OK)->setContent([
-            Response::_ERROR => true,
-            Response::_ERROR_MSG => 'Opcache disable'
-        ]);
-        if ($status) {
+        if (!empty($status)) {
             $path = dirname(dirname($this->request->getFilename()));
             $scripts = array_filter($status['scripts'], function ($val) use ($path) {
                 return strpos($val['full_path'], $path) !== false;
