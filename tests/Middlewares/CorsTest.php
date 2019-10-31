@@ -213,7 +213,7 @@ class AppMiddlewaresCorsTest extends PFT
     public function testProcessRequestOptionsMethod()
     {
         $mockRequest = $this->createMock(\App\Http\Request::class);
-        $mockRequest->method('getUri')->willReturn('test/pokerelay');
+        $mockRequest->method('getUri')->willReturn('/api/v1/test/pokerelay');
         $mockRequest->method('getMethod')->willReturn(Request::METHOD_OPTIONS);
         $this->container->setService(\App\Http\Request::class, $mockRequest);
         $peelReturn = $this->peelLayer();

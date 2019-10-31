@@ -542,6 +542,7 @@ class KernelTest extends PFT
             []
         );
         $this->assertEmpty($gaa0);
+        $this->assertEquals($gaa0, '');
         self::getMethod('setClassname')->invokeArgs(
             $this->instance,
             [self::CTRL_ACT]
