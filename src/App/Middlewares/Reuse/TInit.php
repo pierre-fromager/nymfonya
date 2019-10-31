@@ -69,11 +69,18 @@ trait TInit
     protected $enabled;
 
     /**
+     * exclude requirement
+     *
+     * @var array
+     */
+    protected $exclude;
+
+    /**
      * uri prefix to match if middleware is required
      *
      * @var string
      */
-    private $prefix;
+    protected $prefix;
 
     /**
      * init minimal requirements settings
@@ -83,6 +90,7 @@ trait TInit
      */
     protected function init(Container $container)
     {
+        $this->kernel  = $container->getService(\App\Kernel::class);
         $this->config = $container->getService(\App\Config::class);
         $this->configParams =  $this->config->getSettings(
             Config::_MIDDLEWARES
@@ -93,6 +101,7 @@ trait TInit
         $this->logger = $container->getService(\Monolog\Logger::class);
         $this->enabled = $this->configParams['enabled'];
         $this->prefix = $this->configParams['prefix'];
+        $this->exclude = $this->configParams['exclude'];
     }
 
     /**

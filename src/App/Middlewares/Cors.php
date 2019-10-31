@@ -18,6 +18,7 @@ class Cors implements ILayer
 
     use \App\Middlewares\Reuse\TInit;
 
+    const _PREFLIGHT = 'preflight';
     const _SIGN = 'X-Middleware-Cors';
 
     /**
@@ -46,6 +47,12 @@ class Cors implements ILayer
                 microtime(true)
             );
             if ($this->required()) {
+                if (Request::METHOD_OPTIONS == $this->request->getMethod()) {
+                    $pureCa = preg_replace('/\?.*/', '', $this->caUri()) . '/';
+                    $caFrags = explode('/', $pureCa);
+                    $controller = $caFrags[0];
+                    $this->kernel->setAction([$controller, self::_PREFLIGHT]);
+                }
                 $this->response
                     ->setCode(Response::HTTP_NOT_FOUND)
                     ->setContent([
@@ -100,6 +107,16 @@ class Cors implements ILayer
             }
         }
         return false;
+    }
+
+    /**
+     * return controller action from uri
+     *
+     * @return string
+     */
+    protected function caUri():string
+    {
+        return str_replace($this->prefix, '', $this->request->getUri());
     }
 
     /**

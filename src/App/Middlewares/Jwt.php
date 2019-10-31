@@ -97,7 +97,7 @@ class Jwt implements ILayer
             ->setContent($errorMsg)
             ->send();
         if (false === $this->request->isCli()) {
-            die;
+            $this->kernel->shutdown();
         }
     }
 

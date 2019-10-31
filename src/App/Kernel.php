@@ -8,7 +8,6 @@ use App\Http\Headers;
 class Kernel
 {
 
-    const _PREFLIGHT = 'preflight';
     const PATH_CONFIG = '/../config/';
 
     use \App\Reuse\TKernel;
@@ -20,24 +19,6 @@ class Kernel
     public function __construct(string $env, string $path)
     {
         $this->init($env, $path);
-    }
-
-    /**
-     * destroy
-     *
-     */
-    public function __destruct()
-    {
-        $this->req = null;
-        $this->res = null;
-        $this->config = null;
-        $this->logger = null;
-        $this->router = null;
-        $this->reflector = null;
-        $this->controller = null;
-        $this->actions = [];
-        $this->action = '';
-        $this->container = null;
     }
 
     /**
@@ -84,6 +65,17 @@ class Kernel
     }
 
     /**
+     * set controller action from router groups
+     *
+     * @param array $routerGrps
+     * @return void
+     */
+    public function setAction(array $routerGrps)
+    {
+        $this->action = isset($routerGrps[1]) ? strtolower($routerGrps[1]) : '';
+    }
+
+    /**
      * dispatch response
      *
      * @return Kernel
@@ -109,5 +101,15 @@ class Kernel
         }
         $this->getResponse()->send();
         return $this;
+    }
+
+    /**
+     * shutdown kernel
+     *
+     * @return void
+     */
+    public function shutdown(int $code = 0)
+    {
+        throw new \Exception('shutdown', $code);
     }
 }

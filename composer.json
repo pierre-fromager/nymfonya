@@ -112,7 +112,7 @@
         ],
         "testToolsFileUploader": [
             "phpunit --testsuite ToolsFileUploader"
-        ],        
+        ],
         "testMiddlewareJwt": [
             "phpunit --debug  --testsuite MiddlewareJwt"
         ],
@@ -121,6 +121,9 @@
         ],
         "testMiddlewareAfter": [
             "phpunit --testsuite MiddlewareAfter"
+        ],
+        "testMiddlewareRestful": [
+            "phpunit --testsuite MiddlewareRestful"
         ],
         "testModelSearchAbstract": [
             "phpunit --testsuite ModelSearchAbstract"

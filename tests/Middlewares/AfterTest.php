@@ -70,6 +70,11 @@ class AppMiddlewaresAfterTest extends PFT
         $this->container = new Container(
             $this->config->getSettings(Config::_SERVICES)
         );
+        $kernel = new \App\Kernel(
+            Config::ENV_CLI,
+            __DIR__ . self::CONFIG_PATH
+        );
+        $this->container->setService(\App\Kernel::class, $kernel);
         $this->layer = new After();
         $this->instance = new Middleware();
         $this->layerReflector = new \ReflectionObject($this->layer);

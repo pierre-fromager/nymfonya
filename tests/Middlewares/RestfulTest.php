@@ -3,23 +3,22 @@
 namespace Tests;
 
 use PHPUnit\Framework\TestCase as PFT;
-use PHPUnit\Framework\MockObject\MockObject;
+use App\Http\Request;
 use App\Config;
-use App\Http\Response;
 use App\Container;
 use App\Http\Middleware;
 use App\Http\Interfaces\Middleware\ILayer;
-use App\Http\Request;
-use App\Middlewares\Cors as CorsMiddleware;
+use App\Middlewares\Restful;
 
 /**
- * @covers \App\Middlewares\Cors::<public>
+ * @covers \App\Middlewares\Restful::<public>
  */
-class AppMiddlewaresCorsTest extends PFT
+class AppMiddlewaresRestfulTest extends PFT
 {
 
     const TEST_ENABLE = true;
     const CONFIG_PATH = '/../../config/';
+
 
     /**
      * config
@@ -65,11 +64,6 @@ class AppMiddlewaresCorsTest extends PFT
         if (!self::TEST_ENABLE) {
             $this->markTestSkipped('Test disabled.');
         }
-        $this->init();
-    }
-
-    protected function init(bool $withMock = false, bool $withProcess = false)
-    {
         $this->config = new Config(
             Config::ENV_CLI,
             __DIR__ . self::CONFIG_PATH
@@ -82,32 +76,9 @@ class AppMiddlewaresCorsTest extends PFT
             __DIR__ . self::CONFIG_PATH
         );
         $this->container->setService(\App\Kernel::class, $kernel);
-        if ($withMock) {
-            $this->container->setService(
-                \App\Http\Request::class,
-                $this->getMockedRequest($withProcess)
-            );
-        }
-        $this->layer = new CorsMiddleware();
+        $this->layer = new Restful();
         $this->instance = new Middleware();
         $this->layerReflector = new \ReflectionObject($this->layer);
-    }
-
-    /**
-     * returns mocked request following success param
-     * when success is true valid credentials params get setted valid
-     * for login and password or invalid credentials provided.
-     *
-     * @return MockObject
-     */
-    protected function getMockedRequest(bool $withProcess): MockObject
-    {
-        $uri = ($withProcess)
-            ? '/api/v1/stat/opcache'
-            : '/api/v1/stat/filecache';
-        $mockRequest = $this->createMock(\App\Http\Request::class);
-        $mockRequest->method('getUri')->willReturn($uri);
-        return $mockRequest;
     }
 
     /**
@@ -171,7 +142,7 @@ class AppMiddlewaresCorsTest extends PFT
 
     /**
      * testPeel
-     * @covers App\Middlewares\Cors::peel
+     * @covers App\Middlewares\Restful::peel
      */
     public function testPeel()
     {
@@ -180,7 +151,7 @@ class AppMiddlewaresCorsTest extends PFT
 
     /**
      * testInit
-     * @covers App\Middlewares\Cors::init
+     * @covers App\Middlewares\Restful::init
      */
     public function testInit()
     {
@@ -192,29 +163,15 @@ class AppMiddlewaresCorsTest extends PFT
 
     /**
      * testProcess
-     * @covers App\Middlewares\Cors::setEnabled
-     * @covers App\Middlewares\Cors::process
+     * @covers App\Middlewares\Restful::setEnabled
+     * @covers App\Middlewares\Restful::process
      */
     public function testProcess()
     {
-        $this->init(true, true);
-        $peelReturn = $this->peelLayer();
-        $this->invokeMethod($this->layer, 'setEnabled', [true]);
-        $this->invokeMethod($this->layer, 'process', []);
-        $this->assertTrue($peelReturn instanceof Container);
-        $res = $this->container->getService(\App\Http\Response::class);
-        $this->assertEquals($res->getCode(), Response::HTTP_NOT_FOUND);
-    }
-
-    /**
-     * testProcessRequestOptionsMethod
-     * @covers App\Middlewares\Cors::process
-     */
-    public function testProcessRequestOptionsMethod()
-    {
+        $fakeUri = '/api/v1/restful?id=2';
         $mockRequest = $this->createMock(\App\Http\Request::class);
-        $mockRequest->method('getUri')->willReturn('test/pokerelay');
-        $mockRequest->method('getMethod')->willReturn(Request::METHOD_OPTIONS);
+        $mockRequest->method('getUri')->willReturn($fakeUri);
+        $mockRequest->method('getMethod')->willReturn(Request::METHOD_POST);
         $this->container->setService(\App\Http\Request::class, $mockRequest);
         $peelReturn = $this->peelLayer();
         $this->invokeMethod($this->layer, 'setEnabled', [true]);
@@ -224,64 +181,73 @@ class AppMiddlewaresCorsTest extends PFT
 
     /**
      * testCaUri
-     * @covers App\Middlewares\Cors::caUri
+     * @covers App\Middlewares\Restful::caUri
      */
     public function testCaUri()
     {
-        $fakeUri = 'test/pokerelay';
+        $fakeUri = '/api/v1/restful?id=2';
         $mockRequest = $this->createMock(\App\Http\Request::class);
         $mockRequest->method('getUri')->willReturn($fakeUri);
-        $mockRequest->method('getMethod')->willReturn(Request::METHOD_OPTIONS);
+        $mockRequest->method('getMethod')->willReturn(Request::METHOD_POST);
         $this->container->setService(\App\Http\Request::class, $mockRequest);
         $peelReturn = $this->peelLayer();
         $cau = $this->invokeMethod($this->layer, 'caUri', []);
         $this->assertNotEmpty($cau);
-        $this->assertEquals($cau, $fakeUri);
+        $this->assertEquals($cau, 'restful?id=2');
         $this->assertTrue($peelReturn instanceof Container);
     }
 
     /**
      * testRequired
-     * @covers App\Middlewares\Cors::required
+     * @covers App\Middlewares\Restful::required
      */
     public function testRequired()
     {
-        $this->init(true, true);
+        $fakeUri = '/api/v1/restful?id=2';
+        $mockRequest = $this->createMock(\App\Http\Request::class);
+        $mockRequest->method('getUri')->willReturn($fakeUri);
+        $mockRequest->method('getMethod')->willReturn(Request::METHOD_POST);
+        $this->container->setService(\App\Http\Request::class, $mockRequest);
         $peelReturn = $this->peelLayer();
         $this->assertTrue($peelReturn instanceof Container);
         $requ0 = $this->invokeMethod($this->layer, 'required', []);
         $this->assertTrue(is_bool($requ0));
         $this->assertTrue($requ0);
-        $this->init(true, false);
-        $peelReturn = $this->peelLayer();
-        $this->assertTrue($peelReturn instanceof Container);
-        $requ1 = $this->invokeMethod($this->layer, 'required', []);
-        $this->assertTrue(is_bool($requ1));
-        $this->assertFalse($requ1);
     }
 
     /**
      * testIsExclude
-     * @covers App\Middlewares\Cors::isExclude
+     * @covers App\Middlewares\Restful::isExclude
      */
     public function testIsExclude()
     {
+        $fakeUriOk = '/api/v1/restful?id=2';
+        $mockRequest = $this->createMock(\App\Http\Request::class);
+        $mockRequest->method('getUri')->willReturn($fakeUriOk);
+        $mockRequest->method('getMethod')->willReturn(Request::METHOD_POST);
+        $this->container->setService(\App\Http\Request::class, $mockRequest);
         $peelReturn = $this->peelLayer();
         $this->assertTrue($peelReturn instanceof Container);
-        $ie0 = $this->invokeMethod($this->layer, 'isExclude', []);
-        $this->assertTrue(is_bool($ie0));
-        $this->assertFalse($ie0);
-        $this->init(true, false);
+        $requ0 = $this->invokeMethod($this->layer, 'isExclude', []);
+        $this->assertTrue(is_bool($requ0));
+        $this->assertFalse($requ0);
+        unset($mockRequest);
+        $fakeUriNok = '/api/v1/test/jwtaction';
+        $mockRequest = $this->createMock(\App\Http\Request::class);
+        $mockRequest->method('getMethod')->willReturn(Request::METHOD_GET);
+        $mockRequest->method('getUri')->willReturn($fakeUriNok);
+        $this->container->setService(\App\Http\Request::class, $mockRequest);
         $peelReturn = $this->peelLayer();
         $this->assertTrue($peelReturn instanceof Container);
-        $ie1 = $this->invokeMethod($this->layer, 'isExclude', []);
-        $this->assertTrue(is_bool($ie1));
-        $this->assertTrue($ie1);
+        $requ0 = $this->invokeMethod($this->layer, 'isExclude', []);
+        $this->assertTrue(is_bool($requ0));
+        $this->assertTrue($requ0);
+        unset($mockRequest);
     }
 
     /**
      * testRequestUriPrefix
-     * @covers App\Middlewares\Cors::requestUriPrefix
+     * @covers App\Middlewares\Restful::requestUriPrefix
      */
     public function testRequestUriPrefix()
     {

@@ -323,24 +323,6 @@ trait TKernel
     }
 
     /**
-     * set controller action from router groups and request method
-     *
-     * @param array $routerGroups
-     * @param string $reqMethod
-     * @return void
-     */
-    protected function setAction(array $routerGroups, string $reqMethod)
-    {
-        if ($reqMethod == Request::METHOD_OPTIONS) {
-            $this->action = Kernel::_PREFLIGHT;
-            return;
-        }
-        $this->action = isset($routerGroups[1])
-            ? strtolower($routerGroups[1])
-            : '';
-    }
-
-    /**
      * return core controller action
      *
      * @return string
@@ -348,16 +330,6 @@ trait TKernel
     protected function getAction(): string
     {
         return $this->action;
-    }
-
-    /**
-     * return true if request methof is OPTIONS
-     *
-     * @return boolean
-     */
-    protected function isPreflight(string $reqMethod): bool
-    {
-        return $reqMethod == Request::METHOD_OPTIONS;
     }
 
     /**
@@ -370,7 +342,7 @@ trait TKernel
         $methodsName = array_map(function ($method) {
             return $method->name;
         }, $methods);
-        $this->actions = array_merge($methodsName, [Kernel::_PREFLIGHT]);
+        $this->actions = array_merge($methodsName, ['preflight']);
     }
 
     /**
@@ -403,6 +375,7 @@ trait TKernel
         $this->container = new \App\Container(
             $this->config->getSettings(Config::_SERVICES)
         );
+        $this->container->setService(\App\Kernel::class, $this);
     }
 
     /**
@@ -541,7 +514,7 @@ trait TKernel
      *
      * @return Logger
      */
-    protected function getLogger(): Logger
+    public function getLogger(): Logger
     {
         return $this->logger;
     }

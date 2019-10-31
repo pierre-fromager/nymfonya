@@ -10,7 +10,18 @@ return [
         'enabled' => true,
         'prefix' => '/api/v1/',
         'exclude' => [
-            'auth/login',
+            'auth/login', 'stat/opcache', 'stat/filecache',
+            'restful' ,'restful/index', 'test/pokerelay'
+        ],
+    ],
+    App\Middlewares\Restful::class => [
+        'enabled' => true,
+        'prefix' => '/api/v1/',
+        'exclude' => [
+            '/^(!restful.*)$/',
+            '/^(test)\/(.*)$/',
+            '/^(auth)\/(.*)$/',
+            '/^(stat)\/(.*)$/'
         ],
     ],
     App\Middlewares\After::class => [

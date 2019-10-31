@@ -403,7 +403,7 @@ class KernelTest extends PFT
         $this->assertTrue(is_array($gas1));
         $this->assertNotEquals($gas1, $gas0);
         $this->assertTrue(count($gas1) > 1);
-        $this->assertTrue(in_array(Kernel::_PREFLIGHT, $gas1));
+        $this->assertTrue(in_array('preflight', $gas1));
     }
 
     /**
@@ -451,69 +451,18 @@ class KernelTest extends PFT
     }
 
     /**
-     * testIsPreflight
-     * @covers App\Kernel::isPreflight
-     */
-    public function testIsPreflight()
-    {
-        $ip0 = self::getMethod('isPreflight')->invokeArgs(
-            $this->instance,
-            [Request::METHOD_GET]
-        );
-        $this->assertFalse($ip0);
-        $ip1 = self::getMethod('isPreflight')->invokeArgs(
-            $this->instance,
-            [Request::METHOD_POST]
-        );
-        $this->assertFalse($ip1);
-        $ip2 = self::getMethod('isPreflight')->invokeArgs(
-            $this->instance,
-            [Request::METHOD_OPTIONS]
-        );
-        $this->assertTrue($ip2);
-    }
-
-    /**
-     * testSetAction
+     * testGetSetAction
      * @covers App\Kernel::setAction
      * @covers App\Kernel::getAction
      */
-    public function testSetAction()
+    public function testGetSetAction()
     {
         $ga0 = self::getMethod('getAction')->invokeArgs(
             $this->instance,
             []
         );
         $this->assertEmpty($ga0);
-        self::getMethod('setAction')->invokeArgs(
-            $this->instance,
-            [self::CTRL_ACT, Request::METHOD_GET]
-        );
-        $ga1 = self::getMethod('getAction')->invokeArgs(
-            $this->instance,
-            []
-        );
-        $this->assertNotEmpty($ga1);
-        $this->assertEquals($ga1, 'help');
-        self::getMethod('setAction')->invokeArgs(
-            $this->instance,
-            [self::CTRL_ACT, Request::METHOD_OPTIONS]
-        );
-        $ga2 = self::getMethod('getAction')->invokeArgs(
-            $this->instance,
-            []
-        );
-        $this->assertNotEmpty($ga2);
-        $this->assertEquals($ga2, Kernel::_PREFLIGHT);
-        self::getMethod('setAction')->invokeArgs(
-            $this->instance,
-            [['config'], Request::METHOD_POST]
-        );
-        $ga3 = self::getMethod('getAction')->invokeArgs(
-            $this->instance,
-            []
-        );
-        $this->assertEmpty($ga3);
+        self::getMethod('setAction')->invokeArgs($this->instance, [self::CTRL_ACT]);
     }
 
     /**
@@ -538,7 +487,7 @@ class KernelTest extends PFT
         );
         self::getMethod('setAction')->invokeArgs(
             $this->instance,
-            [self::CTRL_ACT, Request::METHOD_GET]
+            [self::CTRL_ACT]
         );
         $iva0 = self::getMethod('isValidAction')->invokeArgs(
             $this->instance,
@@ -569,10 +518,7 @@ class KernelTest extends PFT
             $this->instance,
             []
         );
-        self::getMethod('setAction')->invokeArgs(
-            $this->instance,
-            [['config'], Request::METHOD_GET]
-        );
+        self::getMethod('setAction')->invokeArgs($this->instance, [['config']]);
         $iva0 = self::getMethod('isValidAction')->invokeArgs(
             $this->instance,
             []
@@ -610,7 +556,7 @@ class KernelTest extends PFT
         );
         self::getMethod('setAction')->invokeArgs(
             $this->instance,
-            [self::CTRL_ACT, Request::METHOD_GET]
+            [self::CTRL_ACT]
         );
         $iva = self::getMethod('isValidAction')->invokeArgs(
             $this->instance,
@@ -689,10 +635,7 @@ class KernelTest extends PFT
         sort($expectedActions);
         sort($gas);
         $this->assertEquals($gas, $expectedActions);
-        self::getMethod('setAction')->invokeArgs(
-            $this->instance,
-            [self::CTRL_ACT, Request::METHOD_GET]
-        );
+        self::getMethod('setAction')->invokeArgs($this->instance, [self::CTRL_ACT]);
         $iva0 = self::getMethod('isValidAction')->invokeArgs($this->instance, []);
         $this->assertTrue($iva0);
         $cla = self::getMethod('getClassname')->invokeArgs($this->instance, []);
@@ -738,10 +681,7 @@ class KernelTest extends PFT
         sort($expectedActions);
         sort($gas);
         $this->assertEquals($gas, $expectedActions);
-        self::getMethod('setAction')->invokeArgs(
-            $this->instance,
-            [['config', 'badaction'], Request::METHOD_GET]
-        );
+        self::getMethod('setAction')->invokeArgs($this->instance, [['config', 'badaction']]);
         $iva0 = self::getMethod('isValidAction')->invokeArgs($this->instance, []);
         $this->assertFalse($iva0);
         $cla = self::getMethod('getClassname')->invokeArgs($this->instance, []);
@@ -779,14 +719,10 @@ class KernelTest extends PFT
         self::getMethod('setClassname')->invokeArgs($this->instance, [self::CTRL_ACT]);
         self::getMethod('setReflector')->invokeArgs($this->instance, []);
         self::getMethod('setActions')->invokeArgs($this->instance, []);
-        self::getMethod('setAction')->invokeArgs(
-            $this->instance,
-            [self::CTRL_ACT, Request::METHOD_GET]
-        );
+        self::getMethod('setAction')->invokeArgs($this->instance, [self::CTRL_ACT]);
         self::getMethod('setController')->invokeArgs($this->instance, []);
         $ia0 = self::getMethod('invokeAction')->invokeArgs($this->instance, [false]);
         $this->assertTrue(is_object($ia0));
-        //$this->assertFalse($ia0);
         $ia1 = self::getMethod('invokeAction')->invokeArgs($this->instance, []);
         $this->assertTrue(is_object($ia1));
     }
@@ -821,10 +757,7 @@ class KernelTest extends PFT
         sort($expectedActions);
         sort($gas);
         $this->assertEquals($gas, $expectedActions);
-        self::getMethod('setAction')->invokeArgs(
-            $this->instance,
-            [['config', 'false'], Request::METHOD_TRACE]
-        );
+        self::getMethod('setAction')->invokeArgs($this->instance, [['config', 'false']]);
         $iva0 = self::getMethod('isValidAction')->invokeArgs($this->instance, []);
         $this->assertTrue($iva0);
         $cla = self::getMethod('getClassname')->invokeArgs($this->instance, []);
@@ -837,6 +770,19 @@ class KernelTest extends PFT
         $this->assertTrue($gerr1);
         $germ1 = self::getMethod('getErrorMsg')->invokeArgs($this->instance, []);
         $this->assertEquals($germ1, 'Execute failed');
+        $this->assertTrue($this->instance instanceof Kernel);
+    }
+
+    /**
+     * testShutdown
+     * @covers App\Kernel::shutdown
+     * @expectedException Exception
+     * @expectedExceptionCode 10
+     * @runInSeparateProcess
+     */
+    public function testShutdown()
+    {
+        $this->instance->shutdown(10);
         $this->assertTrue($this->instance instanceof Kernel);
     }
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<phpunit colors="true" strict="true" bootstrap="./tests/bootstrap.php">
+<phpunit bootstrap="./tests/bootstrap.php" stopOnFailure="true" colors="true" strict="true">
     <testsuites>
         <testsuite name="all">
             <file>tests/Http/RequestTest.php</file>
@@ -25,6 +25,7 @@
             <file>tests/Middlewares/JwtTest.php</file>
             <file>tests/Middlewares/CorsTest.php</file>
             <file>tests/Middlewares/AfterTest.php</file>
+            <file>tests/Middlewares/RestfulTest.php</file>
             <file>tests/Model/SearchTest.php</file>
             <file>tests/Model/AccountsTest.php</file>
         </testsuite>
@@ -84,7 +85,7 @@
         </testsuite>
         <testsuite name="ToolsFileUploader">
             <file>tests/Tools/File/UploaderTest.php</file>
-        </testsuite>        
+        </testsuite>
         <testsuite name="MiddlewareJwt">
             <file>tests/Middlewares/JwtTest.php</file>
         </testsuite>
@@ -94,6 +95,10 @@
         <testsuite name="MiddlewareAfter">
             <file>tests/Middlewares/AfterTest.php</file>
         </testsuite>
+        <testsuite name="MiddlewareRestful">
+            <file>tests/Middlewares/RestfulTest.php</file>
+        </testsuite>
+
         <testsuite name="ModelSearchAbstract">
             <file>tests/Model/SearchTest.php</file>
         </testsuite>
