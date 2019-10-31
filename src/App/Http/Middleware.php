@@ -18,7 +18,7 @@ use App\Http\Interfaces\Middleware\ILayer;
 class Middleware
 {
 
-    protected static $excMsg =  ' is not a valid onion layer.';
+    protected static $excMsg = ' is not a valid onion layer.';
     protected $layers;
 
     /**
@@ -67,7 +67,7 @@ class Middleware
         $layers = array_reverse($this->layers);
         $completeMiddleware = array_reduce(
             $layers,
-            function ($nextLayer, $layer) {
+            function($nextLayer, $layer) {
                 return $this->createLayer($nextLayer, $layer);
             },
             $coreFunction
@@ -95,7 +95,7 @@ class Middleware
      */
     protected function createCoreFunction(Closure $core): Closure
     {
-        return function ($object) use ($core) {
+        return function($object) use ($core) {
             return $core($object);
         };
     }
@@ -110,7 +110,7 @@ class Middleware
      */
     protected function createLayer(Closure $nextLayer, ILayer $layer): Closure
     {
-        return function ($object) use ($nextLayer, $layer) {
+        return function($object) use ($nextLayer, $layer) {
             return $layer->peel($object, $nextLayer);
         };
     }

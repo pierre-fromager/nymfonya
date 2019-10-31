@@ -90,9 +90,9 @@ trait TInit
      */
     protected function init(Container $container)
     {
-        $this->kernel  = $container->getService(\App\Kernel::class);
+        $this->kernel = $container->getService(\App\Kernel::class);
         $this->config = $container->getService(\App\Config::class);
-        $this->configParams =  $this->config->getSettings(
+        $this->configParams = $this->config->getSettings(
             Config::_MIDDLEWARES
         )[get_called_class()];
         $this->request = $container->getService(\App\Http\Request::class);
