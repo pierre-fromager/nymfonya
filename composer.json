@@ -33,7 +33,7 @@
     },
     "scripts": {
         "checklint": [
-            "phpcs --standard=PSR2 --warning-severity=0 --extensions=php src/*"
+            "phpcs -e --standard=PSR2 --warning-severity=10 --extensions=php src/* tests/*"
         ],
         "lint": [
             "phpcbf --standard=PSR2 --warning-severity=10 --extensions=php src/* tests/*"

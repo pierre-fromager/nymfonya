@@ -83,7 +83,7 @@ class Headers implements IHeaders
     public function getRaw(): array
     {
         return array_map(
-            function($key, $val) {
+            function ($key, $val) {
                 return $key . ': ' . $val;
             },
             array_keys($this->headers),

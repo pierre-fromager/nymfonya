@@ -101,7 +101,7 @@ class Accounts extends AbstractSearch
         if (!file_exists($filename)) {
             $crypt = new Crypt($this->config);
             $accounts = $this->config->getSettings(Config::_ACCOUNTS);
-            $accounts = array_map(function($ac) use ($crypt) {
+            $accounts = array_map(function ($ac) use ($crypt) {
                 $ac[self::_PASSWORD] = $crypt->encrypt(
                     $ac[self::_PASSWORD],
                     true

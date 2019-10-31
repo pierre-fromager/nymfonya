@@ -50,10 +50,7 @@ class Kernel
                 $this->setController();
                 $this->setReflector();
                 $this->setActions();
-                $this->setAction(
-                    $routerGroups,
-                    $this->getRequest()->getMethod()
-                );
+                $this->setAction($routerGroups);
                 //->setActionAnnotations();
                 $this->setMiddleware();
             } else {

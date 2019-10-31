@@ -249,7 +249,7 @@ trait TKernel
         }
         (new Middleware())->layer($this->middlewares)->peel(
             $this->container,
-            function($container) {
+            function ($container) {
                 $this->execute(null);
                 return $container;
             }
@@ -339,7 +339,7 @@ trait TKernel
     protected function setActions()
     {
         $methods = $this->getFinalMethods();
-        $methodsName = array_map(function($method) {
+        $methodsName = array_map(function ($method) {
             return $method->name;
         }, $methods);
         $this->actions = array_merge($methodsName, ['preflight']);
