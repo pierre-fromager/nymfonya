@@ -40,7 +40,6 @@ trait TRelay
                 curl_setopt($cha, CURLOPT_VERBOSE, 1);
                 curl_setopt($cha, CURLOPT_HEADER, 1);
             }
-            var_dump($method, $datas);
             if (Request::METHOD_POST == $method && !empty($datas)) {
                 curl_setopt(
                     $cha,
