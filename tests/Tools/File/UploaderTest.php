@@ -120,8 +120,8 @@ class ToolsFileUploaderTest extends PFT
      */
     public function testGetError()
     {
-        $this->assertTrue(is_bool($this->instance->getError()));
-        $this->assertTrue($this->instance->getError());
+        $this->assertTrue(is_bool($this->instance->isError()));
+        $this->assertTrue($this->instance->isError());
     }
 
     /**
@@ -144,7 +144,7 @@ class ToolsFileUploaderTest extends PFT
             $this->instance->process() instanceof Uploader
         );
         $this->assertEquals(
-            $this->instance->getError(),
+            $this->instance->isError(),
             UPLOAD_ERR_NO_FILE
         );
         $sfe = self::getMethod('setFile')->invokeArgs(

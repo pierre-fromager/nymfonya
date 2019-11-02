@@ -108,7 +108,7 @@ class Uploader
      *
      * @return boolean
      */
-    public function getError(): bool
+    public function isError(): bool
     {
         return $this->error;
     }

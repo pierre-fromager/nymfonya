@@ -52,7 +52,7 @@ final class Test extends AbstractApi implements IApi
         $upload = (new Uploader())
             ->setTargetPath($appPath . '/assets/upload/')
             ->process();
-        $resCodeError = $upload->getError()
+        $resCodeError = $upload->isError()
             ? Response::HTTP_INTERNAL_SERVER_ERROR
             : Response::HTTP_OK;
         $this->response->setCode($resCodeError)->setContent(

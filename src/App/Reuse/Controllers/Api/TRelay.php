@@ -23,10 +23,14 @@ trait TRelay
      * @param string $url
      * @param array $headers
      * @param array $datas
-     * @return parent
+     * @return self
      */
-    protected function apiRelayRequest(string $method, string $url, array $headers = [], $datas = []): parent
-    {
+    protected function apiRelayRequest(
+        string $method,
+        string $url,
+        array $headers = [],
+        $datas = []
+    ): self {
         $cha = curl_init();
         if (false !== $cha) {
             curl_setopt($cha, CURLOPT_VERBOSE, false);
@@ -40,13 +44,7 @@ trait TRelay
                 curl_setopt($cha, CURLOPT_VERBOSE, 1);
                 curl_setopt($cha, CURLOPT_HEADER, 1);
             }
-            if (Request::METHOD_POST == $method && !empty($datas)) {
-                curl_setopt(
-                    $cha,
-                    CURLOPT_POSTFIELDS,
-                    http_build_query($datas)
-                );
-            }
+            $this->apiRelayRequestSetPostData($cha, $method, $datas);
             curl_setopt($cha, CURLOPT_RETURNTRANSFER, 1);
             $result = curl_exec($cha);
             $error = (false === $result);
@@ -68,5 +66,26 @@ trait TRelay
             }
         }
         return $this;
+    }
+
+    /**
+     * patch curl instance to provide posted datas if required
+     *
+     * @param mixed $cha
+     * @param string $method
+     * @param array $datas
+     * @return void
+     */
+    protected function apiRelayRequestSetPostData(&$cha, string $method, array $datas)
+    {
+        if (is_resource($cha)) {
+            if (Request::METHOD_POST == $method && !empty($datas)) {
+                curl_setopt(
+                    $cha,
+                    CURLOPT_POSTFIELDS,
+                    http_build_query($datas)
+                );
+            }
+        }
     }
 }
