@@ -51,7 +51,7 @@
             "phpunit --coverage-html='./coverage' tests"
         ],
         "covdbg": [
-            "phpdbg -qrr ./vendor/bin/phpunit --coverage-html='./coverage' tests"
+            "phpdbg -qrr ./vendor/bin/phpunit --coverage-html='./coverage'"
         ],
         "test": [
             "phpunit tests"
@@ -95,6 +95,9 @@
         "testCtrlApiV1Stat": [
             "phpunit --testsuite ControllerApiV1Stat"
         ],
+        "testCtrlApiV1Restful": [
+            "phpunit --testsuite ControllerApiV1Restful"
+        ],        
         "testAbstractApiController": [
             "phpunit --testsuite AbstractControllerApi"
         ],

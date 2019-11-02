@@ -3,6 +3,7 @@
 <phpunit bootstrap="./tests/bootstrap.php" stopOnFailure="true" colors="true" strict="true">
     <testsuites>
         <testsuite name="all">
+            <directory>tests</directory>
             <file>tests/Http/RequestTest.php</file>
             <file>tests/Http/CookieTest.php</file>
             <file>tests/Http/ResponseTest.php</file>
@@ -17,6 +18,7 @@
             <file>tests/Controllers/ConfigTest.php</file>
             <file>tests/Controllers/Api/V1/AuthTest.php</file>
             <file>tests/Controllers/Api/V1/StatTest.php</file>
+            <file>tests/Controllers/Api/V1/RestfulTest.php</file>
             <file>tests/Tools/Jwt/TokenTest.php</file>
             <file>tests/Tools/CryptTest.php</file>
             <file>tests/Tools/AuthTest.php</file>
@@ -68,6 +70,9 @@
         <testsuite name="ControllerApiV1Stat">
             <file>tests/Controllers/Api/V1/StatTest.php</file>
         </testsuite>
+        <testsuite name="ControllerApiV1Restful">
+            <file>tests/Controllers/Api/V1/RestfulTest.php</file>
+        </testsuite>
         <testsuite name="ControllerConfig">
             <file>tests/Controllers/ConfigTest.php</file>
         </testsuite>
@@ -110,21 +115,12 @@
         <whitelist processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">./src</directory>
             <exclude>
-                <directory suffix="Interface.php">.</directory>
+                <directory suffix=".php">src/Interfaces</directory>
                 <file>./src/index.php</file>
             </exclude>
         </whitelist>
         <blacklist>
             <directory suffix=".php">./vendor</directory>
         </blacklist>
-        <logging>
-            <log type="coverage-html" target="./coverage" lowUpperBound="35" highLowerBound="70"/>
-            <log type="coverage-clover" target="./coverage.xml"/>
-            <log type="coverage-php" target="./coverage.serialized"/>
-            <log type="coverage-text" target="php://stdout" showUncoveredFiles="false"/>
-            <log type="junit" target="./logfile.xml" logIncompleteSkipped="false"/>
-            <log type="testdox-html" target="./testdox.html"/>
-            <log type="testdox-text" target="./testdox.txt"/>
-        </logging>
     </filter>
 </phpunit>
