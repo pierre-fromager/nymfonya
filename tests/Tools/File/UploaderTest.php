@@ -115,10 +115,10 @@ class ToolsFileUploaderTest extends PFT
     }
 
     /**
-     * testGetError
-     * @covers App\Tools\File\Uploader::getError
+     * testIsError
+     * @covers App\Tools\File\Uploader::isError
      */
-    public function testGetError()
+    public function testIsError()
     {
         $this->assertTrue(is_bool($this->instance->isError()));
         $this->assertTrue($this->instance->isError());
