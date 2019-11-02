@@ -2,13 +2,18 @@
 
 use App\Http\Request;
 use App\Http\Headers;
+use App\Middlewares\Cors;
+use App\Middlewares\Jwt;
+use App\Middlewares\Restful;
+use App\Middlewares\After;
 
 return [
-    \App\Middlewares\Cors::class => [
+    Cors::class => [
         'enabled' => true,
         'prefix' => '/api/v1/',
         'exclude' => ['stat/filecache'],
         'headers' => [
+            Headers::CONTENT_TYPE => 'application/json; charset=utf-8',
             Headers::HEADER_ACA_ORIGIN  =>  '*',
             Headers::HEADER_ACA_CREDENTIALS => 'true',
             Headers::HEADER_ACA_METHODS => implode(',', [
@@ -18,20 +23,22 @@ return [
             ]),
             Headers::HEADER_ACA_HEADERS =>  implode(',', [
                 'Access-Control-Allow-Headers', 'Origin', 'Accept',
-                'X-Requested-With', 'Content-Type', 'Access-Control-Request-Method',
-                'Access-Control-Request-Headers', 'Access-Control-Allow-Origin',
+                'X-Requested-With', 'Content-Type', 
+                'Access-Control-Request-Method', 
+                'Access-Control-Request-Headers', 
+                'Access-Control-Allow-Origin',
                 'Authorization'
             ])
         ]
     ],
-    \App\Middlewares\Jwt::class => [
+    Jwt::class => [
         'enabled' => true,
         'prefix' => '/api/v1/',
         'exclude' => [
             'auth/login', 'test/pokerelay',
         ],
     ],
-    App\Middlewares\Restful::class => [
+    Restful::class => [
         'enabled' => true,
         'prefix' => '/api/v1/',
         'exclude' => [
@@ -42,7 +49,7 @@ return [
             '/^(config)\/(.*)$/'
         ],
     ],
-    \App\Middlewares\After::class => [
+    After::class => [
         'enabled' => true,
         'prefix' => '/api/v1/',
         'exclude' => ['auth/login'],

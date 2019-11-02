@@ -13,7 +13,6 @@ cache:
 env:
   matrix:
     - DRIVER="phpdbg" DEPENDENCIES="high"
-    - OS=debian DIST=stretch
 
   global:
     - DEFAULT_COMPOSER_FLAGS="--no-interaction --no-ansi --no-progress --no-suggest"
@@ -21,9 +20,6 @@ env:
 matrix:
   include:
     - php: 7
-    - php: 7.1
-    - php: 7.2
-    - php: 7.3
 
 install:
   - travis_retry composer install --no-interaction

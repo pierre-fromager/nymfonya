@@ -60,7 +60,6 @@ class Cors implements ILayer
                         Response::_ERROR_MSG => 'Not found'
                     ])
                     ->getHeaderManager()
-                    ->add(Headers::CONTENT_TYPE, 'application/json; charset=utf-8')
                     ->addMany($this->configParams['headers']);
             }
         }
