@@ -48,13 +48,13 @@
             "php -S localhost:8888 src/index.php"
         ],
         "cov": [
-            "phpunit --coverage-html='./coverage' tests"
+            "phpunit --coverage-html='./coverage'"
         ],
         "covdbg": [
             "phpdbg -qrr ./vendor/bin/phpunit --coverage-html='./coverage'"
         ],
         "test": [
-            "phpunit tests"
+            "phpunit"
         ],
         "testCookie": [
             "phpunit --testsuite Cookie"
@@ -97,7 +97,10 @@
         ],
         "testCtrlApiV1Restful": [
             "phpunit --testsuite ControllerApiV1Restful"
-        ],        
+        ],  
+        "testCtrlApiV1Test": [
+            "phpunit --testsuite ControllerApiV1Test"
+        ],       
         "testAbstractApiController": [
             "phpunit --testsuite AbstractControllerApi"
         ],

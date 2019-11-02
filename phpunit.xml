@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<phpunit bootstrap="./tests/bootstrap.php" stopOnFailure="true" colors="true" strict="true">
+<phpunit bootstrap="vendor/autoload.php" stopOnFailure="true" colors="true" strict="true">
     <testsuites>
         <testsuite name="all">
             <file>tests/Http/RequestTest.php</file>
@@ -18,6 +18,7 @@
             <file>tests/Controllers/Api/V1/AuthTest.php</file>
             <file>tests/Controllers/Api/V1/StatTest.php</file>
             <file>tests/Controllers/Api/V1/RestfulTest.php</file>
+            <file>tests/Controllers/Api/V1/TestTest.php</file>
             <file>tests/Tools/Jwt/TokenTest.php</file>
             <file>tests/Tools/CryptTest.php</file>
             <file>tests/Tools/AuthTest.php</file>
@@ -72,11 +73,11 @@
         <testsuite name="ControllerApiV1Restful">
             <file>tests/Controllers/Api/V1/RestfulTest.php</file>
         </testsuite>
+        <testsuite name="ControllerApiV1Test">
+            <file>tests/Reuse/Controllers/TestTest.php</file>
+        </testsuite>        
         <testsuite name="ControllerConfig">
             <file>tests/Controllers/ConfigTest.php</file>
-        </testsuite>
-        <testsuite name="AbstractControllerApi">
-            <file>tests/Reuse/Controllers/AbstractApiTest.php</file>
         </testsuite>
         <testsuite name="ToolsJwtToken">
             <file>tests/Tools/Jwt/TokenTest.php</file>
