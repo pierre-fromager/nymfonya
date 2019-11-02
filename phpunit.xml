@@ -3,7 +3,6 @@
 <phpunit bootstrap="./tests/bootstrap.php" stopOnFailure="true" colors="true" strict="true">
     <testsuites>
         <testsuite name="all">
-            <directory>tests</directory>
             <file>tests/Http/RequestTest.php</file>
             <file>tests/Http/CookieTest.php</file>
             <file>tests/Http/ResponseTest.php</file>
