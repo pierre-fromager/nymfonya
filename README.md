@@ -108,12 +108,8 @@ Middleware stack must contain at least one.
 ### Server
 
 #### Start
-From the root/src of the project, start the server ip:port as below.
 
-``` bash
-php -S localhost:8888
-```
-or from root path
+From root path
 
 ``` bash
 composer run start
@@ -123,7 +119,7 @@ composer run start
 
 Postman recommended.
 
-* Auth Jwt
+##### Middleware Jwt
 ``` bash
 #!/bin/bash
 curl -v \
@@ -137,12 +133,23 @@ curl -v \
 	--data '{"login": "admin@domain.tld","password": "adminadmin"}'
 ```
 
-Free access
+Free access  
 * http://localhost:8888/api/v1/stat/opcache
+* http://localhost:8888/api/v1/test/pokerelay
+* http://localhost:8888/api/v1/restful
 
-Bearer Token required
+Bearer Token required  
 * http://localhost:8888/api/v1/stat/filecache
+* http://localhost:8888/api/v1/test/jwtaction
+* http://localhost:8888/api/v1/test/upload
 
+##### Middleware Restufl
+
+* http://localhost:8888/api/v1/restful
+
+##### Middleware Cors & After
+
+Enabled for all endpoints.
 
 ### Cli
 

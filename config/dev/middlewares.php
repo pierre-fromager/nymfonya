@@ -35,7 +35,7 @@ return [
         'enabled' => true,
         'prefix' => '/api/v1/',
         'exclude' => [
-            'auth/login', 'stat/opcache', 'stat/filecache',
+            'auth/login', 'stat/opcache', 
             'restful', 'restful/index', 'test/pokerelay'
         ],
     ],
