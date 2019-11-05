@@ -75,7 +75,7 @@
         </testsuite>
         <testsuite name="ControllerApiV1Test">
             <file>tests/Reuse/Controllers/TestTest.php</file>
-        </testsuite>        
+        </testsuite>
         <testsuite name="ControllerConfig">
             <file>tests/Controllers/ConfigTest.php</file>
         </testsuite>
@@ -103,7 +103,6 @@
         <testsuite name="MiddlewareRestful">
             <file>tests/Middlewares/RestfulTest.php</file>
         </testsuite>
-
         <testsuite name="ModelSearchAbstract">
             <file>tests/Model/SearchTest.php</file>
         </testsuite>

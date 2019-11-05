@@ -107,6 +107,7 @@ Middleware stack must contain at least one.
 
 ### Server
 
+#### Start
 From the root/src of the project, start the server ip:port as below.
 
 ``` bash
@@ -118,19 +119,45 @@ or from root path
 composer run start
 ```
 
+#### Play
+
+Postman recommended.
+
+* Auth Jwt
+``` bash
+#!/bin/bash
+curl -v \
+	--request POST \
+	--url http://localhost:8888/api/v1/auth/login \
+	--header 'Cache-Control: no-cache' \
+	--header 'Connection: keep-alive' \
+	--header 'Content-Type: application/json' \
+	--header 'Host: localhost:8888' \
+	--header 'cache-control: no-cache' \
+	--data '{"login": "admin@domain.tld","password": "adminadmin"}'
+```
+
+Free access
+* http://localhost:8888/api/v1/stat/opcache
+
+Bearer Token required
+* http://localhost:8888/api/v1/stat/filecache
+
+
 ### Cli
 
 Ideal for batch mode, cron stuffs.
 From the root of the project.
-This does not require any server to be ran.
+This does not require any server to be running.
+Middleware Jwt is disable.  
 Use [jq](https://stedolan.github.io/jq/) to pretty or filter json in console.
 
 ``` bash
-php src/index.php '/api/v1/auth/login?login=admin@domain.tld&password=adminpassword' | jq
+php src/index.php '/api/v1/auth/login?login=admin@domain.tld&password=adminadmin' | jq
 ```
 
 ``` bash
-php src/index.php '/api/v1/stat/cache' | jq
+php src/index.php '/api/v1/stat/opcache' | jq
 ```
 
 ## :star2: Code

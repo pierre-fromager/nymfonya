@@ -35,7 +35,7 @@ return [
         'enabled' => true,
         'prefix' => '/api/v1/',
         'exclude' => [
-            'auth/login', 'test/pokerelay',
+            'auth/login', 'test/pokerelay', 'stat/opcache'
         ],
     ],
     Restful::class => [

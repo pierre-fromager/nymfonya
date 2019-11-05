@@ -166,6 +166,11 @@ class Jwt implements ILayer
      */
     protected function required(): bool
     {
+        if ($this->request->isCli()
+            && $this->request->getMethod() === Request::METHOD_TRACE
+        ) {
+            return false;
+        }
         return (!$this->isExclude()
             && $this->requestUriPrefix() === $this->prefix
             && !$this->isPreflight());
