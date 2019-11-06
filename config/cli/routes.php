@@ -13,6 +13,7 @@ return [
     '/^(config)\/(keygen)$/', // 1st group match controller 2nd match action
     '/^(config)\/(account)$/', // 1st group match controller 2nd match action
     '/^(config)\/(false)$/', // 1st group match controller 2nd match action
+    '/^(config)\/(swaggerdoc)$/', // 1st group match controller 2nd match action
     '/^(api\/v1\/restful)$/', // 1st group match controller with default action
     '/^(api\/v1\/restful)(\?.*)/', // 3rd group match ?a=1&b=2
     '/^(api\/v1\/restful)\/(.*?)(\?.*)/', // 3rd group match ?a=1&b=2

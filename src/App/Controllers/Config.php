@@ -7,6 +7,10 @@ use App\Reuse\Controllers\AbstractApi;
 use App\Container;
 use App\Http\Response;
 
+/**
+ * @OA\Info(title="Nymfonya",version="v1")
+ * @OA\PathItem(path=".")
+ */
 final class Config extends AbstractApi implements IApi
 {
 
@@ -96,6 +100,22 @@ final class Config extends AbstractApi implements IApi
         $this->response
             ->setCode(Response::HTTP_OK)
             ->setContent(['error' => false, 'command' => $line]);
+        return $this;
+    }
+
+    /**
+     * generate swagger doc from code
+     *
+     * @return Test
+     */
+    final public function swaggerdoc()
+    {
+        $path = dirname(__FILE__);
+        $controllerPath = '/Api/V1/Restful.php';
+        $openapi = \OpenApi\scan($path . $controllerPath);
+        $this->response
+            ->setCode(Response::HTTP_OK)
+            ->setContent($openapi->toYaml());
         return $this;
     }
 

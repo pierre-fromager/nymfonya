@@ -159,12 +159,19 @@ This does not require any server to be running.
 Middleware Jwt is disable.  
 Use [jq](https://stedolan.github.io/jq/) to pretty or filter json in console.
 
+#### Sample Auth  
 ``` bash
 php src/index.php '/api/v1/auth/login?login=admin@domain.tld&password=adminadmin' | jq
 ```
 
+#### Sample Stat Opcache  
 ``` bash
 php src/index.php '/api/v1/stat/opcache' | jq
+```
+
+#### Sample OpenApi Generator  
+``` bash
+php src/index.php '/config/swaggerdoc'
 ```
 
 ## :star2: Code

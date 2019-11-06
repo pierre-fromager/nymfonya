@@ -6,7 +6,14 @@ use App\Interfaces\Controllers\IApi;
 use App\Reuse\Controllers\AbstractApi;
 use App\Http\Response;
 use App\Container;
+use OpenApi\Annotations as OA;
 
+/**
+ * @OA\Info(
+ *     version="1.0",
+ *     title="Api Restful Controller"
+ * )
+ */
 final class Restful extends AbstractApi implements IApi
 {
 
@@ -23,7 +30,30 @@ final class Restful extends AbstractApi implements IApi
     /**
      * index
      *
-     * @Request.method GET
+     * @OA\Get(
+     *     path="/api/v1/restful",
+     *     summary="Search for a something item",
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                     property="id",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="name",
+     *                     type="string"
+     *                 ),
+     *                 example={"id": 10}
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
      * @return Restful
      */
     final public function index(): Restful
@@ -34,7 +64,30 @@ final class Restful extends AbstractApi implements IApi
     /**
      * store
      *
-     * @Request.method POST
+     * @OA\Post(
+     *     path="/api/v1/restful",
+     *     summary="Adds a new something item",
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                     property="id",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="name",
+     *                     type="string"
+     *                 ),
+     *                 example={"id": 10, "name": "Jessica Smith"}
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
      * @return Restful
      */
     final public function store(): Restful
@@ -45,7 +98,30 @@ final class Restful extends AbstractApi implements IApi
     /**
      * update
      *
-     * @Request.method PUT/PATCH
+     * @OA\Put(
+     *     path="/api/v1/restful",
+     *     summary="Modify something item",
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                     property="id",
+     *                     type="string"
+     *                 ),
+     *                 @OA\Property(
+     *                     property="name",
+     *                     type="string"
+     *                 ),
+     *                 example={"id": 10, "name": "Jessica Smoke"}
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
      * @return Restful
      */
     final public function update(): Restful
@@ -56,7 +132,26 @@ final class Restful extends AbstractApi implements IApi
     /**
      * delete
      *
-     * @Request.method DELETE
+     * @OA\Delete(
+     *     path="/api/v1/restful",
+     *     summary="Delete something item",
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(
+     *                     property="id",
+     *                     type="string"
+     *                 ),
+     *                 example={"id": 10}
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="OK"
+     *     )
+     * )
      * @return Restful
      */
     final public function delete(): Restful
