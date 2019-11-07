@@ -4,10 +4,10 @@ namespace Tests;
 
 use PHPUnit\Framework\TestCase as PFT;
 use App\Config;
-use App\Tools\Crypt;
+use App\Component\Crypt;
 
 /**
- * @covers \App\Tools\Crypt::<public>
+ * @covers \App\Component\Crypt::<public>
  */
 class ToolsCyptTest extends PFT
 {
@@ -74,7 +74,7 @@ class ToolsCyptTest extends PFT
 
     /**
      * testInstance
-     * @covers App\Tools\Crypt::__construct
+     * @covers App\Component\Crypt::__construct
      */
     public function testInstance()
     {
@@ -83,7 +83,7 @@ class ToolsCyptTest extends PFT
 
     /**
      * testSetAlgo
-     * @covers App\Tools\Crypt::setAlgo
+     * @covers App\Component\Crypt::setAlgo
      */
     public function testSetAlgo()
     {
@@ -93,8 +93,8 @@ class ToolsCyptTest extends PFT
 
     /**
      * testEncrypt
-     * @covers App\Tools\Crypt::encrypt
-     * @covers App\Tools\Crypt::decrypt
+     * @covers App\Component\Crypt::encrypt
+     * @covers App\Component\Crypt::decrypt
      */
     public function testEncrypt()
     {
@@ -119,7 +119,7 @@ class ToolsCyptTest extends PFT
 
     /**
      * testDecryptException
-     * @covers App\Tools\Crypt::decrypt
+     * @covers App\Component\Crypt::decrypt
      */
     public function testDecryptException()
     {
@@ -129,7 +129,7 @@ class ToolsCyptTest extends PFT
 
     /**
      * testSetAlgoException
-     * @covers App\Tools\Crypt::setAlgo
+     * @covers App\Component\Crypt::setAlgo
      */
     public function testSetAlgoException()
     {
@@ -139,7 +139,7 @@ class ToolsCyptTest extends PFT
 
     /**
      * testSetB64Key
-     * @covers App\Tools\Crypt::setB64Key
+     * @covers App\Component\Crypt::setB64Key
      */
     public function testSetB64Key()
     {
@@ -149,7 +149,7 @@ class ToolsCyptTest extends PFT
 
     /**
      * testGetVersionNumber
-     * @covers App\Tools\Crypt::getVersionNumber
+     * @covers App\Component\Crypt::getVersionNumber
      */
     public function testGetVersionNumber()
     {
@@ -160,7 +160,7 @@ class ToolsCyptTest extends PFT
 
     /**
      * testGetVersionText
-     * @covers App\Tools\Crypt::getVersionText
+     * @covers App\Component\Crypt::getVersionText
      */
     public function testGetVersionText()
     {

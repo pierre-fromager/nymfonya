@@ -7,7 +7,7 @@ use App\Reuse\Controllers\AbstractApi;
 use App\Http\Response;
 use App\Http\Request;
 use App\Container;
-use App\Tools\File\Uploader;
+use App\Component\File\Uploader;
 
 final class Test extends AbstractApi implements IApi
 {

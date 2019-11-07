@@ -5,7 +5,7 @@ namespace App\Model;
 use App\Container;
 use App\Config;
 use App\Model\AbstractSearch;
-use App\Tools\Crypt;
+use App\Component\Crypt;
 
 /**
  * Class App\Model\Accounts

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tools;
+namespace App\Component;
 
 use App\Container;
 use App\Model\Users;

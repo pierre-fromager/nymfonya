@@ -9,7 +9,7 @@ use App\Http\Headers;
 use App\Http\Request;
 use App\Http\Response;
 use App\Model\Users;
-use App\Tools\Jwt\Token;
+use App\Component\Jwt\Token;
 
 final class Auth extends AbstractApi implements IApi
 {

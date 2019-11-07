@@ -1,12 +1,12 @@
 <?php
 
 /**
- * Description of App\Tools\Jwt\Token
+ * Description of App\Component\Jwt\Token
  *
  * @author pierrefromager
  */
 
-namespace App\Tools\Jwt;
+namespace App\Component\Jwt;
 
 use Firebase\JWT\JWT as Fjwt;
 use App\Config;

@@ -3,7 +3,7 @@
 namespace App\Middlewares;
 
 use App\Http\Request;
-use App\Tools\Jwt\Token;
+use App\Component\Jwt\Token;
 use App\Http\Interfaces\Middleware\ILayer;
 use App\Container;
 

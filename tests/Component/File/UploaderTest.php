@@ -3,10 +3,10 @@
 namespace Tests;
 
 use PHPUnit\Framework\TestCase as PFT;
-use App\Tools\File\Uploader;
+use App\Component\File\Uploader;
 
 /**
- * @covers \App\Tools\File\Uploader::<public>
+ * @covers \App\Component\File\Uploader::<public>
  */
 class ToolsFileUploaderTest extends PFT
 {
@@ -76,7 +76,7 @@ class ToolsFileUploaderTest extends PFT
 
     /**
      * testInstance
-     * @covers App\Tools\File\Uploader::__construct
+     * @covers App\Component\File\Uploader::__construct
      */
     public function testInstance()
     {
@@ -104,7 +104,7 @@ class ToolsFileUploaderTest extends PFT
 
     /**
      * testConstants
-     * @covers App\Tools\File\Uploader::__construct
+     * @covers App\Component\File\Uploader::__construct
      * @dataProvider constantsProvider
      */
     public function testConstants($k)
@@ -116,7 +116,7 @@ class ToolsFileUploaderTest extends PFT
 
     /**
      * testIsError
-     * @covers App\Tools\File\Uploader::isError
+     * @covers App\Component\File\Uploader::isError
      */
     public function testIsError()
     {
@@ -126,7 +126,7 @@ class ToolsFileUploaderTest extends PFT
 
     /**
      * testGetInfos
-     * @covers App\Tools\File\Uploader::getInfos
+     * @covers App\Component\File\Uploader::getInfos
      */
     public function testGetInfos()
     {
@@ -135,8 +135,8 @@ class ToolsFileUploaderTest extends PFT
 
     /**
      * testProcess
-     * @covers App\Tools\File\Uploader::process
-     * @covers App\Tools\File\Uploader::setFile
+     * @covers App\Component\File\Uploader::process
+     * @covers App\Component\File\Uploader::setFile
      */
     public function testProcess()
     {
@@ -159,7 +159,7 @@ class ToolsFileUploaderTest extends PFT
 
     /**
      * testSetTargetPath
-     * @covers App\Tools\File\Uploader::setTargetPath
+     * @covers App\Component\File\Uploader::setTargetPath
      */
     public function testSetTargetPath()
     {
@@ -170,7 +170,7 @@ class ToolsFileUploaderTest extends PFT
 
     /**
      * testSetErrorMessage
-     * @covers App\Tools\File\Uploader::setErrorMessage
+     * @covers App\Component\File\Uploader::setErrorMessage
      */
     public function testSetErrorMessage()
     {
@@ -183,7 +183,7 @@ class ToolsFileUploaderTest extends PFT
 
     /**
      * testSetFileInfos
-     * @covers App\Tools\File\Uploader::setFileInfos
+     * @covers App\Component\File\Uploader::setFileInfos
      */
     public function testSetFileInfos()
     {
@@ -201,7 +201,7 @@ class ToolsFileUploaderTest extends PFT
 
     /**
      * testSetFile
-     * @covers App\Tools\File\Uploader::setFile
+     * @covers App\Component\File\Uploader::setFile
      */
     public function testSetFile()
     {
@@ -232,9 +232,9 @@ class ToolsFileUploaderTest extends PFT
 
     /**
      * testSetErrorCode
-     * @covers App\Tools\File\Uploader::setErrorCode
-     * @covers App\Tools\File\Uploader::getInfos
-     * @covers App\Tools\File\Uploader::setErrorMessage
+     * @covers App\Component\File\Uploader::setErrorCode
+     * @covers App\Component\File\Uploader::getInfos
+     * @covers App\Component\File\Uploader::setErrorMessage
      * @dataProvider errorProvider
      */
     public function testSetErrorCode($code, $expMsg)
@@ -246,10 +246,10 @@ class ToolsFileUploaderTest extends PFT
 
     /**
      * testSetErrorCodeNoError
-     * @covers App\Tools\File\Uploader::setFile
-     * @covers App\Tools\File\Uploader::setErrorCode
-     * @covers App\Tools\File\Uploader::getInfos
-     * @covers App\Tools\File\Uploader::setErrorMessage
+     * @covers App\Component\File\Uploader::setFile
+     * @covers App\Component\File\Uploader::setErrorCode
+     * @covers App\Component\File\Uploader::getInfos
+     * @covers App\Component\File\Uploader::setErrorMessage
      */
     public function testSetErrorCodeNoError()
     {

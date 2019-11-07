@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tools\File;
+namespace App\Component\File;
 
 class Uploader
 {

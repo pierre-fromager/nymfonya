@@ -10,7 +10,7 @@ use App\Http\Middleware;
 use App\Http\Interfaces\Middleware\ILayer;
 use App\Http\Response;
 use App\Middlewares\Jwt as JwtMiddleware;
-use App\Tools\Jwt\Token;
+use App\Component\Jwt\Token;
 
 /**
  * @covers \App\Middlewares\Jwt::<public>

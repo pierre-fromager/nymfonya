@@ -5,10 +5,10 @@ namespace Tests;
 use PHPUnit\Framework\TestCase as PFT;
 use App\Config;
 use App\Container;
-use App\Tools\Auth;
+use App\Component\Auth;
 
 /**
- * @covers \App\Tools\Auth::<public>
+ * @covers \App\Component\Auth::<public>
  */
 class ToolsAuthTest extends PFT
 {
@@ -69,7 +69,7 @@ class ToolsAuthTest extends PFT
 
     /**
      * testInstance
-     * @covers App\Tools\Auth::__construct
+     * @covers App\Component\Auth::__construct
      */
     public function testInstance()
     {
@@ -78,7 +78,7 @@ class ToolsAuthTest extends PFT
 
     /**
      * testSetAlgo
-     * @covers App\Tools\Auth::auth
+     * @covers App\Component\Auth::auth
      */
     public function testAuth()
     {

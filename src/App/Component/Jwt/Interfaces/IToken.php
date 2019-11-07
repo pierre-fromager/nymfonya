@@ -1,14 +1,14 @@
 <?php
 
 /**
- * App\Tools\Jwt\Interfaces
+ * App\Component\Jwt\Interfaces
  *
  * @author pierrefromager
  */
 
-namespace App\Tools\Jwt\Interfaces;
+namespace App\Component\Jwt\Interfaces;
 
-use App\Tools\Jwt\Token;
+use App\Component\Jwt\Token;
 
 interface IToken
 {

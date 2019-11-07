@@ -5,10 +5,10 @@ namespace Tests;
 use PHPUnit\Framework\TestCase as PFT;
 use App\Config;
 use App\Http\Request;
-use App\Tools\Jwt\Token;
+use App\Component\Jwt\Token;
 
 /**
- * @covers \App\Tools\Jwt\Token::<public>
+ * @covers \App\Component\Jwt\Token::<public>
  */
 class ToolsJwtTokenTest extends PFT
 {
@@ -83,7 +83,7 @@ class ToolsJwtTokenTest extends PFT
 
     /**
      * testInstance
-     * @covers App\Tools\Jwt\Token::__construct
+     * @covers App\Component\Jwt\Token::__construct
      */
     public function testInstance()
     {
@@ -92,7 +92,7 @@ class ToolsJwtTokenTest extends PFT
 
     /**
      * testEncode
-     * @covers App\Tools\Jwt\Token::encode
+     * @covers App\Component\Jwt\Token::encode
      */
     public function testEncode()
     {
@@ -103,7 +103,7 @@ class ToolsJwtTokenTest extends PFT
 
     /**
      * testGetConfig
-     * @covers App\Tools\Jwt\Token::getConfig
+     * @covers App\Component\Jwt\Token::getConfig
      */
     public function testGetConfig()
     {
@@ -116,7 +116,7 @@ class ToolsJwtTokenTest extends PFT
 
     /**
      * testGetConfigSecret
-     * @covers App\Tools\Jwt\Token::getConfigSecret
+     * @covers App\Component\Jwt\Token::getConfigSecret
      */
     public function testGetConfigSecret()
     {
@@ -130,7 +130,7 @@ class ToolsJwtTokenTest extends PFT
 
     /**
      * testGetConfigAlgo
-     * @covers App\Tools\Jwt\Token::getConfigAlgo
+     * @covers App\Component\Jwt\Token::getConfigAlgo
      */
     public function testGetConfigAlgo()
     {
@@ -144,8 +144,8 @@ class ToolsJwtTokenTest extends PFT
 
     /**
      * testSetGetToken
-     * @covers App\Tools\Jwt\Token::getToken
-     * @covers App\Tools\Jwt\Token::setToken
+     * @covers App\Component\Jwt\Token::getToken
+     * @covers App\Component\Jwt\Token::setToken
      */
     public function testSetGetToken()
     {
@@ -163,7 +163,7 @@ class ToolsJwtTokenTest extends PFT
 
     /**
      * testGetToEncodePayload
-     * @covers App\Tools\Jwt\Token::getToEncodePayload
+     * @covers App\Component\Jwt\Token::getToEncodePayload
      */
     public function testGetToEncodeData()
     {
@@ -176,8 +176,8 @@ class ToolsJwtTokenTest extends PFT
 
     /**
      * testGetToEncodePayload
-     * @covers App\Tools\Jwt\Token::encode
-     * @covers App\Tools\Jwt\Token::decode
+     * @covers App\Component\Jwt\Token::encode
+     * @covers App\Component\Jwt\Token::decode
      */
     public function testDecode()
     {
