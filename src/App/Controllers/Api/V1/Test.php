@@ -63,6 +63,46 @@ final class Test extends AbstractApi implements IApi
     }
 
     /**
+     * check redis service
+     *
+     * @return Test
+     */
+    final public function redis(): Test
+    {
+        $redisService = $this->getContainer()->getService(
+            \App\Component\Cache\Redis\Adapter::class
+        );
+        $client = $redisService->getClient();
+        $error = $redisService->isError();
+        $ping = '';
+        $keys = [];
+        if (false === $error) {
+            $client->set('redis-entry-name', 'redis-entry-name-item');
+            $client->lpush('redis-list', 'item0');
+            $client->lpush('redis-list', 'item1');
+            $client->lpush('redis-list', 'item2');
+            $ping = $client->ping();
+            $keys = $client->keys('*');
+        }
+        $resCodeError = $error
+            ? Response::HTTP_INTERNAL_SERVER_ERROR
+            : Response::HTTP_OK;
+        $this->response->setCode($resCodeError)->setContent(
+            [
+                'error' => $error,
+                'errorCode' => $redisService->getErrorCode(),
+                'errorMessage' => $redisService->getErrorMessage(),
+                'datas' => [
+                    'keys' => $keys,
+                    'ping' => $ping,
+                ]
+            ]
+        );
+        unset($upload);
+        return $this;
+    }
+
+    /**
      * pokerelay
      *
      * @see https://pokeapi.co/

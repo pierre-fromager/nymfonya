@@ -36,7 +36,8 @@ return [
         'prefix' => '/api/v1/',
         'exclude' => [
             'auth/login', 'stat/opcache', 
-            'restful', 'restful/index', 'test/pokerelay'
+            'restful', 'restful/index', 
+            'test/pokerelay' , 'test/redis'
         ],
     ],
     Restful::class => [

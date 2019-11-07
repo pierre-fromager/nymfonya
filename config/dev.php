@@ -19,5 +19,6 @@ return [
     'logger' => [
         'path' => '/../log/app.log',
         'name' => 'skypass'
-    ]
+    ],
+    'redis' => include 'dev/redis.php',
 ];

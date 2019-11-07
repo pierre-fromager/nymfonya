@@ -52,7 +52,7 @@
             "phpunit --coverage-html='./coverage'"
         ],
         "covdbg": [
-            "phpdbg -qrr ./vendor/bin/phpunit --coverage-html='./coverage'"
+            "phpdbg -dmemory_limit=512M -qrr ./vendor/bin/phpunit --coverage-html='./coverage'"
         ],
         "test": [
             "phpunit"
@@ -98,15 +98,18 @@
         ],
         "testCtrlApiV1Restful": [
             "phpunit --testsuite ControllerApiV1Restful"
-        ],  
+        ],
         "testCtrlApiV1Test": [
             "phpunit --testsuite ControllerApiV1Test"
-        ],       
+        ],
         "testAbstractApiController": [
             "phpunit --testsuite AbstractControllerApi"
         ],
         "testCtrlConfig": [
             "phpunit --testsuite ControllerConfig"
+        ],
+        "testComponentCacheRedisAdapter": [
+            "phpunit --testsuite ComponentCacheRedisAdapter"
         ],
         "testComponentJwtToken": [
             "phpunit --testsuite ComponentJwtToken"

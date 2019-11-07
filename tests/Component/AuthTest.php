@@ -19,7 +19,7 @@ class ComponentAuthTest extends PFT
     /**
      * config instance
      *
-     * @var Container
+     * @var Config
      */
     protected $config;
 

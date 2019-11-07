@@ -79,6 +79,9 @@
         <testsuite name="ControllerConfig">
             <file>tests/Controllers/ConfigTest.php</file>
         </testsuite>
+        <testsuite name="ComponentCacheRedisAdapter">
+            <file>tests/Component/Cache/Redis/AdapterTest.php</file>
+        </testsuite>
         <testsuite name="ComponentJwtToken">
             <file>tests/Component/Jwt/TokenTest.php</file>
         </testsuite>

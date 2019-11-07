@@ -19,5 +19,6 @@ return [
     'logger' => [
         'path' => '/../log/console.log',
         'name' => 'skypass'
-    ]
+    ],
+    'redis' => include 'cli/redis.php',
 ];
