@@ -135,6 +135,19 @@ class ApiV1ControllerConfigTest extends PFT
         );
     }
 
+   /**
+     * testSwaggerdoc
+     * @covers App\Controllers\Config::swaggerdoc
+     */
+    public function testSwaggerdoc()
+    {
+        $this->setOutputCallback(function () {
+        });
+        $this->assertTrue(
+            $this->instance->swaggerdoc() instanceof ConfigControler
+        );
+    }
+
     /**
      * testHasReadLine
      * @covers App\Controllers\Config::hasReadLine

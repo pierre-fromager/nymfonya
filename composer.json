@@ -52,7 +52,7 @@
             "phpunit --coverage-html='./coverage'"
         ],
         "covdbg": [
-            "phpdbg -dmemory_limit=512M -qrr ./vendor/bin/phpunit --coverage-html='./coverage'"
+            "phpdbg -qrr ./vendor/bin/phpunit --coverage-html='./coverage'"
         ],
         "test": [
             "phpunit"

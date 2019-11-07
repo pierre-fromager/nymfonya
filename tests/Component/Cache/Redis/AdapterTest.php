@@ -3,8 +3,8 @@
 namespace Tests;
 
 use PHPUnit\Framework\TestCase as PFT;
+use PHPUnit\Framework\MockObject\MockObject;
 use App\Config;
-//use \Redis;
 use App\Component\Cache\Redis\Adapter;
 
 /**
@@ -89,6 +89,31 @@ class ComponentCacheRedisAdapterTest extends PFT
     public function testGetClient()
     {
         $this->assertTrue($this->instance->getClient() instanceof \Redis);
+    }
+
+    /**
+     * testGetClientException
+     * @covers App\Component\Cache\Redis\Adapter::getClient
+     * @covers App\Component\Cache\Redis\Adapter::isError
+     */
+    public function testGetClientException()
+    {
+        $redisConfigValues = function ($arg0) {
+            if ($arg0 == Adapter::_REDIS) {
+                return [
+                    Adapter::_PORT => 8888,
+                    Adapter::_HOST => 'a.0.0.0',
+                    'timeout' => 0.6
+                ];
+            }
+        };
+        $mockConfig = $this->createMock(\App\Config::class);
+        $mockConfig->method('getSettings')->will(
+            $this->returnCallback($redisConfigValues)
+        );
+        $instance = new Adapter($mockConfig);
+        $client = $instance->getClient();
+        $this->assertTrue($instance->isError());
     }
 
     /**

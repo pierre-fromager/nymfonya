@@ -128,6 +128,17 @@ class ApiV1ControllerTestTest extends PFT
     }
 
     /**
+     * testRedis
+     * @covers App\Controllers\Api\V1\Test::redis
+     */
+    public function testRedis()
+    {
+        $this->assertTrue(
+            $this->instance->redis() instanceof ApiTestControler
+        );
+    }
+
+    /**
      * testPokemonApiRelayNoCache
      * @covers App\Controllers\Api\V1\Test::pokemonApiRelay
      * @covers App\Controllers\Api\V1\Test::apiRelayRequest
@@ -163,13 +174,6 @@ class ApiV1ControllerTestTest extends PFT
             ]
         );
         $this->assertTrue($par instanceof ApiTestControler);
-        /*
-        $res = self::getMethod('getService')->invokeArgs(
-            $this->instance,
-            [\App\Http\Response::class]
-        );
-        $this->assertNotEmpty($res->getContent());
-        $this->assertEquals($res->getCode(), Response::HTTP_OK);*/
     }
 
     /**

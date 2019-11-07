@@ -20,5 +20,6 @@ return [
         \App\Config::_NAME,
         [\Monolog\Handler\RotatingFileHandler::class],
         [\Monolog\Processor\WebProcessor::class]
-    ]
+    ],
+    \App\Component\Cache\Redis\Adapter::class => [\App\Config::class]
 ];
