@@ -6,9 +6,9 @@ use PHPUnit\Framework\TestCase as PFT;
 use App\Component\File\Uploader;
 
 /**
- * @covers \App\Component\File\Uploader::<public>
+ * @covers App\Component\File\Uploader::<public>
  */
-class ToolsFileUploaderTest extends PFT
+class ComponentFileUploaderTest extends PFT
 {
 
     const TEST_ENABLE = true;

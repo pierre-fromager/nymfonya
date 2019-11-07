@@ -10,7 +10,7 @@ use App\Component\Jwt\Token;
 /**
  * @covers \App\Component\Jwt\Token::<public>
  */
-class ToolsJwtTokenTest extends PFT
+class ComponentJwtTokenTest extends PFT
 {
 
     const TEST_ENABLE = true;

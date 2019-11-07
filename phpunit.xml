@@ -19,10 +19,10 @@
             <file>tests/Controllers/Api/V1/StatTest.php</file>
             <file>tests/Controllers/Api/V1/RestfulTest.php</file>
             <file>tests/Controllers/Api/V1/TestTest.php</file>
-            <file>tests/Tools/Jwt/TokenTest.php</file>
-            <file>tests/Tools/CryptTest.php</file>
-            <file>tests/Tools/AuthTest.php</file>
-            <file>tests/Tools/File/UploaderTest.php</file>
+            <file>tests/Component/Jwt/TokenTest.php</file>
+            <file>tests/Component/CryptTest.php</file>
+            <file>tests/Component/AuthTest.php</file>
+            <file>tests/Component/File/UploaderTest.php</file>
             <file>tests/Reuse/Controllers/AbstractApiTest.php</file>
             <file>tests/Middlewares/JwtTest.php</file>
             <file>tests/Middlewares/CorsTest.php</file>
@@ -79,17 +79,17 @@
         <testsuite name="ControllerConfig">
             <file>tests/Controllers/ConfigTest.php</file>
         </testsuite>
-        <testsuite name="ToolsJwtToken">
-            <file>tests/Tools/Jwt/TokenTest.php</file>
+        <testsuite name="ComponentJwtToken">
+            <file>tests/Component/Jwt/TokenTest.php</file>
         </testsuite>
-        <testsuite name="ToolsCrypt">
-            <file>tests/Tools/CryptTest.php</file>
+        <testsuite name="ComponentCrypt">
+            <file>tests/Component/CryptTest.php</file>
         </testsuite>
-        <testsuite name="ToolsAuth">
-            <file>tests/Tools/AuthTest.php</file>
+        <testsuite name="ComponentAuth">
+            <file>tests/Component/AuthTest.php</file>
         </testsuite>
-        <testsuite name="ToolsFileUploader">
-            <file>tests/Tools/File/UploaderTest.php</file>
+        <testsuite name="ComponentFileUploader">
+            <file>tests/Component/File/UploaderTest.php</file>
         </testsuite>
         <testsuite name="MiddlewareJwt">
             <file>tests/Middlewares/JwtTest.php</file>

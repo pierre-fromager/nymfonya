@@ -18,7 +18,9 @@ class KernelTest extends PFT
     const KERNEL_PATH = '/../src/';
     const KERNEL_NS = '\\App\\Controllers\\';
     const CTRL_ACT = ['config', 'help'];
-    const CTRL_ACTIONS = ['swaggerdoc','false', 'preflight', 'help', 'account', 'keygen'];
+    const CTRL_ACTIONS = [
+        'swaggerdoc', 'false', 'preflight', 'help', 'account', 'keygen'
+    ];
 
     /**
      * config

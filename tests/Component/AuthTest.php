@@ -10,7 +10,7 @@ use App\Component\Auth;
 /**
  * @covers \App\Component\Auth::<public>
  */
-class ToolsAuthTest extends PFT
+class ComponentAuthTest extends PFT
 {
 
     const TEST_ENABLE = true;

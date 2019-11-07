@@ -108,17 +108,17 @@
         "testCtrlConfig": [
             "phpunit --testsuite ControllerConfig"
         ],
-        "testToolsJwtToken": [
-            "phpunit --testsuite ToolsJwtToken"
+        "testComponentJwtToken": [
+            "phpunit --testsuite ComponentJwtToken"
         ],
-        "testToolsCrypt": [
-            "phpunit --testsuite ToolsCrypt"
+        "testComponentCrypt": [
+            "phpunit --testsuite ComponentCrypt"
         ],
-        "testToolsAuth": [
-            "phpunit --testsuite ToolsAuth"
+        "testComponentAuth": [
+            "phpunit --testsuite ComponentAuth"
         ],
-        "testToolsFileUploader": [
-            "phpunit --testsuite ToolsFileUploader"
+        "testComponentFileUploader": [
+            "phpunit --testsuite ComponentFileUploader"
         ],
         "testMiddlewareJwt": [
             "phpunit --debug  --testsuite MiddlewareJwt"
