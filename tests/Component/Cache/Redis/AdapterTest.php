@@ -88,10 +88,7 @@ class ComponentCacheRedisAdapterTest extends PFT
      */
     public function testGetClient()
     {
-        //$r = new Redis();
-        $client = $this->instance->getClient();
-        $isRedis = $client instanceof \Redis;
-        $this->assertTrue($isRedis);
+        $this->assertTrue($this->instance->getClient() instanceof \Redis);
     }
 
     /**
