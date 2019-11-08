@@ -98,22 +98,30 @@ class ComponentCacheRedisAdapterTest extends PFT
      */
     public function testGetClientException()
     {
-        $redisConfigValues = function ($arg0) {
+        $redisConfigParams = [
+            Adapter::_PORT => 8888,
+            Adapter::_HOST => 'a.0.0.0',
+            'timeout' => 0.6
+        ];
+
+        $redisConfigValues = function ($arg0) use ($redisConfigParams) {
             if ($arg0 == Adapter::_REDIS) {
-                return [
-                    Adapter::_PORT => 8888,
-                    Adapter::_HOST => 'a.0.0.0',
-                    'timeout' => 0.6
-                ];
+                return $redisConfigParams;
             }
         };
         $mockConfig = $this->createMock(\App\Config::class);
         $mockConfig->method('getSettings')->will(
             $this->returnCallback($redisConfigValues)
         );
+        $this->assertEquals(
+            $mockConfig->getSettings('redis'),
+            $redisConfigParams
+        );
         $instance = new Adapter($mockConfig);
         $client = $instance->getClient();
+        $this->assertTrue($client instanceof \Redis);
         $this->assertTrue($instance->isError());
+        $this->assertEquals(1, $instance->getErrorCode());
     }
 
     /**

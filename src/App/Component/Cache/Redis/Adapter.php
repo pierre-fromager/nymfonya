@@ -69,14 +69,19 @@ class Adapter
         if (is_null($this->instance)) {
             try {
                 $this->instance =  new Redis();
-                @$this->instance->connect(
+                $cresult = @$this->instance->connect(
                     $this->config[self::_HOST],
                     $this->config[self::_PORT]
                 );
-            } catch (\Exception $e) {
+                if (false === $cresult) {
+                    $this->errorCode = 1;
+                    $this->error = true;
+                    $this->errorMessage = 'Redis cant connect';
+                }
+            } catch (\RedisException $e) {
                 $this->error = true;
-                $this->errorCode = $e->getCode();
                 $this->errorMessage = $e->getMessage();
+                $this->errorCode = 1;
             }
         }
         return $this->instance;
