@@ -95,6 +95,7 @@ class ComponentCacheRedisAdapterTest extends PFT
      * testGetClientException
      * @covers App\Component\Cache\Redis\Adapter::getClient
      * @covers App\Component\Cache\Redis\Adapter::isError
+     * @covers App\Component\Cache\Redis\Adapter::getErrorCode
      */
     public function testGetClientException()
     {
@@ -103,7 +104,6 @@ class ComponentCacheRedisAdapterTest extends PFT
             Adapter::_HOST => 'a.0.0.0',
             'timeout' => 0.6
         ];
-
         $redisConfigValues = function ($arg0) use ($redisConfigParams) {
             if ($arg0 == Adapter::_REDIS) {
                 return $redisConfigParams;
@@ -114,7 +114,7 @@ class ComponentCacheRedisAdapterTest extends PFT
             $this->returnCallback($redisConfigValues)
         );
         $this->assertEquals(
-            $mockConfig->getSettings('redis'),
+            $mockConfig->getSettings(Adapter::_REDIS),
             $redisConfigParams
         );
         $instance = new Adapter($mockConfig);

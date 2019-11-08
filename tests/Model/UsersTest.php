@@ -9,7 +9,7 @@ use App\Model\Users;
 /**
  * @covers \App\Model\Users::<public>
  */
-class AppModelUserTest extends PFT
+class AppModelUsersTest extends PFT
 {
 
     const TEST_ENABLE = true;

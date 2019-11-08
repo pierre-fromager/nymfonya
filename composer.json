@@ -55,7 +55,7 @@
             "phpdbg -qrr ./vendor/bin/phpunit --coverage-html='./coverage'"
         ],
         "test": [
-            "phpunit"
+            "phpunit --testsuite all"
         ],
         "testCookie": [
             "phpunit --testsuite Cookie"
@@ -140,6 +140,9 @@
         ],
         "testModelAccounts": [
             "phpunit --testsuite ModelAccounts"
+        ],
+        "testModelUsers": [
+            "phpunit --testsuite ModelUsers"
         ]
     }
 }
