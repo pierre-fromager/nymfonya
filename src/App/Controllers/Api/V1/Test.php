@@ -103,6 +103,16 @@ final class Test extends AbstractApi implements IApi
     }
 
     /**
+     * orm make a simple select on db table
+     *
+     * @return Test
+     */
+    final public function orm():Test
+    {
+        return $this;
+    }
+
+    /**
      * pokerelay
      *
      * @see https://pokeapi.co/

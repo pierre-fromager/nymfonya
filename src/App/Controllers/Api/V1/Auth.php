@@ -114,9 +114,9 @@ final class Auth extends AbstractApi implements IApi
                 Response::_ERROR_CODE => $code,
                 Response::_ERROR_MSG => $msg
             ])->getHeaderManager()->add(
-            Headers::CONTENT_TYPE,
-            'application/json'
-        );
+                Headers::CONTENT_TYPE,
+                'application/json'
+            );
         return $this;
     }
 }
