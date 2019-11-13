@@ -23,6 +23,7 @@
             <file>tests/Component/CryptTest.php</file>
             <file>tests/Component/AuthTest.php</file>
             <file>tests/Component/File/UploaderTest.php</file>
+            <file>tests/Component/Model/OrmTest.php</file>
             <file>tests/Reuse/Controllers/AbstractApiTest.php</file>
             <file>tests/Middlewares/JwtTest.php</file>
             <file>tests/Middlewares/CorsTest.php</file>
