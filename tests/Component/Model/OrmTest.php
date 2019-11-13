@@ -188,6 +188,7 @@ class ComponentModelOrmTest extends PFT
      */
     public function testGetQuery()
     {
+        $this->instance->find();
         $this->assertTrue(is_object($this->instance->getQuery()));
     }
 }
