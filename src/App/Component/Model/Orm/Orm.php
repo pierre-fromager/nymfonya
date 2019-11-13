@@ -113,7 +113,8 @@ class Orm implements IOrm
         if (empty($aliases)) {
             $this->query->count();
         } else {
-            $fistKey = array_key_first($aliases);
+            reset($aliases);
+            $fistKey = key($aliases);
             $aliasValue = $aliases[$fistKey];
             $this->query->count($fistKey, $aliasValue);
         }
