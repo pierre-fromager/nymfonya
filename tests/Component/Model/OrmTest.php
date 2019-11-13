@@ -111,6 +111,20 @@ class ComponentModelOrmTest extends PFT
     }
 
     /**
+     * testCountAlias
+     * @covers App\Component\Model\Orm\Orm::count
+     */
+    public function testCountAlias()
+    {
+        $this->assertTrue(
+            $this->instance->count(
+                ['id'],
+                ['id' => 'counterId']
+            ) instanceof Orm
+        );
+    }
+
+    /**
      * testInsert
      * @covers App\Component\Model\Orm\Orm::insert
      */
@@ -128,7 +142,10 @@ class ComponentModelOrmTest extends PFT
     public function testUpdate()
     {
         $this->assertTrue(
-            $this->instance->insert(['stuf' => 'value']) instanceof Orm
+            $this->instance->update(
+                ['stuf' => 'value'],
+                ['id' => 2]
+            ) instanceof Orm
         );
     }
 
@@ -139,7 +156,17 @@ class ComponentModelOrmTest extends PFT
     public function testDelete()
     {
         $this->assertTrue(
-            $this->instance->insert(['id' => 1]) instanceof Orm
+            $this->instance->delete(['id' => 1]) instanceof Orm
         );
+    }
+
+    /**
+     * testGetSql
+     * @covers App\Component\Model\Orm\Orm::getSql
+     */
+    public function testGetSql()
+    {
+        $this->instance->find();
+        $this->assertTrue(is_string($this->instance->getSql()));
     }
 }
