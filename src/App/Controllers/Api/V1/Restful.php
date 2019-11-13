@@ -6,6 +6,8 @@ use App\Interfaces\Controllers\IApi;
 use App\Reuse\Controllers\AbstractApi;
 use App\Http\Response;
 use App\Container;
+use App\Model\Repository\Users;
+use Exception;
 use OpenApi\Annotations as OA;
 
 /**
@@ -18,12 +20,27 @@ final class Restful extends AbstractApi implements IApi
 {
 
     /**
+     * user repository
+     *
+     * @var Users
+     */
+    protected $userRepository;
+
+    /**
+     * sql
+     *
+     * @var String
+     */
+    protected $sql;
+
+    /**
      * instanciate
      *
      * @param Container $container
      */
     public function __construct(Container $container)
     {
+        $this->userRepository = new Users($container);
         parent::__construct($container);
     }
 
@@ -58,6 +75,14 @@ final class Restful extends AbstractApi implements IApi
      */
     final public function index(): Restful
     {
+        $this->userRepository->find(
+            ['name'],
+            [
+                'name' => ['john', 'elisa'],
+                'job>' => 0
+            ]
+        );
+        $this->sql = $this->userRepository->getSql();
         return $this->setResponse(__CLASS__, __FUNCTION__);
     }
 
@@ -92,6 +117,12 @@ final class Restful extends AbstractApi implements IApi
      */
     final public function store(): Restful
     {
+        try {
+            $this->userRepository->insert($this->getParams());
+            $this->sql = $this->userRepository->getSql();
+        } catch (\Exception $e) {
+            $this->sql = $e->getMessage();
+        }
         return $this->setResponse(__CLASS__, __FUNCTION__);
     }
 
@@ -126,6 +157,12 @@ final class Restful extends AbstractApi implements IApi
      */
     final public function update(): Restful
     {
+        try {
+            $this->userRepository->update($this->getParams());
+            $this->sql = $this->userRepository->getSql();
+        } catch (\Exception $e) {
+            $this->sql = $e->getMessage();
+        }
         return $this->setResponse(__CLASS__, __FUNCTION__);
     }
 
@@ -156,6 +193,12 @@ final class Restful extends AbstractApi implements IApi
      */
     final public function delete(): Restful
     {
+        try {
+            $this->userRepository->delete($this->getParams());
+            $this->sql = $this->userRepository->getSql();
+        } catch (\Exception $e) {
+            $this->sql = $e->getMessage();
+        }
         return $this->setResponse(__CLASS__, __FUNCTION__);
     }
 
@@ -178,6 +221,7 @@ final class Restful extends AbstractApi implements IApi
                         'params' => $this->request->getParams(),
                         'controller' => $classname,
                         'action' => $action,
+                        'sql' => $this->sql
                     ]
                 ]
             );

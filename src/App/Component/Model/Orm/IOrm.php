@@ -17,11 +17,12 @@ interface IOrm
         self::SQL_STATEMENTS_INSERT,
         self::SQL_STATEMENTS_DELETE,
     ];
+    const OPERATORS = ['!', '<', '>', '#'];
 
     public function __construct(Container $container);
 
     public function find(array $what = [], array $where = []);
-    
+
     public function count(array $where = []);
 
     public function update(array $what = [], array $where = []);

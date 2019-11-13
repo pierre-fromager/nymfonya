@@ -2,6 +2,7 @@
 
 namespace App\Model\Repository;
 
+use App\Container;
 use App\Component\Model\Orm\Orm;
 
 class Users extends Orm
@@ -11,38 +12,34 @@ class Users extends Orm
      * table name
      * @var string
      */
-    protected $tablename;
+    protected $tablename = 'users';
 
     /**
      * table primary key
      * @var string
      */
-    protected $primary;
+    protected $primary = 'id';
 
     /**
      * table name
      * @var string
      */
-    protected $dbname;
+    protected $dbname = 'test';
 
     /**
      * pool name
      * @var string
      */
-    protected $poolname;
+    protected $poolname = 'testMysql';
 
     /**
      * instanciate
      *
-     * @param \App\Container $container
+     * @param Container $container
      * @return self
      */
-    public function _construct(\App\Container $container)
+    public function _construct(Container $container)
     {
-        $this->tablename = 'users';
-        $this->primary = 'id';
-        $this->dbname = 'test';
-        $this->poolname = 'testMysql';
         parent::__construct($container);
     }
 }

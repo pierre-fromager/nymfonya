@@ -1,16 +1,26 @@
 <?php
 
-use NilPortugues\Sql\QueryBuilder\Builder\GenericBuilder;
-
 namespace App\Component\Model\Orm;
 
-abstract class Orm implements IOrm
+use App\Config;
+use App\Container;
+use Exception;
+use NilPortugues\Sql\QueryBuilder\Builder\GenericBuilder;
+use NilPortugues\Sql\QueryBuilder\Manipulation\Select;
+use NilPortugues\Sql\QueryBuilder\Manipulation\Update;
+use NilPortugues\Sql\QueryBuilder\Manipulation\Insert;
+use NilPortugues\Sql\QueryBuilder\Manipulation\Delete;
+
+/**
+ * Poor man orm
+ */
+class Orm implements IOrm
 {
 
     /**
      * config
      *
-     * @var \App\Config
+     * @var Config
      */
     protected $config;
 
@@ -51,32 +61,27 @@ abstract class Orm implements IOrm
     protected $poolname;
 
     /**
-     * sql query
-     * @var string
-     */
-    protected $query;
-
-    /**
-     * sql querybuilder method factory
-     * @var string
-     */
-    protected $method;
-
-    /**
      * query builder instance
      * @var GenericBuilder
      * @see https://github.com/nilportugues/php-sql-query-builder
      */
-    protected $querybuilder;
+    protected $queryBuilder;
+
+    /**
+     * query from builder
+     * @var object
+     */
+    protected $query;
 
     /**
      * instanciate
      * @param Container $container
      */
-    public function __construct(\App\Container $container)
+    public function __construct(Container $container)
     {
         $this->config = $container->getService(Config::class);
-        $this->querybuilder = new GenericBuilder();
+        $this->queryBuilder = new GenericBuilder();
+        $this->query = null;
         return $this;
     }
 
@@ -89,18 +94,25 @@ abstract class Orm implements IOrm
     {
         $this->what = $what;
         $this->where = $where;
-        $this->method = self::SQL_STATEMENTS_SELECT;
+        $this->query = new Select();
+        $this->build();
         return $this;
     }
 
     /**
-     * count records matching where criterias
+     * count records matching where criterias.
+     * alias is [columnn => column_alias]
+     *
      * @param array $where
+     * @param array $alias
+     * @return Orm
      */
-    public function count(array $where = []): Orm
+    public function count(array $where = [], array $alias = []): Orm
     {
         $this->where = $where;
-        $this->method = self::SQL_STATEMENTS_SELECT;
+        $this->query = new Select();
+        $this->query->count($alias);
+        $this->buildWhere();
         return $this;
     }
 
@@ -113,7 +125,8 @@ abstract class Orm implements IOrm
     {
         $this->what = $what;
         $this->where = $where;
-        $this->method =  self::SQL_STATEMENTS_UPDATE;
+        $this->query = new Update();
+        $this->build();
         return $this;
     }
 
@@ -124,7 +137,8 @@ abstract class Orm implements IOrm
     public function insert(array $what = []): Orm
     {
         $this->what = $what;
-        $this->method = self::SQL_STATEMENTS_INSERT;
+        $this->query = new Insert();
+        $this->build();
         return $this;
     }
 
@@ -135,17 +149,36 @@ abstract class Orm implements IOrm
     public function delete(array $where = []): Orm
     {
         $this->where = $where;
-        $this->method = self::SQL_STATEMENTS_DELETE;
+        $this->query = new Delete();
+        $this->build();
         return $this;
     }
 
     /**
-     * returns sql builder instance
+     * builder instance
      * @return GenericBuilder
      */
-    protected function getQueryBuilder(): GenericBuilder
+    public function getQueryBuilder(): GenericBuilder
     {
-        return $this->querybuilder;
+        return $this->queryBuilder;
+    }
+
+    /**
+     * query instance
+     * @return object
+     */
+    public function getQuery()
+    {
+        return $this->query;
+    }
+
+    /**
+     * query sql string
+     * @return string
+     */
+    public function getSql()
+    {
+        return $this->queryBuilder->write($this->query);
     }
 
     /**
@@ -155,33 +188,97 @@ abstract class Orm implements IOrm
      */
     protected function build(): Orm
     {
-        switch ($this->method) {
-            case self::SQL_STATEMENTS_SELECT:
-                $this->query = $this->querybuilder
-                    ->select()
-                    ->setTable($this->tablename)
-                    ->setColumns($this->what);
+        if (false === is_object($this->query)) {
+            throw new Exception('Build : Invalid query instance');
+        }
+        $queryClassname = get_class($this->query);
+        if (false === class_exists($queryClassname)) {
+            throw new Exception('Build : Invalid query type');
+        }
+        $this->query->setTable($this->tablename);
+        switch ($queryClassname) {
+            case Select::class:
+                $this->query->setColumns($this->what);
                 break;
-            case self::SQL_STATEMENTS_UPDATE:
-                $this->query = $this->querybuilder
-                    ->update()
-                    ->setTable($this->tablename)
-                    ->setValues($this->what);
+            case Update::class:
+                if (empty($this->what)) {
+                    throw new Exception(
+                        'Build : Update requires not empty payload'
+                    );
+                }
+                if (empty($this->where)) {
+                    throw new Exception(
+                        'Build : Update requires at least one condition'
+                    );
+                }
+                $this->query->setValues($this->what);
                 break;
-
+            case Insert::class:
+                if (empty($this->what)) {
+                    throw new Exception(
+                        'Build : Insert requires not empty payload'
+                    );
+                }
+                $this->query->setValues($this->what);
+                break;
+            case Delete::class:
+                if (empty($this->where)) {
+                    throw new Exception(
+                        'Build : Delete requires at least one condition'
+                    );
+                }
+                break;
             default:
                 break;
+        }
+        $this->buildWhere();
+        return $this;
+    }
+
+    /**
+     * build where condition on query
+     *
+     * @return Orm
+     */
+    protected function buildWhere(): Orm
+    {
+        foreach ($this->where as $k => $v) {
+            $whereOperator = $this->getWhereOperator($k, $v);
+            $this->query->where()->{$whereOperator}($k, $v);
         }
         return $this;
     }
 
     /**
-     * return sql built query
+     * check where condition ket values to find operators
      *
+     * @param string $whereColumn
      * @return string
      */
-    protected function getQuey():string
+    protected function getWhereOperator(string &$whereColumn, $value): string
     {
-        return $this->query;
+        $hasArray = is_array($value);
+        $operator = $whereColumn[strlen($whereColumn) - 1];
+        $hasOperator = in_array($operator, self::OPERATORS);
+        if (false === $hasOperator) {
+            return ($hasArray) ? 'in' : 'equals';
+        }
+        foreach (self::OPERATORS as $op) {
+            $whereColumn = str_replace($op, '', $whereColumn);
+        }
+        switch ($operator) {
+            case '!':
+                return ($hasArray) ? 'notIn' : 'notEquals';
+                break;
+            case '<':
+                return 'lessThan';
+                break;
+            case '>':
+                return 'greaterThan';
+                break;
+            case '#':
+                return 'like';
+                break;
+        }
     }
 }
