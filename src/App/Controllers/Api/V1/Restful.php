@@ -7,7 +7,6 @@ use App\Reuse\Controllers\AbstractApi;
 use App\Http\Response;
 use App\Container;
 use App\Model\Repository\Users;
-use Exception;
 use OpenApi\Annotations as OA;
 
 /**

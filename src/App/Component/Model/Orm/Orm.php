@@ -4,7 +4,6 @@ namespace App\Component\Model\Orm;
 
 use App\Config;
 use App\Container;
-use Exception;
 use NilPortugues\Sql\QueryBuilder\Builder\GenericBuilder;
 use NilPortugues\Sql\QueryBuilder\Manipulation\Select;
 use NilPortugues\Sql\QueryBuilder\Manipulation\Update;
@@ -101,17 +100,25 @@ class Orm implements IOrm
 
     /**
      * count records matching where criterias.
-     * alias is [columnn => column_alias]
+     * aliases is formely [columnn => column_alias]
      *
      * @param array $where
-     * @param array $alias
+     * @param array $aliases
      * @return Orm
      */
-    public function count(array $where = [], array $alias = []): Orm
+    public function count(array $where = [], array $aliases = []): Orm
     {
         $this->where = $where;
         $this->query = new Select();
-        $this->query->count($alias);
+        if (empty($aliases)) {
+            $this->query->count();
+        } else {
+            $alias = $aliases[0];
+            $this->query->count(
+                array_keys($alias)[0],
+                array_values($alias)[0]
+            );
+        }
         $this->buildWhere();
         return $this;
     }
@@ -189,11 +196,11 @@ class Orm implements IOrm
     protected function build(): Orm
     {
         if (false === is_object($this->query)) {
-            throw new Exception('Build : Invalid query instance');
+            throw new \Exception('Build : Invalid query instance');
         }
         $queryClassname = get_class($this->query);
         if (false === class_exists($queryClassname)) {
-            throw new Exception('Build : Invalid query type');
+            throw new \Exception('Build : Invalid query type');
         }
         $this->query->setTable($this->tablename);
         switch ($queryClassname) {
@@ -202,12 +209,12 @@ class Orm implements IOrm
                 break;
             case Update::class:
                 if (empty($this->what)) {
-                    throw new Exception(
+                    throw new \Exception(
                         'Build : Update requires not empty payload'
                     );
                 }
                 if (empty($this->where)) {
-                    throw new Exception(
+                    throw new \Exception(
                         'Build : Update requires at least one condition'
                     );
                 }
@@ -215,7 +222,7 @@ class Orm implements IOrm
                 break;
             case Insert::class:
                 if (empty($this->what)) {
-                    throw new Exception(
+                    throw new \Exception(
                         'Build : Insert requires not empty payload'
                     );
                 }
@@ -223,7 +230,7 @@ class Orm implements IOrm
                 break;
             case Delete::class:
                 if (empty($this->where)) {
-                    throw new Exception(
+                    throw new \Exception(
                         'Build : Delete requires at least one condition'
                     );
                 }
