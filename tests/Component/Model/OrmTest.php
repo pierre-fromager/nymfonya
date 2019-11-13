@@ -7,6 +7,7 @@ use \ReflectionMethod;
 use App\Config;
 use App\Container;
 use App\Component\Model\Orm\Orm;
+use NilPortugues\Sql\QueryBuilder\Builder\GenericBuilder;
 
 /**
  * @covers \App\Component\Model\Orm\Orm::<public>
@@ -168,5 +169,25 @@ class ComponentModelOrmTest extends PFT
     {
         $this->instance->find();
         $this->assertTrue(is_string($this->instance->getSql()));
+    }
+
+    /**
+     * testGetQueryBuilder
+     * @covers App\Component\Model\Orm\Orm::getQueryBuilder
+     */
+    public function testGetQueryBuilder()
+    {
+        $this->assertTrue(
+            $this->instance->getQueryBuilder() instanceof GenericBuilder
+        );
+    }
+
+    /**
+     * testGetQuery
+     * @covers App\Component\Model\Orm\Orm::getQuery
+     */
+    public function testGetQuery()
+    {
+        $this->assertTrue(is_object($this->instance->getQuery()));
     }
 }
