@@ -106,9 +106,9 @@ final class Config extends AbstractApi implements IApi
     /**
      * generate swagger doc from code
      *
-     * @return Test
+     * @return Config
      */
-    final public function swaggerdoc()
+    final public function swaggerdoc(): Config
     {
         $path = dirname(__FILE__);
         $controllerPath = '/Api/V1/Restful.php';
