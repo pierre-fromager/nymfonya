@@ -3,9 +3,9 @@
 namespace Tests;
 
 use PHPUnit\Framework\TestCase as PFT;
+use \ReflectionMethod;
 use App\Config;
 use App\Container;
-use App\Http\Request;
 use App\Component\Model\Orm\Orm;
 
 /**
@@ -23,14 +23,6 @@ class ComponentModelOrmTest extends PFT
      * @var Config
      */
     protected $config;
-
-    /**
-     * request instance
-     *
-     * @var Request
-     */
-    protected $request;
-
 
     /**
      * container
@@ -62,7 +54,6 @@ class ComponentModelOrmTest extends PFT
         $this->container = new Container(
             $this->config->getSettings(Config::_SERVICES)
         );
-        $this->request = new Request();
         $this->instance = new Orm($this->container);
     }
 
@@ -81,9 +72,9 @@ class ComponentModelOrmTest extends PFT
      * get any method from a class to be invoked whatever the scope
      *
      * @param String $name
-     * @return void
+     * @return ReflectionMethod
      */
-    protected static function getMethod(string $name)
+    protected static function getMethod(string $name): ReflectionMethod
     {
         $class = new \ReflectionClass(Orm::class);
         $method = $class->getMethod($name);
@@ -99,5 +90,56 @@ class ComponentModelOrmTest extends PFT
     public function testInstance()
     {
         $this->assertTrue($this->instance instanceof Orm);
+    }
+
+    /**
+     * testFind
+     * @covers App\Component\Model\Orm\Orm::find
+     */
+    public function testFind()
+    {
+        $this->assertTrue($this->instance->find() instanceof Orm);
+    }
+
+    /**
+     * testCount
+     * @covers App\Component\Model\Orm\Orm::count
+     */
+    public function testCount()
+    {
+        $this->assertTrue($this->instance->count() instanceof Orm);
+    }
+
+    /**
+     * testInsert
+     * @covers App\Component\Model\Orm\Orm::insert
+     */
+    public function testInsert()
+    {
+        $this->assertTrue(
+            $this->instance->insert(['stuf' => 'value']) instanceof Orm
+        );
+    }
+
+    /**
+     * testUpdate
+     * @covers App\Component\Model\Orm\Orm::update
+     */
+    public function testUpdate()
+    {
+        $this->assertTrue(
+            $this->instance->insert(['stuf' => 'value']) instanceof Orm
+        );
+    }
+
+    /**
+     * testDelete
+     * @covers App\Component\Model\Orm\Orm::delete
+     */
+    public function testDelete()
+    {
+        $this->assertTrue(
+            $this->instance->insert(['id' => 1]) instanceof Orm
+        );
     }
 }

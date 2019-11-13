@@ -249,9 +249,11 @@ class Orm implements IOrm
      */
     protected function buildWhere(): Orm
     {
-        foreach ($this->where as $k => $v) {
-            $whereOperator = $this->getWhereOperator($k, $v);
-            $this->query->where()->{$whereOperator}($k, $v);
+        if (false === empty($this->where)) {
+            foreach ($this->where as $k => $v) {
+                $whereOperator = $this->getWhereOperator($k, $v);
+                $this->query->where()->{$whereOperator}($k, $v);
+            }
         }
         return $this;
     }
