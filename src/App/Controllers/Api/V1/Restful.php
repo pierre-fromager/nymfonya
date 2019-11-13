@@ -118,7 +118,7 @@ final class Restful extends AbstractApi implements IApi
     final public function store(): Restful
     {
         try {
-            $this->userRepository->insert($this->getParams());
+            $this->userRepository->insert($this->request->getParams());
             $this->sql = $this->userRepository->getSql();
         } catch (\Exception $e) {
             $this->sql = $e->getMessage();
@@ -158,7 +158,7 @@ final class Restful extends AbstractApi implements IApi
     final public function update(): Restful
     {
         try {
-            $this->userRepository->update($this->getParams());
+            $this->userRepository->update($this->request->getParams());
             $this->sql = $this->userRepository->getSql();
         } catch (\Exception $e) {
             $this->sql = $e->getMessage();
@@ -194,7 +194,7 @@ final class Restful extends AbstractApi implements IApi
     final public function delete(): Restful
     {
         try {
-            $this->userRepository->delete($this->getParams());
+            $this->userRepository->delete($this->request->getParams());
             $this->sql = $this->userRepository->getSql();
         } catch (\Exception $e) {
             $this->sql = $e->getMessage();
