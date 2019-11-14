@@ -22,6 +22,7 @@ class Restful implements ILayer
         Request::METHOD_POST => 'store',
         Request::METHOD_PUT => 'update',
         Request::METHOD_PATCH => 'update',
+        Request::METHOD_DELETE => 'delete',
         Request::METHOD_OPTIONS => 'preflight',
     ];
 
