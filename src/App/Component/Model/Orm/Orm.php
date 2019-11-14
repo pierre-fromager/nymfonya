@@ -133,8 +133,7 @@ class Orm implements IOrm
             $aliasValue = $aliases[$fistKey];
             $this->query->count($fistKey, $aliasValue);
         }
-        $this->buildWhere($this->where);
-        return $this;
+        return $this->buildWhere($this->where);
     }
 
     /**
@@ -156,11 +155,10 @@ class Orm implements IOrm
      */
     public function insert(array $columns = []): Orm
     {
-        $this
+        return $this
             ->setColumns($columns)
             ->setQuery(new Insert())
             ->build($this->tablename, $this->columns, []);
-        return $this;
     }
 
     /**
@@ -267,11 +265,9 @@ class Orm implements IOrm
                     );
                 }
                 break;
-            default:
-                break;
         }
-        $this->buildWhere($where);
-        return $this;
+        return $this->buildWhere($where);
+        ;
     }
 
     /**
@@ -308,19 +304,14 @@ class Orm implements IOrm
         foreach (self::OPERATORS as $op) {
             $whereColumn = str_replace($op, '', $whereColumn);
         }
-        switch ($operator) {
-            case '!':
-                return ($hasArray) ? 'notIn' : 'notEquals';
-                break;
-            case '<':
-                return 'lessThan';
-                break;
-            case '>':
-                return 'greaterThan';
-                break;
-            case '#':
-                return 'like';
-                break;
+        if ($operator == '!') {
+            return ($hasArray) ? 'notIn' : 'notEquals';
+        } elseif ($operator == '<') {
+            return 'lessThan';
+        } elseif ($operator == '>') {
+            return 'greaterThan';
+        } elseif ($operator == '#') {
+            return 'like';
         }
     }
 }
