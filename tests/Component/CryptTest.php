@@ -58,21 +58,6 @@ class ComponentCyptTest extends PFT
     }
 
     /**
-     * get any method from a class to be invoked whatever the scope
-     *
-     * @param String $name
-     * @return void
-     */
-    protected static function getMethod(string $name)
-    {
-        $class = new \ReflectionClass(Crypt::class);
-        $method = $class->getMethod($name);
-        $method->setAccessible(true);
-        unset($class);
-        return $method;
-    }
-
-    /**
      * testInstance
      * @covers App\Component\Crypt::__construct
      */

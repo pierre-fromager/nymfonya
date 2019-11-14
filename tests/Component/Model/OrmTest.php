@@ -8,6 +8,10 @@ use App\Config;
 use App\Container;
 use App\Component\Model\Orm\Orm;
 use NilPortugues\Sql\QueryBuilder\Builder\GenericBuilder;
+use NilPortugues\Sql\QueryBuilder\Manipulation\Select;
+use NilPortugues\Sql\QueryBuilder\Manipulation\Update;
+use NilPortugues\Sql\QueryBuilder\Manipulation\Insert;
+use NilPortugues\Sql\QueryBuilder\Manipulation\Delete;
 
 /**
  * @covers \App\Component\Model\Orm\Orm::<public>
@@ -52,10 +56,45 @@ class ComponentModelOrmTest extends PFT
             Config::ENV_CLI,
             __DIR__ . self::CONFIG_PATH
         );
-        $this->container = new Container(
+        $container = new Container(
             $this->config->getSettings(Config::_SERVICES)
         );
-        $this->instance = new Orm($this->container);
+        $this->instance = new class ($container) extends Orm
+        {
+            /**
+             * table name
+             * @var string
+             */
+            protected $tablename = 'testtable';
+
+            /**
+             * table primary key
+             * @var string
+             */
+            protected $primary = 'id';
+
+            /**
+             * table name
+             * @var string
+             */
+            protected $dbname = 'test';
+
+            /**
+             * pool name
+             * @var string
+             */
+            protected $poolname = 'testAnySgbd';
+
+            /**
+             * instanciate
+             *
+             * @param Container $container
+             */
+            public function __construct(Container $container)
+            {
+                parent::__construct($container);
+            }
+        };
     }
 
     /**
@@ -190,5 +229,70 @@ class ComponentModelOrmTest extends PFT
     {
         $this->instance->find();
         $this->assertTrue(is_object($this->instance->getQuery()));
+    }
+
+    /**
+     * testBuild
+     * @covers App\Component\Model\Orm\Orm::build
+     */
+    public function testBuild()
+    {
+        $this->instance->find();
+        $build = self::getMethod('build')->invokeArgs(
+            $this->instance,
+            [
+                'testtable', [], []
+            ]
+        );
+        $this->assertTrue($build instanceof Orm);
+    }
+
+    /**
+     * testBuildInstanceException
+     * @covers App\Component\Model\Orm\Orm::build
+     */
+    public function testBuildInstanceException()
+    {
+        $this->expectException(\Exception::class);
+        $build = self::getMethod('build')->invokeArgs(
+            $this->instance,
+            [
+                'testtable', [], []
+            ]
+        );
+        $this->assertTrue($build instanceof Orm);
+    }
+
+    /**
+     * testBuildInvalidTypeException
+     * @covers App\Component\Model\Orm\Orm::build
+     */
+    public function testBuildInvalidTypeException()
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage(
+            'Build : Invalid query type'
+        );
+        $mockOrm = $this->createMock(Orm::class);
+        $mockOrm->method('getQuery')->willReturn(new \stdClass);
+        self::getMethod('build')->invokeArgs($mockOrm, [
+            'testtable', [], []
+        ]);
+    }
+
+    /**
+     * testBuildUpdateException
+     * @covers App\Component\Model\Orm\Orm::build
+     */
+    public function testBuildUpdateException()
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage(
+            'Build : Update requires not empty payload'
+        );
+        $this->instance->setQuery(new Update());
+        self::getMethod('build')->invokeArgs($this->instance, [
+            'tabletest', [], []
+        ]);
     }
 }

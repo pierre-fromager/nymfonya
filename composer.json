@@ -124,6 +124,9 @@
         "testComponentFileUploader": [
             "phpunit --testsuite ComponentFileUploader"
         ],
+        "testComponentModelOrm": [
+            "phpunit --testsuite ComponentModelOrm"
+        ],
         "testMiddlewareJwt": [
             "phpunit --debug  --testsuite MiddlewareJwt"
         ],

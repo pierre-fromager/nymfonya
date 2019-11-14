@@ -24,10 +24,10 @@ class Orm implements IOrm
     protected $config;
 
     /**
-     * what fields
+     * columns fields
      * @var array
      */
-    protected $what;
+    protected $columns;
 
     /**
      * where criterias
@@ -48,7 +48,7 @@ class Orm implements IOrm
     protected $primary;
 
     /**
-     * table name
+     * database name
      * @var string
      */
     protected $dbname;
@@ -81,20 +81,35 @@ class Orm implements IOrm
         $this->config = $container->getService(Config::class);
         $this->queryBuilder = new GenericBuilder();
         $this->query = null;
+        $this->columns = [];
+        $this->where = [];
         return $this;
     }
 
     /**
-     * find a record with what field matching where criterias
-     * @param array $what
+     * set required columns
+     *
+     * @param array $columns
+     * @return Orm
+     */
+    public function setColumns(array $columns): Orm
+    {
+        $this->columns = $columns;
+        return $this;
+    }
+
+    /**
+     * find a record with columns field matching where criterias
+     * @param array $columns
      * @param array $where
      */
-    public function find(array $what = [], array $where = []): Orm
+    public function find(array $columns = [], array $where = []): Orm
     {
-        $this->what = $what;
         $this->where = $where;
-        $this->query = new Select();
-        $this->build();
+        $this
+            ->setColumns($columns)
+            ->setQuery(new Select())
+            ->build($this->tablename, $this->columns, $this->where);
         return $this;
     }
 
@@ -109,7 +124,7 @@ class Orm implements IOrm
     public function count(array $where = [], array $aliases = []): Orm
     {
         $this->where = $where;
-        $this->query = new Select();
+        $this->setQuery(new Select());
         if (empty($aliases)) {
             $this->query->count();
         } else {
@@ -118,33 +133,33 @@ class Orm implements IOrm
             $aliasValue = $aliases[$fistKey];
             $this->query->count($fistKey, $aliasValue);
         }
-        $this->buildWhere();
+        $this->buildWhere($this->where);
         return $this;
     }
 
     /**
-     * update a record with what fields matching where criterias
-     * @param array $what
+     * update a record with columns fields matching where criterias
+     * @param array $columns
      * @param array $where
      */
-    public function update(array $what = [], array $where = []): Orm
+    public function update(array $columns = [], array $where = []): Orm
     {
-        $this->what = $what;
         $this->where = $where;
-        $this->query = new Update();
-        $this->build();
-        return $this;
+        return $this->setColumns($columns)
+            ->setQuery(new Update())
+            ->build($this->tablename, $this->columns, $this->where);
     }
 
     /**
-     * insert record with what fields
-     * @param array $what
+     * insert record with columns fields
+     * @param array $columns
      */
-    public function insert(array $what = []): Orm
+    public function insert(array $columns = []): Orm
     {
-        $this->what = $what;
-        $this->query = new Insert();
-        $this->build();
+        $this
+            ->setColumns($columns)
+            ->setQuery(new Insert())
+            ->build($this->tablename, $this->columns, []);
         return $this;
     }
 
@@ -155,9 +170,9 @@ class Orm implements IOrm
     public function delete(array $where = []): Orm
     {
         $this->where = $where;
-        $this->query = new Delete();
-        $this->build();
-        return $this;
+        return $this
+            ->setQuery(new Delete())
+            ->build($this->tablename, [], $this->where);
     }
 
     /**
@@ -179,6 +194,18 @@ class Orm implements IOrm
     }
 
     /**
+     * set query instance
+     *
+     * @param Select|Update|Insert|Delete $query
+     * @return Orm
+     */
+    public function setQuery($query): Orm
+    {
+        $this->query = $query;
+        return $this;
+    }
+
+    /**
      * query sql string
      * @return string
      */
@@ -188,47 +215,53 @@ class Orm implements IOrm
     }
 
     /**
-     * build sql query
+     * build query
      *
+     * @param string $tablename
+     * @param array $columns
+     * @param array $where
      * @return Orm
      */
-    protected function build(): Orm
+    protected function build(string $tablename, array $columns, array $where): Orm
     {
-        if (false === is_object($this->query)) {
+        if (false === is_object($this->getQuery())) {
             throw new \Exception('Build : Invalid query instance');
         }
-        $queryClassname = get_class($this->query);
-        if (false === class_exists($queryClassname)) {
+        $queryClassname = get_class($this->getQuery());
+        $allowedClasses = [
+            Update::class, Select::class, Delete::class, Insert::class
+        ];
+        if (false === in_array($queryClassname, $allowedClasses)) {
             throw new \Exception('Build : Invalid query type');
         }
-        $this->query->setTable($this->tablename);
+        $this->query->setTable($tablename);
         switch ($queryClassname) {
             case Select::class:
-                $this->query->setColumns($this->what);
+                $this->query->setColumns($columns);
                 break;
             case Update::class:
-                if (empty($this->what)) {
+                if (empty($columns)) {
                     throw new \Exception(
                         'Build : Update requires not empty payload'
                     );
                 }
-                if (empty($this->where)) {
+                if (empty($where)) {
                     throw new \Exception(
                         'Build : Update requires at least one condition'
                     );
                 }
-                $this->query->setValues($this->what);
+                $this->query->setValues($columns);
                 break;
             case Insert::class:
-                if (empty($this->what)) {
+                if (empty($columns)) {
                     throw new \Exception(
                         'Build : Insert requires not empty payload'
                     );
                 }
-                $this->query->setValues($this->what);
+                $this->query->setValues($columns);
                 break;
             case Delete::class:
-                if (empty($this->where)) {
+                if (empty($where)) {
                     throw new \Exception(
                         'Build : Delete requires at least one condition'
                     );
@@ -237,19 +270,20 @@ class Orm implements IOrm
             default:
                 break;
         }
-        $this->buildWhere();
+        $this->buildWhere($where);
         return $this;
     }
 
     /**
      * build where condition on query
      *
+     * @param array $where
      * @return Orm
      */
-    protected function buildWhere(): Orm
+    protected function buildWhere(array $where): Orm
     {
-        if (false === empty($this->where)) {
-            foreach ($this->where as $k => $v) {
+        if (false === empty($where)) {
+            foreach ($where as $k => $v) {
                 $whereOperator = $this->getWhereOperator($k, $v);
                 $this->query->where()->{$whereOperator}($k, $v);
             }

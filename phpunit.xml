@@ -96,6 +96,9 @@
         <testsuite name="ComponentFileUploader">
             <file>tests/Component/File/UploaderTest.php</file>
         </testsuite>
+        <testsuite name="ComponentModelOrm">
+            <file>tests/Component/Model/OrmTest.php</file>
+        </testsuite>
         <testsuite name="MiddlewareJwt">
             <file>tests/Middlewares/JwtTest.php</file>
         </testsuite>
