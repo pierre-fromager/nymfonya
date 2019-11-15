@@ -124,8 +124,9 @@ class ResponseTest extends PFT
     }
 
     /**
-     * testSetContent
+     * testGetSetContent
      * @covers App\Http\Response::setContent
+     * @covers App\Http\Response::getContent
      */
     public function testSetContent()
     {
@@ -137,6 +138,14 @@ class ResponseTest extends PFT
                 json_encode([])
             ) instanceof Response
         );
+        $dummyContent = [
+            'id' => 1,
+            'name' => 'toto'
+        ];
+        $this->instance->setContent($dummyContent);
+        $con = $this->instance->getContent();
+        $this->assertNotEmpty($con);
+        $this->assertEquals($con, '{"id":1,"name":"toto"}');
     }
 
     /**
