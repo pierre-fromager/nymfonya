@@ -183,6 +183,16 @@ class Orm implements IOrm
     }
 
     /**
+     * get primary key
+     *
+     * @return string
+     */
+    public function getPrimary(): string
+    {
+        return $this->primary;
+    }
+
+    /**
      * builder instance
      * @return GenericBuilder
      */

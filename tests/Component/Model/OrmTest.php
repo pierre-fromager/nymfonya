@@ -494,4 +494,16 @@ class ComponentModelOrmTest extends PFT
         $this->assertTrue(strpos($sql0, 'DESC') > 0);
         $this->assertFalse(strpos($sql0, 'ASC') > 0);
     }
+
+    /**
+     * testGetPrimary
+     * @covers App\Component\Model\Orm\Orm::getPrimary
+     */
+    public function testGetPrimary()
+    {
+        $pk = $this->instance->getPrimary();
+        $this->assertTrue(is_string($pk));
+        $this->assertNotEmpty($pk);
+        $this->assertEquals($pk, 'id');
+    }
 }
