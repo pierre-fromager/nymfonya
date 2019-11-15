@@ -469,4 +469,29 @@ class ComponentModelOrmTest extends PFT
         $this->assertNotEmpty($bindValues);
         $this->assertTrue(is_array($bindValues));
     }
+
+    /**
+     * testSetOrder
+     * @covers App\Component\Model\Orm\Orm::find
+     * @covers App\Component\Model\Orm\Orm::setOrder
+     */
+    public function testSetOrder()
+    {
+        $this->instance->find(
+            ['id', 'name'],
+            ['id' => [1, 2, 3]],
+            ['id' => 'ASC']
+        );
+        $sql0 = $this->instance->getSql();
+        $this->assertTrue(strpos($sql0, 'ASC') > 0);
+        $this->assertFalse(strpos($sql0, 'DESC') > 0);
+        $this->instance->find(
+            ['id', 'name'],
+            ['id' => [1, 2, 3]],
+            ['id' => 'DESC']
+        );
+        $sql0 = $this->instance->getSql();
+        $this->assertTrue(strpos($sql0, 'DESC') > 0);
+        $this->assertFalse(strpos($sql0, 'ASC') > 0);
+    }
 }
