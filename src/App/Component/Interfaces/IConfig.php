@@ -1,16 +1,16 @@
 <?php
 
 /**
- * App\Interfaces\IConfig
+ * App\Component\Interfaces\IConfig
  *
- * is App\Config interface
+ * App\Component\Config interface
  *
  * @author pierrefromager
  */
 
-namespace App\Interfaces;
+namespace App\Component\Interfaces;
 
-use App\Config;
+use App\Component\Config;
 
 interface IConfig
 {
