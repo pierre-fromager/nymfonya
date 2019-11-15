@@ -15,9 +15,9 @@
             <file>tests/Component/CryptTest.php</file>
             <file>tests/Component/AuthTest.php</file>
             <file>tests/Component/File/UploaderTest.php</file>
-            <file>tests/Component/Model/OrmTest.php</file>            
+            <file>tests/Component/Model/OrmTest.php</file>
+            <file>tests/Component/ContainerTest.php</file>
             <file>tests/ConfigTest.php</file>
-            <file>tests/ContainerTest.php</file>
             <file>tests/KernelTest.php</file>
             <file>tests/Controllers/ConfigTest.php</file>
             <file>tests/Controllers/Api/V1/AuthTest.php</file>
@@ -61,7 +61,7 @@
             <file>tests/ConfigTest.php</file>
         </testsuite>
         <testsuite name="Container">
-            <file>tests/ContainerTest.php</file>
+            <file>tests/Component/ContainerTest.php</file>
         </testsuite>
         <testsuite name="Kernel">
             <file>tests/KernelTest.php</file>

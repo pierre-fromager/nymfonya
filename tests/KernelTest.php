@@ -128,7 +128,8 @@ class KernelTest extends PFT
      */
     public function testSend()
     {
-        $this->setOutputCallback(function () { });
+        $this->setOutputCallback(function () {
+        });
         $kr = $this->instance->run();
         $this->assertTrue($kr instanceof Kernel);
         $ks = $kr->send();

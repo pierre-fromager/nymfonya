@@ -13,7 +13,7 @@ class ContainerTest extends PFT
 {
 
     const TEST_ENABLE = true;
-    const CONFIG_PATH = '/../config/';
+    const CONFIG_PATH = '/../../config/';
 
     /**
      * instance
