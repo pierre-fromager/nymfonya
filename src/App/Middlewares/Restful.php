@@ -4,7 +4,7 @@ namespace App\Middlewares;
 
 use App\Component\Http\Request;
 use App\Component\Http\Interfaces\Middleware\ILayer;
-use App\Container;
+use App\Component\Container;
 
 /**
  * App\Middleware\Restful

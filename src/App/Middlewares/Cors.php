@@ -6,7 +6,7 @@ use App\Component\Http\Request;
 use App\Component\Http\Response;
 use App\Component\Http\Headers;
 use App\Component\Http\Interfaces\Middleware\ILayer;
-use App\Container;
+use App\Component\Container;
 
 /**
  * App\Middleware\Cors

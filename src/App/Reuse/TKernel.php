@@ -4,7 +4,7 @@ namespace App\Reuse;
 
 use App\Kernel;
 use App\Config;
-use App\Container;
+use App\Component\Container;
 use App\Component\Http\Request;
 use App\Component\Http\Response;
 use App\Component\Http\Router;
@@ -372,7 +372,7 @@ trait TKernel
      */
     protected function setContainer()
     {
-        $this->container = new \App\Container(
+        $this->container = new Container(
             $this->config->getSettings(Config::_SERVICES)
         );
         $this->container->setService(\App\Kernel::class, $this);

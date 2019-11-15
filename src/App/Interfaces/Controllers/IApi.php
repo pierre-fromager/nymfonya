@@ -2,7 +2,7 @@
 
 namespace App\Interfaces\Controllers;
 
-use App\Container;
+use App\Component\Container;
 
 interface IApi
 {

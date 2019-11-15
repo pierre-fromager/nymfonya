@@ -2,7 +2,7 @@
 
 namespace App\Model;
 
-use App\Container;
+use App\Component\Container;
 use App\Config;
 use App\Model\AbstractSearch;
 use App\Component\Crypt;

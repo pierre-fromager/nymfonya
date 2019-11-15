@@ -4,7 +4,7 @@ namespace App\Component\Http;
 
 use InvalidArgumentException;
 use Closure;
-use App\Container;
+use App\Component\Container;
 use App\Component\Http\Interfaces\Middleware\ILayer;
 
 /**

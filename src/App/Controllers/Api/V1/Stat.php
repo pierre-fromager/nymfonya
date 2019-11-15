@@ -5,7 +5,7 @@ namespace App\Controllers\Api\V1;
 use App\Interfaces\Controllers\IApi;
 use App\Reuse\Controllers\AbstractApi;
 use App\Component\Http\Response;
-use App\Container;
+use App\Component\Container;
 
 final class Stat extends AbstractApi implements IApi
 {

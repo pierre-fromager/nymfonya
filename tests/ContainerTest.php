@@ -4,10 +4,10 @@ namespace Tests;
 
 use PHPUnit\Framework\TestCase as PFT;
 use App\Config;
-use App\Container;
+use App\Component\Container;
 
 /**
- * @covers \App\Container::<public>
+ * @covers App\Component\Container::<public>
  */
 class ContainerTest extends PFT
 {
@@ -73,7 +73,7 @@ class ContainerTest extends PFT
 
     /**
      * testInstance
-     * @covers App\Container::__construct
+     * @covers App\Component\Container::__construct
      */
     public function testInstance()
     {
@@ -82,8 +82,8 @@ class ContainerTest extends PFT
 
     /**
      * testInitReporter
-     * @covers App\Container::initReporter
-     * @covers App\Container::getReporter
+     * @covers App\Component\Container::initReporter
+     * @covers App\Component\Container::getReporter
      */
     public function testInitReporter()
     {
@@ -99,7 +99,7 @@ class ContainerTest extends PFT
 
     /**
      * testGetServices
-     * @covers App\Container::getServices
+     * @covers App\Component\Container::getServices
      */
     public function testGetServices()
     {
@@ -108,7 +108,7 @@ class ContainerTest extends PFT
 
     /**
      * testGetService
-     * @covers App\Container::getService
+     * @covers App\Component\Container::getService
      */
     public function testGetService()
     {
@@ -118,7 +118,7 @@ class ContainerTest extends PFT
 
     /**
      * testGetServiceException
-     * @covers App\Container::getService
+     * @covers App\Component\Container::getService
      */
     public function testGetServiceException()
     {
@@ -128,8 +128,8 @@ class ContainerTest extends PFT
 
     /**
      * testSetService
-     * @covers App\Container::setService
-     * @covers App\Container::getService
+     * @covers App\Component\Container::setService
+     * @covers App\Component\Container::getService
      */
     public function testSetService()
     {
@@ -143,7 +143,7 @@ class ContainerTest extends PFT
 
     /**
      * testSetServiceNoClassException
-     * @covers App\Container::setService
+     * @covers App\Component\Container::setService
      */
     public function testSetServiceNoClassException()
     {
@@ -153,7 +153,7 @@ class ContainerTest extends PFT
 
     /**
      * testSetServiceNotObjectException
-     * @covers App\Container::setService
+     * @covers App\Component\Container::setService
      */
     public function testSetServiceNotObjectException()
     {
@@ -163,7 +163,7 @@ class ContainerTest extends PFT
 
     /**
      * testConstructable
-     * @covers App\Container::constructable
+     * @covers App\Component\Container::constructable
      */
     public function testConstructable()
     {
@@ -182,7 +182,7 @@ class ContainerTest extends PFT
 
     /**
      * testHasService
-     * @covers App\Container::hasService
+     * @covers App\Component\Container::hasService
      */
     public function testHasService()
     {
@@ -201,7 +201,7 @@ class ContainerTest extends PFT
 
     /**
      * testLoad
-     * @covers App\Container::load
+     * @covers App\Component\Container::load
      */
     public function testLoad()
     {
@@ -215,7 +215,7 @@ class ContainerTest extends PFT
 
     /**
      * testSetServiceConfig
-     * @covers App\Container::setServiceConfig
+     * @covers App\Component\Container::setServiceConfig
      */
     public function testSetServiceConfig()
     {
@@ -229,7 +229,7 @@ class ContainerTest extends PFT
 
     /**
      * testLoadException
-     * @covers App\Container::load
+     * @covers App\Component\Container::load
      */
     public function testLoadException()
     {
@@ -246,7 +246,7 @@ class ContainerTest extends PFT
 
     /**
      * testCreate
-     * @covers App\Container::create
+     * @covers App\Component\Container::create
      */
     public function testCreate()
     {
@@ -266,7 +266,7 @@ class ContainerTest extends PFT
 
     /**
      * testIsBasicType
-     * @covers App\Container::isBasicType
+     * @covers App\Component\Container::isBasicType
      */
     public function testIsBasicType()
     {
@@ -295,7 +295,7 @@ class ContainerTest extends PFT
 
     /**
      * testCreateCoreService
-     * @covers App\Container::createCoreService
+     * @covers App\Component\Container::createCoreService
      */
     public function testCreateCoreService()
     {
@@ -311,7 +311,7 @@ class ContainerTest extends PFT
 
     /**
      * testCreateDependencies
-     * @covers App\Container::createDependencies
+     * @covers App\Component\Container::createDependencies
      */
     public function testCreateDependencies()
     {
@@ -334,7 +334,7 @@ class ContainerTest extends PFT
 
     /**
      * testInjectService
-     * @covers App\Container::injectService
+     * @covers App\Component\Container::injectService
      */
     public function testInjectService()
     {

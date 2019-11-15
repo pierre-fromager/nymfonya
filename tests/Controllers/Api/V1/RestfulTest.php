@@ -4,7 +4,7 @@ namespace Tests;
 
 use PHPUnit\Framework\TestCase as PFT;
 use App\Config;
-use App\Container;
+use App\Component\Container;
 use App\Controllers\Api\V1\Restful as ApiRestfulControler;
 use App\Component\Http\Request;
 use App\Component\Http\Response;

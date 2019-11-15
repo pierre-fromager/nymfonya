@@ -4,7 +4,7 @@ namespace Tests;
 
 use PHPUnit\Framework\TestCase as PFT;
 use App\Config;
-use App\Container;
+use App\Component\Container;
 use App\Component\Http\Middleware;
 use App\Component\Http\Interfaces\Middleware\ILayer;
 use App\Middlewares\After;

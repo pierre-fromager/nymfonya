@@ -3,8 +3,11 @@
 namespace Tests;
 
 use PHPUnit\Framework\TestCase as PFT;
-use App\Config;
+use App\Component\Config;
+use App\Component\Container;
 use App\Component\Http\Request;
+use App\Component\Http\Response;
+use App\Component\Http\Router;
 use App\Kernel;
 
 /**
@@ -94,8 +97,8 @@ class KernelTest extends PFT
         $routerGroups = ['config', 'help'];
         $kr = $this->instance->run($routerGroups);
         $this->assertTrue($kr instanceof Kernel);
-        $res = $kr->getService(\App\Component\Http\Response::class);
-        $this->assertTrue($res instanceof \App\Component\Http\Response);
+        $res = $kr->getService(Response::class);
+        $this->assertTrue($res instanceof Response);
         $this->assertEquals(
             $res->getCode(),
             \App\Component\Http\Response::HTTP_OK
@@ -111,12 +114,9 @@ class KernelTest extends PFT
         $routerGroups = ['badctrl', 'messup'];
         $kr = $this->instance->run($routerGroups);
         $this->assertTrue($kr instanceof Kernel);
-        $res = $kr->getService(\App\Component\Http\Response::class);
-        $this->assertTrue($res instanceof \App\Component\Http\Response);
-        $this->assertEquals(
-            $res->getCode(),
-            \App\Component\Http\Response::HTTP_NOT_FOUND
-        );
+        $res = $kr->getService(Response::class);
+        $this->assertTrue($res instanceof Response);
+        $this->assertEquals($res->getCode(), Response::HTTP_NOT_FOUND);
     }
 
     /**
@@ -128,8 +128,7 @@ class KernelTest extends PFT
      */
     public function testSend()
     {
-        $this->setOutputCallback(function () {
-        });
+        $this->setOutputCallback(function () { });
         $kr = $this->instance->run();
         $this->assertTrue($kr instanceof Kernel);
         $ks = $kr->send();
@@ -175,12 +174,12 @@ class KernelTest extends PFT
             ]
         );
         $this->assertTrue(
-            $this->instance->getService(\App\Component\Http\Request::class)
-                instanceof \App\Component\Http\Request
+            $this->instance->getService(Request::class)
+                instanceof Request
         );
         $this->assertTrue(
-            $this->instance->getService(\App\Component\Http\Response::class)
-                instanceof \App\Component\Http\Response
+            $this->instance->getService(Response::class)
+                instanceof Response
         );
         $this->assertTrue(
             $this->instance->getService(\Monolog\Logger::class)
@@ -190,7 +189,7 @@ class KernelTest extends PFT
             $this->instance,
             []
         );
-        $this->assertTrue($gc instanceof \App\Container);
+        $this->assertTrue($gc instanceof Container);
     }
 
     /**
@@ -208,7 +207,7 @@ class KernelTest extends PFT
             $this->instance,
             []
         );
-        $this->assertTrue($gc instanceof \App\Container);
+        $this->assertTrue($gc instanceof Container);
     }
 
     /**
@@ -246,14 +245,14 @@ class KernelTest extends PFT
             []
         );
         $this->assertTrue(
-            $this->instance->getService(\App\Component\Http\Request::class)
-                instanceof \App\Component\Http\Request
+            $this->instance->getService(Request::class)
+                instanceof Request
         );
         $gr = self::getMethod('getRequest')->invokeArgs(
             $this->instance,
             []
         );
-        $this->assertTrue($gr instanceof \App\Component\Http\Request);
+        $this->assertTrue($gr instanceof Request);
     }
 
     /**
@@ -268,14 +267,14 @@ class KernelTest extends PFT
             []
         );
         $this->assertTrue(
-            $this->instance->getService(\App\Component\Http\Response::class)
-                instanceof \App\Component\Http\Response
+            $this->instance->getService(Response::class)
+                instanceof Response
         );
         $gr = self::getMethod('getResponse')->invokeArgs(
             $this->instance,
             []
         );
-        $this->assertTrue($gr instanceof \App\Component\Http\Response);
+        $this->assertTrue($gr instanceof Response);
     }
 
     /**
@@ -290,14 +289,14 @@ class KernelTest extends PFT
             []
         );
         $this->assertTrue(
-            $this->instance->getService(\App\Component\Http\Router::class)
-                instanceof \App\Component\Http\Router
+            $this->instance->getService(Router::class)
+                instanceof Router
         );
         $gr = self::getMethod('getRouter')->invokeArgs(
             $this->instance,
             []
         );
-        $this->assertTrue($gr instanceof \App\Component\Http\Router);
+        $this->assertTrue($gr instanceof Router);
     }
 
     /**
@@ -322,7 +321,7 @@ class KernelTest extends PFT
             $this->instance,
             []
         );
-        $this->assertTrue($gc instanceof \App\Config);
+        $this->assertTrue($gc instanceof Config);
         $gp = self::getMethod('getPath')->invokeArgs(
             $this->instance,
             []
@@ -520,7 +519,10 @@ class KernelTest extends PFT
             $this->instance,
             []
         );
-        self::getMethod('setAction')->invokeArgs($this->instance, [['config']]);
+        self::getMethod('setAction')->invokeArgs(
+            $this->instance,
+            [['config']]
+        );
         $iva0 = self::getMethod('isValidAction')->invokeArgs(
             $this->instance,
             []

@@ -3,7 +3,7 @@
 namespace App\Component\Http\Interfaces\Middleware;
 
 use \Closure;
-use App\Container;
+use App\Component\Container;
 
 interface ILayer
 {

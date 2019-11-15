@@ -2,7 +2,7 @@
 
 namespace App\Model;
 
-use App\Container;
+use App\Component\Container;
 
 /**
  * Class App\Model\AbstractSearch

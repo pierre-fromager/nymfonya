@@ -3,7 +3,7 @@
 namespace App\Reuse\Controllers;
 
 use App\Interfaces\Controllers\IApi;
-use App\Container;
+use App\Component\Container;
 use App\Component\Http\Request;
 use App\Component\Http\Response;
 

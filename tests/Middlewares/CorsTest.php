@@ -6,7 +6,7 @@ use PHPUnit\Framework\TestCase as PFT;
 use PHPUnit\Framework\MockObject\MockObject;
 use App\Config;
 use App\Component\Http\Response;
-use App\Container;
+use App\Component\Container;
 use App\Component\Http\Middleware;
 use App\Component\Http\Interfaces\Middleware\ILayer;
 use App\Component\Http\Request;

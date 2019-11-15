@@ -2,7 +2,7 @@
 
 namespace App\Model\Repository;
 
-use App\Container;
+use App\Component\Container;
 use App\Component\Model\Orm\Orm;
 
 class Users extends Orm

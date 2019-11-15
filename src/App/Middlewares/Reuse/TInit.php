@@ -6,7 +6,7 @@ use App\Kernel;
 use App\Config;
 use App\Component\Http\Request;
 use App\Component\Http\Response;
-use App\Container;
+use App\Component\Container;
 use \Monolog\Logger;
 
 trait TInit

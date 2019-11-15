@@ -3,7 +3,7 @@
 namespace App\Middlewares;
 
 use App\Component\Http\Interfaces\Middleware\ILayer;
-use App\Container;
+use App\Component\Container;
 use App\Component\Http\Headers;
 
 class After implements ILayer

@@ -5,7 +5,7 @@ namespace Tests;
 use PHPUnit\Framework\TestCase as PFT;
 use PHPUnit\Framework\MockObject\MockObject;
 use App\Config;
-use App\Container;
+use App\Component\Container;
 use App\Component\Http\Request;
 use App\Component\Http\Response;
 use App\Controllers\Api\V1\Auth as ApiAuthControler;

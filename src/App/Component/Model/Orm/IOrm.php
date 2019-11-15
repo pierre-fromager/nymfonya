@@ -2,7 +2,7 @@
 
 namespace App\Component\Model\Orm;
 
-use App\Container;
+use App\Component\Container;
 
 interface IOrm
 {

@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use App\Interfaces\Controllers\IApi;
 use App\Reuse\Controllers\AbstractApi;
-use App\Container;
+use App\Component\Container;
 use App\Component\Http\Response;
 
 /**

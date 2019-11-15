@@ -2,7 +2,7 @@
 
 namespace App\Component;
 
-use App\Container;
+use App\Component\Container;
 use App\Model\Users;
 
 class Auth
