@@ -33,6 +33,27 @@ final class Restful extends AbstractApi implements IApi
     protected $sql;
 
     /**
+     * sql values to bind statement
+     *
+     * @var array
+     */
+    protected $bindValues;
+
+    /**
+     * error
+     *
+     * @var Boolean
+     */
+    protected $error;
+
+   /**
+     * error message
+     *
+     * @var String
+     */
+    protected $errorMessage;
+
+    /**
      * instanciate
      *
      * @param Container $container
@@ -40,6 +61,8 @@ final class Restful extends AbstractApi implements IApi
     public function __construct(Container $container)
     {
         $this->userRepository = new Users($container);
+        $this->error = false;
+        $this->errorMessage = '';
         parent::__construct($container);
     }
 
@@ -47,7 +70,7 @@ final class Restful extends AbstractApi implements IApi
      * index
      *
      * @OA\Get(
-     *     path="/api/v1/restful",
+     *     path="/api/v1/restful/index",
      *     summary="Search for a something item",
      *     @OA\RequestBody(
      *         @OA\MediaType(
@@ -82,6 +105,7 @@ final class Restful extends AbstractApi implements IApi
             ]
         );
         $this->sql = $this->userRepository->getSql();
+        $this->bindValues = $this->userRepository->getBuilderValues();
         return $this->setResponse(__CLASS__, __FUNCTION__);
     }
 
@@ -116,11 +140,15 @@ final class Restful extends AbstractApi implements IApi
      */
     final public function store(): Restful
     {
+        $this->bindValues = [];
         try {
             $this->userRepository->insert($this->request->getParams());
             $this->sql = $this->userRepository->getSql();
+            $this->bindValues = $this->userRepository->getBuilderValues();
         } catch (\Exception $e) {
-            $this->sql = $e->getMessage();
+            $this->error = true;
+            $this->errorMessage = $e->getMessage();
+            $this->sql = '';
         }
         return $this->setResponse(__CLASS__, __FUNCTION__);
     }
@@ -156,11 +184,14 @@ final class Restful extends AbstractApi implements IApi
      */
     final public function update(): Restful
     {
+        $this->bindValues = [];
         try {
             $this->userRepository->update($this->request->getParams());
             $this->sql = $this->userRepository->getSql();
         } catch (\Exception $e) {
-            $this->sql = $e->getMessage();
+            $this->error = true;
+            $this->errorMessage = $e->getMessage();
+            $this->sql = '';
         }
         return $this->setResponse(__CLASS__, __FUNCTION__);
     }
@@ -192,11 +223,14 @@ final class Restful extends AbstractApi implements IApi
      */
     final public function delete(): Restful
     {
+        $this->bindValues = [];
         try {
             $this->userRepository->delete($this->request->getParams());
             $this->sql = $this->userRepository->getSql();
         } catch (\Exception $e) {
-            $this->sql = $e->getMessage();
+            $this->error = true;
+            $this->errorMessage = $e->getMessage();
+            $this->sql = '';
         }
         return $this->setResponse(__CLASS__, __FUNCTION__);
     }
@@ -211,16 +245,22 @@ final class Restful extends AbstractApi implements IApi
     protected function setResponse(string $classname, string $action): Restful
     {
         $this->response
-            ->setCode(Response::HTTP_OK)
+            ->setCode(
+                ($this->error)
+                    ?  Response::HTTP_BAD_REQUEST
+                    : Response::HTTP_OK
+            )
             ->setContent(
                 [
-                    'error' => false,
+                    'error' => $this->error,
+                    'errorMessage' => $this->errorMessage,
                     'datas' => [
                         'method' => $this->request->getMethod(),
                         'params' => $this->request->getParams(),
                         'controller' => $classname,
                         'action' => $action,
-                        'sql' => $this->sql
+                        'query' => $this->sql,
+                        'queryValues' => $this->bindValues
                     ]
                 ]
             );

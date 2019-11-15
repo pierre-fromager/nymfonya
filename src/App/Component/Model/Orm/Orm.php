@@ -36,6 +36,12 @@ class Orm implements IOrm
     protected $where;
 
     /**
+     * sort order
+     * @var array
+     */
+    protected $order;
+
+    /**
      * table name
      * @var string
      */
@@ -102,14 +108,17 @@ class Orm implements IOrm
      * find a record with columns field matching where criterias
      * @param array $columns
      * @param array $where
+     * @param array $order
      */
-    public function find(array $columns = [], array $where = []): Orm
+    public function find(array $columns = [], array $where = [], array $order = []): Orm
     {
         $this->where = $where;
+        $order = (empty($order)) ? [$this->primary => 'DESC'] : $order;
         $this
             ->setColumns($columns)
             ->setQuery(new Select())
-            ->build($this->tablename, $this->columns, $this->where);
+            ->build($this->tablename, $this->columns, $this->where)
+            ->setOrder($order);
         return $this;
     }
 
@@ -192,6 +201,16 @@ class Orm implements IOrm
     }
 
     /**
+     * query builder values
+     * @return array
+     */
+    public function getBuilderValues(): array
+    {
+        $this->getSql();
+        return $this->queryBuilder->getValues();
+    }
+
+    /**
      * set query instance
      *
      * @param Select|Update|Insert|Delete $query
@@ -207,7 +226,7 @@ class Orm implements IOrm
      * query sql string
      * @return string
      */
-    public function getSql()
+    public function getSql(): string
     {
         return $this->queryBuilder->write($this->query);
     }
@@ -267,7 +286,6 @@ class Orm implements IOrm
                 break;
         }
         return $this->buildWhere($where);
-        ;
     }
 
     /**
@@ -313,5 +331,20 @@ class Orm implements IOrm
         } elseif ($operator == '#') {
             return 'like';
         }
+    }
+
+    /**
+     * set query sort order
+     *
+     * @param array $orders
+     * @return Orm
+     */
+    protected function setOrder(array $orders): Orm
+    {
+        $this->order = $orders;
+        foreach ($this->order as $k => $v) {
+            $this->query->orderBy($k, $v);
+        }
+        return $this;
     }
 }

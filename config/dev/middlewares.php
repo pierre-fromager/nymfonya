@@ -31,15 +31,6 @@ return [
             ])
         ]
     ],
-    Jwt::class => [
-        'enabled' => true,
-        'prefix' => '/api/v1/',
-        'exclude' => [
-            'auth/login', 'stat/opcache', 
-            'restful', 'restful/index', 
-            'test/pokerelay' , 'test/redis'
-        ],
-    ],
     Restful::class => [
         'enabled' => true,
         'prefix' => '/api/v1/',
@@ -48,6 +39,15 @@ return [
             '/^(test)\/(.*)$/',
             '/^(auth)\/(.*)$/',
             '/^(stat)\/(.*)$/'
+        ],
+    ],    
+    Jwt::class => [
+        'enabled' => true,
+        'prefix' => '/api/v1/',
+        'exclude' => [
+            'auth/login', 'stat/opcache', 
+            'restful', 'restful/index', 
+            'test/pokerelay' , 'test/redis'
         ],
     ],
     After::class => [

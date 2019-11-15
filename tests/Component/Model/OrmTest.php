@@ -457,4 +457,16 @@ class ComponentModelOrmTest extends PFT
         $this->assertTrue(is_string($opLike));
         $this->assertEquals('like', $opLike);
     }
+
+    /**
+     * testGetBuilderValues
+     * @covers App\Component\Model\Orm\Orm::getBuilderValues
+     */
+    public function testGetBuilderValues()
+    {
+        $this->instance->find(['id', 'name'], ['id' => [1, 2, 3]]);
+        $bindValues = $this->instance->getBuilderValues();
+        $this->assertNotEmpty($bindValues);
+        $this->assertTrue(is_array($bindValues));
+    }
 }
