@@ -191,8 +191,11 @@ final class Restful extends AbstractApi implements IApi
             if (false === isset($params[$pk])) {
                 throw new \Exception('Missing primary : ' . $pk);
             }
-            $this->userRepository->update($params, [$pk => $params[$pk]]);
+            $pkValue = $params[$pk];
+            unset($params[$pk]);
+            $this->userRepository->update($params, [$pk => $pkValue]);
             $this->sql = $this->userRepository->getSql();
+            $this->bindValues = $this->userRepository->getBuilderValues();
         } catch (\Exception $e) {
             $this->error = true;
             $this->errorMessage = $e->getMessage();
@@ -230,8 +233,14 @@ final class Restful extends AbstractApi implements IApi
     {
         $this->bindValues = [];
         try {
-            $this->userRepository->delete($this->request->getParams());
+            $params = $this->request->getParams();
+            $pk = $this->userRepository->getPrimary();
+            if (false === isset($params[$pk])) {
+                throw new \Exception('Missing primary : ' . $pk);
+            }
+            $this->userRepository->delete([$pk => $params[$pk]]);
             $this->sql = $this->userRepository->getSql();
+            $this->bindValues = $this->userRepository->getBuilderValues();
         } catch (\Exception $e) {
             $this->error = true;
             $this->errorMessage = $e->getMessage();
@@ -266,7 +275,6 @@ final class Restful extends AbstractApi implements IApi
                         'action' => $action,
                         'query' => $this->sql,
                         'queryValues' => $this->bindValues,
-                        'server' => $_SERVER
                     ]
                 ]
             );
