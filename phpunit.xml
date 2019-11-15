@@ -3,14 +3,19 @@
 <phpunit bootstrap="vendor/autoload.php" stopOnFailure="true" colors="true" strict="true">
     <testsuites>
         <testsuite name="all">
-            <file>tests/Http/RequestTest.php</file>
-            <file>tests/Http/CookieTest.php</file>
-            <file>tests/Http/ResponseTest.php</file>
-            <file>tests/Http/HeadersTest.php</file>
-            <file>tests/Http/RoutesTest.php</file>
-            <file>tests/Http/RouterTest.php</file>
-            <file>tests/Http/MiddlewareTest.php</file>
-            <file>tests/Http/SessionTest.php</file>
+            <file>tests/Component/Http/RequestTest.php</file>
+            <file>tests/Component/Http/CookieTest.php</file>
+            <file>tests/Component/Http/ResponseTest.php</file>
+            <file>tests/Component/Http/HeadersTest.php</file>
+            <file>tests/Component/Http/RoutesTest.php</file>
+            <file>tests/Component/Http/RouterTest.php</file>
+            <file>tests/Component/Http/MiddlewareTest.php</file>
+            <file>tests/Component/Http/SessionTest.php</file>
+            <file>tests/Component/Jwt/TokenTest.php</file>
+            <file>tests/Component/CryptTest.php</file>
+            <file>tests/Component/AuthTest.php</file>
+            <file>tests/Component/File/UploaderTest.php</file>
+            <file>tests/Component/Model/OrmTest.php</file>            
             <file>tests/ConfigTest.php</file>
             <file>tests/ContainerTest.php</file>
             <file>tests/KernelTest.php</file>
@@ -19,11 +24,6 @@
             <file>tests/Controllers/Api/V1/StatTest.php</file>
             <file>tests/Controllers/Api/V1/RestfulTest.php</file>
             <file>tests/Controllers/Api/V1/TestTest.php</file>
-            <file>tests/Component/Jwt/TokenTest.php</file>
-            <file>tests/Component/CryptTest.php</file>
-            <file>tests/Component/AuthTest.php</file>
-            <file>tests/Component/File/UploaderTest.php</file>
-            <file>tests/Component/Model/OrmTest.php</file>
             <file>tests/Reuse/Controllers/AbstractApiTest.php</file>
             <file>tests/Middlewares/JwtTest.php</file>
             <file>tests/Middlewares/CorsTest.php</file>
@@ -34,28 +34,28 @@
             <file>tests/Model/UsersTest.php</file>
         </testsuite>
         <testsuite name="Request">
-            <file>tests/Http/RequestTest.php</file>
+            <file>tests/Component/Http/RequestTest.php</file>
         </testsuite>
         <testsuite name="Cookie">
-            <file>tests/Http/CookieTest.php</file>
+            <file>tests/Component/Http/CookieTest.php</file>
         </testsuite>
         <testsuite name="Response">
-            <file>tests/Http/ResponseTest.php</file>
+            <file>tests/Component/Http/ResponseTest.php</file>
         </testsuite>
         <testsuite name="Headers">
-            <file>tests/Http/HeadersTest.php</file>
+            <file>tests/Component/Http/HeadersTest.php</file>
         </testsuite>
         <testsuite name="Routes">
-            <file>tests/Http/RoutesTest.php</file>
+            <file>tests/Component/Http/RoutesTest.php</file>
         </testsuite>
         <testsuite name="Router">
-            <file>tests/Http/RouterTest.php</file>
+            <file>tests/Component/Http/RouterTest.php</file>
         </testsuite>
         <testsuite name="Middleware">
-            <file>tests/Http/MiddlewareTest.php</file>
+            <file>tests/Component/Http/MiddlewareTest.php</file>
         </testsuite>
         <testsuite name="Session">
-            <file>tests/Http/SessionTest.php</file>
+            <file>tests/Component/Http/SessionTest.php</file>
         </testsuite>
         <testsuite name="Config">
             <file>tests/ConfigTest.php</file>
