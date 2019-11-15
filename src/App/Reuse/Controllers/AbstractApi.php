@@ -76,4 +76,24 @@ abstract class AbstractApi implements IApi
     {
         return $this->container;
     }
+
+    /**
+     * get request instance
+     *
+     * @return Request
+     */
+    protected function getRequest(): Request
+    {
+        return $this->request;
+    }
+
+    /**
+     * get request params
+     *
+     * @return array
+     */
+    protected function getParams(): array
+    {
+        return $this->getRequest()->getParams();
+    }
 }

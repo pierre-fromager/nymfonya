@@ -6,6 +6,8 @@ use PHPUnit\Framework\TestCase as PFT;
 use App\Config;
 use App\Container;
 use App\Controllers\Api\V1\Restful as ApiRestfulControler;
+use App\Http\Request;
+use App\Http\Response;
 
 /**
  * @covers \App\Controllers\Api\V1\Restful::<public>
@@ -46,6 +48,17 @@ class ApiV1ControllerrestfulTest extends PFT
         if (!self::TEST_ENABLE) {
             $this->markTestSkipped('Test disabled.');
         }
+        $this->init();
+    }
+
+    /**
+     * init setup mocking or not request getParams method
+     *
+     * @param boolean $withMockRequest
+     * @return void
+     */
+    protected function init(bool $withMockRequest = false)
+    {
         $this->config = new Config(
             Config::ENV_CLI,
             __DIR__ . self::CONFIG_PATH
@@ -53,6 +66,13 @@ class ApiV1ControllerrestfulTest extends PFT
         $this->container = new Container(
             $this->config->getSettings(Config::_SERVICES)
         );
+        if ($withMockRequest) {
+            $mockedRequest = $this->createMock(Request::class);
+            $mockedRequest->method('getParams')->willReturn(
+                ['id' => 1, 'name' => 'coco']
+            );
+            $this->container->setService(Request::class, $mockedRequest);
+        }
         $this->instance = new ApiRestfulControler($this->container);
     }
 
@@ -92,47 +112,139 @@ class ApiV1ControllerrestfulTest extends PFT
     }
 
     /**
-     * testIndexAction
+     * testIndexActionNoParams
      * @covers App\Controllers\Api\V1\Restful::index
+     * @covers App\Controllers\Api\V1\Restful::getStatusCode
      */
     public function testIndexAction()
     {
         $this->assertTrue(
             $this->instance->index() instanceof ApiRestfulControler
         );
+        $err = self::getMethod('isError')->invokeArgs($this->instance, []);
+        $this->assertFalse($err);
+        $sco = self::getMethod('getStatusCode')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertEquals(Response::HTTP_OK, $sco);
     }
 
     /**
-     * testStoreAction
+     * testStoreActionNoParams
      * @covers App\Controllers\Api\V1\Restful::store
+     * @covers App\Controllers\Api\V1\Restful::isError
+     * @covers App\Controllers\Api\V1\Restful::getStatusCode
      */
-    public function testStoreAction()
+    public function testStoreActionNoParams()
     {
         $this->assertTrue(
             $this->instance->store() instanceof ApiRestfulControler
         );
+        $err = self::getMethod('isError')->invokeArgs($this->instance, []);
+        $this->assertTrue($err);
+        $sco = self::getMethod('getStatusCode')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertEquals(Response::HTTP_BAD_REQUEST, $sco);
     }
 
     /**
-     * testUpdateAction
-     * @covers App\Controllers\Api\V1\Restful::update
+     * testStoreActionNoParams
+     * @covers App\Controllers\Api\V1\Restful::store
+     * @covers App\Controllers\Api\V1\Restful::isError
+     * @covers App\Controllers\Api\V1\Restful::getStatusCode
      */
-    public function testUpdateAction()
+    public function testStoreActionParams()
+    {
+        $this->init(true);
+        $this->assertTrue(
+            $this->instance->store() instanceof ApiRestfulControler
+        );
+        $err = self::getMethod('isError')->invokeArgs($this->instance, []);
+        $this->assertFalse($err);
+        $sco = self::getMethod('getStatusCode')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertEquals(Response::HTTP_OK, $sco);
+    }
+
+    /**
+     * testUpdateActionNoParams
+     * @covers App\Controllers\Api\V1\Restful::update
+     * @covers App\Controllers\Api\V1\Restful::isError
+     * @covers App\Controllers\Api\V1\Restful::getStatusCode
+     */
+    public function testUpdateActionNoParams()
     {
         $this->assertTrue(
             $this->instance->update() instanceof ApiRestfulControler
         );
+        $err = self::getMethod('isError')->invokeArgs($this->instance, []);
+        $this->assertTrue($err);
+        $sco = self::getMethod('getStatusCode')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertEquals(Response::HTTP_BAD_REQUEST, $sco);
     }
 
     /**
-     * testDeleteAction
-     * @covers App\Controllers\Api\V1\Restful::delete
+     * testUpdateActionParams
+     * @covers App\Controllers\Api\V1\Restful::update
+     * @covers App\Controllers\Api\V1\Restful::isError
+     * @covers App\Controllers\Api\V1\Restful::getStatusCode
      */
-    public function testDeleteAction()
+    public function testUpdateActionParams()
+    {
+        $this->init(true);
+        $this->assertTrue(
+            $this->instance->update() instanceof ApiRestfulControler
+        );
+        $err = self::getMethod('isError')->invokeArgs($this->instance, []);
+        $this->assertFalse($err);
+        $sco = self::getMethod('getStatusCode')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertEquals(Response::HTTP_OK, $sco);
+    }
+
+    /**
+     * testDeleteActionNoParams
+     * @covers App\Controllers\Api\V1\Restful::delete
+     * @covers App\Controllers\Api\V1\Restful::isError
+     * @covers App\Controllers\Api\V1\Restful::getStatusCode
+     */
+    public function testDeleteActionNoParams()
     {
         $this->assertTrue(
             $this->instance->delete() instanceof ApiRestfulControler
         );
+        $err = self::getMethod('isError')->invokeArgs($this->instance, []);
+        $this->assertTrue($err);
+        $sco = self::getMethod('getStatusCode')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertEquals(Response::HTTP_BAD_REQUEST, $sco);
+    }
+
+    /**
+     * testDeleteActionParams
+     * @covers App\Controllers\Api\V1\Restful::delete
+     * @covers App\Controllers\Api\V1\Restful::isError
+     */
+    public function testDeleteActionParams()
+    {
+        $this->init(true);
+        $this->assertTrue(
+            $this->instance->delete() instanceof ApiRestfulControler
+        );
+        $err = self::getMethod('isError')->invokeArgs($this->instance, []);
+        $this->assertFalse($err);
     }
 
     /**
@@ -146,5 +258,29 @@ class ApiV1ControllerrestfulTest extends PFT
             ['toto', 'prout']
         );
         $this->assertTrue($res instanceof ApiRestfulControler);
+    }
+
+    /**
+     * testIsError
+     * @covers App\Controllers\Api\V1\Restful::isError
+     */
+    public function testIsError()
+    {
+        $err = self::getMethod('isError')->invokeArgs($this->instance, []);
+        $this->assertTrue(is_bool($err));
+    }
+
+    /**
+     * testGetStatusCode
+     * @covers App\Controllers\Api\V1\Restful::getStatusCode
+     */
+    public function testGetStatusCode()
+    {
+        $sco = self::getMethod('getStatusCode')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertTrue(is_int($sco));
+        $this->assertGreaterThanOrEqual(Response::HTTP_OK, $sco);
     }
 }

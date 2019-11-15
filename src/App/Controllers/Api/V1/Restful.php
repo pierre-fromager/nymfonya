@@ -142,7 +142,7 @@ final class Restful extends AbstractApi implements IApi
     {
         $this->bindValues = [];
         try {
-            $this->userRepository->insert($this->request->getParams());
+            $this->userRepository->insert($this->getParams());
             $this->sql = $this->userRepository->getSql();
             $this->bindValues = $this->userRepository->getBuilderValues();
         } catch (\Exception $e) {
@@ -186,7 +186,7 @@ final class Restful extends AbstractApi implements IApi
     {
         $this->bindValues = [];
         try {
-            $params = $this->request->getParams();
+            $params = $this->getParams();
             $pk = $this->userRepository->getPrimary();
             if (false === isset($params[$pk])) {
                 throw new \Exception('Missing primary : ' . $pk);
@@ -233,7 +233,7 @@ final class Restful extends AbstractApi implements IApi
     {
         $this->bindValues = [];
         try {
-            $params = $this->request->getParams();
+            $params = $this->getParams();
             $pk = $this->userRepository->getPrimary();
             if (false === isset($params[$pk])) {
                 throw new \Exception('Missing primary : ' . $pk);
@@ -259,18 +259,14 @@ final class Restful extends AbstractApi implements IApi
     protected function setResponse(string $classname, string $action): Restful
     {
         $this->response
-            ->setCode(
-                ($this->error)
-                    ?  Response::HTTP_BAD_REQUEST
-                    : Response::HTTP_OK
-            )
+            ->setCode($this->getStatusCode())
             ->setContent(
                 [
                     'error' => $this->error,
                     'errorMessage' => $this->errorMessage,
                     'datas' => [
-                        'method' => $this->request->getMethod(),
-                        'params' => $this->request->getParams(),
+                        'method' => $this->getRequest()->getMethod(),
+                        'params' => $this->getParams(),
                         'controller' => $classname,
                         'action' => $action,
                         'query' => $this->sql,
@@ -279,5 +275,27 @@ final class Restful extends AbstractApi implements IApi
                 ]
             );
         return $this;
+    }
+
+    /**
+     * returns true if error happened
+     *
+     * @return boolean
+     */
+    protected function isError(): bool
+    {
+        return $this->error === true;
+    }
+
+    /**
+     * returns http status code
+     *
+     * @return int
+     */
+    protected function getStatusCode(): int
+    {
+        return (true === $this->isError())
+            ? Response::HTTP_BAD_REQUEST
+            : Response::HTTP_OK;
     }
 }
