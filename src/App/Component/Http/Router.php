@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http;
+namespace App\Component\Http;
 
-use App\Http\Interfaces\IRoutes;
-use App\Http\Interfaces\IRequest;
-use App\Http\Interfaces\IRouter;
+use App\Component\Http\Interfaces\IRoutes;
+use App\Component\Http\Interfaces\IRequest;
+use App\Component\Http\Interfaces\IRouter;
 
 class Router implements IRouter
 {

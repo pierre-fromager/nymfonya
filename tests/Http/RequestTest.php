@@ -2,12 +2,12 @@
 
 namespace Tests;
 
-use App\Http\Headers;
+use App\Component\Http\Headers;
 use PHPUnit\Framework\TestCase as PFT;
-use App\Http\Request;
+use App\Component\Http\Request;
 
 /**
- * @covers \App\Http\Request::<public>
+ * @covers \App\Component\Http\Request::<public>
  */
 class RequestTest extends PFT
 {
@@ -59,7 +59,7 @@ class RequestTest extends PFT
 
     /**
      * testInstance
-     * @covers App\Http\Request::__construct
+     * @covers App\Component\Http\Request::__construct
      */
     public function testInstance()
     {
@@ -96,7 +96,7 @@ class RequestTest extends PFT
 
     /**
      * testConstants
-     * @covers App\Http\Request::__construct
+     * @covers App\Component\Http\Request::__construct
      * @dataProvider constantsProvider
      */
     public function testConstants($k)
@@ -108,7 +108,7 @@ class RequestTest extends PFT
 
     /**
      * testGetHost
-     * @covers App\Http\Request::getHost
+     * @covers App\Component\Http\Request::getHost
      */
     public function testGetHost()
     {
@@ -117,7 +117,7 @@ class RequestTest extends PFT
 
     /**
      * testGetHost
-     * @covers App\Http\Request::getMethod
+     * @covers App\Component\Http\Request::getMethod
      */
     public function testGetMethod()
     {
@@ -130,7 +130,7 @@ class RequestTest extends PFT
 
     /**
      * testGetParams
-     * @covers App\Http\Request::getParams
+     * @covers App\Component\Http\Request::getParams
      */
     public function testGetParams()
     {
@@ -188,10 +188,10 @@ class RequestTest extends PFT
 
     /**
      * testSetParams
-     * @covers App\Http\Request::setMethod
-     * @covers App\Http\Request::setParams
-     * @covers App\Http\Request::getParams
-     * @covers App\Http\Request::getCliParams
+     * @covers App\Component\Http\Request::setMethod
+     * @covers App\Component\Http\Request::setParams
+     * @covers App\Component\Http\Request::getParams
+     * @covers App\Component\Http\Request::getCliParams
      */
     public function testSetParams()
     {
@@ -283,9 +283,9 @@ class RequestTest extends PFT
 
     /**
      * testSetGetParam
-     * @covers App\Http\Request::getParam
-     * @covers App\Http\Request::setParam
-     * @covers App\Http\Request::getParams
+     * @covers App\Component\Http\Request::getParam
+     * @covers App\Component\Http\Request::setParam
+     * @covers App\Component\Http\Request::getParams
      */
     public function testSetGetParam()
     {
@@ -314,7 +314,7 @@ class RequestTest extends PFT
 
     /**
      * testGetRoute
-     * @covers App\Http\Request::getRoute
+     * @covers App\Component\Http\Request::getRoute
      */
     public function testGetRoute()
     {
@@ -325,7 +325,7 @@ class RequestTest extends PFT
 
     /**
      * testGetFilename
-     * @covers App\Http\Request::getFilename
+     * @covers App\Component\Http\Request::getFilename
      */
     public function testGetFilename()
     {
@@ -336,7 +336,7 @@ class RequestTest extends PFT
 
     /**
      * testGetUri
-     * @covers App\Http\Request::getUri
+     * @covers App\Component\Http\Request::getUri
      * @runInSeparateProcess
      */
     public function testGetUri()
@@ -359,7 +359,7 @@ class RequestTest extends PFT
 
     /**
      * testGetIp
-     * @covers App\Http\Request::getIp
+     * @covers App\Component\Http\Request::getIp
      */
     public function testGetIp()
     {
@@ -370,7 +370,7 @@ class RequestTest extends PFT
 
     /**
      * testGetAcceptEncoding
-     * @covers App\Http\Request::getAcceptEncoding
+     * @covers App\Component\Http\Request::getAcceptEncoding
      */
     public function testGetAcceptEncoding()
     {
@@ -381,7 +381,7 @@ class RequestTest extends PFT
 
     /**
      * testGetContentType
-     * @covers App\Http\Request::getContentType
+     * @covers App\Component\Http\Request::getContentType
      */
     public function testGetContentType()
     {
@@ -392,7 +392,7 @@ class RequestTest extends PFT
 
     /**
      * testGetServer
-     * @covers App\Http\Request::getServer
+     * @covers App\Component\Http\Request::getServer
      */
     public function testGetServer()
     {
@@ -412,8 +412,8 @@ class RequestTest extends PFT
 
     /**
      * testSetIsCli
-     * @covers App\Http\Request::setIsCli
-     * @covers App\Http\Request::isCli
+     * @covers App\Component\Http\Request::setIsCli
+     * @covers App\Component\Http\Request::isCli
      * @runInSeparateProcess
      */
     public function testSetIsCli()
@@ -434,7 +434,7 @@ class RequestTest extends PFT
 
     /**
      * testSetMethod
-     * @covers App\Http\Request::setMethod
+     * @covers App\Component\Http\Request::setMethod
      */
     public function testSetMethod()
     {
@@ -449,8 +449,8 @@ class RequestTest extends PFT
 
     /**
      * testGetArgs
-     * @covers App\Http\Request::getArgs
-     * @covers App\Http\Request::getInput
+     * @covers App\Component\Http\Request::getArgs
+     * @covers App\Component\Http\Request::getInput
      */
     public function testGetArgs()
     {
@@ -468,7 +468,7 @@ class RequestTest extends PFT
 
     /**
      * testIsJsonContentType
-     * @covers App\Http\Request::isJsonContentType
+     * @covers App\Component\Http\Request::isJsonContentType
      */
     public function testIsJsonContentType()
     {
@@ -481,8 +481,8 @@ class RequestTest extends PFT
 
     /**
      * testGetInput
-     * @covers App\Http\Request::getInput
-     * @covers App\Http\Request::setContentType
+     * @covers App\Component\Http\Request::getInput
+     * @covers App\Component\Http\Request::setContentType
      */
     public function testGetInput()
     {
@@ -504,7 +504,7 @@ class RequestTest extends PFT
 
     /**
      * testSetContentType
-     * @covers App\Http\Request::setContentType
+     * @covers App\Component\Http\Request::setContentType
      */
     public function testSetContentType()
     {
@@ -517,7 +517,7 @@ class RequestTest extends PFT
 
     /**
      * testIsCli
-     * @covers App\Http\Request::isCli
+     * @covers App\Component\Http\Request::isCli
      */
     public function testIsCli()
     {
@@ -530,7 +530,7 @@ class RequestTest extends PFT
 
     /**
      * testGetCliParams
-     * @covers App\Http\Request::getCliParams
+     * @covers App\Component\Http\Request::getCliParams
      */
     public function testGetCliParams()
     {
@@ -543,7 +543,7 @@ class RequestTest extends PFT
 
     /**
      * testGetCliParams
-     * @covers App\Http\Request::getCliParams
+     * @covers App\Component\Http\Request::getCliParams
      */
     public function testGetHeaderManager()
     {
@@ -556,7 +556,7 @@ class RequestTest extends PFT
 
     /**
      * testSetHeaders
-     * @covers App\Http\Request::setHeaders
+     * @covers App\Component\Http\Request::setHeaders
      */
     public function testSetHeaders()
     {

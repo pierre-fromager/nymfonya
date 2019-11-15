@@ -4,8 +4,8 @@ namespace App\Reuse\Controllers;
 
 use App\Interfaces\Controllers\IApi;
 use App\Container;
-use App\Http\Request;
-use App\Http\Response;
+use App\Component\Http\Request;
+use App\Component\Http\Response;
 
 abstract class AbstractApi implements IApi
 {
@@ -40,8 +40,8 @@ abstract class AbstractApi implements IApi
     public function __construct(Container $container)
     {
         $this->container = $container;
-        $this->request = $this->getService(\App\Http\Request::class);
-        $this->response = $this->getService(\App\Http\Response::class);
+        $this->request = $this->getService(\App\Component\Http\Request::class);
+        $this->response = $this->getService(\App\Component\Http\Response::class);
     }
 
     /**

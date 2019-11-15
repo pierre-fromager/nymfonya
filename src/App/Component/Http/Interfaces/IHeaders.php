@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Interfaces;
+namespace App\Component\Http\Interfaces;
 
-use App\Http\Headers;
+use App\Component\Http\Headers;
 
 interface IHeaders
 {

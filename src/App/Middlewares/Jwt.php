@@ -2,9 +2,9 @@
 
 namespace App\Middlewares;
 
-use App\Http\Request;
+use App\Component\Http\Request;
 use App\Component\Jwt\Token;
-use App\Http\Interfaces\Middleware\ILayer;
+use App\Component\Http\Interfaces\Middleware\ILayer;
 use App\Container;
 
 /**

@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http;
+namespace App\Component\Http;
 
 use InvalidArgumentException;
 use Closure;
 use App\Container;
-use App\Http\Interfaces\Middleware\ILayer;
+use App\Component\Http\Interfaces\Middleware\ILayer;
 
 /**
- * App\Http\Middleware
+ * App\Component\Http\Middleware
  *
  * is a copy/paste from onion team.
  *

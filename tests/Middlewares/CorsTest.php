@@ -5,11 +5,11 @@ namespace Tests;
 use PHPUnit\Framework\TestCase as PFT;
 use PHPUnit\Framework\MockObject\MockObject;
 use App\Config;
-use App\Http\Response;
+use App\Component\Http\Response;
 use App\Container;
-use App\Http\Middleware;
-use App\Http\Interfaces\Middleware\ILayer;
-use App\Http\Request;
+use App\Component\Http\Middleware;
+use App\Component\Http\Interfaces\Middleware\ILayer;
+use App\Component\Http\Request;
 use App\Middlewares\Cors as CorsMiddleware;
 
 /**
@@ -84,7 +84,7 @@ class AppMiddlewaresCorsTest extends PFT
         $this->container->setService(\App\Kernel::class, $kernel);
         if ($withMock) {
             $this->container->setService(
-                \App\Http\Request::class,
+                \App\Component\Http\Request::class,
                 $this->getMockedRequest($withProcess)
             );
         }
@@ -105,7 +105,7 @@ class AppMiddlewaresCorsTest extends PFT
         $uri = ($withProcess)
             ? '/api/v1/stat/opcache'
             : '/api/v1/stat/filecache';
-        $mockRequest = $this->createMock(\App\Http\Request::class);
+        $mockRequest = $this->createMock(\App\Component\Http\Request::class);
         $mockRequest->method('getUri')->willReturn($uri);
         return $mockRequest;
     }
@@ -162,7 +162,7 @@ class AppMiddlewaresCorsTest extends PFT
 
     /**
      * testInstance
-     * @covers App\Http\Middleware::__construct
+     * @covers App\Component\Http\Middleware::__construct
      */
     public function testInstance()
     {
@@ -202,7 +202,7 @@ class AppMiddlewaresCorsTest extends PFT
         $this->invokeMethod($this->layer, 'setEnabled', [true]);
         $this->invokeMethod($this->layer, 'process', []);
         $this->assertTrue($peelReturn instanceof Container);
-        $res = $this->container->getService(\App\Http\Response::class);
+        $res = $this->container->getService(\App\Component\Http\Response::class);
         $this->assertEquals($res->getCode(), Response::HTTP_NOT_FOUND);
     }
 
@@ -213,10 +213,10 @@ class AppMiddlewaresCorsTest extends PFT
     public function testProcessRequestOptionsMethod()
     {
         $fakeUri = '/api/v1/test/pokerelay';
-        $mockRequest = $this->createMock(\App\Http\Request::class);
+        $mockRequest = $this->createMock(\App\Component\Http\Request::class);
         $mockRequest->method('getUri')->willReturn($fakeUri);
         $mockRequest->method('getMethod')->willReturn(Request::METHOD_OPTIONS);
-        $this->container->setService(\App\Http\Request::class, $mockRequest);
+        $this->container->setService(\App\Component\Http\Request::class, $mockRequest);
         $peelReturn = $this->peelLayer();
         $this->invokeMethod($this->layer, 'setEnabled', [true]);
         $this->invokeMethod($this->layer, 'process', []);
@@ -230,10 +230,10 @@ class AppMiddlewaresCorsTest extends PFT
     public function testCaUri()
     {
         $fakeUri = '/api/v1/test/pokerelay';
-        $mockRequest = $this->createMock(\App\Http\Request::class);
+        $mockRequest = $this->createMock(\App\Component\Http\Request::class);
         $mockRequest->method('getUri')->willReturn($fakeUri);
         $mockRequest->method('getMethod')->willReturn(Request::METHOD_OPTIONS);
-        $this->container->setService(\App\Http\Request::class, $mockRequest);
+        $this->container->setService(\App\Component\Http\Request::class, $mockRequest);
         $peelReturn = $this->peelLayer();
         $cau = $this->invokeMethod($this->layer, 'caUri', []);
         $this->assertNotEmpty($cau);

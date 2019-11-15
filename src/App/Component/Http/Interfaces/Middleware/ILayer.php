@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Interfaces\Middleware;
+namespace App\Component\Http\Interfaces\Middleware;
 
 use \Closure;
 use App\Container;

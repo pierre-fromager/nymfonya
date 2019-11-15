@@ -2,12 +2,12 @@
 
 return [
     \App\Config::class => [\App\Config::ENV_CLI, __DIR__ . '/../'],
-    \App\Http\Request::class => [],
-    \App\Http\Response::class => [],
-    \App\Http\Routes::class => [include(__DIR__ . '/routes.php')],
-    \App\Http\Router::class => [
-        \App\Http\Routes::class,
-        \App\Http\Request::class
+    \App\Component\Http\Request::class => [],
+    \App\Component\Http\Response::class => [],
+    \App\Component\Http\Routes::class => [include(__DIR__ . '/routes.php')],
+    \App\Component\Http\Router::class => [
+        \App\Component\Http\Routes::class,
+        \App\Component\Http\Request::class
     ],
     \Monolog\Handler\RotatingFileHandler::class => [
         realpath(__DIR__ . '/../../log') . '/console.txt',

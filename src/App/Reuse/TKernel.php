@@ -5,10 +5,10 @@ namespace App\Reuse;
 use App\Kernel;
 use App\Config;
 use App\Container;
-use App\Http\Request;
-use App\Http\Response;
-use App\Http\Router;
-use App\Http\Middleware;
+use App\Component\Http\Request;
+use App\Component\Http\Response;
+use App\Component\Http\Router;
+use App\Component\Http\Middleware;
 use Monolog\Logger;
 use \ReflectionClass;
 
@@ -393,7 +393,7 @@ trait TKernel
      */
     protected function setRequest()
     {
-        $this->req = $this->getService(\App\Http\Request::class);
+        $this->req = $this->getService(\App\Component\Http\Request::class);
     }
 
     /**
@@ -411,7 +411,7 @@ trait TKernel
      */
     protected function setResponse()
     {
-        $this->res = $this->getService(\App\Http\Response::class);
+        $this->res = $this->getService(\App\Component\Http\Response::class);
     }
 
     /**
@@ -429,7 +429,7 @@ trait TKernel
      */
     protected function setRouter()
     {
-        $this->router = $this->getService(\App\Http\Router::class);
+        $this->router = $this->getService(\App\Component\Http\Router::class);
     }
 
     /**

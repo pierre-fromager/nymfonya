@@ -5,10 +5,10 @@ namespace Tests;
 use PHPUnit\Framework\TestCase as PFT;
 use App\Config;
 use App\Container;
-use App\Http\Middleware;
+use App\Component\Http\Middleware;
 
 /**
- * @covers \App\Http\Middleware::<public>
+ * @covers \App\Component\Http\Middleware::<public>
  */
 class MiddlewareTest extends PFT
 {
@@ -82,7 +82,7 @@ class MiddlewareTest extends PFT
 
     /**
      * testInstance
-     * @covers App\Http\Middleware::__construct
+     * @covers App\Component\Http\Middleware::__construct
      */
     public function testInstance()
     {
@@ -91,7 +91,7 @@ class MiddlewareTest extends PFT
 
     /**
      * testLayerException
-     * @covers App\Http\Middleware::layer
+     * @covers App\Component\Http\Middleware::layer
      */
     public function testLayerException()
     {
@@ -101,7 +101,7 @@ class MiddlewareTest extends PFT
 
     /**
      * testLayerException
-     * @covers App\Http\Middleware::layer
+     * @covers App\Component\Http\Middleware::layer
      */
     public function testLayer()
     {
@@ -115,7 +115,7 @@ class MiddlewareTest extends PFT
 
     /**
      * testPeel
-     * @covers App\Http\Middleware::peel
+     * @covers App\Component\Http\Middleware::peel
      */
     public function testPeel()
     {
@@ -130,7 +130,7 @@ class MiddlewareTest extends PFT
 
     /**
      * testToArray
-     * @covers App\Http\Middleware::toArray
+     * @covers App\Component\Http\Middleware::toArray
      */
     public function testToArray()
     {
@@ -139,7 +139,7 @@ class MiddlewareTest extends PFT
 
     /**
      * testCreateCoreFunction
-     * @covers App\Http\Middleware::createCoreFunction
+     * @covers App\Component\Http\Middleware::createCoreFunction
      */
     public function testCreateCoreFunction()
     {
@@ -156,7 +156,7 @@ class MiddlewareTest extends PFT
 
     /**
      * testCreateLayer
-     * @covers App\Http\Middleware::createLayer
+     * @covers App\Component\Http\Middleware::createLayer
      */
     public function testCreateLayer()
     {

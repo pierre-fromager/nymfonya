@@ -10,7 +10,7 @@ namespace App\Component\Jwt;
 
 use Firebase\JWT\JWT as Fjwt;
 use App\Config;
-use App\Http\Request;
+use App\Component\Http\Request;
 
 class Token implements Interfaces\IToken
 {

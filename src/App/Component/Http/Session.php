@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http;
+namespace App\Component\Http;
 
-use App\Http\Cookie;
-use App\Http\Interfaces\ISession;
+use App\Component\Http\Cookie;
+use App\Component\Http\Interfaces\ISession;
 
 class Session extends Cookie implements ISession
 {

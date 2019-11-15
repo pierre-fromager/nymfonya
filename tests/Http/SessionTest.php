@@ -3,10 +3,10 @@
 namespace Tests;
 
 use PHPUnit\Framework\TestCase as PFT;
-use App\Http\Session;
+use App\Component\Http\Session;
 
 /**
- * @covers \App\Http\Session::<public>
+ * @covers \App\Component\Http\Session::<public>
  */
 class SessionTest extends PFT
 {
@@ -58,7 +58,7 @@ class SessionTest extends PFT
 
     /**
      * testInstance
-     * @covers App\Http\Session::__construct
+     * @covers App\Component\Http\Session::__construct
      */
     public function testInstance()
     {
@@ -67,9 +67,9 @@ class SessionTest extends PFT
 
     /**
      * testSetHasGetSession
-     * @covers App\Http\Session::setSession
-     * @covers App\Http\Session::hasSession
-     * @covers App\Http\Session::getSession
+     * @covers App\Component\Http\Session::setSession
+     * @covers App\Component\Http\Session::hasSession
+     * @covers App\Component\Http\Session::getSession
      */
     public function testSetHasGetSession()
     {
@@ -88,9 +88,9 @@ class SessionTest extends PFT
 
     /**
      * testDeleteSession
-     * @covers App\Http\Session::setSession
-     * @covers App\Http\Session::deleteSession
-     * @covers App\Http\Session::getSession
+     * @covers App\Component\Http\Session::setSession
+     * @covers App\Component\Http\Session::deleteSession
+     * @covers App\Component\Http\Session::getSession
      */
     public function testDeleteSession()
     {

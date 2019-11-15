@@ -3,10 +3,10 @@
 namespace Tests;
 
 use PHPUnit\Framework\TestCase as PFT;
-use App\Http\Headers;
+use App\Component\Http\Headers;
 
 /**
- * @covers \App\Http\Headers::<public>
+ * @covers \App\Component\Http\Headers::<public>
  */
 class HeadersTest extends PFT
 {
@@ -58,8 +58,8 @@ class HeadersTest extends PFT
 
     /**
      * testInstance
-     * @covers App\Http\Headers::__construct
-     * @covers App\Http\Headers::get
+     * @covers App\Component\Http\Headers::__construct
+     * @covers App\Component\Http\Headers::get
      */
     public function testInstance()
     {
@@ -87,7 +87,7 @@ class HeadersTest extends PFT
 
     /**
      * testConstants
-     * @covers App\Http\Headers::__construct
+     * @covers App\Component\Http\Headers::__construct
      * @dataProvider constantsProvider
      */
     public function testConstants($k)
@@ -99,8 +99,8 @@ class HeadersTest extends PFT
 
     /**
      * testAdd
-     * @covers App\Http\Headers::add
-     * @covers App\Http\Headers::get
+     * @covers App\Component\Http\Headers::add
+     * @covers App\Component\Http\Headers::get
      */
     public function testAdd()
     {
@@ -113,8 +113,8 @@ class HeadersTest extends PFT
 
     /**
      * testAddMany
-     * @covers App\Http\Headers::add
-     * @covers App\Http\Headers::get
+     * @covers App\Component\Http\Headers::add
+     * @covers App\Component\Http\Headers::get
      */
     public function testAddMany()
     {
@@ -128,8 +128,8 @@ class HeadersTest extends PFT
 
     /**
      * testRemove
-     * @covers App\Http\Headers::remove
-     * @covers App\Http\Headers::get
+     * @covers App\Component\Http\Headers::remove
+     * @covers App\Component\Http\Headers::get
      */
     public function testRemove()
     {
@@ -147,8 +147,8 @@ class HeadersTest extends PFT
 
     /**
      * testSend
-     * @covers App\Http\Headers::addMany
-     * @covers App\Http\Headers::send
+     * @covers App\Component\Http\Headers::addMany
+     * @covers App\Component\Http\Headers::send
      * @runInSeparateProcess
      */
     public function testSend()

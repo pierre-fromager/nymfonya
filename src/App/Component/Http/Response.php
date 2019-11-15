@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http;
+namespace App\Component\Http;
 
-use \App\Http\Interfaces\IResponse;
-use \App\Http\Headers;
+use \App\Component\Http\Interfaces\IResponse;
+use \App\Component\Http\Headers;
 
 class Response implements IResponse
 {

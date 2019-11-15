@@ -3,10 +3,10 @@
 namespace Tests;
 
 use PHPUnit\Framework\TestCase as PFT;
-use App\Http\Routes;
+use App\Component\Http\Routes;
 
 /**
- * @covers \App\Http\Routes::<public>
+ * @covers \App\Component\Http\Routes::<public>
  */
 class RoutesTest extends PFT
 {
@@ -66,8 +66,8 @@ class RoutesTest extends PFT
 
     /**
      * testInstance
-     * @covers App\Http\Routes::__construct
-     * @covers App\Http\Routes::get
+     * @covers App\Component\Http\Routes::__construct
+     * @covers App\Component\Http\Routes::get
      */
     public function testInstance()
     {
@@ -77,8 +77,8 @@ class RoutesTest extends PFT
 
     /**
      * testGetSet
-     * @covers App\Http\Routes::set
-     * @covers App\Http\Routes::get
+     * @covers App\Component\Http\Routes::set
+     * @covers App\Component\Http\Routes::get
      */
     public function testGetSet()
     {
@@ -92,7 +92,7 @@ class RoutesTest extends PFT
 
     /**
      * testValidate
-     * @covers App\Http\Routes::validate
+     * @covers App\Component\Http\Routes::validate
      */
     public function testValidate()
     {
@@ -110,8 +110,8 @@ class RoutesTest extends PFT
 
     /**
      * testValidateException
-     * @covers App\Http\Routes::set
-     * @covers App\Http\Routes::validate
+     * @covers App\Component\Http\Routes::set
+     * @covers App\Component\Http\Routes::validate
      */
     public function testValidateException()
     {

@@ -4,7 +4,7 @@ namespace Tests;
 
 use PHPUnit\Framework\TestCase as PFT;
 use App\Config;
-use App\Http\Request;
+use App\Component\Http\Request;
 use App\Component\Jwt\Token;
 
 /**

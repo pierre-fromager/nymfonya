@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http;
+namespace App\Component\Http;
 
-use App\Http\Interfaces\IRoutes;
+use App\Component\Http\Interfaces\IRoutes;
 
 class Routes implements IRoutes
 {

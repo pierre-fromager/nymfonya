@@ -3,10 +3,10 @@
 namespace Tests;
 
 use PHPUnit\Framework\TestCase as PFT;
-use App\Http\Cookie;
+use App\Component\Http\Cookie;
 
 /**
- * @covers \App\Http\Cookie::<public>
+ * @covers \App\Component\Http\Cookie::<public>
  */
 class CookieTest extends PFT
 {
@@ -58,7 +58,7 @@ class CookieTest extends PFT
 
     /**
      * testInstance
-     * @covers App\Http\Cookie::__construct
+     * @covers App\Component\Http\Cookie::__construct
      */
     public function testInstance()
     {
@@ -67,7 +67,7 @@ class CookieTest extends PFT
 
     /**
      * testGetCookie
-     * @covers App\Http\Cookie::getCookie
+     * @covers App\Component\Http\Cookie::getCookie
      */
     public function testGetCookie()
     {
@@ -76,7 +76,7 @@ class CookieTest extends PFT
 
     /**
      * testSetCookie
-     * @covers App\Http\Cookie::setCookie
+     * @covers App\Component\Http\Cookie::setCookie
      * @runInSeparateProcess
      */
     public function testSetCookie()
@@ -91,7 +91,7 @@ class CookieTest extends PFT
 
     /**
      * testRefreshCookie
-     * @covers App\Http\Cookie::refreshCookie
+     * @covers App\Component\Http\Cookie::refreshCookie
      * @runInSeparateProcess
      */
     public function testRefreshCookie()

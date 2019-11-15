@@ -6,8 +6,8 @@ use PHPUnit\Framework\TestCase as PFT;
 use App\Config;
 use App\Container;
 use App\Controllers\Api\V1\Test as ApiTestControler;
-use App\Http\Request;
-use App\Http\Response;
+use App\Component\Http\Request;
+use App\Component\Http\Response;
 use PHPUnit\Util\Test;
 
 /**
@@ -153,7 +153,7 @@ class ApiV1ControllerTestTest extends PFT
         $this->assertTrue($par instanceof ApiTestControler);
         $res = self::getMethod('getService')->invokeArgs(
             $this->instance,
-            [\App\Http\Response::class]
+            [\App\Component\Http\Response::class]
         );
         $this->assertNotEmpty($res->getContent());
         $this->assertEquals($res->getCode(), Response::HTTP_OK);
@@ -189,7 +189,7 @@ class ApiV1ControllerTestTest extends PFT
         $this->assertTrue($par instanceof ApiTestControler);
         $res = self::getMethod('getService')->invokeArgs(
             $this->instance,
-            [\App\Http\Response::class]
+            [\App\Component\Http\Response::class]
         );
         $this->assertNotEmpty($res->getContent());
         $this->assertEquals($res->getCode(), Response::HTTP_OK);

@@ -112,8 +112,8 @@ class ContainerTest extends PFT
      */
     public function testGetService()
     {
-        $service = $this->instance->getService(\App\Http\Request::class);
-        $this->assertTrue($service instanceof \App\Http\Request);
+        $service = $this->instance->getService(\App\Component\Http\Request::class);
+        $this->assertTrue($service instanceof \App\Component\Http\Request);
     }
 
     /**
@@ -158,7 +158,7 @@ class ContainerTest extends PFT
     public function testSetServiceNotObjectException()
     {
         $this->expectException(\Exception::class);
-        $this->instance->setService(\App\Http\Request::class, null);
+        $this->instance->setService(\App\Component\Http\Request::class, null);
     }
 
     /**
@@ -189,7 +189,7 @@ class ContainerTest extends PFT
         $checkedMethod = 'hasService';
         $hsReq = self::getMethod($checkedMethod)->invokeArgs(
             $this->instance,
-            [\App\Http\Request::class]
+            [\App\Component\Http\Request::class]
         );
         $this->assertTrue($hsReq);
         $hsMdl = self::getMethod($checkedMethod)->invokeArgs(
@@ -257,7 +257,7 @@ class ContainerTest extends PFT
                 \App\Config::class,
                 [
                     self::CONFIG_PATH . \App\Config::ENV_CLI,
-                    \App\Http\Request::class
+                    \App\Component\Http\Request::class
                 ]
             ]
         );

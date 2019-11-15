@@ -5,8 +5,8 @@ namespace Tests;
 use PHPUnit\Framework\TestCase as PFT;
 use App\Config;
 use App\Container;
-use App\Http\Middleware;
-use App\Http\Interfaces\Middleware\ILayer;
+use App\Component\Http\Middleware;
+use App\Component\Http\Interfaces\Middleware\ILayer;
 use App\Middlewares\After;
 
 /**
@@ -132,7 +132,7 @@ class AppMiddlewaresAfterTest extends PFT
 
     /**
      * testInstance
-     * @covers App\Http\Middleware::__construct
+     * @covers App\Component\Http\Middleware::__construct
      */
     public function testInstance()
     {

@@ -2,8 +2,8 @@
 
 namespace App;
 
-use App\Http\Response;
-use App\Http\Headers;
+use App\Component\Http\Response;
+use App\Component\Http\Headers;
 
 class Kernel
 {

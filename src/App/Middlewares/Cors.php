@@ -2,10 +2,10 @@
 
 namespace App\Middlewares;
 
-use App\Http\Request;
-use App\Http\Response;
-use App\Http\Headers;
-use App\Http\Interfaces\Middleware\ILayer;
+use App\Component\Http\Request;
+use App\Component\Http\Response;
+use App\Component\Http\Headers;
+use App\Component\Http\Interfaces\Middleware\ILayer;
 use App\Container;
 
 /**

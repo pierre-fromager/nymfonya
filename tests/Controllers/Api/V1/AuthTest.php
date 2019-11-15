@@ -6,8 +6,8 @@ use PHPUnit\Framework\TestCase as PFT;
 use PHPUnit\Framework\MockObject\MockObject;
 use App\Config;
 use App\Container;
-use App\Http\Request;
-use App\Http\Response;
+use App\Component\Http\Request;
+use App\Component\Http\Response;
 use App\Controllers\Api\V1\Auth as ApiAuthControler;
 
 /**
@@ -110,7 +110,7 @@ class ApiV1ControllerAuthTest extends PFT
         );
         if ($withMock) {
             $this->container->setService(
-                \App\Http\Request::class,
+                \App\Component\Http\Request::class,
                 $this->getMockedRequest($success)
             );
         }
@@ -137,7 +137,7 @@ class ApiV1ControllerAuthTest extends PFT
                 : self::VALID_PASSWORD;
         };
         $mockRequest = $this->createMock(
-            \App\Http\Request::class
+            \App\Component\Http\Request::class
         );
         $mockRequest->method('getMethod')->willReturn(
             Request::METHOD_TRACE
@@ -170,7 +170,7 @@ class ApiV1ControllerAuthTest extends PFT
         );
         $res = self::getMethod('getService')->invokeArgs(
             $this->instance,
-            [\App\Http\Response::class]
+            [\App\Component\Http\Response::class]
         );
         $this->assertEquals(
             $res->getCode(),
@@ -191,7 +191,7 @@ class ApiV1ControllerAuthTest extends PFT
         );
         $res = self::getMethod('getService')->invokeArgs(
             $this->instance,
-            [\App\Http\Response::class]
+            [\App\Component\Http\Response::class]
         );
         $this->assertEquals(
             $res->getCode(),
@@ -211,7 +211,7 @@ class ApiV1ControllerAuthTest extends PFT
         );
         $res = self::getMethod('getService')->invokeArgs(
             $this->instance,
-            [\App\Http\Response::class]
+            [\App\Component\Http\Response::class]
         );
         $this->assertEquals(
             $res->getCode(),
@@ -232,7 +232,7 @@ class ApiV1ControllerAuthTest extends PFT
         $this->assertTrue($ser instanceof ApiAuthControler);
         $res = self::getMethod('getService')->invokeArgs(
             $this->instance,
-            [\App\Http\Response::class]
+            [\App\Component\Http\Response::class]
         );
         $this->assertEquals(
             $res->getCode(),

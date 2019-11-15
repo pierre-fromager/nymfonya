@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http;
+namespace App\Component\Http;
 
-use App\Http\Interfaces\IRequest;
-use App\Http\Interfaces\IHeaders;
-use App\Http\Session;
+use App\Component\Http\Interfaces\IRequest;
+use App\Component\Http\Interfaces\IHeaders;
+use App\Component\Http\Session;
 
 class Request extends Session implements IRequest
 {

@@ -5,7 +5,7 @@ namespace App\Controllers;
 use App\Interfaces\Controllers\IApi;
 use App\Reuse\Controllers\AbstractApi;
 use App\Container;
-use App\Http\Response;
+use App\Component\Http\Response;
 
 /**
  * @OA\Info(title="Nymfonya",version="v1")

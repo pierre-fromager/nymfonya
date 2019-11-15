@@ -6,8 +6,8 @@ use PHPUnit\Framework\TestCase as PFT;
 use App\Config;
 use App\Container;
 use App\Controllers\Api\V1\Restful as ApiRestfulControler;
-use App\Http\Request;
-use App\Http\Response;
+use App\Component\Http\Request;
+use App\Component\Http\Response;
 
 /**
  * @covers \App\Controllers\Api\V1\Restful::<public>

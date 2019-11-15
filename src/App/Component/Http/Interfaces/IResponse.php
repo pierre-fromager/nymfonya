@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Interfaces;
+namespace App\Component\Http\Interfaces;
 
-use App\Http\Response;
-use \App\Http\Headers;
-use \App\Http\Interfaces\IStatus;
+use App\Component\Http\Response;
+use \App\Component\Http\Headers;
+use \App\Component\Http\Interfaces\IStatus;
 
 interface IResponse extends IStatus
 {

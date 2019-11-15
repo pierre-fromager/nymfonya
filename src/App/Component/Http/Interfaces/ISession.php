@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Interfaces;
+namespace App\Component\Http\Interfaces;
 
-use App\Http\Session;
+use App\Component\Http\Session;
 
 interface ISession
 {

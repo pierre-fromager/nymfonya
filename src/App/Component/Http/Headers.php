@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http;
+namespace App\Component\Http;
 
-use \App\Http\Interfaces\IHeaders;
+use \App\Component\Http\Interfaces\IHeaders;
 
 class Headers implements IHeaders
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Interfaces;
+namespace App\Component\Http\Interfaces;
 
-use App\Http\Cookie;
+use App\Component\Http\Cookie;
 
 interface ICookie
 {

@@ -4,8 +4,8 @@ namespace App\Middlewares\Reuse;
 
 use App\Kernel;
 use App\Config;
-use App\Http\Request;
-use App\Http\Response;
+use App\Component\Http\Request;
+use App\Component\Http\Response;
 use App\Container;
 use \Monolog\Logger;
 
@@ -95,9 +95,9 @@ trait TInit
         $this->configParams = $this->config->getSettings(
             Config::_MIDDLEWARES
         )[get_called_class()];
-        $this->request = $container->getService(\App\Http\Request::class);
+        $this->request = $container->getService(\App\Component\Http\Request::class);
         $this->headers = $this->request->getHeaders();
-        $this->response = $container->getService(\App\Http\Response::class);
+        $this->response = $container->getService(\App\Component\Http\Response::class);
         $this->logger = $container->getService(\Monolog\Logger::class);
         $this->enabled = $this->configParams['enabled'];
         $this->prefix = $this->configParams['prefix'];

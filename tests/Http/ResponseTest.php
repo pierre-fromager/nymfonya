@@ -3,11 +3,11 @@
 namespace Tests;
 
 use PHPUnit\Framework\TestCase as PFT;
-use App\Http\Headers;
-use App\Http\Response;
+use App\Component\Http\Headers;
+use App\Component\Http\Response;
 
 /**
- * @covers \App\Http\Response::<public>
+ * @covers \App\Component\Http\Response::<public>
  */
 class ResponseTest extends PFT
 {
@@ -59,7 +59,7 @@ class ResponseTest extends PFT
 
     /**
      * testInstance
-     * @covers App\Http\Response::__construct
+     * @covers App\Component\Http\Response::__construct
      */
     public function testInstance()
     {
@@ -82,7 +82,7 @@ class ResponseTest extends PFT
 
     /**
      * testConstants
-     * @covers App\Http\Response::__construct
+     * @covers App\Component\Http\Response::__construct
      * @dataProvider constantsProvider
      */
     public function testConstants($k)
@@ -94,7 +94,7 @@ class ResponseTest extends PFT
 
     /**
      * testGetHeaderManager
-     * @covers App\Http\Response::getHeaderManager
+     * @covers App\Component\Http\Response::getHeaderManager
      */
     public function testGetHeaderManager()
     {
@@ -105,8 +105,8 @@ class ResponseTest extends PFT
 
     /**
      * testSetGetCode
-     * @covers App\Http\Response::setCode
-     * @covers App\Http\Response::getCode
+     * @covers App\Component\Http\Response::setCode
+     * @covers App\Component\Http\Response::getCode
      */
     public function testSetGetCode()
     {
@@ -125,8 +125,8 @@ class ResponseTest extends PFT
 
     /**
      * testGetSetContent
-     * @covers App\Http\Response::setContent
-     * @covers App\Http\Response::getContent
+     * @covers App\Component\Http\Response::setContent
+     * @covers App\Component\Http\Response::getContent
      */
     public function testSetContent()
     {
@@ -150,8 +150,8 @@ class ResponseTest extends PFT
 
     /**
      * testSend
-     * @covers App\Http\Response::send
-     * @covers App\Http\Response::setIsCli
+     * @covers App\Component\Http\Response::send
+     * @covers App\Component\Http\Response::setIsCli
      * @runInSeparateProcess
      */
     public function testSend()

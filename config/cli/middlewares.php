@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Request;
-use App\Http\Headers;
+use App\Component\Http\Request;
+use App\Component\Http\Headers;
 use App\Middlewares\Cors;
 use App\Middlewares\Jwt;
 use App\Middlewares\Restful;

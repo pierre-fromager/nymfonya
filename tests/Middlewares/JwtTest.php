@@ -6,9 +6,9 @@ use PHPUnit\Framework\TestCase as PFT;
 use PHPUnit\Framework\MockObject\MockObject;
 use App\Config;
 use App\Container;
-use App\Http\Middleware;
-use App\Http\Interfaces\Middleware\ILayer;
-use App\Http\Response;
+use App\Component\Http\Middleware;
+use App\Component\Http\Interfaces\Middleware\ILayer;
+use App\Component\Http\Response;
 use App\Middlewares\Jwt as JwtMiddleware;
 use App\Component\Jwt\Token;
 
@@ -123,7 +123,7 @@ class AppMiddlewaresJwtTest extends PFT
             ? '/api/v1/stat/filecache'
             : '/api/v1/auth/login';
         $userPayload = ($user) ? $user : $this->getUser($withProcess);
-        $mockRequest = $this->createMock(\App\Http\Request::class);
+        $mockRequest = $this->createMock(\App\Component\Http\Request::class);
         $mockRequest->method('getUri')->willReturn($uri);
         $mockRequest->method('isCli')->willReturn(true);
         $mockRequest->method('getHeaders')->willReturn(
@@ -143,7 +143,7 @@ class AppMiddlewaresJwtTest extends PFT
      */
     protected function getMockedRequestUri(string $uri): MockObject
     {
-        $mockRequest = $this->createMock(\App\Http\Request::class);
+        $mockRequest = $this->createMock(\App\Component\Http\Request::class);
         $mockRequest->method('getUri')->willReturn($uri);
         $mockRequest->method('isCli')->willReturn(true);
         return $mockRequest;
@@ -172,13 +172,13 @@ class AppMiddlewaresJwtTest extends PFT
         $this->container->setService(\App\Kernel::class, $kernel);
         if ($withMock) {
             $this->container->setService(
-                \App\Http\Request::class,
+                \App\Component\Http\Request::class,
                 $this->getMockedRequest($withProcess, $user)
             );
         }
         $this->tokenTool = new Token(
             $this->config,
-            $this->container->getService(\App\Http\Request::class)
+            $this->container->getService(\App\Component\Http\Request::class)
         );
         $this->layer = new JwtMiddleware();
         $this->instance = new Middleware();
@@ -239,7 +239,7 @@ class AppMiddlewaresJwtTest extends PFT
 
     /**
      * testInstance
-     * @covers App\Http\Middleware::__construct
+     * @covers App\Component\Http\Middleware::__construct
      */
     public function testInstance()
     {
@@ -297,7 +297,7 @@ class AppMiddlewaresJwtTest extends PFT
         $this->invokeMethod($this->layer, 'setEnabled', [true]);
         $this->invokeMethod($this->layer, 'process', []);
         $this->assertTrue($peelReturn instanceof Container);
-        $res = $peelReturn->getService(\App\Http\Response::class);
+        $res = $peelReturn->getService(\App\Component\Http\Response::class);
         $this->assertEquals($res->getCode(), 403);
         $this->assertEquals(
             $res->getContent(),
@@ -319,7 +319,7 @@ class AppMiddlewaresJwtTest extends PFT
         $this->invokeMethod($this->layer, 'setEnabled', [true]);
         $this->invokeMethod($this->layer, 'process', []);
         $this->assertTrue($peelReturn instanceof Container);
-        $res = $peelReturn->getService(\App\Http\Response::class);
+        $res = $peelReturn->getService(\App\Component\Http\Response::class);
         $this->assertEquals($res->getCode(), 403);
         $this->assertEquals(
             $res->getContent(),
@@ -341,7 +341,7 @@ class AppMiddlewaresJwtTest extends PFT
         $this->invokeMethod($this->layer, 'setEnabled', [true]);
         $this->invokeMethod($this->layer, 'process', []);
         $this->assertTrue($peelReturn instanceof Container);
-        $res = $peelReturn->getService(\App\Http\Response::class);
+        $res = $peelReturn->getService(\App\Component\Http\Response::class);
         $this->assertEquals($res->getCode(), 403);
         $this->assertEquals(
             $res->getContent(),
@@ -359,14 +359,14 @@ class AppMiddlewaresJwtTest extends PFT
         $this->setOutputCallback(function () {
         });
         $this->container->setService(
-            \App\Http\Request::class,
+            \App\Component\Http\Request::class,
             $this->getMockedRequestUri('/api/v1/stat/filecache')
         );
         $peelReturn = $this->peelLayer();
         $this->invokeMethod($this->layer, 'setEnabled', [true]);
         $this->invokeMethod($this->layer, 'process', []);
         $this->assertTrue($peelReturn instanceof Container);
-        $res = $peelReturn->getService(\App\Http\Response::class);
+        $res = $peelReturn->getService(\App\Component\Http\Response::class);
         $this->assertEquals($res->getCode(), 403);
         $this->assertEquals(
             $res->getContent(),
@@ -504,7 +504,7 @@ class AppMiddlewaresJwtTest extends PFT
             500, 'error message'
         ]);
         $this->assertTrue($peelReturn instanceof Container);
-        $res = $peelReturn->getService(\App\Http\Response::class);
+        $res = $peelReturn->getService(\App\Component\Http\Response::class);
         $this->assertTrue($res instanceof Response);
         $this->assertEquals($res->getCode(), 500);
         $this->assertEquals(

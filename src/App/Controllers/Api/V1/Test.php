@@ -4,8 +4,8 @@ namespace App\Controllers\Api\V1;
 
 use App\Interfaces\Controllers\IApi;
 use App\Reuse\Controllers\AbstractApi;
-use App\Http\Response;
-use App\Http\Request;
+use App\Component\Http\Response;
+use App\Component\Http\Request;
 use App\Container;
 use App\Component\File\Uploader;
 

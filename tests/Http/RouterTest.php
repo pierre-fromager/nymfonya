@@ -3,12 +3,12 @@
 namespace Tests;
 
 use PHPUnit\Framework\TestCase as PFT;
-use App\Http\Request;
-use App\Http\Routes;
-use App\Http\Router;
+use App\Component\Http\Request;
+use App\Component\Http\Routes;
+use App\Component\Http\Router;
 
 /**
- * @covers \App\Http\Router::<public>
+ * @covers \App\Component\Http\Router::<public>
  */
 class RouterTest extends PFT
 {
@@ -63,7 +63,7 @@ class RouterTest extends PFT
 
     /**
      * testInstance
-     * @covers App\Http\Router::__construct
+     * @covers App\Component\Http\Router::__construct
      */
     public function testInstance()
     {
@@ -72,7 +72,7 @@ class RouterTest extends PFT
 
     /**
      * testSetRoutes
-     * @covers App\Http\Router::setRoutes
+     * @covers App\Component\Http\Router::setRoutes
      */
     public function testSetRoutes()
     {
@@ -86,7 +86,7 @@ class RouterTest extends PFT
 
     /**
      * testCompile
-     * @covers App\Http\Router::compile
+     * @covers App\Component\Http\Router::compile
      */
     public function testCompile()
     {
