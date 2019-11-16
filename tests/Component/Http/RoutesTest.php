@@ -67,18 +67,18 @@ class RoutesTest extends PFT
     /**
      * testInstance
      * @covers App\Component\Http\Routes::__construct
-     * @covers App\Component\Http\Routes::get
+     * @covers App\Component\Http\Routes::getExpr
      */
     public function testInstance()
     {
         $this->assertTrue($this->instance instanceof Routes);
-        $this->assertEquals($this->instance->get(), $this->regexRoutes);
+        $this->assertEquals($this->instance->getExpr(), $this->regexRoutes);
     }
 
     /**
      * testGetSet
      * @covers App\Component\Http\Routes::set
-     * @covers App\Component\Http\Routes::get
+     * @covers App\Component\Http\Routes::getExpr
      */
     public function testGetSet()
     {
@@ -87,7 +87,7 @@ class RoutesTest extends PFT
             '/^(config)\/(keygen)$/'
         ];
         $this->instance->set($routesArray);
-        $this->assertEquals($this->instance->get(), $routesArray);
+        $this->assertEquals($this->instance->getExpr(), $routesArray);
     }
 
     /**

@@ -8,9 +8,40 @@ use App\Component\Http\Interfaces\IRouter;
 
 class Router implements IRouter
 {
-    private $activeRoute = '';
-    private $routes = [];
+    /**
+     * active route
+     *
+     * @var string
+     */
+    private $activeRoute;
+
+    /**
+     * routes collection
+     *
+     * @var IRoutes
+     */
+    private $routes;
+
+    /**
+     * request
+     *
+     * @var IRequest
+     */
     private $request = null;
+
+    /**
+     * route params
+     *
+     * @var array
+     */
+    private $params;
+
+    /**
+     * route match expr
+     *
+     * @var string
+     */
+    private $matchingRoute;
 
     /**
      * instanciate
@@ -20,8 +51,12 @@ class Router implements IRouter
      */
     public function __construct(IRoutes $routes, IRequest $request)
     {
-        $this->setRoutes($routes);
+        $this->routes = [];
         $this->request = $request;
+        $this->activeRoute = '';
+        $this->params = [];
+        $this->matchingRoute = '';
+        $this->setRoutes($routes);
         $this->activeRoute = substr($this->request->getUri(), 1);
         return $this;
     }
@@ -34,7 +69,7 @@ class Router implements IRouter
      */
     public function setRoutes(IRoutes $routes): Router
     {
-        $this->routes = $routes;
+        $this->routes = $routes->get();
         return $this;
     }
 
@@ -45,16 +80,33 @@ class Router implements IRouter
      */
     public function compile(): array
     {
-        $routes = $this->routes->get();
+        
+        $routes = $this->routes;
         $routesLength = count($routes);
         for ($i = 0; $i < $routesLength; $i++) {
             $matches = [];
-            $match = preg_match($routes[$i], $this->activeRoute, $matches);
+            $match = preg_match(
+                $routes[$i]->getExpr(),
+                $this->activeRoute,
+                $matches
+            );
             if ($match) {
+                $this->params = $matches;
+                $this->matchingRoute = $routes[$i]->getExpr();
                 array_shift($matches);
                 return $matches;
             }
         }
         return [];
+    }
+
+    public function getParams():array
+    {
+        return $this->params;
+    }
+
+    public function getMatchingRoute():string
+    {
+        return $this->matchingRoute;
     }
 }

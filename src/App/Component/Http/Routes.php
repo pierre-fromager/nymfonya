@@ -3,9 +3,18 @@
 namespace App\Component\Http;
 
 use App\Component\Http\Interfaces\IRoutes;
+use App\Component\Http\Route;
 
 class Routes implements IRoutes
 {
+
+    /**
+     * routes config collection
+     *
+     * @var array
+     */
+    private $routesConfig = [];
+
     /**
      * route list as array
      *
@@ -16,13 +25,13 @@ class Routes implements IRoutes
     /**
      * __construct
      *
-     * @param array $routes
+     * @param array $routesConfig
      * @return Routes
      */
-    public function __construct(array $routes = [])
+    public function __construct(array $routesConfig = [])
     {
-        if (!empty($routes)) {
-            $this->set($routes);
+        if (!empty($routesConfig)) {
+            $this->set($routesConfig);
         }
         return $this;
     }
@@ -38,16 +47,47 @@ class Routes implements IRoutes
     }
 
     /**
-     * set routes as array and returns Routes
+     * returns routes as array
      *
-     * @param array $routes
+     * @return array
+     */
+    public function getExpr(): array
+    {
+        $patterns = array_map(
+            function (Route $i) {
+                return $i->getExpr();
+            },
+            $this->routes
+        );
+        return $patterns;
+    }
+
+    /**
+     * set routes as array and stack Route collection
+     *
+     * @param array $routesConfig
      * @return Routes
      */
-    public function set(array $routes): Routes
+    public function set(array $routesConfig): Routes
     {
-        $this->routes = $routes;
+        $this->routes = [];
+        $this->routesConfig = $routesConfig;
+        $this->prepare();
         $this->validate();
         return $this;
+    }
+
+    /**
+     * validate routes to be an array of regexp string
+     *
+     * @throws Exception
+     */
+    protected function prepare()
+    {
+        $count = count($this->routesConfig);
+        for ($c = 0; $c < $count; $c++) {
+            $this->routes[] = new Route($this->routesConfig[$c]);
+        }
     }
 
     /**
@@ -59,9 +99,9 @@ class Routes implements IRoutes
     {
         $count = count($this->routes);
         for ($c = 0; $c < $count; $c++) {
-            $route = $this->routes[$c];
+            $route = $this->routes[$c]->getExpr();
             if (@preg_match($route, null) === false) {
-                throw new \Exception('Route invalid ' . $route);
+                throw new \Exception('Route invalid expr ' . $route);
             }
         }
     }

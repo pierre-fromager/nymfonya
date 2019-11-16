@@ -145,7 +145,8 @@ Bearer Token required
 
 ##### Middleware Restufl
 
-* http://localhost:8888/api/v1/restful
+* http://localhost:8888/api/v1/restful  
+
 
 ##### Middleware Cors & After
 
