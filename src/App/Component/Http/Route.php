@@ -50,15 +50,4 @@ class Route
     {
         return $this->method;
     }
-
-    /**
-     * return a nonsense
-     * @todo refacto this as a pattern group replacer to get params slugs
-     *
-     * @return string
-     */
-    public function getCallable(): string
-    {
-        return $this->callable;
-    }
 }

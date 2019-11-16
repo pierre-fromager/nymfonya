@@ -7,6 +7,7 @@
             <file>tests/Component/Http/CookieTest.php</file>
             <file>tests/Component/Http/ResponseTest.php</file>
             <file>tests/Component/Http/HeadersTest.php</file>
+            <file>tests/Component/Http/RouteTest.php</file>
             <file>tests/Component/Http/RoutesTest.php</file>
             <file>tests/Component/Http/RouterTest.php</file>
             <file>tests/Component/Http/MiddlewareTest.php</file>
