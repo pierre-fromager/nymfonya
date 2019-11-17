@@ -202,7 +202,7 @@ trait TKernel
                 : Response::HTTP_OK;
             $this->errorMsg = sprintf(
                 'Execute %s',
-                ($this->error) ? 'failed' : 'successfully'
+                ($this->error) ? 'failed' : 'success'
             );
             $this->logger->debug($this->errorMsg);
         } else {
@@ -250,7 +250,7 @@ trait TKernel
         (new Middleware())->layer($this->middlewares)->peel(
             $this->container,
             function ($container) {
-                $this->execute(null);
+                $this->execute($this->router->getParams());
                 return $container;
             }
         );
@@ -393,7 +393,7 @@ trait TKernel
      */
     protected function setRequest()
     {
-        $this->req = $this->getService(\App\Component\Http\Request::class);
+        $this->req = $this->getService(Request::class);
     }
 
     /**
@@ -411,7 +411,7 @@ trait TKernel
      */
     protected function setResponse()
     {
-        $this->res = $this->getService(\App\Component\Http\Response::class);
+        $this->res = $this->getService(Response::class);
     }
 
     /**
@@ -429,7 +429,7 @@ trait TKernel
      */
     protected function setRouter()
     {
-        $this->router = $this->getService(\App\Component\Http\Router::class);
+        $this->router = $this->getService(Router::class);
     }
 
     /**

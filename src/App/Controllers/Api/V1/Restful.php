@@ -26,6 +26,13 @@ final class Restful extends AbstractApi implements IApi
     protected $userRepository;
 
     /**
+     * slugs
+     *
+     * @var array
+     */
+    protected $slugs;
+
+    /**
      * sql
      *
      * @var String
@@ -95,8 +102,9 @@ final class Restful extends AbstractApi implements IApi
      * )
      * @return Restful
      */
-    final public function index(): Restful
+    final public function index(array $slugs): Restful
     {
+        $this->slugs = $slugs;
         $this->userRepository->find(
             ['name'],
             [
@@ -138,8 +146,9 @@ final class Restful extends AbstractApi implements IApi
      * )
      * @return Restful
      */
-    final public function store(): Restful
+    final public function store(array $slugs): Restful
     {
+        $this->slugs = $slugs;
         $this->bindValues = [];
         try {
             $this->userRepository->insert($this->getParams());
@@ -182,8 +191,9 @@ final class Restful extends AbstractApi implements IApi
      * )
      * @return Restful
      */
-    final public function update(): Restful
+    final public function update(array $slugs): Restful
     {
+        $this->slugs = $slugs;
         $this->bindValues = [];
         try {
             $params = $this->getParams();
@@ -229,8 +239,9 @@ final class Restful extends AbstractApi implements IApi
      * )
      * @return Restful
      */
-    final public function delete(): Restful
+    final public function delete(array $slugs): Restful
     {
+        $this->slugs = $slugs;
         $this->bindValues = [];
         try {
             $params = $this->getParams();
@@ -271,6 +282,7 @@ final class Restful extends AbstractApi implements IApi
                         'action' => $action,
                         'query' => $this->sql,
                         'queryValues' => $this->bindValues,
+                        'slugs' => $this->slugs
                     ]
                 ]
             );
