@@ -131,4 +131,37 @@ class RouteTest extends PFT
         $this->assertNotEmpty($method);
         $this->assertEquals('GET', $method);
     }
+
+    /**
+     * testGetSlugs
+     * @covers App\Component\Http\Route::getSlugs
+     */
+    public function testGetSlugs()
+    {
+        $slugs = $this->instance->getSlugs();
+        $this->assertTrue(is_array($slugs));
+        $this->assertEmpty($slugs);
+    }
+
+    /**
+     * testParsedSlugs
+     * @covers App\Component\Http\Route::parsedSlugs
+     */
+    public function testParsedSlugs()
+    {
+        $rawSlug0 = ',id';
+        $slugs0 = self::getMethod('parsedSlugs')->invokeArgs(
+            $this->instance,
+            [$rawSlug0]
+        );
+        $this->assertTrue(is_array($slugs0));
+        $this->assertEquals(['', 'id'], $slugs0);
+        $rawSlug1 = '';
+        $slugs1 = self::getMethod('parsedSlugs')->invokeArgs(
+            $this->instance,
+            [$rawSlug1]
+        );
+        $this->assertTrue(is_array($slugs1));
+        $this->assertEmpty($slugs1);
+    }
 }
