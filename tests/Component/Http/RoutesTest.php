@@ -4,6 +4,7 @@ namespace Tests;
 
 use PHPUnit\Framework\TestCase as PFT;
 use App\Component\Http\Routes;
+use App\Component\Http\Route;
 
 /**
  * @covers \App\Component\Http\Routes::<public>
@@ -78,6 +79,7 @@ class RoutesTest extends PFT
     /**
      * testGetSet
      * @covers App\Component\Http\Routes::set
+     * @covers App\Component\Http\Routes::get
      * @covers App\Component\Http\Routes::getExpr
      */
     public function testGetSet()
@@ -88,6 +90,10 @@ class RoutesTest extends PFT
         ];
         $this->instance->set($routesArray);
         $this->assertEquals($this->instance->getExpr(), $routesArray);
+        $routesArray0 = $this->instance->get();
+        $this->assertTrue(is_array($routesArray0));
+        $this->assertTrue(isset($routesArray0[0]));
+        $this->assertTrue($routesArray0[0] instanceof Route);
     }
 
     /**
@@ -106,6 +112,23 @@ class RoutesTest extends PFT
         ];
         $this->instance->set($routesArray);
         $this->assertTrue($this->instance instanceof Routes);
+    }
+
+    /**
+     * testPrepare
+     * @covers App\Component\Http\Routes::prepare
+     */
+    public function testPrepare()
+    {
+        $routesArray = [
+            '/^(api\/v1\/auth)\/(.*)$/',
+            '/^(config)\/(keygen)$/'
+        ];
+        $prep = self::getMethod('prepare')->invokeArgs(
+            $this->instance,
+            [$routesArray]
+        );
+        $this->assertTrue($prep instanceof Routes);
     }
 
     /**

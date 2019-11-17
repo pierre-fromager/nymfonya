@@ -71,23 +71,24 @@ class Routes implements IRoutes
     public function set(array $routesConfig): Routes
     {
         $this->routes = [];
-        $this->routesConfig = $routesConfig;
-        $this->prepare();
+        $this->prepare($routesConfig);
         $this->validate();
         return $this;
     }
 
     /**
-     * validate routes to be an array of regexp string
+     * stacks routes as Route object collection from routes config
      *
-     * @throws Exception
+     * @param array $routesConfig
+     * @return Routes
      */
-    protected function prepare()
+    protected function prepare(array $routesConfig):Routes
     {
-        $count = count($this->routesConfig);
+        $count = count($routesConfig);
         for ($c = 0; $c < $count; $c++) {
-            $this->routes[] = new Route($this->routesConfig[$c]);
+            $this->routes[] = new Route($routesConfig[$c]);
         }
+        return $this;
     }
 
     /**

@@ -33,4 +33,25 @@ interface IRouter
      * @return array
      */
     public function compile(): array;
+
+    /**
+     * return slugs params
+     *
+     * @return array
+     */
+    public function getParams(): array;
+
+    /**
+     * set params from slugs
+     *
+     * @return Router
+     */
+    public function setParams(IRoute $route, array $matches): Router;
+
+    /**
+     * return matching regexp pattern
+     *
+     * @return string
+     */
+    public function getMatchingRoute(): string;
 }
