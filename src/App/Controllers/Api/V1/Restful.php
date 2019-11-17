@@ -102,7 +102,7 @@ final class Restful extends AbstractApi implements IApi
      * )
      * @return Restful
      */
-    final public function index(array $slugs): Restful
+    final public function index(array $slugs = []): Restful
     {
         $this->slugs = $slugs;
         $this->userRepository->find(
@@ -146,7 +146,7 @@ final class Restful extends AbstractApi implements IApi
      * )
      * @return Restful
      */
-    final public function store(array $slugs): Restful
+    final public function store(array $slugs = []): Restful
     {
         $this->slugs = $slugs;
         $this->bindValues = [];
@@ -191,7 +191,7 @@ final class Restful extends AbstractApi implements IApi
      * )
      * @return Restful
      */
-    final public function update(array $slugs): Restful
+    final public function update(array $slugs = []): Restful
     {
         $this->slugs = $slugs;
         $this->bindValues = [];
@@ -239,7 +239,7 @@ final class Restful extends AbstractApi implements IApi
      * )
      * @return Restful
      */
-    final public function delete(array $slugs): Restful
+    final public function delete(array $slugs = []): Restful
     {
         $this->slugs = $slugs;
         $this->bindValues = [];

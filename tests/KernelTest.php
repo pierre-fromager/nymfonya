@@ -652,7 +652,7 @@ class KernelTest extends PFT
         self::getMethod('execute')->invokeArgs($this->instance, []);
         $gerr = self::getMethod('getError')->invokeArgs($this->instance, []);
         $germ = self::getMethod('getErrorMsg')->invokeArgs($this->instance, []);
-        $this->assertEquals($germ, 'Execute successfully');
+        $this->assertEquals($germ, 'Execute success');
         $this->assertFalse($gerr);
         $this->assertNotEmpty($this->instance instanceof Kernel);
     }
