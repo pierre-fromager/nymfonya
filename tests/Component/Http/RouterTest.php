@@ -4,6 +4,7 @@ namespace Tests;
 
 use PHPUnit\Framework\TestCase as PFT;
 use App\Component\Http\Request;
+use App\Component\Http\Route;
 use App\Component\Http\Routes;
 use App\Component\Http\Router;
 
@@ -82,6 +83,40 @@ class RouterTest extends PFT
                 $routesAny
             ) instanceof Router
         );
+    }
+
+    /**
+     * testGetSetParams
+     * @covers App\Component\Http\Router::getParams
+     * @covers App\Component\Http\Router::setParams
+     */
+    public function testGetSetParams()
+    {
+        $params0 = $this->instance->getParams();
+        $this->assertTrue(is_array($params0));
+        $this->assertEmpty($params0);
+        $routeSlugged = new Route(
+            'GET;/^(api\/v1\/restful)\/(\d+)$/;,id'
+        );
+        $matches = [
+            '',
+            100
+        ];
+        $rsp = $this->instance->setParams($routeSlugged, $matches);
+        $this->assertTrue($rsp instanceof Router);
+        $params1 = $this->instance->getParams();
+        $this->assertEquals(['id' => 100], $params1);
+    }
+
+    /**
+     * testGetMatchingRoute
+     * @covers App\Component\Http\Router::getMatchingRoute
+     */
+    public function testGetMatchingRoute()
+    {
+        $mar = $this->instance->getMatchingRoute();
+        $this->assertTrue(is_string($mar));
+        $this->assertEmpty($mar);
     }
 
     /**
