@@ -2,12 +2,31 @@
 
 namespace App\Component\Http;
 
-class Route
+use App\Component\Http\Interfaces\IRoute;
+
+class Route implements IRoute
 {
 
+    /**
+     * allowed request method
+     *
+     * @var string
+     */
     protected $method;
+
+    /**
+     * uri validation regexp
+     *
+     * @var string
+     */
     protected $expr;
-    protected $callable;
+
+    /**
+     * slug collection
+     *
+     * @var array
+     */
+    protected $slugs;
 
     /**
      * instanciate
@@ -18,14 +37,14 @@ class Route
     {
         $this->method = 'GET';
         $this->expr = '/^(*.)$/';
-        $this->callable = function () {
-        };
+        $this->slugs = [];
         if (strpos($routeItem, ';') !== false) {
             list(
                 $this->method,
                 $this->expr,
-                $this->callable
+                $slugs
             ) = explode(';', $routeItem);
+            $this->slugs = $this->parsedSlugs($slugs);
         } else {
             $this->expr = $routeItem;
         }
@@ -49,5 +68,29 @@ class Route
     public function getMethod(): string
     {
         return $this->method;
+    }
+
+    /**
+     * return slugs
+     *
+     * @return array
+     */
+    public function getSlugs(): array
+    {
+        return $this->slugs;
+    }
+
+    /**
+     * return parsed slugs as string collection
+     *
+     * @param string $rawSlug
+     * @return array
+     */
+    protected function parsedSlugs(string $rawSlug): array
+    {
+        if (is_null($rawSlug) || empty($rawSlug)) {
+            return [];
+        }
+        return explode(',', $rawSlug);
     }
 }

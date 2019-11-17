@@ -44,8 +44,6 @@ class Kernel
         $routerGroups = ($groups)
             ? $groups
             : $this->router->compile();
-        $this->logger->warn($this->router->getMatchingRoute());
-        $this->logger->alert(json_encode($this->router->getParams()));
         if ($routerGroups) {
             $this->setClassname($routerGroups);
             if (class_exists($this->className)) {
@@ -71,9 +69,6 @@ class Kernel
      */
     public function setAction(array $routerGrps)
     {
-        
-        //$this->logger->warn(json_encode($this->router->getParams()));
-        
         $this->action = isset($routerGrps[1]) ? strtolower($routerGrps[1]) : '';
     }
 

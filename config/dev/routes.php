@@ -17,10 +17,10 @@ return [
     '/^(api\/v1\/test)\/(pokerelay)$/', // 1st group match controller 2nd match action
     '/^(api\/v1\/test)\/(upload)$/', // 1st group match controller 2nd match action
     '/^(api\/v1\/test)\/(redis)$/', // 1st group match controller 2nd match action
+    'GET;/^(api\/v1\/restful)\/(\d+)$/;,id', // 1st group match controller then slug_id
     '/^(api\/v1\/restful)$/', // 1st group match controller with default action
-    '/^(api\/v1\/restful)\/(\d+)$/', // 1st group match controller then slug_id
-   /* '/^(api\/v1\/restful)(\?.*)/', // 3rd group match ?a=1&b=2
-    '/^(api\/v1\/restful)\/(.*?)(\?.*)/', // 3rd group match ?a=1&b=2
+    '/^(api\/v1\/restful)(\?.*)/', // 3rd group match ?a=1&b=2
+    /*'/^(api\/v1\/restful)\/(.*?)(\?.*)/', // 3rd group match ?a=1&b=2
     '/^(api\/v1\/restful)\/(.*?)(\/.*)/', // 3rd group match /a/1/b/2
     '/^(api\/v1\/restful)\/(.*)$/', // 1st group match controller 2nd match action*/
 ];

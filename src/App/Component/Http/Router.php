@@ -3,6 +3,7 @@
 namespace App\Component\Http;
 
 use App\Component\Http\Interfaces\IRoutes;
+use App\Component\Http\Interfaces\IRoute;
 use App\Component\Http\Interfaces\IRequest;
 use App\Component\Http\Interfaces\IRouter;
 
@@ -80,32 +81,57 @@ class Router implements IRouter
      */
     public function compile(): array
     {
-        
         $routes = $this->routes;
         $routesLength = count($routes);
         for ($i = 0; $i < $routesLength; $i++) {
+            $route = $routes[$i];
             $matches = [];
-            $match = preg_match(
-                $routes[$i]->getExpr(),
-                $this->activeRoute,
-                $matches
-            );
+            $pattern = $route->getExpr();
+            $match = preg_match($pattern, $this->activeRoute, $matches);
             if ($match) {
-                $this->params = $matches;
-                $this->matchingRoute = $routes[$i]->getExpr();
+                $this->matchingRoute = $pattern;
                 array_shift($matches);
+                $this->setParams($route, $matches);
                 return $matches;
             }
         }
         return [];
     }
 
-    public function getParams():array
+    /**
+     * return slugs params
+     *
+     * @return array
+     */
+    public function getParams(): array
     {
         return $this->params;
     }
 
-    public function getMatchingRoute():string
+    /**
+     * set params from slugs
+     *
+     * @return Router
+     */
+    public function setParams(IRoute $route, array $matches): Router
+    {
+        $slugs = $route->getSlugs();
+        $slugCount = count($slugs);
+        for ($c = 0; $c < $slugCount; $c++) {
+            $slug = $slugs[$c];
+            if (false === empty($slug)) {
+                $this->params[$slug] = $matches[$c];
+            }
+        }
+        return $this;
+    }
+
+    /**
+     * return matching regexp pattern
+     *
+     * @return string
+     */
+    public function getMatchingRoute(): string
     {
         return $this->matchingRoute;
     }
