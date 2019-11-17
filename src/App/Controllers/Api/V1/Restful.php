@@ -3,6 +3,7 @@
 namespace App\Controllers\Api\V1;
 
 use App\Interfaces\Controllers\IApi;
+use App\Interfaces\Controllers\IRestful;
 use App\Reuse\Controllers\AbstractApi;
 use App\Component\Http\Response;
 use App\Component\Container;
@@ -15,7 +16,7 @@ use OpenApi\Annotations as OA;
  *     title="Api Restful Controller"
  * )
  */
-final class Restful extends AbstractApi implements IApi
+final class Restful extends AbstractApi implements IApi, IRestful
 {
 
     /**
