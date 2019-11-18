@@ -35,7 +35,6 @@ class RouterTest extends PFT
             '/^(api\/v1\/auth)\/(.*)$/',
             '/^(config)\/(help)$/',
             '/^(config)\/(keygen)$/',
-            self::MATCH_ALL[0]
         ];
     }
 
@@ -125,9 +124,11 @@ class RouterTest extends PFT
      */
     public function testCompile()
     {
-        $this->assertTrue(is_array($this->instance->compile()));
-        //$routesAny = new Routes(self::MATCH_ALL);
-        //$this->instance->setRoutes(self::MATCH_ALL);
-        $this->assertTrue(is_array($this->instance->compile()));
+        $comp0 = $this->instance->compile();
+        $this->assertTrue(is_array($comp0));
+        $this->assertEmpty($comp0);
+        $this->instance->setRoutes(new Routes(self::MATCH_ALL));
+        $comp1 = $this->instance->compile();
+        $this->assertTrue(is_array($comp1));
     }
 }
