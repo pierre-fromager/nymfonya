@@ -92,7 +92,7 @@ class Core
         $this->sql = $sql;
         try {
             $this->statement = $this->connection->prepare($sql);
-            if (false !== $this->statement) {
+            if ($this->statement instanceof \PDOStatement) {
                 $this->statement->setFetchMode($this->fetchMode);
                 if (!empty($bindParams)) {
                     $this->bindArray($this->statement, $bindParams, $bindTypes);
