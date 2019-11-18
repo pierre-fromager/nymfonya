@@ -75,16 +75,16 @@ class ComponentModelOrmTest extends PFT
             protected $primary = 'id';
 
             /**
-             * table name
+             * database name
              * @var string
              */
-            protected $dbname = 'test';
+            protected $database = 'nymfonya';
 
             /**
-             * pool name
+             * pool slot name
              * @var string
              */
-            protected $poolname = 'testAnySgbd';
+            protected $slot = 'test';
 
             /**
              * instanciate
@@ -505,5 +505,39 @@ class ComponentModelOrmTest extends PFT
         $this->assertTrue(is_string($pk));
         $this->assertNotEmpty($pk);
         $this->assertEquals($pk, 'id');
+    }
+
+    /**
+     * testGetSlot
+     * @covers App\Component\Model\Orm\Orm::getSlot
+     */
+    public function testGetSlot()
+    {
+        $slot = $this->instance->getSlot();
+        $this->assertTrue(is_string($slot));
+        $this->assertNotEmpty($slot);
+        $this->assertEquals($slot, 'test');
+    }
+
+    /**
+     * testGetContainter
+     * @covers App\Component\Model\Orm\Orm::getContainer
+     */
+    public function testGetContainter()
+    {
+        $cont = $this->instance->getContainer();
+        $this->assertTrue($cont instanceof Container);
+    }
+
+    /**
+     * testGetDatabase
+     * @covers App\Component\Model\Orm\Orm::getDatabase
+     */
+    public function testGetDatabase()
+    {
+        $dbname = $this->instance->getDatabase();
+        $this->assertTrue(is_string($dbname));
+        $this->assertNotEmpty($dbname);
+        $this->assertEquals('nymfonya', $dbname);
     }
 }
