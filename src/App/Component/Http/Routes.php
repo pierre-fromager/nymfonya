@@ -9,13 +9,6 @@ class Routes implements IRoutes
 {
 
     /**
-     * routes config collection
-     *
-     * @var array
-     */
-    private $routesConfig = [];
-
-    /**
      * route list as array
      *
      * @var array
@@ -33,6 +26,20 @@ class Routes implements IRoutes
         if (!empty($routesConfig)) {
             $this->set($routesConfig);
         }
+        return $this;
+    }
+
+    /**
+     * set routes as array and stack Route collection
+     *
+     * @param array $routesConfig
+     * @return Routes
+     */
+    public function set(array $routesConfig): Routes
+    {
+        $this->routes = [];
+        $this->prepare($routesConfig);
+        $this->validate();
         return $this;
     }
 
@@ -63,26 +70,12 @@ class Routes implements IRoutes
     }
 
     /**
-     * set routes as array and stack Route collection
-     *
-     * @param array $routesConfig
-     * @return Routes
-     */
-    public function set(array $routesConfig): Routes
-    {
-        $this->routes = [];
-        $this->prepare($routesConfig);
-        $this->validate();
-        return $this;
-    }
-
-    /**
      * stacks routes as Route object collection from routes config
      *
      * @param array $routesConfig
      * @return Routes
      */
-    protected function prepare(array $routesConfig):Routes
+    protected function prepare(array $routesConfig): Routes
     {
         $count = count($routesConfig);
         for ($c = 0; $c < $count; $c++) {

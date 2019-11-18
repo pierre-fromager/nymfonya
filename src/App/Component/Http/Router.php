@@ -19,7 +19,7 @@ class Router implements IRouter
     /**
      * routes collection
      *
-     * @var IRoutes
+     * @var Route[]
      */
     private $routes;
 
