@@ -21,16 +21,16 @@ class Users extends Orm
     protected $primary = 'id';
 
     /**
-     * table name
+     * database name
      * @var string
      */
-    protected $dbname = 'test';
+    protected $database = 'nymfonya';
 
     /**
      * pool name
      * @var string
      */
-    protected $poolname = 'testMysql';
+    protected $slot = 'test';
 
     /**
      * instanciate

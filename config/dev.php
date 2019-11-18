@@ -21,4 +21,5 @@ return [
         'name' => 'skypass'
     ],
     'redis' => include 'dev/redis.php',
+    'db' => include 'dev/db.php',
 ];

@@ -17,6 +17,13 @@ class Orm implements IOrm
 {
 
     /**
+     * service container
+     *
+     * @var Container
+     */
+    private $container;
+
+    /**
      * config
      *
      * @var Config
@@ -57,13 +64,13 @@ class Orm implements IOrm
      * database name
      * @var string
      */
-    protected $dbname;
+    protected $database;
 
     /**
-     * pool name
+     * db slot pool name
      * @var string
      */
-    protected $poolname;
+    protected $slot;
 
     /**
      * query builder instance
@@ -84,6 +91,7 @@ class Orm implements IOrm
      */
     public function __construct(Container $container)
     {
+        $this->container = $container;
         $this->config = $container->getService(Config::class);
         $this->queryBuilder = new GenericBuilder();
         $this->query = null;
@@ -190,6 +198,36 @@ class Orm implements IOrm
     public function getPrimary(): string
     {
         return $this->primary;
+    }
+
+    /**
+     * get slot name
+     *
+     * @return string
+     */
+    public function getSlot(): string
+    {
+        return $this->slot;
+    }
+
+    /**
+     * get service container
+     *
+     * @return Container
+     */
+    public function getContainer(): Container
+    {
+        return $this->container;
+    }
+
+    /**
+     * get database name
+     *
+     * @return string
+     */
+    public function getDatabase(): string
+    {
+        return $this->database;
     }
 
     /**

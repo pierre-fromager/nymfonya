@@ -8,6 +8,7 @@ use App\Reuse\Controllers\AbstractApi;
 use App\Component\Http\Response;
 use App\Component\Container;
 use App\Model\Repository\Users;
+use App\Component\Db\Core;
 use OpenApi\Annotations as OA;
 
 /**
@@ -18,6 +19,13 @@ use OpenApi\Annotations as OA;
  */
 final class Restful extends AbstractApi implements IApi, IRestful
 {
+
+    /**
+     * core db instance
+     *
+     * @var Core
+     */
+    protected $db;
 
     /**
      * user repository
@@ -69,6 +77,8 @@ final class Restful extends AbstractApi implements IApi, IRestful
     public function __construct(Container $container)
     {
         $this->userRepository = new Users($container);
+        $this->db = new Core();
+        $this->db->fromOrm($this->userRepository);
         $this->error = false;
         $this->errorMessage = '';
         parent::__construct($container);
@@ -105,16 +115,18 @@ final class Restful extends AbstractApi implements IApi, IRestful
      */
     final public function index(array $slugs = []): Restful
     {
+
         $this->slugs = $slugs;
         $this->userRepository->find(
             ['name'],
             [
                 'name' => ['john', 'elisa'],
-                'job>' => 0
+                'jobs>' => 1
             ]
         );
         $this->sql = $this->userRepository->getSql();
         $this->bindValues = $this->userRepository->getBuilderValues();
+        $this->db->run($this->sql, $this->bindValues)->hydrate();
         return $this->setResponse(__CLASS__, __FUNCTION__);
     }
 
@@ -283,7 +295,8 @@ final class Restful extends AbstractApi implements IApi, IRestful
                         'action' => $action,
                         'query' => $this->sql,
                         'queryValues' => $this->bindValues,
-                        'slugs' => $this->slugs
+                        'slugs' => $this->slugs,
+                        'rowset' => $this->db->getRowset()
                     ]
                 ]
             );
