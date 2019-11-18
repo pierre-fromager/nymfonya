@@ -29,12 +29,12 @@ class PdoMysql
         $this->options = $params['options'];
     }
 
-     /**
-      * connect to db
-      *
-      * @return void
-      */
-    public function connect()
+    /**
+     * connect to db
+     *
+     * @return PdoMysql
+     */
+    public function connect(): PdoMysql
     {
         $this->connection = new PDO(
             $this->dsn(),
@@ -42,6 +42,7 @@ class PdoMysql
             $this->password,
             $this->options
         );
+        return $this;
     }
 
     /**
