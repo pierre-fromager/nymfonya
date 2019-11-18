@@ -5,7 +5,6 @@ namespace App\Component\Db;
 use \PDO;
 use App\Component\Config;
 use App\Component\Container;
-use Exception;
 
 class Factory
 {
@@ -65,7 +64,7 @@ class Factory
      */
     protected function connect(string $slot, string $dbname): Factory
     {
-        $this->connectionPool = (is_null($this->connectionPool))
+        $this->connectionPool = (false === is_array($this->connectionPool))
             ? []
             : $this->connectionPool;
         $params = $this->adapterParams($slot, $dbname);
@@ -74,8 +73,8 @@ class Factory
             $adapter->connect();
             $id = $this->identity($slot, $dbname);
             $this->connectionPool[$id] = $adapter->getConnection();
-        } catch (\Exception $e) {
-            throw new Exception($e);
+        } catch (\PDOException $e) {
+            throw new \Exception('Connexion failed', $e->getCode());
         }
         return $this;
     }

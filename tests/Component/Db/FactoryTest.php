@@ -120,11 +120,35 @@ class ComponentDbFactoryTest extends PFT
      */
     public function testConnect()
     {
+        $connArgs = [self::DB_SLOT_TEST, self::DB_NAME_TEST];
         $conn = self::getMethod('connect')->invokeArgs(
             $this->instance,
-            [self::DB_SLOT_TEST, self::DB_NAME_TEST]
+            $connArgs
         );
         $this->assertTrue($conn instanceof Factory);
+        # Ensure we retrieved existing connexion
+        $connArgs = [self::DB_SLOT_TEST, self::DB_NAME_TEST];
+        $conn = self::getMethod('connect')->invokeArgs(
+            $this->instance,
+            $connArgs
+        );
+        $this->assertTrue($conn instanceof Factory);
+    }
+
+    /**
+     * testConnectException
+     * @covers App\Component\Db\Factory::connect
+     */
+    public function testConnectException()
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Connexion failed');
+        $this->expectExceptionCode(1045);
+        $connArgs = [self::DB_SLOT_TEST, 'badnymfonya'];
+        self::getMethod('connect')->invokeArgs(
+            $this->instance,
+            $connArgs
+        );
     }
 
     /**
