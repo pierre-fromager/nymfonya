@@ -99,7 +99,7 @@ final class Test extends AbstractApi implements IApi
                 ]
             ]
         );
-        unset($upload);
+        unset($redisService, $client);
         return $this;
     }
 

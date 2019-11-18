@@ -10,7 +10,7 @@ class Core
     /**
      * connection
      *
-     * @var \PDO
+     * @var \PDO | boolean
      */
     protected $connection;
 
