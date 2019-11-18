@@ -87,7 +87,7 @@ class Factory
      * @param string $dbname
      * @return array
      */
-    protected function adapterParams(string $slot, string $dbname)
+    protected function adapterParams(string $slot, string $dbname): array
     {
         if (false === isset($this->config[$slot][$dbname])) {
             $exMsg = sprintf(
