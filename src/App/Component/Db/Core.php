@@ -57,6 +57,14 @@ class Core
     protected $rowset;
 
     /**
+     * instanciate
+     */
+    public function __construct()
+    {
+        $this->rowset = [];
+    }
+
+    /**
      * set connection from Orm instance
      *
      * @param Orm $ormInstance
@@ -72,7 +80,6 @@ class Core
             $ormInstance->getSlot(),
             $this->database
         );
-        $this->rowset = [];
         return $this;
     }
 
@@ -122,8 +129,10 @@ class Core
      */
     public function hydrate(): Core
     {
-        $this->rowset = $this->statement->fetchAll($this->fetchMode);
-        $this->statement->closeCursor();
+        if ($this->statement instanceof \PDOStatement) {
+            $this->rowset = $this->statement->fetchAll($this->fetchMode);
+            $this->statement->closeCursor();
+        }
         return $this;
     }
 

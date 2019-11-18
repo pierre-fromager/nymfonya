@@ -20,6 +20,7 @@
             <file>tests/Component/ContainerTest.php</file>
             <file>tests/Component/Db/Adapter/PdoMysqlTest.php</file>
             <file>tests/Component/Db/FactoryTest.php</file>
+            <file>tests/Component/Db/CoreTest.php</file>
             <file>tests/ConfigTest.php</file>
             <file>tests/KernelTest.php</file>
             <file>tests/Controllers/ConfigTest.php</file>
