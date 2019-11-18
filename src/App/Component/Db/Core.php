@@ -29,7 +29,8 @@ class Core
     protected $sql;
 
     /**
-     * $statement
+     * statement
+     * 
      * @var \PDOStatement
      */
     protected $statement;
@@ -64,30 +65,38 @@ class Core
     public function fromOrm(Orm &$ormInstance): Core
     {
         $this->database = $ormInstance->getDatabase();
-        $slot = $ormInstance->getSlot();
         $container = $ormInstance->getContainer();
         $this->logger = $container->getService(\Monolog\Logger::class);
         $factory = new Factory($container);
-        $this->connection = $factory->getConnection($slot, $this->database);
+        $this->connection = $factory->getConnection(
+            $ormInstance->getSlot(),
+            $this->database
+        );
         $this->rowset = [];
         return $this;
     }
 
     /**
-     * run
+     * run query with bind values and types
      *
      * @param string $sql
      * @param array $bindParams
-     * @return boolean
+     * @param array $bindTypes
+     * @return Core
      */
-    public function run($sql, $bindParams = [], $bindTypes = []):Core
-    {
+    public function run(
+        string $sql,
+        array $bindParams = [],
+        array $bindTypes = []
+    ): Core {
         $this->sql = $sql;
         try {
             $this->statement = $this->connection->prepare($sql);
-            $this->statement->setFetchMode($this->fetchMode);
-            if ($bindParams) {
-                $this->bindArray($this->statement, $bindParams, $bindTypes);
+            if (false !== $this->statement) {
+                $this->statement->setFetchMode($this->fetchMode);
+                if (!empty($bindParams)) {
+                    $this->bindArray($this->statement, $bindParams, $bindTypes);
+                }
             }
         } catch (\PDOException $exc) {
             $this->logger->alert('Prepare failed');
@@ -119,7 +128,7 @@ class Core
      *
      * @return array
      */
-    public function getRowset():array
+    public function getRowset(): array
     {
         return $this->rowset;
     }
