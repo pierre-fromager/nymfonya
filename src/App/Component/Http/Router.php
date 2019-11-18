@@ -47,17 +47,16 @@ class Router implements IRouter
     /**
      * instanciate
      *
-     * @param IRoutes $routes
+     * @param array $configRoutes
      * @param IRequest $request
      */
     public function __construct(IRoutes $routes, IRequest $request)
     {
-        $this->routes = [];
+        $this->routes = $routes->get();
         $this->request = $request;
         $this->activeRoute = '';
         $this->params = [];
         $this->matchingRoute = '';
-        $this->setRoutes($routes);
         $this->activeRoute = substr($this->request->getUri(), 1);
         return $this;
     }

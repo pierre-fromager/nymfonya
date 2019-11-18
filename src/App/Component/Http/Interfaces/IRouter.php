@@ -14,7 +14,7 @@ interface IRouter
     /**
      * instanciate
      *
-     * @param IRoutes $routes
+     * @param array $routes
      * @param IRequest $request
      */
     public function __construct(IRoutes $routes, IRequest $request);

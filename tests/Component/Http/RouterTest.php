@@ -25,16 +25,17 @@ class RouterTest extends PFT
     protected $instance;
 
     /**
-     * regexp collection
+     * routes from config routes
      *
      * @return array
      */
-    protected function routesRegexp(): array
+    protected function routesConfig(): array
     {
         return [
             '/^(api\/v1\/auth)\/(.*)$/',
             '/^(config)\/(help)$/',
-            '/^(config)\/(keygen)$/'
+            '/^(config)\/(keygen)$/',
+            self::MATCH_ALL[0]
         ];
     }
 
@@ -48,7 +49,7 @@ class RouterTest extends PFT
             $this->markTestSkipped('Test disabled.');
         }
         $this->instance = new Router(
-            new Routes($this->routesRegexp()),
+            new Routes($this->routesConfig()),
             new Request()
         );
     }
@@ -77,10 +78,9 @@ class RouterTest extends PFT
      */
     public function testSetRoutes()
     {
-        $routesAny = new Routes(self::MATCH_ALL);
         $this->assertTrue(
             $this->instance->setRoutes(
-                $routesAny
+                new Routes(self::MATCH_ALL)
             ) instanceof Router
         );
     }
@@ -126,8 +126,8 @@ class RouterTest extends PFT
     public function testCompile()
     {
         $this->assertTrue(is_array($this->instance->compile()));
-        $routesAny = new Routes(self::MATCH_ALL);
-        $this->instance->setRoutes($routesAny);
+        //$routesAny = new Routes(self::MATCH_ALL);
+        //$this->instance->setRoutes(self::MATCH_ALL);
         $this->assertTrue(is_array($this->instance->compile()));
     }
 }

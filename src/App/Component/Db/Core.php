@@ -30,7 +30,7 @@ class Core
 
     /**
      * statement
-     * 
+     *
      * @var \PDOStatement
      */
     protected $statement;
@@ -95,7 +95,11 @@ class Core
             if ($this->statement instanceof \PDOStatement) {
                 $this->statement->setFetchMode($this->fetchMode);
                 if (!empty($bindParams)) {
-                    $this->bindArray($this->statement, $bindParams, $bindTypes);
+                    $this->bindArray(
+                        $this->statement,
+                        $bindParams,
+                        $bindTypes
+                    );
                 }
             }
         } catch (\PDOException $exc) {
