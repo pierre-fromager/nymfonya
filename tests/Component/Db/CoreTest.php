@@ -48,6 +48,8 @@ class ComponentDbCoreTest extends PFT
      */
     protected $instance;
 
+
+
     /**
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
@@ -65,7 +67,7 @@ class ComponentDbCoreTest extends PFT
             $this->config->getSettings(Config::_SERVICES)
         );
         $this->userRepository = new Users($this->container);
-        $this->instance = new Core();
+        $this->instance = new Core($this->container);
     }
 
     /**
@@ -77,6 +79,22 @@ class ComponentDbCoreTest extends PFT
         $this->config = null;
         $this->container = null;
         $this->instance = null;
+    }
+
+    /**
+     * return a valid connection
+     *
+     * @return PDO
+     */
+    protected function getConnection(): PDO
+    {
+        $dbConfig = $this->config->getSettings(Config::_DB);
+        $adapterParams = $dbConfig[self::DB_SLOT_TEST][self::DB_NAME_TEST];
+        $adapter = new \App\Component\Db\Adapter\PdoMysql(
+            self::DB_NAME_TEST,
+            $adapterParams
+        );
+        return $adapter->connect()->getConnection();
     }
 
     /**
@@ -127,11 +145,27 @@ class ComponentDbCoreTest extends PFT
     }
 
     /**
-     * testHydrate
+     * testHydrateNoStatement
      * @covers App\Component\Db\Core::hydrate
      */
-    public function testHydrate()
+    public function testHydrateNoStatement()
     {
+        $this->assertTrue(
+            $this->instance->hydrate() instanceof Core
+        );
+    }
+
+    /**
+     * testHydrateWithStatement
+     * @covers App\Component\Db\Core::hydrate
+     */
+    public function testHydrateWithStatement()
+    {
+        self::getMethod('setConnection')->invokeArgs(
+            $this->instance,
+            [$this->getConnection()]
+        );
+        $this->instance->run('select * from users');
         $this->assertTrue(
             $this->instance->hydrate() instanceof Core
         );
@@ -148,7 +182,105 @@ class ComponentDbCoreTest extends PFT
         $this->userRepository->find(['id', 'name'], ['id' => 0]);
         $sql = $this->userRepository->getSql();
         $bindValues = $this->userRepository->getBuilderValues();
-        $run = $this->instance->run($sql, $bindValues);
+        $bindTypes = [':v1' => \PDO::PARAM_BOOL];
+        $run = $this->instance->run($sql, $bindValues, $bindTypes);
         $this->assertTrue($run instanceof Core);
+    }
+
+    /**
+     * testRunErrorExecute
+     * @covers App\Component\Db\Core::run
+     * @covers App\Component\Db\Core::isError
+     * @covers App\Component\Db\Core::bindArray
+     */
+    public function testRunErrorExecute()
+    {
+        $ise0 = self::getMethod('isError')->invokeArgs($this->instance, []);
+        $this->assertTrue(is_bool($ise0));
+        $this->assertFalse($ise0);
+        self::getMethod('setConnection')->invokeArgs(
+            $this->instance,
+            [$this->getConnection()]
+        );
+        $sql = 'select * from badtable';
+        $run = $this->instance->run($sql, []);
+        $this->assertTrue($run instanceof Core);
+        $ise1 = self::getMethod('isError')->invokeArgs($this->instance, []);
+        $this->assertTrue($ise1);
+        self::getMethod('resetError')->invokeArgs($this->instance, []);
+        // bindArray exception
+        $sql = 'select * from users where id = :id';
+        $bindValues = [':idx' => 0];
+        $run = $this->instance->run($sql, $bindValues);
+        $ise2 = self::getMethod('isError')->invokeArgs($this->instance, []);
+        $this->assertTrue($ise2);
+    }
+
+    /**
+     * testSetConnection
+     * @covers App\Component\Db\Core::setConnection
+     */
+    public function testSetConnection()
+    {
+        $sco = self::getMethod('setConnection')->invokeArgs(
+            $this->instance,
+            [$this->getConnection()]
+        );
+        $this->assertTrue($sco instanceof Core);
+    }
+
+    /**
+     * testIsError
+     * @covers App\Component\Db\Core::isError
+     */
+    public function testIsError()
+    {
+        $ise = self::getMethod('isError')->invokeArgs($this->instance, []);
+        $this->assertTrue(is_bool($ise));
+        $this->assertFalse($ise);
+    }
+
+    /**
+     * testGetErrorCodeMessage
+     * @covers App\Component\Db\Core::isError
+     * @covers App\Component\Db\Core::getErrorCode
+     * @covers App\Component\Db\Core::getErrorMessage
+     */
+    public function testGetErrorCodeMessage()
+    {
+        $ise = self::getMethod('isError')->invokeArgs($this->instance, []);
+        $this->assertTrue(is_bool($ise));
+        $this->assertFalse($ise);
+        $ger = self::getMethod('getErrorCode')->invokeArgs($this->instance, []);
+        $gem = self::getMethod('getErrorMessage')->invokeArgs($this->instance, []);
+        $this->assertTrue(is_int($ger));
+        $this->assertTrue(is_string($gem));
+        $this->assertEmpty($gem);
+    }
+
+    /**
+     * testResetError
+     * @covers App\Component\Db\Core::resetError
+     * @covers App\Component\Db\Core::isError
+     * @covers App\Component\Db\Core::setError
+     */
+    public function testResetError()
+    {
+        $ise0 = self::getMethod('isError')->invokeArgs($this->instance, []);
+        $this->assertTrue(is_bool($ise0));
+        $this->assertFalse($ise0);
+        $serr = self::getMethod('setError')->invokeArgs(
+            $this->instance,
+            [true, 100, 'hundred error']
+        );
+        $this->assertTrue($serr instanceof Core);
+        $ise1 = self::getMethod('isError')->invokeArgs($this->instance, []);
+        $this->assertTrue(is_bool($ise1));
+        $this->assertTrue($ise1);
+        $res0 = self::getMethod('resetError')->invokeArgs($this->instance, []);
+        $this->assertTrue($res0 instanceof Core);
+        $ise2 = self::getMethod('isError')->invokeArgs($this->instance, []);
+        $this->assertTrue(is_bool($ise2));
+        $this->assertFalse($ise2);
     }
 }

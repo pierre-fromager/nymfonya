@@ -77,7 +77,7 @@ final class Restful extends AbstractApi implements IApi, IRestful
     public function __construct(Container $container)
     {
         $this->userRepository = new Users($container);
-        $this->db = new Core();
+        $this->db = new Core($container);
         $this->db->fromOrm($this->userRepository);
         $this->error = false;
         $this->errorMessage = '';

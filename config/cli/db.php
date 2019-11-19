@@ -16,7 +16,7 @@ return [
                 \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
                 //, \PDO::ERRMODE_EXCEPTION => false
                 \PDO::ATTR_CASE => \PDO::CASE_LOWER,
-                \PDO::ATTR_EMULATE_PREPARES => true
+                \PDO::ATTR_EMULATE_PREPARES => false
             ]
         ],
         'badnymfonya' => [
@@ -30,7 +30,7 @@ return [
                 \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
                 //, \PDO::ERRMODE_EXCEPTION => false
                 \PDO::ATTR_CASE => \PDO::CASE_LOWER,
-                \PDO::ATTR_EMULATE_PREPARES => true
+                \PDO::ATTR_EMULATE_PREPARES => false
             ]
         ]
     ]

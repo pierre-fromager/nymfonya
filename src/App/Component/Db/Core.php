@@ -4,6 +4,7 @@ namespace App\Component\Db;
 
 use App\Component\Model\Orm\Orm;
 use App\Component\Db\Factory;
+use App\Component\Container;
 
 class Core
 {
@@ -13,6 +14,20 @@ class Core
      * @var \PDO | boolean
      */
     protected $connection;
+
+    /**
+     * container
+     *
+     * @var Container
+     */
+    protected $container;
+
+    /**
+     * factory
+     *
+     * @var Factory
+     */
+    protected $factory;
 
     /**
      * logger
@@ -43,13 +58,6 @@ class Core
     protected $fetchMode = \PDO::FETCH_ASSOC;
 
     /**
-     * database name
-     *
-     * @var string
-     */
-    protected $database;
-
-    /**
      * rowset result
      *
      * @var array
@@ -57,11 +65,36 @@ class Core
     protected $rowset;
 
     /**
+     * error
+     *
+     * @var boolean
+     */
+    protected $error;
+
+    /**
+     * code error
+     *
+     * @var string
+     */
+    protected $errorCode;
+
+    /**
+     * error message
+     *
+     * @var string
+     */
+    protected $errorMessage;
+
+    /**
      * instanciate
      */
-    public function __construct()
+    public function __construct(Container $container)
     {
+        $this->container = $container;
+        $this->factory = new Factory($this->container);
+        $this->logger = $this->container->getService(\Monolog\Logger::class);
         $this->rowset = [];
+        $this->resetError();
     }
 
     /**
@@ -72,13 +105,9 @@ class Core
      */
     public function fromOrm(Orm &$ormInstance): Core
     {
-        $this->database = $ormInstance->getDatabase();
-        $container = $ormInstance->getContainer();
-        $this->logger = $container->getService(\Monolog\Logger::class);
-        $factory = new Factory($container);
-        $this->connection = $factory->getConnection(
+        $this->connection = $this->factory->getConnection(
             $ormInstance->getSlot(),
-            $this->database
+            $ormInstance->getDatabase()
         );
         return $this;
     }
@@ -97,6 +126,7 @@ class Core
         array $bindTypes = []
     ): Core {
         $this->sql = $sql;
+        $this->resetError();
         try {
             $this->statement = $this->connection->prepare($sql);
             if ($this->statement instanceof \PDOStatement) {
@@ -109,15 +139,10 @@ class Core
                     );
                 }
             }
-        } catch (\PDOException $exc) {
-            $this->logger->alert('Prepare failed');
-            $this->logger->alert($exc->getMessage());
-        }
-        try {
-            $this->statement->execute();
-        } catch (\PDOException $exc) {
-            $this->logger->alert('Execute failed');
-            $this->logger->alert($exc->getMessage());
+        } catch (\PDOException $e) {
+            $this->setError(true, $e->getCode(), $e->getMessage());
+            $this->logger->alert('Core Db : Run failed');
+            $this->logger->alert($this->errorMessage);
         }
         return $this;
     }
@@ -167,12 +192,82 @@ class Core
             $key =  $k;
             try {
                 $poStatement->bindValue($key, $value, $type);
-            } catch (\PDOException $exc) {
+            } catch (\PDOException $e) {
+                $this->setError(true, $e->getCode(), $e->getMessage());
                 $this->logger->alert(
                     'Sql Bind Error [' . $key . ':' . $value . ':' . $type . ']'
                 );
             }
         }
+        return $this;
+    }
+
+    /**
+     * set connection
+     *
+     * @param \PDO $connection
+     * @return Core
+     */
+    protected function setConnection(\PDO $connection): Core
+    {
+        $this->connection = $connection;
+        return $this;
+    }
+
+    /**
+     * return true if error
+     *
+     * @return boolean
+     */
+    protected function isError(): bool
+    {
+        return $this->error === true;
+    }
+
+    /**
+     * reset last error
+     *
+     * @return Core
+     */
+    protected function resetError(): Core
+    {
+        $this->setError(false, 0, '');
+        return $this;
+    }
+
+    /**
+     * get error code
+     *
+     * @return mixed
+     */
+    protected function getErrorCode()
+    {
+        return $this->errorCode;
+    }
+
+    /**
+     * get error message
+     *
+     * @return string
+     */
+    protected function getErrorMessage(): string
+    {
+        return $this->errorMessage;
+    }
+
+    /**
+     * set error status, code and message
+     *
+     * @param boolean $status
+     * @param integer | string $code
+     * @param string $message
+     * @return Core
+     */
+    protected function setError(bool $status, $code, string $message): Core
+    {
+        $this->error = $status;
+        $this->errorCode = $code;
+        $this->errorMessage = $message;
         return $this;
     }
 }
