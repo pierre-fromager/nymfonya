@@ -83,7 +83,7 @@ trait TKernel
      *
      * @var string
      */
-    protected $nameSpace;
+    protected $spacename;
 
     /**
      * controller instance
@@ -448,7 +448,7 @@ trait TKernel
      */
     protected function setClassname(array $routerGroups)
     {
-        $this->className = $this->nameSpace
+        $this->className = $this->spacename
             . implode(
                 '\\',
                 array_map('ucfirst', explode('/', $routerGroups[0]))

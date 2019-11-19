@@ -29,7 +29,7 @@ class Kernel
      */
     public function setNameSpace(string $ctrlNamespace): Kernel
     {
-        $this->nameSpace = $ctrlNamespace;
+        $this->spacename = $ctrlNamespace;
         return $this;
     }
 
