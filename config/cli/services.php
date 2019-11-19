@@ -1,13 +1,19 @@
 <?php
 
+use App\Component\Config;
+use App\Component\Http\Request;
+use App\Component\Http\Response;
+use App\Component\Http\Routes;
+use App\Component\Http\Router;
+
 return [
-    \App\Config::class => [\App\Config::ENV_CLI, __DIR__ . '/../'],
-    \App\Component\Http\Request::class => [],
-    \App\Component\Http\Response::class => [],
-    \App\Component\Http\Routes::class => [include(__DIR__ . '/routes.php')],
-    \App\Component\Http\Router::class => [
-        \App\Component\Http\Routes::class,
-        \App\Component\Http\Request::class
+    Config::class => [Config::ENV_CLI, __DIR__ . '/../'],
+    Request::class => [],
+    Response::class => [],
+    Routes::class => [include(__DIR__ . '/routes.php')],
+    Router::class => [
+        Routes::class,
+        Request::class
     ],
     \Monolog\Handler\RotatingFileHandler::class => [
         realpath(__DIR__ . '/../../log') . '/console.txt',
@@ -17,9 +23,11 @@ return [
         0664
     ],
     \Monolog\Logger::class => [
-        \App\Config::_NAME,
+        Config::_NAME,
         [\Monolog\Handler\RotatingFileHandler::class],
         [\Monolog\Processor\WebProcessor::class]
     ],
-    \App\Component\Cache\Redis\Adapter::class => [\App\Config::class]
+    \App\Component\Cache\Redis\Adapter::class => [
+        Config::class
+    ]
 ];

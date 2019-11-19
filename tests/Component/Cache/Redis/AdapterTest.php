@@ -4,7 +4,7 @@ namespace Tests\Component\Cache\Redis;
 
 use PHPUnit\Framework\TestCase as PFT;
 use PHPUnit\Framework\MockObject\MockObject;
-use App\Config;
+use App\Component\Config;
 use App\Component\Cache\Redis\Adapter;
 
 /**

@@ -2,6 +2,7 @@
 
 namespace App\Component;
 
+use App\Component\Config;
 use App\Component\Container;
 use App\Model\Users;
 
@@ -16,7 +17,7 @@ class Auth
     public function __construct(Container $container)
     {
         $this->userModel = new Users(
-            $container->getService(\App\Config::class)
+            $container->getService(Config::class)
         );
     }
 

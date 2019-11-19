@@ -3,7 +3,8 @@
 namespace Tests\Component\Http;
 
 use PHPUnit\Framework\TestCase as PFT;
-use App\Config;
+use App\Component\Http\Kernel;
+use App\Component\Config;
 use App\Component\Container;
 use App\Component\Http\Middleware;
 
@@ -53,8 +54,8 @@ class MiddlewareTest extends PFT
         );
         $serviceConfig = $this->config->getSettings(Config::_SERVICES);
         $this->container = new Container($serviceConfig);
-        $kernel = new \App\Kernel(Config::ENV_CLI, basename(self::CONFIG_PATH));
-        $this->container->setService(\App\Kernel::class, $kernel);
+        $kernel = new Kernel(Config::ENV_CLI, basename(self::CONFIG_PATH));
+        $this->container->setService(Kernel::class, $kernel);
         $this->instance = new Middleware();
     }
 

@@ -4,7 +4,7 @@ namespace Tests\Component\Db\Adapter;
 
 use PHPUnit\Framework\TestCase as PFT;
 use \PDO;
-use App\Config;
+use App\Component\Config;
 use App\Component\Container;
 use App\Component\Db\Adapter\PdoMysql;
 

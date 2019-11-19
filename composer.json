@@ -56,7 +56,7 @@
             "phpdbg -qrr ./vendor/bin/phpunit --coverage-html='./coverage'"
         ],
         "test": [
-            "phpunit --testsuite all"
+            "phpunit --verbose --testsuite all"
         ],
         "testCookie": [
             "phpunit --testsuite Cookie"

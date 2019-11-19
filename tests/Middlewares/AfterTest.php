@@ -3,8 +3,9 @@
 namespace Tests\Middlewares;
 
 use PHPUnit\Framework\TestCase as PFT;
-use App\Config;
+use App\Component\Config;
 use App\Component\Container;
+use App\Component\Http\Kernel;
 use App\Component\Http\Middleware;
 use App\Component\Http\Interfaces\Middleware\ILayer;
 use App\Middlewares\After;
@@ -69,11 +70,11 @@ class AfterTest extends PFT
         $this->container = new Container(
             $this->config->getSettings(Config::_SERVICES)
         );
-        $kernel = new \App\Kernel(
+        $kernel = new Kernel(
             Config::ENV_CLI,
             __DIR__ . self::CONFIG_PATH
         );
-        $this->container->setService(\App\Kernel::class, $kernel);
+        $this->container->setService(Kernel::class, $kernel);
         $this->layer = new After();
         $this->instance = new Middleware();
         $this->layerReflector = new \ReflectionObject($this->layer);

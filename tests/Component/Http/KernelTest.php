@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace Tests\Component\Http;
 
 use PHPUnit\Framework\TestCase as PFT;
 use App\Component\Config;
@@ -8,17 +8,17 @@ use App\Component\Container;
 use App\Component\Http\Request;
 use App\Component\Http\Response;
 use App\Component\Http\Router;
-use App\Kernel;
+use App\Component\Http\Kernel;
 
 /**
- * @covers \App\Kernel::<public>
+ * @covers \App\Component\Http\Kernel::<public>
  */
 class KernelTest extends PFT
 {
 
     const TEST_ENABLE = true;
-    const CONFIG_PATH = '/../config/';
-    const KERNEL_PATH = '/../src/';
+    const CONFIG_PATH = '/../../../config/';
+    const KERNEL_PATH = '/../../../src/';
     const KERNEL_NS = '\\App\\Controllers\\';
     const CTRL_ACT = ['config', 'help'];
     const CTRL_ACTIONS = [
@@ -81,7 +81,7 @@ class KernelTest extends PFT
 
     /**
      * testInstance
-     * @covers App\Kernel::__construct
+     * @covers App\Component\Http\Kernel::__construct
      */
     public function testInstance()
     {
@@ -90,7 +90,7 @@ class KernelTest extends PFT
 
     /**
      * testRunOk
-     * @covers App\Kernel::run
+     * @covers App\Component\Http\Kernel::run
      */
     public function testRunOk()
     {
@@ -107,7 +107,7 @@ class KernelTest extends PFT
 
     /**
      * testRunNok
-     * @covers App\Kernel::run
+     * @covers App\Component\Http\Kernel::run
      */
     public function testRunNok()
     {
@@ -121,9 +121,9 @@ class KernelTest extends PFT
 
     /**
      * testSend
-     * @covers App\Kernel::send
-     * @covers App\Kernel::setError
-     * @covers App\Kernel::getError
+     * @covers App\Component\Http\Kernel::send
+     * @covers App\Component\Http\Kernel::setError
+     * @covers App\Component\Http\Kernel::getError
      * @runInSeparateProcess
      */
     public function testSend()
@@ -149,7 +149,7 @@ class KernelTest extends PFT
 
     /**
      * testSetNameSpace
-     * @covers App\Kernel::setNameSpace
+     * @covers App\Component\Http\Kernel::setNameSpace
      */
     public function testSetNameSpace()
     {
@@ -162,8 +162,8 @@ class KernelTest extends PFT
 
     /**
      * testInit
-     * @covers App\Kernel::init
-     * @covers App\Kernel::getContainer
+     * @covers App\Component\Http\Kernel::init
+     * @covers App\Component\Http\Kernel::getContainer
      */
     public function testInit()
     {
@@ -195,8 +195,8 @@ class KernelTest extends PFT
 
     /**
      * testSetGetContainer
-     * @covers App\Kernel::setContainer
-     * @covers App\Kernel::getContainer
+     * @covers App\Component\Http\Kernel::setContainer
+     * @covers App\Component\Http\Kernel::getContainer
      */
     public function testSetGetContainer()
     {
@@ -213,8 +213,8 @@ class KernelTest extends PFT
 
     /**
      * testSetGetError
-     * @covers App\Kernel::setError
-     * @covers App\Kernel::getError
+     * @covers App\Component\Http\Kernel::setError
+     * @covers App\Component\Http\Kernel::getError
      */
     public function testSetGetError()
     {
@@ -236,8 +236,8 @@ class KernelTest extends PFT
 
     /**
      * testSetGetRequest
-     * @covers App\Kernel::setRequest
-     * @covers App\Kernel::getRequest
+     * @covers App\Component\Http\Kernel::setRequest
+     * @covers App\Component\Http\Kernel::getRequest
      */
     public function testSetGetRequest()
     {
@@ -258,8 +258,8 @@ class KernelTest extends PFT
 
     /**
      * testSetGetResponse
-     * @covers App\Kernel::setResponse
-     * @covers App\Kernel::getResponse
+     * @covers App\Component\Http\Kernel::setResponse
+     * @covers App\Component\Http\Kernel::getResponse
      */
     public function testSetGetResponse()
     {
@@ -280,8 +280,8 @@ class KernelTest extends PFT
 
     /**
      * testSetGetRouter
-     * @covers App\Kernel::setRouter
-     * @covers App\Kernel::getRouter
+     * @covers App\Component\Http\Kernel::setRouter
+     * @covers App\Component\Http\Kernel::getRouter
      */
     public function testSetGetRouter()
     {
@@ -302,10 +302,10 @@ class KernelTest extends PFT
 
     /**
      * testSetGetConfig
-     * @covers App\Kernel::init
-     * @covers App\Kernel::setConfig
-     * @covers App\Kernel::getConfig
-     * @covers App\Kernel::getPath
+     * @covers App\Component\Http\Kernel::init
+     * @covers App\Component\Http\Kernel::setConfig
+     * @covers App\Component\Http\Kernel::getConfig
+     * @covers App\Component\Http\Kernel::getPath
      */
     public function testSetGetConfig()
     {
@@ -332,10 +332,10 @@ class KernelTest extends PFT
 
     /**
      * testSetGetReflector
-     * @covers App\Kernel::setClassname
-     * @covers App\Kernel::setReflector
-     * @covers App\Kernel::getReflector
-     * @covers App\Kernel::getFinalMethods
+     * @covers App\Component\Http\Kernel::setClassname
+     * @covers App\Component\Http\Kernel::setReflector
+     * @covers App\Component\Http\Kernel::getReflector
+     * @covers App\Component\Http\Kernel::getFinalMethods
      */
     public function testSetGetReflector()
     {
@@ -361,11 +361,11 @@ class KernelTest extends PFT
 
     /**
      * testGetSetActions
-     * @covers App\Kernel::setClassname
-     * @covers App\Kernel::getClassname
-     * @covers App\Kernel::setReflector
-     * @covers App\Kernel::setActions
-     * @covers App\Kernel::getActions
+     * @covers App\Component\Http\Kernel::setClassname
+     * @covers App\Component\Http\Kernel::getClassname
+     * @covers App\Component\Http\Kernel::setReflector
+     * @covers App\Component\Http\Kernel::setActions
+     * @covers App\Component\Http\Kernel::getActions
      */
     public function testGetSetActions()
     {
@@ -410,8 +410,8 @@ class KernelTest extends PFT
 
     /**
      * testSetGetLogger
-     * @covers App\Kernel::setLogger
-     * @covers App\Kernel::getLogger
+     * @covers App\Component\Http\Kernel::setLogger
+     * @covers App\Component\Http\Kernel::getLogger
      */
     public function testSetGetLogger()
     {
@@ -431,8 +431,8 @@ class KernelTest extends PFT
 
     /**
      * testSetGetPath
-     * @covers App\Kernel::setPath
-     * @covers App\Kernel::getPath
+     * @covers App\Component\Http\Kernel::setPath
+     * @covers App\Component\Http\Kernel::getPath
      */
     public function testSetGetPath()
     {
@@ -454,8 +454,8 @@ class KernelTest extends PFT
 
     /**
      * testGetSetAction
-     * @covers App\Kernel::setAction
-     * @covers App\Kernel::getAction
+     * @covers App\Component\Http\Kernel::setAction
+     * @covers App\Component\Http\Kernel::getAction
      */
     public function testGetSetAction()
     {
@@ -474,9 +474,9 @@ class KernelTest extends PFT
 
     /**
      * testIsValidActionOk
-     * @covers App\Kernel::isValidAction
-     * @covers App\Kernel::setActions
-     * @covers App\Kernel::setAction
+     * @covers App\Component\Http\Kernel::isValidAction
+     * @covers App\Component\Http\Kernel::setActions
+     * @covers App\Component\Http\Kernel::setAction
      */
     public function testIsValidActionOk()
     {
@@ -502,11 +502,11 @@ class KernelTest extends PFT
 
     /**
      * testIsValidActionNok
-     * @covers App\Kernel::setClassname
-     * @covers App\Kernel::setReflector
-     * @covers App\Kernel::setActions
-     * @covers App\Kernel::setAction
-     * @covers App\Kernel::isValidAction
+     * @covers App\Component\Http\Kernel::setClassname
+     * @covers App\Component\Http\Kernel::setReflector
+     * @covers App\Component\Http\Kernel::setActions
+     * @covers App\Component\Http\Kernel::setAction
+     * @covers App\Component\Http\Kernel::isValidAction
      */
     public function testIsValidActionNok()
     {
@@ -532,12 +532,12 @@ class KernelTest extends PFT
 
     /**
      * testSetGetActionAnnotations
-     * @covers App\Kernel::getActionAnnotations
-     * @covers App\Kernel::setClassname
-     * @covers App\Kernel::setReflector
-     * @covers App\Kernel::setActions
-     * @covers App\Kernel::setAction
-     * @covers App\Kernel::setActionAnnotations
+     * @covers App\Component\Http\Kernel::getActionAnnotations
+     * @covers App\Component\Http\Kernel::setClassname
+     * @covers App\Component\Http\Kernel::setReflector
+     * @covers App\Component\Http\Kernel::setActions
+     * @covers App\Component\Http\Kernel::setAction
+     * @covers App\Component\Http\Kernel::setActionAnnotations
      */
     public function testSetGetActionAnnotations()
     {
@@ -578,7 +578,7 @@ class KernelTest extends PFT
 
     /**
      * testSetMiddleware
-     * @covers App\Kernel::setMiddleware
+     * @covers App\Component\Http\Kernel::setMiddleware
      */
     public function testSetMiddleware()
     {
@@ -609,18 +609,18 @@ class KernelTest extends PFT
      *
      * execute an existing controller action
      *
-     * @covers App\Kernel::setClassname
-     * @covers App\Kernel::setReflector
-     * @covers App\Kernel::setActions
-     * @covers App\Kernel::getActions
-     * @covers App\Kernel::setAction
-     * @covers App\Kernel::isValidAction
-     * @covers App\Kernel::getClassname
-     * @covers App\Kernel::setController
-     * @covers App\Kernel::getController
-     * @covers App\Kernel::execute
-     * @covers App\Kernel::getError
-     * @covers App\Kernel::getErrorMsg
+     * @covers App\Component\Http\Kernel::setClassname
+     * @covers App\Component\Http\Kernel::setReflector
+     * @covers App\Component\Http\Kernel::setActions
+     * @covers App\Component\Http\Kernel::getActions
+     * @covers App\Component\Http\Kernel::setAction
+     * @covers App\Component\Http\Kernel::isValidAction
+     * @covers App\Component\Http\Kernel::getClassname
+     * @covers App\Component\Http\Kernel::setController
+     * @covers App\Component\Http\Kernel::getController
+     * @covers App\Component\Http\Kernel::execute
+     * @covers App\Component\Http\Kernel::getError
+     * @covers App\Component\Http\Kernel::getErrorMsg
      */
     public function testExecuteSuccess()
     {
@@ -661,18 +661,18 @@ class KernelTest extends PFT
      *
      * execute an existing controller but unknown action
      *
-     * @covers App\Kernel::setClassname
-     * @covers App\Kernel::setReflector
-     * @covers App\Kernel::setActions
-     * @covers App\Kernel::getActions
-     * @covers App\Kernel::setAction
-     * @covers App\Kernel::isValidAction
-     * @covers App\Kernel::getClassname
-     * @covers App\Kernel::setController
-     * @covers App\Kernel::getController
-     * @covers App\Kernel::execute
-     * @covers App\Kernel::getError
-     * @covers App\Kernel::getErrorMsg
+     * @covers App\Component\Http\Kernel::setClassname
+     * @covers App\Component\Http\Kernel::setReflector
+     * @covers App\Component\Http\Kernel::setActions
+     * @covers App\Component\Http\Kernel::getActions
+     * @covers App\Component\Http\Kernel::setAction
+     * @covers App\Component\Http\Kernel::isValidAction
+     * @covers App\Component\Http\Kernel::getClassname
+     * @covers App\Component\Http\Kernel::setController
+     * @covers App\Component\Http\Kernel::getController
+     * @covers App\Component\Http\Kernel::execute
+     * @covers App\Component\Http\Kernel::getError
+     * @covers App\Component\Http\Kernel::getErrorMsg
      */
     public function testExecuteFailed()
     {
@@ -710,14 +710,14 @@ class KernelTest extends PFT
 
     /**
      * testInvokeAction
-     * @covers App\Kernel::setClassname
-     * @covers App\Kernel::setReflector
-     * @covers App\Kernel::setActions
-     * @covers App\Kernel::setAction
-     * @covers App\Kernel::isValidAction
-     * @covers App\Kernel::getClassname
-     * @covers App\Kernel::setController
-     * @covers App\Kernel::invokeAction
+     * @covers App\Component\Http\Kernel::setClassname
+     * @covers App\Component\Http\Kernel::setReflector
+     * @covers App\Component\Http\Kernel::setActions
+     * @covers App\Component\Http\Kernel::setAction
+     * @covers App\Component\Http\Kernel::isValidAction
+     * @covers App\Component\Http\Kernel::getClassname
+     * @covers App\Component\Http\Kernel::setController
+     * @covers App\Component\Http\Kernel::invokeAction
      */
     public function testInvokeAction()
     {
@@ -737,18 +737,18 @@ class KernelTest extends PFT
      *
      * execute an existing controller but unknown action
      *
-     * @covers App\Kernel::setClassname
-     * @covers App\Kernel::setReflector
-     * @covers App\Kernel::setActions
-     * @covers App\Kernel::getActions
-     * @covers App\Kernel::setAction
-     * @covers App\Kernel::isValidAction
-     * @covers App\Kernel::getClassname
-     * @covers App\Kernel::setController
-     * @covers App\Kernel::getController
-     * @covers App\Kernel::execute
-     * @covers App\Kernel::getError
-     * @covers App\Kernel::getErrorMsg
+     * @covers App\Component\Http\Kernel::setClassname
+     * @covers App\Component\Http\Kernel::setReflector
+     * @covers App\Component\Http\Kernel::setActions
+     * @covers App\Component\Http\Kernel::getActions
+     * @covers App\Component\Http\Kernel::setAction
+     * @covers App\Component\Http\Kernel::isValidAction
+     * @covers App\Component\Http\Kernel::getClassname
+     * @covers App\Component\Http\Kernel::setController
+     * @covers App\Component\Http\Kernel::getController
+     * @covers App\Component\Http\Kernel::execute
+     * @covers App\Component\Http\Kernel::getError
+     * @covers App\Component\Http\Kernel::getErrorMsg
      */
     public function testExecuteInternalError()
     {
@@ -780,7 +780,7 @@ class KernelTest extends PFT
 
     /**
      * testShutdown
-     * @covers App\Kernel::shutdown
+     * @covers App\Component\Http\Kernel::shutdown
      * @expectedException Exception
      * @expectedExceptionCode 10
      * @runInSeparateProcess

@@ -2,7 +2,7 @@
 
 namespace App\Component\Model\Orm;
 
-use App\Config;
+use App\Component\Config;
 use App\Component\Container;
 use NilPortugues\Sql\QueryBuilder\Builder\GenericBuilder;
 use NilPortugues\Sql\QueryBuilder\Manipulation\Select;

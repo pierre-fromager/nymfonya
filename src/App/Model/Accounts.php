@@ -3,7 +3,7 @@
 namespace App\Model;
 
 use App\Component\Container;
-use App\Config;
+use App\Component\Config;
 use App\Model\AbstractSearch;
 use App\Component\Crypt;
 
@@ -39,7 +39,7 @@ class Accounts extends AbstractSearch
     public function __construct(Container $container)
     {
         parent::__construct($container);
-        $this->config = $this->getService(\App\Config::class);
+        $this->config = $this->getService(Config::class);
         $this->init();
         return $this;
     }

@@ -2,7 +2,7 @@
 
 namespace App\Component;
 
-use App\Config;
+use App\Component\Config;
 
 /**
  * Lib_Auth_Crypt

@@ -3,7 +3,8 @@
 namespace Tests\Component;
 
 use PHPUnit\Framework\TestCase as PFT;
-use App\Config;
+use App\Component\Config;
+use App\Component\Http\Request;
 use App\Component\Container;
 
 /**
@@ -112,8 +113,8 @@ class ContainerTest extends PFT
      */
     public function testGetService()
     {
-        $service = $this->instance->getService(\App\Component\Http\Request::class);
-        $this->assertTrue($service instanceof \App\Component\Http\Request);
+        $service = $this->instance->getService(Request::class);
+        $this->assertTrue($service instanceof Request);
     }
 
     /**
@@ -158,7 +159,7 @@ class ContainerTest extends PFT
     public function testSetServiceNotObjectException()
     {
         $this->expectException(\Exception::class);
-        $this->instance->setService(\App\Component\Http\Request::class, null);
+        $this->instance->setService(Request::class, null);
     }
 
     /**
@@ -189,7 +190,7 @@ class ContainerTest extends PFT
         $checkedMethod = 'hasService';
         $hsReq = self::getMethod($checkedMethod)->invokeArgs(
             $this->instance,
-            [\App\Component\Http\Request::class]
+            [Request::class]
         );
         $this->assertTrue($hsReq);
         $hsMdl = self::getMethod($checkedMethod)->invokeArgs(
@@ -250,16 +251,13 @@ class ContainerTest extends PFT
      */
     public function testCreate()
     {
-        $checkedMethod = 'create';
-        $cr = self::getMethod($checkedMethod)->invokeArgs(
+        $createArgs = [
+            self::CONFIG_PATH . Config::ENV_CLI,
+            Request::class
+        ];
+        $cr = self::getMethod('create')->invokeArgs(
             $this->instance,
-            [
-                \App\Config::class,
-                [
-                    self::CONFIG_PATH . \App\Config::ENV_CLI,
-                    \App\Component\Http\Request::class
-                ]
-            ]
+            [Config::class, $createArgs]
         );
         $this->assertTrue($cr instanceof Container);
     }

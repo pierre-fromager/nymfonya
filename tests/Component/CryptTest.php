@@ -3,7 +3,7 @@
 namespace Tests\Component;
 
 use PHPUnit\Framework\TestCase as PFT;
-use App\Config;
+use App\Component\Config;
 use App\Component\Crypt;
 
 /**

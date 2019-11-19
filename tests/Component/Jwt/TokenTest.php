@@ -3,7 +3,7 @@
 namespace Tests\Component\Jwt;
 
 use PHPUnit\Framework\TestCase as PFT;
-use App\Config;
+use App\Component\Config;
 use App\Component\Http\Request;
 use App\Component\Jwt\Token;
 

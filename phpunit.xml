@@ -22,8 +22,9 @@
             <file>tests/Component/Db/Adapter/PdoMysqlTest.php</file>
             <file>tests/Component/Db/FactoryTest.php</file>
             <file>tests/Component/Db/CoreTest.php</file>
+            <file>tests/BundleApiTest.php</file>
             <file>tests/ConfigTest.php</file>
-            <file>tests/KernelTest.php</file>
+            <file>tests/Component/Http/KernelTest.php</file>
             <file>tests/Controllers/ConfigTest.php</file>
             <file>tests/Controllers/Api/V1/AuthTest.php</file>
             <file>tests/Controllers/Api/V1/StatTest.php</file>
@@ -69,7 +70,7 @@
             <file>tests/Component/ContainerTest.php</file>
         </testsuite>
         <testsuite name="Kernel">
-            <file>tests/KernelTest.php</file>
+            <file>tests/Component/Http/KernelTest.php</file>
         </testsuite>
         <testsuite name="ControllerApiV1Auth">
             <file>tests/Controllers/Api/V1/AuthTest.php</file>

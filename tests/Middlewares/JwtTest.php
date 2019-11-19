@@ -4,10 +4,12 @@ namespace Tests\Middlewares;
 
 use PHPUnit\Framework\TestCase as PFT;
 use PHPUnit\Framework\MockObject\MockObject;
-use App\Config;
+use App\Component\Config;
 use App\Component\Container;
+use App\Component\Http\Kernel;
 use App\Component\Http\Middleware;
 use App\Component\Http\Interfaces\Middleware\ILayer;
+use App\Component\Http\Request;
 use App\Component\Http\Response;
 use App\Middlewares\Jwt as JwtMiddleware;
 use App\Component\Jwt\Token;
@@ -123,7 +125,7 @@ class JwtTest extends PFT
             ? '/api/v1/stat/filecache'
             : '/api/v1/auth/login';
         $userPayload = ($user) ? $user : $this->getUser($withProcess);
-        $mockRequest = $this->createMock(\App\Component\Http\Request::class);
+        $mockRequest = $this->createMock(Request::class);
         $mockRequest->method('getUri')->willReturn($uri);
         $mockRequest->method('isCli')->willReturn(true);
         $mockRequest->method('getHeaders')->willReturn(
@@ -143,7 +145,7 @@ class JwtTest extends PFT
      */
     protected function getMockedRequestUri(string $uri): MockObject
     {
-        $mockRequest = $this->createMock(\App\Component\Http\Request::class);
+        $mockRequest = $this->createMock(Request::class);
         $mockRequest->method('getUri')->willReturn($uri);
         $mockRequest->method('isCli')->willReturn(true);
         return $mockRequest;
@@ -165,20 +167,20 @@ class JwtTest extends PFT
         $this->container = new Container(
             $this->config->getSettings(Config::_SERVICES)
         );
-        $kernel = new \App\Kernel(
+        $kernel = new Kernel(
             Config::ENV_CLI,
             __DIR__ . self::CONFIG_PATH
         );
-        $this->container->setService(\App\Kernel::class, $kernel);
+        $this->container->setService(Kernel::class, $kernel);
         if ($withMock) {
             $this->container->setService(
-                \App\Component\Http\Request::class,
+                Request::class,
                 $this->getMockedRequest($withProcess, $user)
             );
         }
         $this->tokenTool = new Token(
             $this->config,
-            $this->container->getService(\App\Component\Http\Request::class)
+            $this->container->getService(Request::class)
         );
         $this->layer = new JwtMiddleware();
         $this->instance = new Middleware();

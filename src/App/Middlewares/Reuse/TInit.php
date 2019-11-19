@@ -2,8 +2,8 @@
 
 namespace App\Middlewares\Reuse;
 
-use App\Kernel;
-use App\Config;
+use App\Component\Http\Kernel;
+use App\Component\Config;
 use App\Component\Http\Request;
 use App\Component\Http\Response;
 use App\Component\Container;
@@ -90,14 +90,18 @@ trait TInit
      */
     protected function init(Container $container)
     {
-        $this->kernel = $container->getService(\App\Kernel::class);
-        $this->config = $container->getService(\App\Config::class);
+        $this->kernel = $container->getService(
+            Kernel::class
+        );
+        $this->config = $container->getService(
+            Config::class
+        );
         $this->configParams = $this->config->getSettings(
             Config::_MIDDLEWARES
         )[get_called_class()];
-        $this->request = $container->getService(\App\Component\Http\Request::class);
+        $this->request = $container->getService(Request::class);
         $this->headers = $this->request->getHeaders();
-        $this->response = $container->getService(\App\Component\Http\Response::class);
+        $this->response = $container->getService(Response::class);
         $this->logger = $container->getService(\Monolog\Logger::class);
         $this->enabled = $this->configParams['enabled'];
         $this->prefix = $this->configParams['prefix'];

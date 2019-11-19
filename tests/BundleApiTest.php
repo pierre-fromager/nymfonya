@@ -1,18 +1,24 @@
 <?php
 
+
 namespace Tests;
 
-use Tests\Component\ConfigTest;
-use App\Config;
+require_once __DIR__ . '/Component/Http/KernelTest.php';
+use Tests\Component\Http\KernelTest;
+use App\Component\Config;
+use App\Component\Kernel;
+use App\BundleApi;
 
 /**
- * @covers \App\Config::<public>
+ * @covers \App\BundleApi::<public>
  */
-class AppConfigTest extends ConfigTest
+class BundleApiTest extends KernelTest
 {
 
     const TEST_ENABLE = true;
     const CONFIG_PATH = '/../config/';
+    const KERNEL_PATH = '/../src/';
+    const KERNEL_NS = '\\App\\Controllers\\';
 
     /**
      * Sets up the fixture, for example, opens a network connection.
@@ -23,10 +29,11 @@ class AppConfigTest extends ConfigTest
         if (!self::TEST_ENABLE) {
             $this->markTestSkipped('Test disabled.');
         }
-        $this->instance = new Config(
+        $this->instance = new BundleApi(
             Config::ENV_CLI,
-            __DIR__ . self::CONFIG_PATH
+            __DIR__ . self::KERNEL_PATH
         );
+        $this->instance->setNameSpace(self::KERNEL_NS);
     }
 
     /**
@@ -36,16 +43,14 @@ class AppConfigTest extends ConfigTest
     protected function tearDown()
     {
         $this->instance = null;
-        $this->container = null;
-        $this->config = null;
     }
 
     /**
      * testInstance
-     * @covers App\Config::__construct
+     * @covers App\BundleApi::__construct
      */
     public function testInstance()
     {
-        $this->assertTrue($this->instance instanceof Config);
+        $this->assertTrue($this->instance instanceof BundleApi);
     }
 }

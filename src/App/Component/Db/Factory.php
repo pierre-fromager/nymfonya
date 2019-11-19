@@ -34,7 +34,7 @@ class Factory
     public function __construct(Container $container)
     {
         $this->container = $container;
-        $configService = $this->container->getService(\App\Config::class);
+        $configService = $this->container->getService(Config::class);
         $this->config = $configService->getSettings(Config::_DB);
     }
 

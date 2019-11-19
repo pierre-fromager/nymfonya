@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Component\Http;
 
 use App\Component\Http\Response;
 use App\Component\Http\Headers;
@@ -10,7 +10,7 @@ class Kernel
 
     const PATH_CONFIG = '/../config/';
 
-    use \App\Reuse\TKernel;
+    use \App\Component\Http\Reuse\TKernel;
 
     /**
      * instanciate
@@ -31,6 +31,16 @@ class Kernel
     {
         $this->spacename = $ctrlNamespace;
         return $this;
+    }
+
+    /**
+     * retrieve kernel instance classname from container
+     *
+     * @return string
+     */
+    public function getBundleClassname():string
+    {
+        return get_called_class();
     }
 
     /**

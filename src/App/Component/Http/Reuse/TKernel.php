@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Reuse;
+namespace App\Component\Http\Reuse;
 
-use App\Kernel;
-use App\Config;
+use App\Component\Http\Kernel;
+use App\Component\Config;
 use App\Component\Container;
 use App\Component\Http\Request;
 use App\Component\Http\Response;
@@ -376,7 +376,10 @@ trait TKernel
         $this->container = new Container(
             $this->config->getSettings(Config::_SERVICES)
         );
-        $this->container->setService(\App\Kernel::class, $this);
+        $this->container->setService(
+            \App\Component\Http\Kernel::class,
+            $this
+        );
     }
 
     /**

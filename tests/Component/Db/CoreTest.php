@@ -4,8 +4,9 @@ namespace Tests\Component\Db;
 
 use PHPUnit\Framework\TestCase as PFT;
 use \PDO;
-use App\Config;
+use App\Component\Config;
 use App\Component\Container;
+use App\Component\Http\Kernel;
 use App\Model\Repository\Users;
 use App\Component\Db\Core;
 

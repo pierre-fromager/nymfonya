@@ -4,7 +4,9 @@ namespace App\Controllers\Api\V1;
 
 use App\Interfaces\Controllers\IApi;
 use App\Reuse\Controllers\AbstractApi;
+use App\Component\Config;
 use App\Component\Container;
+//use App\Component\Kernel;
 use App\Component\Http\Headers;
 use App\Component\Http\Request;
 use App\Component\Http\Response;
@@ -32,7 +34,7 @@ final class Auth extends AbstractApi implements IApi
      */
     final public function login(): Auth
     {
-        $config = $this->getService(\App\Config::class);
+        $config = $this->getService(Config::class);
         $logger = $this->getService(\Monolog\Logger::class);
         $login = $this->request->getParam('login');
         $password = $this->request->getParam('password');

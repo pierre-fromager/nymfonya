@@ -3,7 +3,7 @@
 namespace Tests\Controllers;
 
 use PHPUnit\Framework\TestCase as PFT;
-use App\Config;
+use App\Component\Config;
 use App\Component\Container;
 use App\Controllers\Config as ConfigControler;
 

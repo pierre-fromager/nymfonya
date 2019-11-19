@@ -3,7 +3,7 @@
 namespace Tests\Model;
 
 use PHPUnit\Framework\TestCase as PFT;
-use App\Config;
+use App\Component\Config;
 use App\Component\Container;
 use App\Model\AbstractSearch;
 
@@ -180,9 +180,8 @@ class AbstractSearchTest extends PFT
     public function testGetService()
     {
         $this->assertTrue(
-            $this->instance->getService(
-                \App\Config::class
-            ) instanceof Config
+            $this->instance->getService(Config::class)
+                instanceof Config
         );
     }
 

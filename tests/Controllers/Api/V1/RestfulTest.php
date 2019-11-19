@@ -3,7 +3,7 @@
 namespace Tests\Controllers\Api\V1;
 
 use PHPUnit\Framework\TestCase as PFT;
-use App\Config;
+use App\Component\Config;
 use App\Component\Container;
 use App\Controllers\Api\V1\Restful as ApiRestfulControler;
 use App\Component\Http\Request;
