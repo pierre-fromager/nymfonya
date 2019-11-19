@@ -46,7 +46,7 @@ class Core
     /**
      * statement
      *
-     * @var \PDOStatement
+     * @var \PDOStatement | boolean
      */
     protected $statement;
 

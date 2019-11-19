@@ -67,9 +67,7 @@ class Middleware
         $layers = array_reverse($this->layers);
         $completeMiddleware = array_reduce(
             $layers,
-            function ($nextLayer, $layer) {
-                return $this->createLayer($nextLayer, $layer);
-            },
+            [$this, 'createLayer'],
             $coreFunction
         );
         return $completeMiddleware($object);

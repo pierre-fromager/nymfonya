@@ -53,6 +53,8 @@ class MiddlewareTest extends PFT
         );
         $serviceConfig = $this->config->getSettings(Config::_SERVICES);
         $this->container = new Container($serviceConfig);
+        $kernel = new \App\Kernel(Config::ENV_CLI, basename(self::CONFIG_PATH));
+        $this->container->setService(\App\Kernel::class, $kernel);
         $this->instance = new Middleware();
     }
 
@@ -152,6 +154,8 @@ class MiddlewareTest extends PFT
         $this->assertTrue($value instanceof \Closure);
         $this->assertTrue(is_callable($value));
         $this->assertEquals($value(1), 2);
+        $invoked = $value->__invoke(1);
+        $this->assertEquals(2, $invoked);
     }
 
     /**
@@ -164,12 +168,14 @@ class MiddlewareTest extends PFT
             $this->instance,
             [
                 function ($v) {
-                    return $v + 1;
+                    return $v;
                 },
                 new \App\Middlewares\After($this->container)
             ]
         );
         $this->assertTrue($value instanceof \Closure);
         $this->assertTrue(is_callable($value));
+        $invoked = $value->__invoke($this->container);
+        $this->assertTrue($invoked instanceof Container);
     }
 }
