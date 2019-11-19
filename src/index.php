@@ -19,21 +19,15 @@ $env = (php_sapi_name() === App\Config::ENV_CLI)
     ? App\Config::ENV_CLI
     : App\Config::ENV_DEV;
 
-# Nymphonia bundle
-$nymphoniaBundle = (new App\Component\Http\Kernel($env, __DIR__))
+$apiBundle = (new App\BundleApi($env, __DIR__))
     ->setNameSpace('\\App\\Controllers\\');
 
-# Nymphonia bundle
-/*
-$nymphoniaBundle = (new App\BundleApi($env, __DIR__))
-    ->setNameSpace('\\App\\Controllers\\');
-*/
 try {
-    $nymphoniaBundle->run()->send();
+    $apiBundle->run()->send();
 } catch (Exception $e) {
-    $nymphoniaBundle->getLogger()->debug(
+    $apiBundle->getLogger()->debug(
         'Exception : ' . $e->getMessage() . ' : ' . $e->getCode()
     );
 }
 
-unset($nymphoniaBundle);
+unset($apiBundle);
