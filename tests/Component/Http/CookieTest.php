@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace Tests\Component\Http;
 
 use PHPUnit\Framework\TestCase as PFT;
 use App\Component\Http\Cookie;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace Tests\Component\Jwt;
 
 use PHPUnit\Framework\TestCase as PFT;
 use App\Config;
@@ -10,7 +10,7 @@ use App\Component\Jwt\Token;
 /**
  * @covers \App\Component\Jwt\Token::<public>
  */
-class ComponentJwtTokenTest extends PFT
+class TokenTest extends PFT
 {
 
     const TEST_ENABLE = true;

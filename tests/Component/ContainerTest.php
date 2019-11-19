@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace Tests\Component;
 
 use PHPUnit\Framework\TestCase as PFT;
 use App\Config;

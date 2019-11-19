@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace Tests\Component\Model;
 
 use PHPUnit\Framework\TestCase as PFT;
 use \ReflectionMethod;
@@ -17,7 +17,7 @@ use NilPortugues\Sql\QueryBuilder\Syntax\Where;
 /**
  * @covers \App\Component\Model\Orm\Orm::<public>
  */
-class ComponentModelOrmTest extends PFT
+class OrmTest extends PFT
 {
 
     const TEST_ENABLE = true;

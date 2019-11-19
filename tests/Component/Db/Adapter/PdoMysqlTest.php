@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace Tests\Component\Db\Adapter;
 
 use PHPUnit\Framework\TestCase as PFT;
 use \PDO;
@@ -11,7 +11,7 @@ use App\Component\Db\Adapter\PdoMysql;
 /**
  * @covers App\Component\Db\Adapter\PdoMysql::<public>
  */
-class ComponentDbAdapterPdoMysqlTest extends PFT
+class PdoMysqlTest extends PFT
 {
 
     const TEST_ENABLE = true;

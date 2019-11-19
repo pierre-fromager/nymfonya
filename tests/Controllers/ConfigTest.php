@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace Tests\Controllers;
 
 use PHPUnit\Framework\TestCase as PFT;
 use App\Config;
@@ -10,7 +10,7 @@ use App\Controllers\Config as ConfigControler;
 /**
  * @covers \App\Controllers\Config::<public>
  */
-class ApiV1ControllerConfigTest extends PFT
+class ConfigTest extends PFT
 {
 
     const TEST_ENABLE = true;

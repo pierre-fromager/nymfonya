@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace Tests\Component;
 
 use PHPUnit\Framework\TestCase as PFT;
 use App\Config;
@@ -9,7 +9,7 @@ use App\Component\Crypt;
 /**
  * @covers \App\Component\Crypt::<public>
  */
-class ComponentCyptTest extends PFT
+class CyptTest extends PFT
 {
 
     const TEST_ENABLE = true;

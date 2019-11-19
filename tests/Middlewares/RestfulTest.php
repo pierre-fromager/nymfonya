@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace Tests\Middlewares;
 
 use PHPUnit\Framework\TestCase as PFT;
 use App\Component\Http\Request;
@@ -13,12 +13,11 @@ use App\Middlewares\Restful;
 /**
  * @covers \App\Middlewares\Restful::<public>
  */
-class AppMiddlewaresRestfulTest extends PFT
+class RestfulTest extends PFT
 {
 
     const TEST_ENABLE = true;
     const CONFIG_PATH = '/../../config/';
-
 
     /**
      * config

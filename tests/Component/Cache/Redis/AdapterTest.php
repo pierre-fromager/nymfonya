@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace Tests\Component\Cache\Redis;
 
 use PHPUnit\Framework\TestCase as PFT;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -10,7 +10,7 @@ use App\Component\Cache\Redis\Adapter;
 /**
  * @covers App\Component\Cache\Redis\Adapter::<public>
  */
-class ComponentCacheRedisAdapterTest extends PFT
+class AdapterTest extends PFT
 {
 
     const TEST_ENABLE = true;

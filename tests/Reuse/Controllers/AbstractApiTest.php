@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace Tests\Reuse\Controllers;
 
 use PHPUnit\Framework\TestCase as PFT;
 use App\Config;
@@ -10,7 +10,7 @@ use App\Reuse\Controllers\AbstractApi;
 /**
  * @covers \App\Reuse\Controllers\AbstractApi::<public>
  */
-class ReuseControllersAbstractApi extends PFT
+class AbstractApiTest extends PFT
 {
 
     const TEST_ENABLE = true;

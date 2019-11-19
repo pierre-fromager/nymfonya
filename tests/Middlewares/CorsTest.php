@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace Tests\Middlewares;
 
 use PHPUnit\Framework\TestCase as PFT;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -15,7 +15,7 @@ use App\Middlewares\Cors as CorsMiddleware;
 /**
  * @covers \App\Middlewares\Cors::<public>
  */
-class AppMiddlewaresCorsTest extends PFT
+class CorsTest extends PFT
 {
 
     const TEST_ENABLE = true;

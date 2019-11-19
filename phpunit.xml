@@ -15,6 +15,7 @@
             <file>tests/Component/Jwt/TokenTest.php</file>
             <file>tests/Component/CryptTest.php</file>
             <file>tests/Component/AuthTest.php</file>
+            <file>tests/Component/ConfigTest.php</file>
             <file>tests/Component/File/UploaderTest.php</file>
             <file>tests/Component/Model/OrmTest.php</file>
             <file>tests/Component/ContainerTest.php</file>
@@ -33,7 +34,7 @@
             <file>tests/Middlewares/CorsTest.php</file>
             <file>tests/Middlewares/AfterTest.php</file>
             <file>tests/Middlewares/RestfulTest.php</file>
-            <file>tests/Model/SearchTest.php</file>
+            <file>tests/Model/AbstractSearchTest.php</file>
             <file>tests/Model/AccountsTest.php</file>
             <file>tests/Model/UsersTest.php</file>
         </testsuite>
@@ -116,7 +117,7 @@
             <file>tests/Middlewares/RestfulTest.php</file>
         </testsuite>
         <testsuite name="ModelSearchAbstract">
-            <file>tests/Model/SearchTest.php</file>
+            <file>tests/Model/AbstractSearchTest.php</file>
         </testsuite>
         <testsuite name="ModelAccounts">
             <file>tests/Model/AccountsTest.php</file>

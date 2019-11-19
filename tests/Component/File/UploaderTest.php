@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace Tests\Component\File;
 
 use PHPUnit\Framework\TestCase as PFT;
 use App\Component\File\Uploader;
@@ -8,7 +8,7 @@ use App\Component\File\Uploader;
 /**
  * @covers App\Component\File\Uploader::<public>
  */
-class ComponentFileUploaderTest extends PFT
+class UploaderTest extends PFT
 {
 
     const TEST_ENABLE = true;

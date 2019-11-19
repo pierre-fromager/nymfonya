@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace Tests\Controllers\Api\V1;
 
 use PHPUnit\Framework\TestCase as PFT;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -21,7 +21,7 @@ use App\Controllers\Api\V1\Auth as ApiAuthControler;
  *
  * @covers \App\Controllers\Api\V1\Auth::<public>
  */
-class ApiV1ControllerAuthTest extends PFT
+class AuthTest extends PFT
 {
 
     const TEST_ENABLE = true;

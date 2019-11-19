@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace Tests\Model;
 
 use PHPUnit\Framework\TestCase as PFT;
 use App\Config;
@@ -9,7 +9,7 @@ use App\Model\Users;
 /**
  * @covers \App\Model\Users::<public>
  */
-class AppModelUsersTest extends PFT
+class UsersTest extends PFT
 {
 
     const TEST_ENABLE = true;

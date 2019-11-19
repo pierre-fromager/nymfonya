@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace Tests\Controllers\Api\V1;
 
 use PHPUnit\Framework\TestCase as PFT;
 use App\Config;
@@ -10,7 +10,7 @@ use App\Controllers\Api\V1\Stat as ApiStatControler;
 /**
  * @covers \App\Controllers\Api\V1\Stat::<public>
  */
-class ApiV1ControllerStatTest extends PFT
+class StatTest extends PFT
 {
 
     const TEST_ENABLE = true;

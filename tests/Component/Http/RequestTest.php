@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace Tests\Component\Http;
 
 use App\Component\Http\Headers;
 use PHPUnit\Framework\TestCase as PFT;

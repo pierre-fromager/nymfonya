@@ -1,17 +1,16 @@
 <?php
 
-namespace Tests;
+namespace Tests\Model;
 
 use PHPUnit\Framework\TestCase as PFT;
 use App\Config;
 use App\Component\Container;
-
 use App\Model\AbstractSearch;
 
 /**
  * @covers \App\Model\AbstractSearch::<public>
  */
-class AppModelSearchTest extends PFT
+class AbstractSearchTest extends PFT
 {
 
     const TEST_ENABLE = true;

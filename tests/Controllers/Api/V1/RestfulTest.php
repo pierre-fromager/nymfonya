@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace Tests\Controllers\Api\V1;
 
 use PHPUnit\Framework\TestCase as PFT;
 use App\Config;
@@ -12,7 +12,7 @@ use App\Component\Http\Response;
 /**
  * @covers \App\Controllers\Api\V1\Restful::<public>
  */
-class ApiV1ControllerrestfulTest extends PFT
+class RestfulTest extends PFT
 {
 
     const TEST_ENABLE = true;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace Tests\Controllers\Api\V1;
 
 use PHPUnit\Framework\TestCase as PFT;
 use App\Config;
@@ -8,12 +8,11 @@ use App\Component\Container;
 use App\Controllers\Api\V1\Test as ApiTestControler;
 use App\Component\Http\Request;
 use App\Component\Http\Response;
-use PHPUnit\Util\Test;
 
 /**
  * @covers \App\Controllers\Api\V1\Test::<public>
  */
-class ApiV1ControllerTestTest extends PFT
+class TestTest extends PFT
 {
 
     const TEST_ENABLE = true;

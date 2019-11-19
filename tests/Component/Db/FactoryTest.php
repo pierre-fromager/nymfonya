@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace Tests\Component\Db;
 
 use PHPUnit\Framework\TestCase as PFT;
 use \PDO;
@@ -11,7 +11,7 @@ use App\Component\Db\Factory;
 /**
  * @covers App\Component\Db\Factory::<public>
  */
-class ComponentDbFactoryTest extends PFT
+class FactoryTest extends PFT
 {
 
     const TEST_ENABLE = true;

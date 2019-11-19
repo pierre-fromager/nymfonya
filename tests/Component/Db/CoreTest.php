@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace Tests\Component\Db;
 
 use PHPUnit\Framework\TestCase as PFT;
 use \PDO;
@@ -12,7 +12,7 @@ use App\Component\Db\Core;
 /**
  * @covers App\Component\Db\Core::<public>
  */
-class ComponentDbCoreTest extends PFT
+class CoreTest extends PFT
 {
 
     const TEST_ENABLE = true;

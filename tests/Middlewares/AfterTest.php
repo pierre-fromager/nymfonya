@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace Tests\Middlewares;
 
 use PHPUnit\Framework\TestCase as PFT;
 use App\Config;
@@ -12,12 +12,11 @@ use App\Middlewares\After;
 /**
  * @covers \App\Middlewares\After::<public>
  */
-class AppMiddlewaresAfterTest extends PFT
+class AfterTest extends PFT
 {
 
     const TEST_ENABLE = true;
     const CONFIG_PATH = '/../../config/';
-
 
     /**
      * config

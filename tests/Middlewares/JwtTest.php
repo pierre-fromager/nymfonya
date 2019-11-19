@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace Tests\Middlewares;
 
 use PHPUnit\Framework\TestCase as PFT;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -15,7 +15,7 @@ use App\Component\Jwt\Token;
 /**
  * @covers \App\Middlewares\Jwt::<public>
  */
-class AppMiddlewaresJwtTest extends PFT
+class JwtTest extends PFT
 {
 
     const TEST_ENABLE = true;

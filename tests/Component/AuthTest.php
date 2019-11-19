@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests;
+namespace Tests\Component;
 
 use PHPUnit\Framework\TestCase as PFT;
 use App\Config;
@@ -10,7 +10,7 @@ use App\Component\Auth;
 /**
  * @covers \App\Component\Auth::<public>
  */
-class ComponentAuthTest extends PFT
+class AuthTest extends PFT
 {
 
     const TEST_ENABLE = true;
