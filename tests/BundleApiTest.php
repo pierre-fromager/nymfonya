@@ -3,10 +3,8 @@
 
 namespace Tests;
 
-require_once __DIR__ . '/Component/Http/KernelTest.php';
 use Tests\Component\Http\KernelTest;
 use App\Component\Config;
-use App\Component\Kernel;
 use App\BundleApi;
 
 /**

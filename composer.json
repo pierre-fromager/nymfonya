@@ -27,6 +27,11 @@
             "App\\": "src/App/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
     "config": {
         "preferred-install": "dist",
         "disable-tls": false,
