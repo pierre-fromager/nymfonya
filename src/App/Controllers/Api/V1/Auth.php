@@ -6,7 +6,6 @@ use App\Interfaces\Controllers\IApi;
 use App\Reuse\Controllers\AbstractApi;
 use App\Component\Config;
 use App\Component\Container;
-//use App\Component\Kernel;
 use App\Component\Http\Headers;
 use App\Component\Http\Request;
 use App\Component\Http\Response;
@@ -65,7 +64,6 @@ final class Auth extends AbstractApi implements IApi
                 );
             return $this;
         }
-        //die;
         $logger->warning(__FUNCTION__ . ' Auth failed');
         return $this->setErrorResponse(
             Response::HTTP_UNAUTHORIZED,

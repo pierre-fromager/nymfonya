@@ -10,6 +10,8 @@ use App\Component\Container;
 final class Stat extends AbstractApi implements IApi
 {
 
+    const _SCRIPTS = 'scripts';
+
     /**
      * instanciate
      *
@@ -37,13 +39,19 @@ final class Stat extends AbstractApi implements IApi
         $status = opcache_get_status();
         if (!empty($status)) {
             $path = dirname(dirname($this->request->getFilename()));
-            $scripts = array_filter($status['scripts'], function ($val) use ($path) {
-                return strpos($val['full_path'], $path) !== false;
-            });
-            $status['scripts'] = array_values($scripts);
-            $bytes = array_reduce($status['scripts'], function ($stack, $val) {
-                return $stack + $val['memory_consumption'];
-            });
+            $scripts = array_filter(
+                $status[self::_SCRIPTS],
+                function ($val) use ($path) {
+                    return false !== strpos($val['full_path'], $path);
+                }
+            );
+            $status[self::_SCRIPTS] = array_values($scripts);
+            $bytes = array_reduce(
+                $status[self::_SCRIPTS],
+                function ($stack, $val) {
+                    return $stack + (int) $val['memory_consumption'];
+                }
+            );
             $scriptCount = count($scripts);
             unset($scripts);
             $this->response

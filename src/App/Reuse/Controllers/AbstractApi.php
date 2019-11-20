@@ -6,6 +6,7 @@ use App\Interfaces\Controllers\IApi;
 use App\Component\Container;
 use App\Component\Http\Request;
 use App\Component\Http\Response;
+use \Monolog\Logger;
 
 abstract class AbstractApi implements IApi
 {
@@ -27,6 +28,13 @@ abstract class AbstractApi implements IApi
     protected $response;
 
     /**
+     * logger
+     *
+     * @var Logger
+     */
+    protected $logger;
+
+    /**
      * di container
      *
      * @var Container
@@ -40,8 +48,9 @@ abstract class AbstractApi implements IApi
     public function __construct(Container $container)
     {
         $this->container = $container;
-        $this->request = $this->getService(\App\Component\Http\Request::class);
-        $this->response = $this->getService(\App\Component\Http\Response::class);
+        $this->request = $this->getService(Request::class);
+        $this->response = $this->getService(Response::class);
+        $this->logger = $this->getService(Logger::class);
     }
 
     /**

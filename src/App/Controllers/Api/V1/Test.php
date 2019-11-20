@@ -8,6 +8,7 @@ use App\Component\Http\Response;
 use App\Component\Http\Request;
 use App\Component\Container;
 use App\Component\File\Uploader;
+use App\Component\Cache\Redis\Adapter;
 
 final class Test extends AbstractApi implements IApi
 {
@@ -70,9 +71,7 @@ final class Test extends AbstractApi implements IApi
      */
     final public function redis(): Test
     {
-        $redisService = $this->getContainer()->getService(
-            \App\Component\Cache\Redis\Adapter::class
-        );
+        $redisService = $this->getContainer()->getService(Adapter::class);
         $client = $redisService->getClient();
         $error = $redisService->isError();
         $ping = '';

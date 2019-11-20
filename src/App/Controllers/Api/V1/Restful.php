@@ -115,7 +115,6 @@ final class Restful extends AbstractApi implements IApi, IRestful
      */
     final public function index(array $slugs = []): Restful
     {
-
         $this->slugs = $slugs;
         $this->userRepository->find(
             ['name'],
