@@ -3,7 +3,6 @@
 namespace Tests\Component\Cache\Redis;
 
 use PHPUnit\Framework\TestCase as PFT;
-use PHPUnit\Framework\MockObject\MockObject;
 use App\Component\Config;
 use App\Component\Cache\Redis\Adapter;
 
@@ -109,7 +108,7 @@ class AdapterTest extends PFT
                 return $redisConfigParams;
             }
         };
-        $mockConfig = $this->createMock(\App\Config::class);
+        $mockConfig = $this->createMock(Config::class);
         $mockConfig->method('getSettings')->will(
             $this->returnCallback($redisConfigValues)
         );

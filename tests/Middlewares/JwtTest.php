@@ -299,7 +299,7 @@ class JwtTest extends PFT
         $this->invokeMethod($this->layer, 'setEnabled', [true]);
         $this->invokeMethod($this->layer, 'process', []);
         $this->assertTrue($peelReturn instanceof Container);
-        $res = $peelReturn->getService(\App\Component\Http\Response::class);
+        $res = $peelReturn->getService(Response::class);
         $this->assertEquals($res->getCode(), 403);
         $this->assertEquals(
             $res->getContent(),
@@ -321,7 +321,7 @@ class JwtTest extends PFT
         $this->invokeMethod($this->layer, 'setEnabled', [true]);
         $this->invokeMethod($this->layer, 'process', []);
         $this->assertTrue($peelReturn instanceof Container);
-        $res = $peelReturn->getService(\App\Component\Http\Response::class);
+        $res = $peelReturn->getService(Response::class);
         $this->assertEquals($res->getCode(), 403);
         $this->assertEquals(
             $res->getContent(),
@@ -343,7 +343,7 @@ class JwtTest extends PFT
         $this->invokeMethod($this->layer, 'setEnabled', [true]);
         $this->invokeMethod($this->layer, 'process', []);
         $this->assertTrue($peelReturn instanceof Container);
-        $res = $peelReturn->getService(\App\Component\Http\Response::class);
+        $res = $peelReturn->getService(Response::class);
         $this->assertEquals($res->getCode(), 403);
         $this->assertEquals(
             $res->getContent(),
@@ -361,14 +361,14 @@ class JwtTest extends PFT
         $this->setOutputCallback(function () {
         });
         $this->container->setService(
-            \App\Component\Http\Request::class,
+            Request::class,
             $this->getMockedRequestUri('/api/v1/stat/filecache')
         );
         $peelReturn = $this->peelLayer();
         $this->invokeMethod($this->layer, 'setEnabled', [true]);
         $this->invokeMethod($this->layer, 'process', []);
         $this->assertTrue($peelReturn instanceof Container);
-        $res = $peelReturn->getService(\App\Component\Http\Response::class);
+        $res = $peelReturn->getService(Response::class);
         $this->assertEquals($res->getCode(), 403);
         $this->assertEquals(
             $res->getContent(),
@@ -506,7 +506,7 @@ class JwtTest extends PFT
             500, 'error message'
         ]);
         $this->assertTrue($peelReturn instanceof Container);
-        $res = $peelReturn->getService(\App\Component\Http\Response::class);
+        $res = $peelReturn->getService(Response::class);
         $this->assertTrue($res instanceof Response);
         $this->assertEquals($res->getCode(), 500);
         $this->assertEquals(

@@ -7,6 +7,7 @@ use App\Component\Http\Kernel;
 use App\Component\Config;
 use App\Component\Container;
 use App\Component\Http\Middleware;
+use App\Middlewares\After;
 
 /**
  * @covers \App\Component\Http\Middleware::<public>
@@ -109,7 +110,7 @@ class MiddlewareTest extends PFT
     public function testLayer()
     {
         $r = $this->instance->layer(
-            new \App\Middlewares\After($this->container)
+            new After($this->container)
         );
         $this->assertTrue($r instanceof Middleware);
         $r = $this->instance->layer(new Middleware());
@@ -171,7 +172,7 @@ class MiddlewareTest extends PFT
                 function ($v) {
                     return $v;
                 },
-                new \App\Middlewares\After($this->container)
+                new After($this->container)
             ]
         );
         $this->assertTrue($value instanceof \Closure);

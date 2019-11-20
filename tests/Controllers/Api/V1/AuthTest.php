@@ -110,7 +110,7 @@ class AuthTest extends PFT
         );
         if ($withMock) {
             $this->container->setService(
-                \App\Component\Http\Request::class,
+                Request::class,
                 $this->getMockedRequest($success)
             );
         }
@@ -136,9 +136,7 @@ class AuthTest extends PFT
                 ? self::VALID_LOGIN
                 : self::VALID_PASSWORD;
         };
-        $mockRequest = $this->createMock(
-            \App\Component\Http\Request::class
-        );
+        $mockRequest = $this->createMock(Request::class);
         $mockRequest->method('getMethod')->willReturn(
             Request::METHOD_TRACE
         );
@@ -170,7 +168,7 @@ class AuthTest extends PFT
         );
         $res = self::getMethod('getService')->invokeArgs(
             $this->instance,
-            [\App\Component\Http\Response::class]
+            [Response::class]
         );
         $this->assertEquals(
             $res->getCode(),
@@ -191,7 +189,7 @@ class AuthTest extends PFT
         );
         $res = self::getMethod('getService')->invokeArgs(
             $this->instance,
-            [\App\Component\Http\Response::class]
+            [Response::class]
         );
         $this->assertEquals(
             $res->getCode(),
@@ -211,7 +209,7 @@ class AuthTest extends PFT
         );
         $res = self::getMethod('getService')->invokeArgs(
             $this->instance,
-            [\App\Component\Http\Response::class]
+            [Response::class]
         );
         $this->assertEquals(
             $res->getCode(),
@@ -232,7 +230,7 @@ class AuthTest extends PFT
         $this->assertTrue($ser instanceof ApiAuthControler);
         $res = self::getMethod('getService')->invokeArgs(
             $this->instance,
-            [\App\Component\Http\Response::class]
+            [Response::class]
         );
         $this->assertEquals(
             $res->getCode(),

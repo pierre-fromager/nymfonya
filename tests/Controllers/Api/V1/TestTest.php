@@ -152,7 +152,7 @@ class TestTest extends PFT
         $this->assertTrue($par instanceof ApiTestControler);
         $res = self::getMethod('getService')->invokeArgs(
             $this->instance,
-            [\App\Component\Http\Response::class]
+            [Response::class]
         );
         $this->assertNotEmpty($res->getContent());
         $this->assertEquals($res->getCode(), Response::HTTP_OK);
@@ -188,7 +188,7 @@ class TestTest extends PFT
         $this->assertTrue($par instanceof ApiTestControler);
         $res = self::getMethod('getService')->invokeArgs(
             $this->instance,
-            [\App\Component\Http\Response::class]
+            [Response::class]
         );
         $this->assertNotEmpty($res->getContent());
         $this->assertEquals($res->getCode(), Response::HTTP_OK);

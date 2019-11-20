@@ -99,10 +99,7 @@ class KernelTest extends PFT
         $this->assertTrue($kr instanceof Kernel);
         $res = $kr->getService(Response::class);
         $this->assertTrue($res instanceof Response);
-        $this->assertEquals(
-            $res->getCode(),
-            \App\Component\Http\Response::HTTP_OK
-        );
+        $this->assertEquals($res->getCode(),Response::HTTP_OK);
     }
 
     /**
