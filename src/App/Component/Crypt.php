@@ -2,7 +2,7 @@
 
 namespace App\Component;
 
-use App\Component\Config;
+use Nymfonya\Component\Config;
 
 /**
  * Lib_Auth_Crypt

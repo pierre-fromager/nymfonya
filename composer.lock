@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "efbffbd7de1df50df59694575c0e15d0",
+    "content-hash": "f943b346a895e97941e7c2f284f7568b",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -182,16 +182,16 @@
         },
         {
             "name": "monolog/monolog",
-            "version": "1.25.1",
+            "version": "1.25.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "70e65a5470a42cfec1a7da00d30edb6e617e8dcf"
+                "reference": "d5e2fb341cb44f7e2ab639d12a1e5901091ec287"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/70e65a5470a42cfec1a7da00d30edb6e617e8dcf",
-                "reference": "70e65a5470a42cfec1a7da00d30edb6e617e8dcf",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/d5e2fb341cb44f7e2ab639d12a1e5901091ec287",
+                "reference": "d5e2fb341cb44f7e2ab639d12a1e5901091ec287",
                 "shasum": ""
             },
             "require": {
@@ -256,7 +256,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2019-09-06T13:49:17+00:00"
+            "time": "2019-11-13T10:00:05+00:00"
         },
         {
             "name": "nilportugues/sql-query-builder",
@@ -378,6 +378,170 @@
             "time": "2015-11-02T23:24:39+00:00"
         },
         {
+            "name": "pier-infor/nymfonya-config",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pierre-fromager/nymfonya-config.git",
+                "reference": "e6735632bbd85781ff4ef67497a8819ebe48397e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pierre-fromager/nymfonya-config/zipball/e6735632bbd85781ff4ef67497a8819ebe48397e",
+                "reference": "e6735632bbd85781ff4ef67497a8819ebe48397e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.0.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.13",
+                "phploc/phploc": "^4.0",
+                "phpmd/phpmd": "@stable",
+                "phpunit/phpunit": "^6.5",
+                "squizlabs/php_codesniffer": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Nymfonya\\Component\\": "src/"
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Pierre Fromager",
+                    "email": "info@pier-infor.fr",
+                    "homepage": "https://github.com/pierre-fromager"
+                }
+            ],
+            "description": "Nymfonya Config Component",
+            "homepage": "https://github.com/pierre-fromager/nymfonya-config",
+            "keywords": [
+                "Nymfonya",
+                "components",
+                "config"
+            ],
+            "time": "2019-11-20T21:54:21+00:00"
+        },
+        {
+            "name": "pier-infor/nymfonya-container",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pierre-fromager/nymfonya-container.git",
+                "reference": "b3d75b73fc8415160aafff549c9b7712afea241e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pierre-fromager/nymfonya-container/zipball/b3d75b73fc8415160aafff549c9b7712afea241e",
+                "reference": "b3d75b73fc8415160aafff549c9b7712afea241e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.0.0",
+                "pier-infor/nymfonya-config": "dev-master"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.13",
+                "phploc/phploc": "^4.0",
+                "phpmd/phpmd": "@stable",
+                "phpunit/phpunit": "^6.5",
+                "squizlabs/php_codesniffer": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Nymfonya\\Component\\": "src/"
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Pierre Fromager",
+                    "email": "info@pier-infor.fr",
+                    "homepage": "https://github.com/pierre-fromager"
+                }
+            ],
+            "description": "Nymfonya Container Component",
+            "homepage": "https://github.com/pierre-fromager/nymfonya-container",
+            "keywords": [
+                "Nymfonya",
+                "components",
+                "container"
+            ],
+            "time": "2019-11-20T22:00:42+00:00"
+        },
+        {
+            "name": "pier-infor/nymfonya-http-foundation",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pierre-fromager/nymfonya-http-foundation.git",
+                "reference": "ccef91d2ea196794eff5ff05ca677306e416d19b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pierre-fromager/nymfonya-http-foundation/zipball/ccef91d2ea196794eff5ff05ca677306e416d19b",
+                "reference": "ccef91d2ea196794eff5ff05ca677306e416d19b",
+                "shasum": ""
+            },
+            "require": {
+                "monolog/monolog": "^1.25",
+                "php": ">=7.0.0",
+                "pier-infor/nymfonya-config": "dev-master",
+                "pier-infor/nymfonya-container": "dev-master"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.13",
+                "phploc/phploc": "^4.0",
+                "phpmd/phpmd": "@stable",
+                "phpunit/phpunit": "^6.5",
+                "squizlabs/php_codesniffer": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Nymfonya\\Component\\Http\\": "src/"
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Pierre Fromager",
+                    "email": "info@pier-infor.fr",
+                    "homepage": "https://github.com/pierre-fromager"
+                }
+            ],
+            "description": "Nymfonya Http Foundation Components",
+            "homepage": "https://github.com/pierre-fromager/nymfonya-http-foundation",
+            "keywords": [
+                "Nymfonya",
+                "components",
+                "foundation",
+                "http"
+            ],
+            "time": "2019-11-21T10:56:57+00:00"
+        },
+        {
             "name": "psr/log",
             "version": "1.1.2",
             "source": {
@@ -489,7 +653,7 @@
         },
         {
             "name": "symfony/finder",
-            "version": "v3.4.33",
+            "version": "v3.4.35",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/finder.git",
@@ -655,7 +819,7 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v3.4.33",
+            "version": "v3.4.35",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
@@ -2732,16 +2896,16 @@
         },
         {
             "name": "symfony/config",
-            "version": "v3.4.33",
+            "version": "v3.4.35",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/config.git",
-                "reference": "c111091db748ed394fd8c3e473a90ad3b80e08ad"
+                "reference": "c3a30587de97263d2813a3c81b74126c58b67a4f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/config/zipball/c111091db748ed394fd8c3e473a90ad3b80e08ad",
-                "reference": "c111091db748ed394fd8c3e473a90ad3b80e08ad",
+                "url": "https://api.github.com/repos/symfony/config/zipball/c3a30587de97263d2813a3c81b74126c58b67a4f",
+                "reference": "c3a30587de97263d2813a3c81b74126c58b67a4f",
                 "shasum": ""
             },
             "require": {
@@ -2792,20 +2956,20 @@
             ],
             "description": "Symfony Config Component",
             "homepage": "https://symfony.com",
-            "time": "2019-10-30T12:46:47+00:00"
+            "time": "2019-11-08T08:28:59+00:00"
         },
         {
             "name": "symfony/console",
-            "version": "v3.4.33",
+            "version": "v3.4.35",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "c7edffb26b29cae972ca4afccb610a38ce8d0ccf"
+                "reference": "17b154f932c5874cdbda6d05796b6490eec9f9f7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/c7edffb26b29cae972ca4afccb610a38ce8d0ccf",
-                "reference": "c7edffb26b29cae972ca4afccb610a38ce8d0ccf",
+                "url": "https://api.github.com/repos/symfony/console/zipball/17b154f932c5874cdbda6d05796b6490eec9f9f7",
+                "reference": "17b154f932c5874cdbda6d05796b6490eec9f9f7",
                 "shasum": ""
             },
             "require": {
@@ -2864,11 +3028,11 @@
             ],
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
-            "time": "2019-10-24T15:33:53+00:00"
+            "time": "2019-11-13T07:12:39+00:00"
         },
         {
             "name": "symfony/debug",
-            "version": "v3.4.33",
+            "version": "v3.4.35",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/debug.git",
@@ -2924,16 +3088,16 @@
         },
         {
             "name": "symfony/dependency-injection",
-            "version": "v3.4.33",
+            "version": "v3.4.35",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dependency-injection.git",
-                "reference": "413a2c0cae6a1a5d8720bdfeebc0dbbfac24155d"
+                "reference": "0ea4d39ca82409a25a43b61ce828048a90000920"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/dependency-injection/zipball/413a2c0cae6a1a5d8720bdfeebc0dbbfac24155d",
-                "reference": "413a2c0cae6a1a5d8720bdfeebc0dbbfac24155d",
+                "url": "https://api.github.com/repos/symfony/dependency-injection/zipball/0ea4d39ca82409a25a43b61ce828048a90000920",
+                "reference": "0ea4d39ca82409a25a43b61ce828048a90000920",
                 "shasum": ""
             },
             "require": {
@@ -2991,11 +3155,11 @@
             ],
             "description": "Symfony DependencyInjection Component",
             "homepage": "https://symfony.com",
-            "time": "2019-10-24T15:33:53+00:00"
+            "time": "2019-11-08T16:18:30+00:00"
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "v3.4.33",
+            "version": "v3.4.35",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/event-dispatcher.git",
@@ -3058,7 +3222,7 @@
         },
         {
             "name": "symfony/filesystem",
-            "version": "v3.4.33",
+            "version": "v3.4.35",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
@@ -3108,7 +3272,7 @@
         },
         {
             "name": "symfony/options-resolver",
-            "version": "v3.4.33",
+            "version": "v3.4.35",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/options-resolver.git",
@@ -3276,7 +3440,7 @@
         },
         {
             "name": "symfony/process",
-            "version": "v3.4.33",
+            "version": "v3.4.35",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
@@ -3325,16 +3489,16 @@
         },
         {
             "name": "symfony/stopwatch",
-            "version": "v3.4.33",
+            "version": "v3.4.35",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/stopwatch.git",
-                "reference": "c0c27e38f8accb452f830a4ec8e8ac94b6ec864a"
+                "reference": "efe0af281ad336bc3b10375c88b117499f1d8494"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/stopwatch/zipball/c0c27e38f8accb452f830a4ec8e8ac94b6ec864a",
-                "reference": "c0c27e38f8accb452f830a4ec8e8ac94b6ec864a",
+                "url": "https://api.github.com/repos/symfony/stopwatch/zipball/efe0af281ad336bc3b10375c88b117499f1d8494",
+                "reference": "efe0af281ad336bc3b10375c88b117499f1d8494",
                 "shasum": ""
             },
             "require": {
@@ -3370,7 +3534,7 @@
             ],
             "description": "Symfony Stopwatch Component",
             "homepage": "https://symfony.com",
-            "time": "2019-08-06T13:24:37+00:00"
+            "time": "2019-11-03T17:17:59+00:00"
         },
         {
             "name": "theseer/fdomdocument",
@@ -3506,6 +3670,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "pier-infor/nymfonya-config": 20,
+        "pier-infor/nymfonya-container": 20,
         "phpmd/phpmd": 0
     },
     "prefer-stable": false,

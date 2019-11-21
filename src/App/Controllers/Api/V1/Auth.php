@@ -4,7 +4,7 @@ namespace App\Controllers\Api\V1;
 
 use App\Interfaces\Controllers\IApi;
 use App\Reuse\Controllers\AbstractApi;
-use App\Component\Config;
+use Nymfonya\Component\Config;
 use App\Component\Container;
 use App\Component\Http\Headers;
 use App\Component\Http\Request;

@@ -4,7 +4,7 @@ namespace Tests\Component\Http;
 
 use PHPUnit\Framework\TestCase as PFT;
 use App\Component\Http\Kernel;
-use App\Component\Config;
+use Nymfonya\Component\Config;
 use App\Component\Container;
 use App\Component\Http\Middleware;
 use App\Middlewares\After;

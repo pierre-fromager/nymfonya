@@ -5,9 +5,9 @@ namespace App\Component;
 use App\Component\Interfaces\IConfig;
 
 /**
- * App\Config
+ * App\Component\Config
  *
- * is a config manager
+ * config manager
  *
  * @author pierrefromager
  */
@@ -36,9 +36,9 @@ class Config implements IConfig
      * set config environment
      *
      * @param string $env
-     * @return Config
+     * @return IConfig
      */
-    public function setEnv(string $env = self::ENV_DEV): Config
+    public function setEnv(string $env = self::ENV_DEV): IConfig
     {
         $this->env = $env;
         return $this;
@@ -58,9 +58,9 @@ class Config implements IConfig
      * set config path
      *
      * @param string $path
-     * @return Config
+     * @return IConfig
      */
-    public function setPath(string $path): Config
+    public function setPath(string $path): IConfig
     {
         $this->path = $path;
         return $this;
@@ -101,9 +101,9 @@ class Config implements IConfig
     /**
      * load config for a given env
      *
-     * @return Config
+     * @return IConfig
      */
-    public function load(): Config
+    public function load(): IConfig
     {
         $filename = realpath($this->getFilename());
         if (false === $this->check($filename)) {

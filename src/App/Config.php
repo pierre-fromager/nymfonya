@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\Component\Config as configComponent;
+use Nymfonya\Component\Config as configComponent;
 
 /**
  * App\Config
@@ -24,6 +24,5 @@ class Config extends configComponent
     public function __construct(string $env, string $path)
     {
         parent::__construct($env, $path);
-        return $this;
     }
 }

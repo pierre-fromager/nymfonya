@@ -3,7 +3,7 @@
 namespace App\Component\Http\Reuse;
 
 use App\Component\Http\Kernel;
-use App\Component\Config;
+use Nymfonya\Component\Config;
 use App\Component\Container;
 use App\Component\Http\Request;
 use App\Component\Http\Response;

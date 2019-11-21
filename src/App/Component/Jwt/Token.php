@@ -9,7 +9,7 @@
 namespace App\Component\Jwt;
 
 use Firebase\JWT\JWT as Fjwt;
-use App\Component\Config;
+use Nymfonya\Component\Config;
 use App\Component\Http\Request;
 
 class Token implements Interfaces\IToken

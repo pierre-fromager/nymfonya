@@ -2,7 +2,7 @@
 
 namespace App\Component\Cache\Redis;
 
-use App\Component\Config;
+use Nymfonya\Component\Config;
 use \Redis;
 
 class Adapter

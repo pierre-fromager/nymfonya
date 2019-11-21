@@ -3,7 +3,7 @@
 namespace App\Component\Db;
 
 use \PDO;
-use App\Component\Config;
+use Nymfonya\Component\Config;
 use App\Component\Container;
 
 class Factory

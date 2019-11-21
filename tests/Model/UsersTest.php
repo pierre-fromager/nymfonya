@@ -3,7 +3,7 @@
 namespace Tests\Model;
 
 use PHPUnit\Framework\TestCase as PFT;
-use App\Component\Config;
+use Nymfonya\Component\Config;
 use App\Model\Users;
 
 /**

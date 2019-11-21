@@ -3,7 +3,7 @@
 namespace Tests\Component;
 
 use PHPUnit\Framework\TestCase as PFT;
-use App\Component\Config;
+use Nymfonya\Component\Config;
 use App\Component\Container;
 use App\Component\Auth;
 

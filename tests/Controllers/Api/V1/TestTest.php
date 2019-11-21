@@ -3,7 +3,7 @@
 namespace Tests\Controllers\Api\V1;
 
 use PHPUnit\Framework\TestCase as PFT;
-use App\Component\Config;
+use Nymfonya\Component\Config;
 use App\Component\Container;
 use App\Controllers\Api\V1\Test as ApiTestControler;
 use App\Component\Http\Request;

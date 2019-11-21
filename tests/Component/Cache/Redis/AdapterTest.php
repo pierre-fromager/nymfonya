@@ -3,7 +3,7 @@
 namespace Tests\Component\Cache\Redis;
 
 use PHPUnit\Framework\TestCase as PFT;
-use App\Component\Config;
+use Nymfonya\Component\Config;
 use App\Component\Cache\Redis\Adapter;
 
 /**

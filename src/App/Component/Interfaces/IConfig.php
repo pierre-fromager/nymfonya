@@ -10,8 +10,6 @@
 
 namespace App\Component\Interfaces;
 
-use App\Component\Config;
-
 interface IConfig
 {
     const CONFIG_REL_PATH = '../config/';
@@ -34,9 +32,9 @@ interface IConfig
      * set config environment
      *
      * @param string $env
-     * @return Config
+     * @return IConfig
      */
-    public function setEnv(string $env = self::ENV_DEV): Config;
+    public function setEnv(string $env = self::ENV_DEV): IConfig;
 
     /**
      * returns env
@@ -49,9 +47,9 @@ interface IConfig
      * set config path
      *
      * @param string $path
-     * @return Config
+     * @return IConfig
      */
-    public function setPath(string $path): Config;
+    public function setPath(string $path): IConfig;
 
     /**
      * returns config path
@@ -79,7 +77,7 @@ interface IConfig
     /**
      * load config for a given env
      *
-     * @return Config
+     * @return IConfig
      */
-    public function load(): Config;
+    public function load(): IConfig;
 }

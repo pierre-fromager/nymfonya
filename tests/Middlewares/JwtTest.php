@@ -4,7 +4,7 @@ namespace Tests\Middlewares;
 
 use PHPUnit\Framework\TestCase as PFT;
 use PHPUnit\Framework\MockObject\MockObject;
-use App\Component\Config;
+use Nymfonya\Component\Config;
 use App\Component\Container;
 use App\Component\Http\Kernel;
 use App\Component\Http\Middleware;

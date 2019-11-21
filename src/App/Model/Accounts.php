@@ -3,7 +3,7 @@
 namespace App\Model;
 
 use App\Component\Container;
-use App\Component\Config;
+use Nymfonya\Component\Config;
 use App\Model\AbstractSearch;
 use App\Component\Crypt;
 

@@ -2,7 +2,7 @@
 
 namespace App\Component;
 
-use App\Component\Config;
+use Nymfonya\Component\Config;
 use App\Component\Container;
 use App\Model\Users;
 

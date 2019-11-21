@@ -4,7 +4,7 @@ namespace Tests\Component\Model;
 
 use PHPUnit\Framework\TestCase as PFT;
 use \ReflectionMethod;
-use App\Component\Config;
+use Nymfonya\Component\Config;
 use App\Component\Container;
 use App\Component\Model\Orm\Orm;
 use NilPortugues\Sql\QueryBuilder\Builder\GenericBuilder;

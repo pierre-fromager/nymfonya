@@ -3,7 +3,7 @@
 namespace Tests;
 
 use Tests\Component\Http\KernelTest;
-use App\Component\Config;
+use Nymfonya\Component\Config;
 use App\BundleApi;
 
 /**

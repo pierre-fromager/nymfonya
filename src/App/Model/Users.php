@@ -2,7 +2,7 @@
 
 namespace App\Model;
 
-use App\Component\Config;
+use Nymfonya\Component\Config;
 
 /**
  * Users class is a basic class to let auth process running.

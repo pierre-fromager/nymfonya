@@ -1,6 +1,6 @@
 <?php
 
-use App\Component\Config;
+use Nymfonya\Component\Config;
 use App\Component\Http\Request;
 use App\Component\Http\Response;
 use App\Component\Http\Routes;

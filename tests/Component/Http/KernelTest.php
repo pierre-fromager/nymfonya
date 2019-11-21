@@ -3,7 +3,7 @@
 namespace Tests\Component\Http;
 
 use PHPUnit\Framework\TestCase as PFT;
-use App\Component\Config;
+use Nymfonya\Component\Config;
 use App\Component\Container;
 use App\Component\Http\Request;
 use App\Component\Http\Response;
@@ -99,7 +99,7 @@ class KernelTest extends PFT
         $this->assertTrue($kr instanceof Kernel);
         $res = $kr->getService(Response::class);
         $this->assertTrue($res instanceof Response);
-        $this->assertEquals($res->getCode(),Response::HTTP_OK);
+        $this->assertEquals($res->getCode(), Response::HTTP_OK);
     }
 
     /**
