@@ -3,6 +3,8 @@
 <phpunit bootstrap="vendor/autoload.php" stopOnFailure="true" colors="true" strict="true">
     <testsuites>
         <testsuite name="all">
+            <file>tests/BundleApiTest.php</file>
+            <file>tests/ConfigTest.php</file>
             <file>tests/Component/Http/RequestTest.php</file>
             <file>tests/Component/Http/CookieTest.php</file>
             <file>tests/Component/Http/ResponseTest.php</file>
@@ -22,8 +24,6 @@
             <file>tests/Component/Db/Adapter/PdoMysqlTest.php</file>
             <file>tests/Component/Db/FactoryTest.php</file>
             <file>tests/Component/Db/CoreTest.php</file>
-            <file>tests/BundleApiTest.php</file>
-            <file>tests/ConfigTest.php</file>
             <file>tests/Component/Http/KernelTest.php</file>
             <file>tests/Controllers/ConfigTest.php</file>
             <file>tests/Controllers/Api/V1/AuthTest.php</file>
@@ -62,9 +62,6 @@
         </testsuite>
         <testsuite name="Session">
             <file>tests/Component/Http/SessionTest.php</file>
-        </testsuite>
-        <testsuite name="Config">
-            <file>tests/ConfigTest.php</file>
         </testsuite>
         <testsuite name="Container">
             <file>tests/Component/ContainerTest.php</file>
