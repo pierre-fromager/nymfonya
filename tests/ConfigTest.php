@@ -1,8 +1,10 @@
 <?php
 
+
 namespace Tests;
 
-use Tests\Component\ConfigTest;
+use Nymfonya\Component\Config\Tests\ConfigTest;
+
 use App\Config;
 
 /**

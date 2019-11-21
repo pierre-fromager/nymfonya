@@ -383,12 +383,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/pierre-fromager/nymfonya-config.git",
-                "reference": "e6735632bbd85781ff4ef67497a8819ebe48397e"
+                "reference": "aad0b40337da20c8a64e67fe6cccf499d39676a2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pierre-fromager/nymfonya-config/zipball/e6735632bbd85781ff4ef67497a8819ebe48397e",
-                "reference": "e6735632bbd85781ff4ef67497a8819ebe48397e",
+                "url": "https://api.github.com/repos/pierre-fromager/nymfonya-config/zipball/aad0b40337da20c8a64e67fe6cccf499d39676a2",
+                "reference": "aad0b40337da20c8a64e67fe6cccf499d39676a2",
                 "shasum": ""
             },
             "require": {
@@ -428,7 +428,7 @@
                 "components",
                 "config"
             ],
-            "time": "2019-11-20T21:54:21+00:00"
+            "time": "2019-11-21T12:38:13+00:00"
         },
         {
             "name": "pier-infor/nymfonya-container",
