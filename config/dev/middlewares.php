@@ -1,7 +1,7 @@
 <?php
 
 use Nymfonya\Component\Http\Request;
-use App\Component\Http\Headers;
+use Nymfonya\Component\Http\Headers;
 use App\Middlewares\Cors;
 use App\Middlewares\Jwt;
 use App\Middlewares\Restful;

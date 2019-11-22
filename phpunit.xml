@@ -6,6 +6,7 @@
             <file>tests/BundleApiTest.php</file>
             <file>tests/ConfigTest.php</file>
             <file>tests/Component/Jwt/TokenTest.php</file>
+            <file>tests/Component/Cache/Redis/AdapterTest.php</file>
             <file>tests/Component/CryptTest.php</file>
             <file>tests/Component/AuthTest.php</file>
             <file>tests/Component/ConfigTest.php</file>
@@ -28,60 +29,6 @@
             <file>tests/Model/AccountsTest.php</file>
             <file>tests/Model/UsersTest.php</file>
         </testsuite>
-        <testsuite name="ControllerApiV1Auth">
-            <file>tests/Controllers/Api/V1/AuthTest.php</file>
-        </testsuite>
-        <testsuite name="ControllerApiV1Stat">
-            <file>tests/Controllers/Api/V1/StatTest.php</file>
-        </testsuite>
-        <testsuite name="ControllerApiV1Restful">
-            <file>tests/Controllers/Api/V1/RestfulTest.php</file>
-        </testsuite>
-        <testsuite name="ControllerApiV1Test">
-            <file>tests/Reuse/Controllers/TestTest.php</file>
-        </testsuite>
-        <testsuite name="ControllerConfig">
-            <file>tests/Controllers/ConfigTest.php</file>
-        </testsuite>
-        <testsuite name="ComponentCacheRedisAdapter">
-            <file>tests/Component/Cache/Redis/AdapterTest.php</file>
-        </testsuite>
-        <testsuite name="ComponentJwtToken">
-            <file>tests/Component/Jwt/TokenTest.php</file>
-        </testsuite>
-        <testsuite name="ComponentCrypt">
-            <file>tests/Component/CryptTest.php</file>
-        </testsuite>
-        <testsuite name="ComponentAuth">
-            <file>tests/Component/AuthTest.php</file>
-        </testsuite>
-        <testsuite name="ComponentFileUploader">
-            <file>tests/Component/File/UploaderTest.php</file>
-        </testsuite>
-        <testsuite name="ComponentModelOrm">
-            <file>tests/Component/Model/OrmTest.php</file>
-        </testsuite>
-        <testsuite name="MiddlewareJwt">
-            <file>tests/Middlewares/JwtTest.php</file>
-        </testsuite>
-        <testsuite name="MiddlewareCors">
-            <file>tests/Middlewares/CorsTest.php</file>
-        </testsuite>
-        <testsuite name="MiddlewareAfter">
-            <file>tests/Middlewares/AfterTest.php</file>
-        </testsuite>
-        <testsuite name="MiddlewareRestful">
-            <file>tests/Middlewares/RestfulTest.php</file>
-        </testsuite>
-        <testsuite name="ModelSearchAbstract">
-            <file>tests/Model/AbstractSearchTest.php</file>
-        </testsuite>
-        <testsuite name="ModelAccounts">
-            <file>tests/Model/AccountsTest.php</file>
-        </testsuite>
-        <testsuite name="ModelUsers">
-            <file>tests/Model/UsersTest.php</file>
-        </testsuite>
     </testsuites>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
@@ -89,7 +36,6 @@
             <exclude>
                 <directory suffix=".php">src/Interfaces</directory>
                 <file>./src/index.php</file>
-                <file>./src/App/Component/Container.php</file>
             </exclude>
         </whitelist>
         <blacklist>
