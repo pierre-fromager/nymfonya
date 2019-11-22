@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f943b346a895e97941e7c2f284f7568b",
+    "content-hash": "0676daba6dbab444714affe31f9e81c9",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -436,12 +436,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/pierre-fromager/nymfonya-container.git",
-                "reference": "b3d75b73fc8415160aafff549c9b7712afea241e"
+                "reference": "69e72b66cc1aecb35125e2cc1f64a48075780e6a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pierre-fromager/nymfonya-container/zipball/b3d75b73fc8415160aafff549c9b7712afea241e",
-                "reference": "b3d75b73fc8415160aafff549c9b7712afea241e",
+                "url": "https://api.github.com/repos/pierre-fromager/nymfonya-container/zipball/69e72b66cc1aecb35125e2cc1f64a48075780e6a",
+                "reference": "69e72b66cc1aecb35125e2cc1f64a48075780e6a",
                 "shasum": ""
             },
             "require": {
@@ -482,20 +482,20 @@
                 "components",
                 "container"
             ],
-            "time": "2019-11-20T22:00:42+00:00"
+            "time": "2019-11-21T15:55:16+00:00"
         },
         {
             "name": "pier-infor/nymfonya-http-foundation",
-            "version": "1.0.2",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pierre-fromager/nymfonya-http-foundation.git",
-                "reference": "ccef91d2ea196794eff5ff05ca677306e416d19b"
+                "reference": "71607a09cbb5650e9e00d126125806f5214bf0c2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pierre-fromager/nymfonya-http-foundation/zipball/ccef91d2ea196794eff5ff05ca677306e416d19b",
-                "reference": "ccef91d2ea196794eff5ff05ca677306e416d19b",
+                "url": "https://api.github.com/repos/pierre-fromager/nymfonya-http-foundation/zipball/71607a09cbb5650e9e00d126125806f5214bf0c2",
+                "reference": "71607a09cbb5650e9e00d126125806f5214bf0c2",
                 "shasum": ""
             },
             "require": {
@@ -539,7 +539,7 @@
                 "foundation",
                 "http"
             ],
-            "time": "2019-11-21T10:56:57+00:00"
+            "time": "2019-11-22T10:16:23+00:00"
         },
         {
             "name": "psr/log",
@@ -3672,6 +3672,7 @@
     "stability-flags": {
         "pier-infor/nymfonya-config": 20,
         "pier-infor/nymfonya-container": 20,
+        "pier-infor/nymfonya-http-foundation": 20,
         "phpmd/phpmd": 0
     },
     "prefer-stable": false,

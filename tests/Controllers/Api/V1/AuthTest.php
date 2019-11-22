@@ -5,9 +5,9 @@ namespace Tests\Controllers\Api\V1;
 use PHPUnit\Framework\TestCase as PFT;
 use PHPUnit\Framework\MockObject\MockObject;
 use Nymfonya\Component\Config;
-use App\Component\Container;
-use App\Component\Http\Request;
-use App\Component\Http\Response;
+use Nymfonya\Component\Container;
+use Nymfonya\Component\Http\Request;
+use Nymfonya\Component\Http\Response;
 use App\Controllers\Api\V1\Auth as ApiAuthControler;
 
 /**

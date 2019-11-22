@@ -1,6 +1,6 @@
 <?php
 
-use App\Component\Http\Request;
+use Nymfonya\Component\Http\Request;
 use App\Component\Http\Headers;
 use App\Middlewares\Cors;
 use App\Middlewares\Jwt;

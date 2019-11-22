@@ -1,6 +1,6 @@
 <?php
 
-use App\Component\Http\Request;
+use Nymfonya\Component\Http\Request;
 
 return [
         'GET;' 

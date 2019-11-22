@@ -2,10 +2,10 @@
 
 namespace App\Middlewares;
 
-use App\Component\Http\Request;
+use Nymfonya\Component\Container;
+use Nymfonya\Component\Http\Interfaces\Middleware\ILayer;
+use Nymfonya\Component\Http\Request;
 use App\Component\Jwt\Token;
-use App\Component\Http\Interfaces\Middleware\ILayer;
-use App\Component\Container;
 
 /**
  * App\Middleware\Jwt

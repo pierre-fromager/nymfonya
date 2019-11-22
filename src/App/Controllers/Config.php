@@ -4,8 +4,8 @@ namespace App\Controllers;
 
 use App\Interfaces\Controllers\IApi;
 use App\Reuse\Controllers\AbstractApi;
-use App\Component\Container;
-use App\Component\Http\Response;
+use Nymfonya\Component\Container;
+use Nymfonya\Component\Http\Response;
 
 /**
  * @OA\Info(title="Nymfonya",version="v1")

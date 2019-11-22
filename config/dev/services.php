@@ -1,10 +1,10 @@
 <?php
 
 use Nymfonya\Component\Config;
-use App\Component\Http\Request;
-use App\Component\Http\Response;
-use App\Component\Http\Routes;
-use App\Component\Http\Router;
+use Nymfonya\Component\Http\Request;
+use Nymfonya\Component\Http\Response;
+use Nymfonya\Component\Http\Routes;
+use Nymfonya\Component\Http\Router;
 
 return [
     Config::class => [Config::ENV_DEV, __DIR__ . '/../'],

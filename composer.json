@@ -11,7 +11,7 @@
         "php": ">=7.0.0",
         "pier-infor/nymfonya-config": "dev-master",
         "pier-infor/nymfonya-container": "dev-master",
-        "pier-infor/nymfonya-http-foundation": "^1.0",
+        "pier-infor/nymfonya-http-foundation": "dev-master",
         "firebase/php-jwt": "^3.0 || ^4.0 || ^5.0",
         "monolog/monolog": "^1.25",
         "respect/validation": "^1.1",
@@ -33,7 +33,9 @@
     "autoload-dev": {
         "psr-4": {
             "Tests\\": "tests/",
-            "Nymfonya\\Component\\Config\\Tests\\" : "vendor/pier-infor/nymfonya-config/tests/"
+            "Nymfonya\\Component\\Config\\Tests\\" : "vendor/pier-infor/nymfonya-config/tests/",
+            "Nymfonya\\Component\\Container\\Tests\\" : "vendor/pier-infor/nymfonya-container/tests/",
+            "Nymfonya\\Component\\HttpFoundation\\Tests\\" : "vendor/pier-infor/nymfonya-http-foundation/tests/"
         }
     },
     "config": {

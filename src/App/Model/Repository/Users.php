@@ -2,7 +2,7 @@
 
 namespace App\Model\Repository;
 
-use App\Component\Container;
+use Nymfonya\Component\Container;
 use App\Component\Model\Orm\Orm;
 
 class Users extends Orm

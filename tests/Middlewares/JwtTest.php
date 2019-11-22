@@ -5,12 +5,12 @@ namespace Tests\Middlewares;
 use PHPUnit\Framework\TestCase as PFT;
 use PHPUnit\Framework\MockObject\MockObject;
 use Nymfonya\Component\Config;
-use App\Component\Container;
-use App\Component\Http\Kernel;
-use App\Component\Http\Middleware;
-use App\Component\Http\Interfaces\Middleware\ILayer;
-use App\Component\Http\Request;
-use App\Component\Http\Response;
+use Nymfonya\Component\Container;
+use Nymfonya\Component\Http\Kernel;
+use Nymfonya\Component\Http\Middleware;
+use Nymfonya\Component\Http\Interfaces\Middleware\ILayer;
+use Nymfonya\Component\Http\Request;
+use Nymfonya\Component\Http\Response;
 use App\Middlewares\Jwt as JwtMiddleware;
 use App\Component\Jwt\Token;
 
@@ -241,7 +241,7 @@ class JwtTest extends PFT
 
     /**
      * testInstance
-     * @covers App\Component\Http\Middleware::__construct
+     * @covers Nymfonya\Component\Http\Middleware::__construct
      */
     public function testInstance()
     {

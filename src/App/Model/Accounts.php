@@ -2,7 +2,7 @@
 
 namespace App\Model;
 
-use App\Component\Container;
+use Nymfonya\Component\Container;
 use Nymfonya\Component\Config;
 use App\Model\AbstractSearch;
 use App\Component\Crypt;

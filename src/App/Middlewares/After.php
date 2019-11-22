@@ -2,9 +2,9 @@
 
 namespace App\Middlewares;
 
-use App\Component\Http\Interfaces\Middleware\ILayer;
-use App\Component\Container;
-use App\Component\Http\Headers;
+use Nymfonya\Component\Http\Interfaces\Middleware\ILayer;
+use Nymfonya\Component\Container;
+use Nymfonya\Component\Http\Headers;
 
 class After implements ILayer
 {

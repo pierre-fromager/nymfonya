@@ -2,11 +2,11 @@
 
 namespace App\Middlewares\Reuse;
 
-use App\Component\Http\Kernel;
+use Nymfonya\Component\Http\Kernel;
 use Nymfonya\Component\Config;
-use App\Component\Http\Request;
-use App\Component\Http\Response;
-use App\Component\Container;
+use Nymfonya\Component\Http\Request;
+use Nymfonya\Component\Http\Response;
+use Nymfonya\Component\Container;
 use \Monolog\Logger;
 
 trait TInit

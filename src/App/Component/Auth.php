@@ -3,7 +3,7 @@
 namespace App\Component;
 
 use Nymfonya\Component\Config;
-use App\Component\Container;
+use Nymfonya\Component\Container;
 use App\Model\Users;
 
 class Auth

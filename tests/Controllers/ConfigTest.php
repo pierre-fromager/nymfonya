@@ -4,7 +4,7 @@ namespace Tests\Controllers;
 
 use PHPUnit\Framework\TestCase as PFT;
 use Nymfonya\Component\Config;
-use App\Component\Container;
+use Nymfonya\Component\Container;
 use App\Controllers\Config as ConfigControler;
 
 /**

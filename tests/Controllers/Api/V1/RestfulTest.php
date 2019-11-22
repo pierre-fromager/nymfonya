@@ -2,12 +2,12 @@
 
 namespace Tests\Controllers\Api\V1;
 
-use PHPUnit\Framework\TestCase as PFT;
 use Nymfonya\Component\Config;
-use App\Component\Container;
+use Nymfonya\Component\Container;
+use Nymfonya\Component\Http\Request;
+use Nymfonya\Component\Http\Response;
+use PHPUnit\Framework\TestCase as PFT;
 use App\Controllers\Api\V1\Restful as ApiRestfulControler;
-use App\Component\Http\Request;
-use App\Component\Http\Response;
 
 /**
  * @covers \App\Controllers\Api\V1\Restful::<public>

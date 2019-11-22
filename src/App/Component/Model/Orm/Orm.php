@@ -3,7 +3,7 @@
 namespace App\Component\Model\Orm;
 
 use Nymfonya\Component\Config;
-use App\Component\Container;
+use Nymfonya\Component\Container;
 use NilPortugues\Sql\QueryBuilder\Builder\GenericBuilder;
 use NilPortugues\Sql\QueryBuilder\Manipulation\Select;
 use NilPortugues\Sql\QueryBuilder\Manipulation\Update;

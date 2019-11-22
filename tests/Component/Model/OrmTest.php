@@ -5,7 +5,7 @@ namespace Tests\Component\Model;
 use PHPUnit\Framework\TestCase as PFT;
 use \ReflectionMethod;
 use Nymfonya\Component\Config;
-use App\Component\Container;
+use Nymfonya\Component\Container;
 use App\Component\Model\Orm\Orm;
 use NilPortugues\Sql\QueryBuilder\Builder\GenericBuilder;
 use NilPortugues\Sql\QueryBuilder\Manipulation\Select;

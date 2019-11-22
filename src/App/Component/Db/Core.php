@@ -4,7 +4,7 @@ namespace App\Component\Db;
 
 use App\Component\Model\Orm\Orm;
 use App\Component\Db\Factory;
-use App\Component\Container;
+use Nymfonya\Component\Container;
 
 class Core
 {

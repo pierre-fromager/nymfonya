@@ -3,9 +3,9 @@
 namespace App\Reuse\Controllers;
 
 use App\Interfaces\Controllers\IApi;
-use App\Component\Container;
-use App\Component\Http\Request;
-use App\Component\Http\Response;
+use Nymfonya\Component\Container;
+use Nymfonya\Component\Http\Request;
+use Nymfonya\Component\Http\Response;
 use \Monolog\Logger;
 
 abstract class AbstractApi implements IApi

@@ -2,7 +2,7 @@
 
 namespace App\Model;
 
-use App\Component\Container;
+use Nymfonya\Component\Container;
 
 /**
  * Class App\Model\AbstractSearch

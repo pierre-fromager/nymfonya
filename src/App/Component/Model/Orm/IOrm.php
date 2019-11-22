@@ -2,7 +2,7 @@
 
 namespace App\Component\Model\Orm;
 
-use App\Component\Container;
+use Nymfonya\Component\Container;
 
 interface IOrm
 {

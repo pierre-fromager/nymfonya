@@ -2,7 +2,8 @@
 
 namespace App;
 
-use App\Component\Http\Kernel;
+//use App\Component\Http\Kernel;
+use Nymfonya\Component\Http\Kernel;
 
 class BundleApi extends Kernel
 {

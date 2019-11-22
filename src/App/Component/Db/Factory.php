@@ -4,7 +4,7 @@ namespace App\Component\Db;
 
 use \PDO;
 use Nymfonya\Component\Config;
-use App\Component\Container;
+use Nymfonya\Component\Container;
 
 class Factory
 {

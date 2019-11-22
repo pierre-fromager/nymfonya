@@ -2,11 +2,11 @@
 
 namespace App\Controllers\Api\V1;
 
+use Nymfonya\Component\Container;
+use Nymfonya\Component\Http\Response;
 use App\Interfaces\Controllers\IApi;
 use App\Interfaces\Controllers\IRestful;
 use App\Reuse\Controllers\AbstractApi;
-use App\Component\Http\Response;
-use App\Component\Container;
 use App\Model\Repository\Users;
 use App\Component\Db\Core;
 use OpenApi\Annotations as OA;

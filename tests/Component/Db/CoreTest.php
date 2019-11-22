@@ -5,7 +5,7 @@ namespace Tests\Component\Db;
 use PHPUnit\Framework\TestCase as PFT;
 use \PDO;
 use Nymfonya\Component\Config;
-use App\Component\Container;
+use Nymfonya\Component\Container;
 use App\Component\Http\Kernel;
 use App\Model\Repository\Users;
 use App\Component\Db\Core;

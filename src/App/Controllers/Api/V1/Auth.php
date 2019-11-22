@@ -5,10 +5,10 @@ namespace App\Controllers\Api\V1;
 use App\Interfaces\Controllers\IApi;
 use App\Reuse\Controllers\AbstractApi;
 use Nymfonya\Component\Config;
-use App\Component\Container;
-use App\Component\Http\Headers;
-use App\Component\Http\Request;
-use App\Component\Http\Response;
+use Nymfonya\Component\Container;
+use Nymfonya\Component\Http\Headers;
+use Nymfonya\Component\Http\Request;
+use Nymfonya\Component\Http\Response;
 use App\Model\Users;
 use App\Component\Jwt\Token;
 

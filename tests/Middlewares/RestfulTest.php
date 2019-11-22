@@ -3,12 +3,12 @@
 namespace Tests\Middlewares;
 
 use PHPUnit\Framework\TestCase as PFT;
-use App\Component\Http\Kernel;
-use App\Component\Http\Request;
+use Nymfonya\Component\Http\Kernel;
+use Nymfonya\Component\Http\Request;
 use Nymfonya\Component\Config;
-use App\Component\Container;
-use App\Component\Http\Middleware;
-use App\Component\Http\Interfaces\Middleware\ILayer;
+use Nymfonya\Component\Container;
+use Nymfonya\Component\Http\Middleware;
+use Nymfonya\Component\Http\Interfaces\Middleware\ILayer;
 use App\Middlewares\Restful;
 
 /**
@@ -133,7 +133,7 @@ class RestfulTest extends PFT
 
     /**
      * testInstance
-     * @covers App\Component\Http\Middleware::__construct
+     * @covers Nymfonya\Component\Http\Middleware::__construct
      */
     public function testInstance()
     {
@@ -169,10 +169,10 @@ class RestfulTest extends PFT
     public function testProcess()
     {
         $fakeUri = '/api/v1/restful?id=2';
-        $mockRequest = $this->createMock(\App\Component\Http\Request::class);
+        $mockRequest = $this->createMock(Request::class);
         $mockRequest->method('getUri')->willReturn($fakeUri);
         $mockRequest->method('getMethod')->willReturn(Request::METHOD_POST);
-        $this->container->setService(\App\Component\Http\Request::class, $mockRequest);
+        $this->container->setService(Request::class, $mockRequest);
         $peelReturn = $this->peelLayer();
         $this->invokeMethod($this->layer, 'setEnabled', [true]);
         $this->invokeMethod($this->layer, 'process', []);
@@ -186,10 +186,10 @@ class RestfulTest extends PFT
     public function testCaUri()
     {
         $fakeUri = '/api/v1/restful?id=2';
-        $mockRequest = $this->createMock(\App\Component\Http\Request::class);
+        $mockRequest = $this->createMock(Request::class);
         $mockRequest->method('getUri')->willReturn($fakeUri);
         $mockRequest->method('getMethod')->willReturn(Request::METHOD_POST);
-        $this->container->setService(\App\Component\Http\Request::class, $mockRequest);
+        $this->container->setService(Request::class, $mockRequest);
         $peelReturn = $this->peelLayer();
         $cau = $this->invokeMethod($this->layer, 'caUri', []);
         $this->assertNotEmpty($cau);
@@ -204,10 +204,10 @@ class RestfulTest extends PFT
     public function testRequired()
     {
         $fakeUri = '/api/v1/restful?id=2';
-        $mockRequest = $this->createMock(\App\Component\Http\Request::class);
+        $mockRequest = $this->createMock(Request::class);
         $mockRequest->method('getUri')->willReturn($fakeUri);
         $mockRequest->method('getMethod')->willReturn(Request::METHOD_POST);
-        $this->container->setService(\App\Component\Http\Request::class, $mockRequest);
+        $this->container->setService(Request::class, $mockRequest);
         $peelReturn = $this->peelLayer();
         $this->assertTrue($peelReturn instanceof Container);
         $requ0 = $this->invokeMethod($this->layer, 'required', []);
@@ -222,10 +222,10 @@ class RestfulTest extends PFT
     public function testIsExclude()
     {
         $fakeUriOk = '/api/v1/restful?id=2';
-        $mockRequest = $this->createMock(\App\Component\Http\Request::class);
+        $mockRequest = $this->createMock(Request::class);
         $mockRequest->method('getUri')->willReturn($fakeUriOk);
         $mockRequest->method('getMethod')->willReturn(Request::METHOD_POST);
-        $this->container->setService(\App\Component\Http\Request::class, $mockRequest);
+        $this->container->setService(Request::class, $mockRequest);
         $peelReturn = $this->peelLayer();
         $this->assertTrue($peelReturn instanceof Container);
         $requ0 = $this->invokeMethod($this->layer, 'isExclude', []);
@@ -233,10 +233,10 @@ class RestfulTest extends PFT
         $this->assertFalse($requ0);
         unset($mockRequest);
         $fakeUriNok = '/api/v1/test/jwtaction';
-        $mockRequest = $this->createMock(\App\Component\Http\Request::class);
+        $mockRequest = $this->createMock(Request::class);
         $mockRequest->method('getMethod')->willReturn(Request::METHOD_GET);
         $mockRequest->method('getUri')->willReturn($fakeUriNok);
-        $this->container->setService(\App\Component\Http\Request::class, $mockRequest);
+        $this->container->setService(Request::class, $mockRequest);
         $peelReturn = $this->peelLayer();
         $this->assertTrue($peelReturn instanceof Container);
         $requ0 = $this->invokeMethod($this->layer, 'isExclude', []);

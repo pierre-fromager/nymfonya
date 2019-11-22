@@ -4,7 +4,7 @@ namespace Tests\Controllers\Api\V1;
 
 use PHPUnit\Framework\TestCase as PFT;
 use Nymfonya\Component\Config;
-use App\Component\Container;
+use Nymfonya\Component\Container;
 use App\Controllers\Api\V1\Stat as ApiStatControler;
 
 /**

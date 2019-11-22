@@ -2,11 +2,11 @@
 
 namespace App\Middlewares;
 
-use App\Component\Http\Request;
-use App\Component\Http\Response;
-use App\Component\Http\Headers;
-use App\Component\Http\Interfaces\Middleware\ILayer;
-use App\Component\Container;
+use Nymfonya\Component\Http\Request;
+use Nymfonya\Component\Http\Response;
+use Nymfonya\Component\Http\Headers;
+use Nymfonya\Component\Http\Interfaces\Middleware\ILayer;
+use Nymfonya\Component\Container;
 
 /**
  * App\Middleware\Cors

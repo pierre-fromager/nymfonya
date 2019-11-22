@@ -2,11 +2,11 @@
 
 namespace App\Controllers\Api\V1;
 
+use Nymfonya\Component\Container;
+use Nymfonya\Component\Http\Response;
+use Nymfonya\Component\Http\Request;
 use App\Interfaces\Controllers\IApi;
 use App\Reuse\Controllers\AbstractApi;
-use App\Component\Http\Response;
-use App\Component\Http\Request;
-use App\Component\Container;
 use App\Component\File\Uploader;
 use App\Component\Cache\Redis\Adapter;
 

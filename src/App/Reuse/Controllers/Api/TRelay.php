@@ -2,7 +2,7 @@
 
 namespace App\Reuse\Controllers\Api;
 
-use App\Component\Http\Request;
+use Nymfonya\Component\Http\Request;
 use App\Interfaces\Controllers\IApi;
 
 trait TRelay

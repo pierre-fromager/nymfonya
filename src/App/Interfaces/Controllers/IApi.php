@@ -2,7 +2,7 @@
 
 namespace App\Interfaces\Controllers;
 
-use App\Component\Container;
+use Nymfonya\Component\Container;
 
 interface IApi
 {
