@@ -19,6 +19,11 @@ I want :
 * Slim conf.  
 * Console features.  
 * Low memory footprint.
+* Minimize load files (max 150) for any final purpose.
+* Response time always lower than 10ms.
+* All testable.
+* Packageable.
+* CI compliant.
 
 ## :eyes: Introduction
 
@@ -26,8 +31,6 @@ Involved into backend projects based on Symfony or Laravel with Angular as front
 I turned to micro frameworks like Silex, Slim...to improve more.
 A lot of them have been abandonned in favor of majors actors.
 I can't figure why, maybe a lake of maintainers or people prefered something more generalistic and large feature oriented.
-
-## :droplet: History
 
 Composer package manager, introduced in 2011 changed the way to design php app with the concept of package and dependencie.
 Autoloading RFCs as PSR-0 then PSR-4 were introduced a bit later aligning packages with namespace as vendor/feature.  
@@ -42,30 +45,25 @@ Despite all these benefits, some frameworks require around 3K files to boot, mul
 This is frustrating :rage: !  
 We can do better, don't we ?   
 
-## :ocean: Goals
+## :ocean: Best practices
 
-* Minimize number of files and filesize at boot time.
-* Minimize the memory usage at boot.
 * Instanciate objects once.
-* Inject objects everywhere by service container.
+* Inject container everywhere.
 * Type hinting usage when we can (better with php => 7.3).
 * Avoid slow processes as Reflection when we can.
 * Prohibit functional annotations.
-* Keep config as associative arrays.
-* Runnable Kernel in server and cli mode.
-* Isolate configs by Env.
 * Log everything (Monolog) by env even errors.
 * Responds minimal error structure with error code and message even no error.
 * No magic methods.
 * No globals nor define.
 * Avoid static.
-* Declare class constant in Interface.
+* Declare class constant in Interfaces.
 
 ## :horse: Arch
 
 * :sunglasses: rest App.
-* :tropical_fish: Extra packages as feature only (unsupported).
-* :beer: I would say Mvc.
+* :tropical_fish: Extra packages as features (unsupported).
+* :beer: I would say Mvc but I love to forget about controllers and use Closure instead.
 * :cyclone: Configs in config/$env.
 * :shell: Run with php >= 7.0.
 
@@ -73,6 +71,8 @@ We can do better, don't we ?
 
 * :fish: [nymfonya-config](https://github.com/pierre-fromager/nymfonya-config) external package dependencie (supported).
 * Config manager.
+* Keep config as associative arrays.
+* Isolate by Env.
 * Testable : check autoload-dev psr-4 for namespace.
 
 ### Container
@@ -84,10 +84,11 @@ We can do better, don't we ?
 * Container config is associative array (classname => params).
 * Testable : check autoload-dev psr-4 for namespace.
 
-### Kernel
+### Kernel & Http Foundation
 
 * :fish: [nymfonya-http-foundation](https://github.com/pierre-fromager/nymfonya-http-foundation) external package (supported).
 * Load Config.
+* Run Kernel in server and cli mode.
 * Instanciate services from container.
 * Setup middlewares in design order (before/core/after).
 * Run middleware sequence when routes match.
@@ -98,11 +99,11 @@ We can do better, don't we ?
 
 * Config
 * Logger (Monolog)
-* Request (not PSR-7)
+* Request (not PSR-7 yet)
 * Routes
 * Router
 * Controller
-* Response (nor PSR-7)
+* Response (nor PSR-7 yet)
 
 ### Rules
  
