@@ -4,8 +4,7 @@ namespace App\Middlewares;
 
 use Nymfonya\Component\Http\Request;
 use Nymfonya\Component\Http\Response;
-use Nymfonya\Component\Http\Headers;
-use Nymfonya\Component\Http\Interfaces\Middleware\ILayer;
+use Nymfonya\Component\Http\Interfaces\MiddlewareInterface;
 use Nymfonya\Component\Container;
 
 /**
@@ -13,7 +12,7 @@ use Nymfonya\Component\Container;
  *
  * Patch initial response to accept CORS requests
  */
-class Cors implements ILayer
+class Cors implements MiddlewareInterface
 {
 
     use \App\Middlewares\Reuse\TInit;

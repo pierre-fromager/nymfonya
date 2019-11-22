@@ -9,7 +9,8 @@ use Nymfonya\Component\Http\Response;
 use Nymfonya\Component\Http\Kernel;
 use Nymfonya\Component\Container;
 use Nymfonya\Component\Http\Middleware;
-use Nymfonya\Component\Http\Interfaces\Middleware\ILayer;
+//use Nymfonya\Component\Http\Interfaces\Middleware\ILayer;
+use Nymfonya\Component\Http\Interfaces\MiddlewareInterface;
 use Nymfonya\Component\Http\Request;
 use App\Middlewares\Cors as CorsMiddleware;
 
@@ -39,7 +40,7 @@ class CorsTest extends PFT
     /**
      * middleware layer
      *
-     * @var ILayer
+     * @var MiddlewareInterface
      */
     protected $layer;
 
@@ -129,13 +130,13 @@ class CorsTest extends PFT
      * method name,
      * array of params.
      *
-     * @param ILayer $layer
+     * @param MiddlewareInterface $layer
      * @param string $name
      * @param array $params
      * @return void
      */
     protected function invokeMethod(
-        ILayer $layer,
+        MiddlewareInterface $layer,
         string $name,
         array $params = []
     ) {

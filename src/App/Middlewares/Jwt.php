@@ -3,7 +3,8 @@
 namespace App\Middlewares;
 
 use Nymfonya\Component\Container;
-use Nymfonya\Component\Http\Interfaces\Middleware\ILayer;
+//use Nymfonya\Component\Http\Interfaces\Middleware\ILayer;
+use Nymfonya\Component\Http\Interfaces\MiddlewareInterface;
 use Nymfonya\Component\Http\Request;
 use App\Component\Jwt\Token;
 
@@ -12,7 +13,7 @@ use App\Component\Jwt\Token;
  *
  * Intercept jwt header and auth if required
  */
-class Jwt implements ILayer
+class Jwt implements MiddlewareInterface
 {
 
     use \App\Middlewares\Reuse\TInit;

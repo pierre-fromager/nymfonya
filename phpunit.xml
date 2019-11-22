@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<phpunit bootstrap="vendor/autoload.php" stopOnFailure="false" colors="true" strict="true">
+<phpunit bootstrap="vendor/autoload.php" stopOnFailure="true" colors="true" strict="true">
     <testsuites>
         <testsuite name="all">
             <file>tests/BundleApiTest.php</file>

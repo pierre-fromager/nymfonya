@@ -15,7 +15,7 @@ I want :
 * Play rest only.
 * Slim conf.  
 * Console features.  
-* Lightweight memory footprint.
+* Low memory footprint.
 
 ## :eyes: Introduction
 

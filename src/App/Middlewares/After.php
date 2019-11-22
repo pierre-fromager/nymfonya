@@ -2,11 +2,10 @@
 
 namespace App\Middlewares;
 
-use Nymfonya\Component\Http\Interfaces\Middleware\ILayer;
+use Nymfonya\Component\Http\Interfaces\MiddlewareInterface;
 use Nymfonya\Component\Container;
-use Nymfonya\Component\Http\Headers;
 
-class After implements ILayer
+class After implements MiddlewareInterface
 {
     use \App\Middlewares\Reuse\TInit;
 
