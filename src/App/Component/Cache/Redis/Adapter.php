@@ -12,11 +12,18 @@ class Adapter
     const _PORT = 'port';
 
     /**
-     * redis adapter config
+     * redis server hostname
      *
-     * @var array
+     * @var string
      */
-    protected $config;
+    protected $host;
+
+    /**
+     * redis server port
+     *
+     * @var integer
+     */
+    protected $port;
 
     /**
      * redis instance
@@ -53,7 +60,8 @@ class Adapter
      */
     public function __construct(Config $config)
     {
-        $this->config = $config->getSettings(self::_REDIS);
+        $config = $config->getSettings(self::_REDIS);
+        $this->applyConfig($config[self::_HOST], $config[self::_PORT]);
         $this->error = false;
         $this->errorCode = 0;
         $this->errorMessage = '';
@@ -69,15 +77,7 @@ class Adapter
         if (is_null($this->instance)) {
             try {
                 $this->instance =  new Redis();
-                $cresult = @$this->instance->connect(
-                    $this->config[self::_HOST],
-                    $this->config[self::_PORT]
-                );
-                if (false === $cresult) {
-                    $this->errorCode = 1;
-                    $this->error = true;
-                    $this->errorMessage = 'Redis cant connect';
-                }
+                @$this->instance->connect($this->host, $this->port);
             } catch (\RedisException $e) {
                 $this->error = true;
                 $this->errorMessage = $e->getMessage();
@@ -115,5 +115,19 @@ class Adapter
     public function getErrorMessage(): string
     {
         return $this->errorMessage;
+    }
+
+    /**
+     * set redis server config
+     *
+     * @param string $host
+     * @param integer $port
+     * @return Adapter
+     */
+    protected function applyConfig(string $host, int $port): Adapter
+    {
+        $this->host = $host;
+        $this->port = $port;
+        return $this;
     }
 }

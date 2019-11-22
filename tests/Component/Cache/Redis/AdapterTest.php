@@ -48,6 +48,21 @@ class AdapterTest extends PFT
     }
 
     /**
+     * get any method from a class to be invoked whatever the scope
+     *
+     * @param String $name
+     * @return void
+     */
+    protected static function getMethod(string $name)
+    {
+        $class = new \ReflectionClass(Adapter::class);
+        $method = $class->getMethod($name);
+        $method->setAccessible(true);
+        unset($class);
+        return $method;
+    }
+
+    /**
      * testInstance
      * @covers App\Component\Cache\Redis\Adapter::__construct
      */
@@ -98,29 +113,43 @@ class AdapterTest extends PFT
      */
     public function testGetClientException()
     {
-        $redisConfigParams = [
-            Adapter::_PORT => 8888,
-            Adapter::_HOST => 'a.0.0.0',
-            'timeout' => 0.6
-        ];
-        $redisConfigValues = function ($arg0) use ($redisConfigParams) {
-            if ($arg0 == Adapter::_REDIS) {
-                return $redisConfigParams;
-            }
-        };
-        $mockConfig = $this->createMock(Config::class);
-        $mockConfig->method('getSettings')->will(
-            $this->returnCallback($redisConfigValues)
+        $badPort = 6378;
+        $badHost = 'a.0.0.0';
+        $aco = self::getMethod('applyConfig')->invokeArgs(
+            $this->instance,
+            [$badHost, $badPort]
         );
-        $this->assertEquals(
-            $mockConfig->getSettings(Adapter::_REDIS),
-            $redisConfigParams
-        );
-        $instance = new Adapter($mockConfig);
-        $client = $instance->getClient();
+        $client = $this->instance->getClient();
         $this->assertTrue($client instanceof \Redis);
-        $this->assertTrue($instance->isError());
-        $this->assertEquals(1, $instance->getErrorCode());
+        $this->assertTrue($this->instance->isError());
+        $this->assertEquals(1, $this->instance->getErrorCode());
+        $this->assertEquals(
+            'php_network_getaddresses: getaddrinfo failed: Name or service not known',
+            $this->instance->getErrorMessage()
+        );
+    }
+
+    /**
+     * testGetClientNoConnect
+     * @covers App\Component\Cache\Redis\Adapter::getClient
+     * @covers App\Component\Cache\Redis\Adapter::isError
+     * @covers App\Component\Cache\Redis\Adapter::getErrorCode
+     */
+    public function testGetClientNoConnect()
+    {
+        $badPort = 6378;
+        $aco = self::getMethod('applyConfig')->invokeArgs(
+            $this->instance,
+            ['localhost', $badPort]
+        );
+        $client = $this->instance->getClient();
+        $this->assertTrue($client instanceof \Redis);
+        $this->assertTrue($this->instance->isError());
+        $this->assertEquals(1, $this->instance->getErrorCode());
+        $this->assertEquals(
+            'Connection refused',
+            $this->instance->getErrorMessage()
+        );
     }
 
     /**
@@ -151,5 +180,18 @@ class AdapterTest extends PFT
     {
         $this->assertTrue(is_string($this->instance->getErrorMessage()));
         $this->assertEmpty($this->instance->getErrorMessage());
+    }
+
+    /**
+     * testApplyConfig
+     * @covers App\Component\Cache\Redis\Adapter::applyConfig
+     */
+    public function testApplyConfig()
+    {
+        $aco = self::getMethod('applyConfig')->invokeArgs(
+            $this->instance,
+            ['localhost', 6379]
+        );
+        $this->assertTrue($aco instanceof Adapter);
     }
 }
