@@ -216,18 +216,7 @@ composer run md
 Run phpunit all tests.  
 ``` bash
 composer run test
-```
-
-or targeted test replacing in above command 'test' by :
-
-* testConfig
-* testRequest
-* testHeaders
-* testResponse
-* testRoutes
-* testRouter
-* ...@see composer.json
-
+```  
 To get the code coverage the command below then browse coverage/index.html file.  
 
 To run xdebug driver (xdebug required), considered as fat and buggy.  
@@ -289,8 +278,6 @@ Change some settings in php.ini
 * Refacto Request to use behind a proxy.
 * Console tool.
 * More middlewares before Acl, Waf, after Transfos...
-* Isolate http & core as packages.
-* Implement Bundle concept.
 * Implement Controller forward method.
 * Implement Response redirect 30X.
 
