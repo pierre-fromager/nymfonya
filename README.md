@@ -11,7 +11,11 @@ is not a Symfony app...¯\\_(ツ)_/¯
 
 ## ʕʘ̅͜ʘ̅ʔ Why
 
-I want a zero conf consolable lightweight fast Rest backend & I :blue_heart: Php...OMG !!!
+I want :  
+* Play rest only.
+* Slim conf.  
+* Console features.  
+* Lightweight memory footprint.
 
 ## :eyes: Introduction
 
@@ -56,26 +60,36 @@ We can do better, don't we ?
 
 ## :horse: Arch
 
-* :sunglasses: Monolithic App.
-* :tropical_fish: Extra packages as feature only.
+* :sunglasses: rest App.
+* :tropical_fish: Extra packages as feature only (unsupported).
 * :beer: I would say Mvc.
 * :cyclone: Configs in config/$env.
 * :shell: Run with php >= 7.0.
 
+### Config
+
+* :fish: [nymfonya-config](https://github.com/pierre-fromager/nymfonya-config) external package dependencie (supported).
+* Config manager.
+* Testable : check autoload-dev psr-4 for namespace.
+
 ### Container
 
+* :fish: [nymfonya-container](https://github.com/pierre-fromager/nymfonya-container) external package dependencie (supported).
 * not PSR-11.
 * Instanciate classes with injected params.
 * Roll-in precedence order.
 * Container config is associative array (classname => params).
+* Testable : check autoload-dev psr-4 for namespace.
 
 ### Kernel
 
+* :fish: [nymfonya-http-foundation](https://github.com/pierre-fromager/nymfonya-http-foundation) external package (supported).
 * Load Config.
 * Instanciate services from container.
 * Setup middlewares in design order (before/core/after).
 * Run middleware sequence when routes match.
 * Execute controler action as middleware core Closure.
+* Testable : check autoload-dev psr-4 for namespace.
 
 ### Services
 
