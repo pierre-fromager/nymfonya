@@ -1,11 +1,23 @@
 {
-    "name": "pier-infor/skypass",
-    "description": "Nymfonya Backend.",
+    "name": "pier-infor/nymfonya",
+    "description": "Nymfonya Backend App",
     "keywords": [
+        "Nymfonya App",
         "backend",
         "rest"
     ],
-    "license": "GNU3",
+    "homepage": "https://github.com/pierre-fromager/nymfonya",
+    "license": "LGPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "Pierre Fromager",
+            "email": "info@pier-infor.fr",
+            "homepage": "https://github.com/pierre-fromager"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "version": "1.0.2",
     "type": "project",
     "require": {
         "php": ">=7.0.0",
