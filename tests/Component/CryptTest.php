@@ -103,6 +103,31 @@ class CyptTest extends PFT
     }
 
     /**
+     * testEncryptNotVerify
+     * 
+     * Show that encrypted content is different each time.
+     * But each encrypted content is well decrypted.
+     * 
+     * @covers App\Component\Crypt::encrypt
+     * @covers App\Component\Crypt::decrypt
+     */
+    public function testEncryptNotVerify()
+    {
+        $content = 'message';
+        $en0 = $this->instance->encrypt($content, true);
+        $this->assertNotEmpty($en0);
+        $this->assertTrue(is_string($en0));
+        $en1 = $this->instance->encrypt($content, true);
+        $this->assertNotEmpty($en1);
+        $this->assertTrue(is_string($en1));
+        $this->assertNotEquals($en0, $en1);
+        $this->assertEquals(
+            $this->instance->decrypt($en0, true),
+            $this->instance->decrypt($en1, true)
+        );
+    }
+
+    /**
      * testDecryptException
      * @covers App\Component\Crypt::decrypt
      */
