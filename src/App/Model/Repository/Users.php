@@ -38,8 +38,32 @@ class Users extends Orm
      * @param Container $container
      * @return self
      */
-    public function _construct(Container $container)
+    public function __construct(Container $container)
     {
         parent::__construct($container);
+    }
+
+    /**
+     * find a user for a given id
+     *
+     * @param integer $uid
+     * @return Users
+     */
+    public function getById(int $uid): Users
+    {
+        $this->find(['*'], ['id' => $uid]);
+        return $this;
+    }
+
+    /**
+     * find a user for a given email
+     *
+     * @param integer $uid
+     * @return Users
+     */
+    public function getByEmail(string $email): Users
+    {
+        $this->find(['*'], ['email' => $email]);
+        return $this;
     }
 }

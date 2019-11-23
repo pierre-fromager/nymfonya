@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0676daba6dbab444714affe31f9e81c9",
+    "content-hash": "7665800c5028106e4eaab64b363465ef",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -490,12 +490,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/pierre-fromager/nymfonya-http-foundation.git",
-                "reference": "b9dd445a9c10acca6f4398fdf87d7d2ca3923a6b"
+                "reference": "e58d71d3434179b6d73613cda5da5fe00991ef80"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pierre-fromager/nymfonya-http-foundation/zipball/b9dd445a9c10acca6f4398fdf87d7d2ca3923a6b",
-                "reference": "b9dd445a9c10acca6f4398fdf87d7d2ca3923a6b",
+                "url": "https://api.github.com/repos/pierre-fromager/nymfonya-http-foundation/zipball/e58d71d3434179b6d73613cda5da5fe00991ef80",
+                "reference": "e58d71d3434179b6d73613cda5da5fe00991ef80",
                 "shasum": ""
             },
             "require": {
@@ -539,7 +539,7 @@
                 "foundation",
                 "http"
             ],
-            "time": "2019-11-22T12:30:07+00:00"
+            "time": "2019-11-22T13:05:10+00:00"
         },
         {
             "name": "psr/log",
@@ -3668,14 +3668,14 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "stability-flags": {
         "pier-infor/nymfonya-config": 20,
         "pier-infor/nymfonya-container": 20,
         "pier-infor/nymfonya-http-foundation": 20,
         "phpmd/phpmd": 0
     },
-    "prefer-stable": false,
+    "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": ">=7.0.0"
