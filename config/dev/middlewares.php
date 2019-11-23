@@ -47,7 +47,7 @@ return [
         'exclude' => [
             'auth/login', 'stat/opcache', 
             'restful', 'restful/index', 
-            'test/pokerelay' , 'test/redis'
+            'test/pokerelay', 'test/redis'
         ],
     ],
     After::class => [

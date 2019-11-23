@@ -189,7 +189,7 @@ class Core
                 $v = ($type == \PDO::PARAM_INT) ? (int) $v : $v;
             }
             $value = is_array($v) ? serialize($v) : $v;
-            $key =  $k;
+            $key = $k;
             try {
                 $poStatement->bindValue($key, $value, $type);
             } catch (\PDOException $e) {
