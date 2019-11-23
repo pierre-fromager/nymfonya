@@ -52,12 +52,13 @@ class FactoryTest extends PFT
         $this->init();
     }
 
-    /**
-     * test init
-     *
-     * @param boolean $badconfig
-     * @return void
-     */
+     /**
+      * initialize test
+      *
+      * @param boolean $badEntry
+      * @param boolean $messAdapter
+      * @return void
+      */
     protected function init(bool $badEntry = false, bool $messAdapter = false)
     {
         $this->config = new Config(
