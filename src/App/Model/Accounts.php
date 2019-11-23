@@ -4,15 +4,16 @@ namespace App\Model;
 
 use Nymfonya\Component\Container;
 use Nymfonya\Component\Config;
+use App\Component\Auth\AuthInterface;
 use App\Model\AbstractSearch;
 use App\Component\Crypt;
 
 /**
  * Class App\Model\Accounts
  *
- * Provides account list.
+ * Provides account list from file accounts.csv.
  */
-class Accounts extends AbstractSearch
+class Accounts extends AbstractSearch implements AuthInterface
 {
     const _ID = 'id';
     const _NAME = 'name';
@@ -23,7 +24,7 @@ class Accounts extends AbstractSearch
     const PATH_ASSETS_MODEL = '/../assets/model/';
     const ACCOUNTS_FILENAME = '/accounts.csv';
     const FIELD_SEPARATOR = ',';
-    const FILTER_ALL = '/^(.*),(.*),(.*),(.*),(.*)/';
+    const FILTER_ALL = '/^(.*),(.*),(.*),(.*),(.*),(.*)/';
 
     /**
      * config
@@ -42,6 +43,34 @@ class Accounts extends AbstractSearch
         $this->config = $this->getService(Config::class);
         $this->init();
         return $this;
+    }
+
+    /**
+     * auth
+     *
+     * @return array
+     */
+    public function auth(string $login, string $password): array
+    {
+        $crypt = new Crypt($this->config);
+        $filter =
+            '/^(.*),'
+            . '(.*),'
+            . '(' . $login . '),'
+            . '(.*),'
+            . '(.*),'
+            . '(.*)/';
+        $this->setFilter($filter)->readFromStream();
+        $result = $this->get();
+        if (empty($result)) {
+            return [];
+        }
+        $user = $result[0];
+        if ($password == $crypt->decrypt($user[self::_PASSWORD])) {
+            return $user;
+        }
+        unset($crypt);
+        return [];
     }
 
     /**

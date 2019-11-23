@@ -2,8 +2,10 @@
 
 namespace App\Component\Auth\Adapters;
 
+use Nymfonya\Component\Config as AppConfig;
 use Nymfonya\Component\Container;
 use App\Component\Auth\AdapterInterface;
+use App\Model\Users;
 
 class Config implements AdapterInterface
 {
@@ -32,6 +34,7 @@ class Config implements AdapterInterface
      */
     public function auth(string $login, string $password): array
     {
-        return [];
+        $config = $this->container->getService(AppConfig::class);
+        return (new Users($config))->auth($login, $password);
     }
 }

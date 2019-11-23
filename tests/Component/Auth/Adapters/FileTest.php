@@ -8,6 +8,11 @@ use Nymfonya\Component\Container;
 use App\Component\Auth\Adapters\File as FileAdapter;
 
 /**
+ * FileTest
+ *
+ * test auth file adapter.
+ * Results may differ from config accounts values.
+ *
  * @covers \App\Component\Auth\Adapters\File::<public>
  */
 class FileTest extends PFT
@@ -102,10 +107,21 @@ class FileTest extends PFT
     }
 
     /**
-     * testAuth
+     * testAuthOk
      * @covers App\Component\Auth\Adapters\File::auth
      */
-    public function testAuth()
+    public function testAuthOk()
+    {
+        $auf = $this->instance->auth('admin@domain.tld', 'adminadmin');
+        $this->assertTrue(is_array($auf));
+        $this->assertNotEmpty($auf);
+    }
+
+    /**
+     * testAuthNok
+     * @covers App\Component\Auth\Adapters\File::auth
+     */
+    public function testAuthNok()
     {
         $auf = $this->instance->auth('login', 'password');
         $this->assertTrue(is_array($auf));

@@ -3,13 +3,14 @@
 namespace App\Model;
 
 use Nymfonya\Component\Config;
+use App\Component\Auth\AuthInterface;
 
 /**
  * Users class is a basic class to let auth process running.
  * It uses fake accounts come from config accounts key.
  * For security reason, don't use this in prod /!\
  */
-class Users
+class Users implements AuthInterface
 {
 
     const _ID = 'id';

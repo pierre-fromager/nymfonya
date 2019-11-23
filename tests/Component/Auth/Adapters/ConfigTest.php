@@ -101,11 +101,22 @@ class ConfigTest extends PFT
         $this->assertTrue($this->instance instanceof ConfigAdapter);
     }
 
-    /**
-     * testAuth
+ /**
+     * testAuthOk
      * @covers App\Component\Auth\Adapters\Config::auth
      */
-    public function testAuth()
+    public function testAuthOk()
+    {
+        $auf = $this->instance->auth('admin@domain.tld', 'adminadmin');
+        $this->assertTrue(is_array($auf));
+        $this->assertNotEmpty($auf);
+    }
+
+    /**
+     * testAuthNok
+     * @covers App\Component\Auth\Adapters\Config::auth
+     */
+    public function testAuthNok()
     {
         $auf = $this->instance->auth('login', 'password');
         $this->assertTrue(is_array($auf));
