@@ -1,4 +1,5 @@
 <?php
+
 return [
     'request' => [
         'scheme' => 'https',
@@ -22,4 +23,7 @@ return [
     ],
     'redis' => include 'cli/redis.php',
     'db' => include 'cli/db.php',
+    'auth' => [
+        'adapter' => \App\Component\Auth\Adapters\File::class
+    ]
 ];

@@ -7,6 +7,7 @@
             <file>tests/Component/Cache/Redis/AdapterTest.php</file>
             <file>tests/Component/CryptTest.php</file>
             <file>tests/Component/AuthTest.php</file>
+            <file>tests/Component/Auth/FactoryTest.php</file>
             <file>tests/Component/ConfigTest.php</file>
             <file>tests/Component/File/UploaderTest.php</file>
             <file>tests/Component/Model/OrmTest.php</file>
