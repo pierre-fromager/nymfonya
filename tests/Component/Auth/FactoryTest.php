@@ -143,6 +143,7 @@ class FactoryTest extends PFT
     /**
      * testAuthFileAdapter
      * @covers App\Component\Auth\Factory::setAdapter
+     * @covers App\Component\Auth\Factory::getAdapter
      * @covers App\Component\Auth\Factory::auth
      */
     public function testAuthFileAdapter()
@@ -151,6 +152,9 @@ class FactoryTest extends PFT
         $auf = $this->instance->auth('login', 'password');
         $this->assertTrue(is_array($auf));
         $this->assertEmpty($auf);
+        $this->assertTrue(
+            $this->instance->getAdapter() instanceof FileAdapter
+        );
     }
 
     /**
@@ -164,6 +168,9 @@ class FactoryTest extends PFT
         $aur = $this->instance->auth('login', 'password');
         $this->assertTrue(is_array($aur));
         $this->assertEmpty($aur);
+        $this->assertTrue(
+            $this->instance->getAdapter() instanceof RepositoryAdapter
+        );
     }
 
     /**
@@ -177,6 +184,9 @@ class FactoryTest extends PFT
         $auc = $this->instance->auth('login', 'password');
         $this->assertTrue(is_array($auc));
         $this->assertEmpty($auc);
+        $this->assertTrue(
+            $this->instance->getAdapter() instanceof ConfigAdapter
+        );
     }
 
     /**
