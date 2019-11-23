@@ -130,7 +130,7 @@ class Accounts extends AbstractSearch implements AuthInterface
         if (!file_exists($filename)) {
             $crypt = new Crypt($this->config);
             $accounts = $this->config->getSettings(Config::_ACCOUNTS);
-            $accounts = array_map(function ($acc) use ($crypt) {
+            $accounts = array_map(function($acc) use ($crypt) {
                 $acc[self::_PASSWORD] = $crypt->encrypt(
                     $acc[self::_PASSWORD],
                     true
