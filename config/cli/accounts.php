@@ -26,5 +26,3 @@ return [
         'role' => 'pro'
     ],
 ];
-
-

@@ -177,4 +177,43 @@ class AccountsTest extends PFT
         );
         $this->assertTrue($cfi instanceof Accounts);
     }
+
+    /**
+     * testAuthBadLogin
+     * @covers App\Model\Accounts::auth
+     */
+    public function testAuthBadLogin()
+    {
+        $aut = $this->instance->auth('login', 'password');
+        $this->assertTrue(is_array($aut));
+        $this->assertEmpty($aut);
+    }
+
+    /**
+     * testAuthBadPassword
+     * @covers App\Model\Accounts::auth
+     */
+    public function testAuthBadPassword()
+    {
+        $aut = $this->instance->auth(
+            'admin@domain.tld',
+            'password'
+        );
+        $this->assertTrue(is_array($aut));
+        $this->assertEmpty($aut);
+    }
+
+    /**
+     * testAuthOk
+     * @covers App\Model\Accounts::auth
+     */
+    public function testAuthOk()
+    {
+        $aut = $this->instance->auth(
+            'admin@domain.tld',
+            'adminadmin'
+        );
+        $this->assertTrue(is_array($aut));
+        $this->assertNotEmpty($aut);
+    }
 }

@@ -104,10 +104,10 @@ class CyptTest extends PFT
 
     /**
      * testEncryptNotVerify
-     * 
+     *
      * Show that encrypted content is different each time.
      * But each encrypted content is well decrypted.
-     * 
+     *
      * @covers App\Component\Crypt::encrypt
      * @covers App\Component\Crypt::decrypt
      */
