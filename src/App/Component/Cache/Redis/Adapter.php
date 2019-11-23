@@ -77,7 +77,10 @@ class Adapter
         if (is_null($this->instance)) {
             try {
                 $this->instance =  new Redis();
-                @$this->instance->connect($this->host, $this->port);
+                $con = @$this->instance->connect($this->host, $this->port);
+                if (false === $con) {
+                    throw new \RedisException('Connection refused', 2);
+                }
             } catch (\RedisException $e) {
                 $this->error = true;
                 $this->errorMessage = $e->getMessage();

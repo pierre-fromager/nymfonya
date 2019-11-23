@@ -3,7 +3,6 @@
 namespace App\Middlewares;
 
 use Nymfonya\Component\Container;
-//use Nymfonya\Component\Http\Interfaces\Middleware\ILayer;
 use Nymfonya\Component\Http\Interfaces\MiddlewareInterface;
 use Nymfonya\Component\Http\Request;
 use App\Component\Jwt\Token;

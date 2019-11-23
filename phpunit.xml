@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<phpunit bootstrap="vendor/autoload.php" stopOnFailure="true" colors="true" strict="true">
+<phpunit bootstrap="vendor/autoload.php" stopOnFailure="false" colors="true" strict="true">
     <testsuites>
         <testsuite name="all">
-            <file>tests/BundleApiTest.php</file>
-            <file>tests/ConfigTest.php</file>
             <file>tests/Component/Jwt/TokenTest.php</file>
             <file>tests/Component/Cache/Redis/AdapterTest.php</file>
             <file>tests/Component/CryptTest.php</file>
@@ -15,12 +13,6 @@
             <file>tests/Component/Db/Adapter/PdoMysqlTest.php</file>
             <file>tests/Component/Db/FactoryTest.php</file>
             <file>tests/Component/Db/CoreTest.php</file>
-            <file>tests/Controllers/ConfigTest.php</file>
-            <file>tests/Controllers/Api/V1/AuthTest.php</file>
-            <file>tests/Controllers/Api/V1/StatTest.php</file>
-            <file>tests/Controllers/Api/V1/RestfulTest.php</file>
-            <file>tests/Controllers/Api/V1/TestTest.php</file>
-            <file>tests/Reuse/Controllers/AbstractApiTest.php</file>
             <file>tests/Middlewares/JwtTest.php</file>
             <file>tests/Middlewares/CorsTest.php</file>
             <file>tests/Middlewares/AfterTest.php</file>
@@ -28,6 +20,15 @@
             <file>tests/Model/AbstractSearchTest.php</file>
             <file>tests/Model/AccountsTest.php</file>
             <file>tests/Model/UsersTest.php</file>
+            <file>tests/Model/Repository/UsersTest.php</file>
+            <file>tests/Controllers/ConfigTest.php</file>
+            <file>tests/Controllers/Api/V1/AuthTest.php</file>
+            <file>tests/Controllers/Api/V1/StatTest.php</file>
+            <file>tests/Controllers/Api/V1/RestfulTest.php</file>
+            <file>tests/Controllers/Api/V1/TestTest.php</file>
+            <file>tests/Reuse/Controllers/AbstractApiTest.php</file>
+            <file>tests/ConfigTest.php</file>
+            <file>tests/BundleApiTest.php</file>
         </testsuite>
     </testsuites>
     <filter>

@@ -3,7 +3,6 @@
 namespace App\Middlewares;
 
 use Nymfonya\Component\Http\Request;
-//use Nymfonya\Component\Http\Interfaces\Middleware\;
 use Nymfonya\Component\Http\Interfaces\MiddlewareInterface;
 use Nymfonya\Component\Container;
 

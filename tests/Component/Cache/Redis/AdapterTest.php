@@ -102,7 +102,10 @@ class AdapterTest extends PFT
      */
     public function testGetClient()
     {
-        $this->assertTrue($this->instance->getClient() instanceof \Redis);
+        $this->assertTrue(
+            $this->instance->getClient() instanceof \Redis
+        );
+        $this->assertFalse($this->instance->isError());
     }
 
     /**
@@ -113,9 +116,9 @@ class AdapterTest extends PFT
      */
     public function testGetClientException()
     {
-        $badPort = 6378;
+        $badPort = 6379;
         $badHost = 'a.0.0.0';
-        $aco = self::getMethod('applyConfig')->invokeArgs(
+        self::getMethod('applyConfig')->invokeArgs(
             $this->instance,
             [$badHost, $badPort]
         );
@@ -123,8 +126,11 @@ class AdapterTest extends PFT
         $this->assertTrue($client instanceof \Redis);
         $this->assertTrue($this->instance->isError());
         $this->assertEquals(1, $this->instance->getErrorCode());
+        $expectMessage = (version_compare(phpversion(), '7.1', '<'))
+            ? 'Connection refused'
+            : 'php_network_getaddresses: getaddrinfo failed: Name or service not known';
         $this->assertEquals(
-            'php_network_getaddresses: getaddrinfo failed: Name or service not known',
+            $expectMessage,
             $this->instance->getErrorMessage()
         );
     }
@@ -138,7 +144,7 @@ class AdapterTest extends PFT
     public function testGetClientNoConnect()
     {
         $badPort = 6378;
-        $aco = self::getMethod('applyConfig')->invokeArgs(
+        self::getMethod('applyConfig')->invokeArgs(
             $this->instance,
             ['localhost', $badPort]
         );
