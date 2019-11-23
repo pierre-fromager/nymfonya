@@ -13,6 +13,10 @@ use App\Model\Accounts;
 class AccountsTest extends PFT
 {
 
+    const GOOD_LOGIN = 'admin@domain.tld';
+    const GOOD_PASSWORD = 'adminadmin';
+    const BAD_LOGIN = 'login';
+    const BAD_PASSWORD = 'password';
     const TEST_ENABLE = true;
     const CONFIG_PATH = '/../../config/';
     const ASSET_PATH = '/../../assets/tests/model/';
@@ -108,8 +112,6 @@ class AccountsTest extends PFT
      */
     public function testReadFromStream()
     {
-        //$sfn = $this->instance->setFilename($this->filename);
-        //$this->assertTrue($sfn instanceof AbstractSearch);
         $sft = $this->instance->setFilter('/^(.*),(.*),(.*),(.*),(.*)/');
         $this->assertTrue($sft instanceof Accounts);
         $sse = $this->instance->setseparator(',');
@@ -184,7 +186,10 @@ class AccountsTest extends PFT
      */
     public function testAuthBadLogin()
     {
-        $aut = $this->instance->auth('login', 'password');
+        $aut = $this->instance->auth(
+            self::BAD_LOGIN,
+            self::BAD_PASSWORD
+        );
         $this->assertTrue(is_array($aut));
         $this->assertEmpty($aut);
     }
@@ -196,8 +201,8 @@ class AccountsTest extends PFT
     public function testAuthBadPassword()
     {
         $aut = $this->instance->auth(
-            'admin@domain.tld',
-            'password'
+            self::GOOD_LOGIN,
+            self::BAD_PASSWORD
         );
         $this->assertTrue(is_array($aut));
         $this->assertEmpty($aut);
@@ -210,8 +215,8 @@ class AccountsTest extends PFT
     public function testAuthOk()
     {
         $aut = $this->instance->auth(
-            'admin@domain.tld',
-            'adminadmin'
+            self::GOOD_LOGIN,
+            self::GOOD_PASSWORD
         );
         $this->assertTrue(is_array($aut));
         $this->assertNotEmpty($aut);
