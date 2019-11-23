@@ -102,12 +102,42 @@ class FactoryTest extends PFT
     }
 
     /**
+     * get any method from a class to be invoked whatever the scope
+     *
+     * @param String $name
+     * @return void
+     */
+    protected static function getMethod(string $name)
+    {
+        $class = new \ReflectionClass(Factory::class);
+        $method = $class->getMethod($name);
+        $method->setAccessible(true);
+        unset($class);
+        return $method;
+    }
+
+    /**
      * testInstance
      * @covers App\Component\Auth\Factory::__construct
      */
     public function testInstance()
     {
         $this->assertTrue($this->instance instanceof Factory);
+    }
+
+    /**
+     * testAllowedAdapters
+     * @covers App\Component\Auth\Factory::allowedAdapters
+     * @covers App\Component\Auth\Factory::auth
+     */
+    public function testAllowedAdapters()
+    {
+        $ala = self::getMethod('allowedAdapters')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertTrue(is_array($ala));
+        $this->assertNotEmpty($ala);
     }
 
     /**

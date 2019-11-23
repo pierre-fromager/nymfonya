@@ -59,12 +59,7 @@ class Factory implements AdapterInterface
         } else {
             $adapterClassname = $classname;
         }
-        $allowedAdapters = [
-            FileAdapter::class,
-            ConfigAdapter::class,
-            RepositoryAdapter::class
-        ];
-        if (false === in_array($adapterClassname, $allowedAdapters)) {
+        if (false === in_array($adapterClassname, $this->allowedAdapters())) {
             throw new \Exception('Bad auth adapter classname');
         }
         $this->adapter = new $adapterClassname($this->container);
@@ -89,5 +84,18 @@ class Factory implements AdapterInterface
     public function auth(string $login, string $password): array
     {
         return $this->getAdapter()->auth($login, $password);
+    }
+
+    /**
+     * returns alloed adapter list
+     *
+     * @return array
+     */
+    protected function allowedAdapters(): array
+    {
+        return [
+            FileAdapter::class, ConfigAdapter::class,
+            RepositoryAdapter::class
+        ];
     }
 }
