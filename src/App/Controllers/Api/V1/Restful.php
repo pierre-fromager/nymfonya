@@ -20,6 +20,8 @@ use OpenApi\Annotations as OA;
 final class Restful extends AbstractApi implements IApi, IRestful
 {
 
+    const _ID='id';
+
     /**
      * core db instance
      *
@@ -116,13 +118,10 @@ final class Restful extends AbstractApi implements IApi, IRestful
     final public function index(array $slugs = []): Restful
     {
         $this->slugs = $slugs;
-        $this->userRepository->find(
-            ['name'],
-            [
-                'name' => ['john', 'elisa'],
-                'jobs>' => 1
-            ]
-        );
+        $where = (isset($slugs[self::_ID]))
+            ? [self::_ID => $slugs[self::_ID]]
+            : [];
+        $this->userRepository->find(['*'], $where);
         $this->sql = $this->userRepository->getSql();
         $this->bindValues = $this->userRepository->getBuilderValues();
         $this->db->run($this->sql, $this->bindValues)->hydrate();

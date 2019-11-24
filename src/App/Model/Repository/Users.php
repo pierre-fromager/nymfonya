@@ -3,9 +3,10 @@
 namespace App\Model\Repository;
 
 use Nymfonya\Component\Container;
+use App\Component\Model\Orm\IOrm;
 use App\Component\Model\Orm\Orm;
 
-class Users extends Orm
+class Users extends Orm implements IOrm
 {
 
     /**
@@ -64,6 +65,20 @@ class Users extends Orm
     public function getByEmail(string $email): Users
     {
         $this->find(['*'], ['email' => $email]);
+        return $this;
+    }
+
+    /**
+     * auth from username and password
+     *
+     * @param string $email
+     * @param string $password
+     * @return array
+     */
+    public function auth(string $email, string $password): Users
+    {
+        $where = ['email' => $email];
+        $this->find(['*'], $where);
         return $this;
     }
 }

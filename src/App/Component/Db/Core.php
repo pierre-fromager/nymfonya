@@ -139,6 +139,7 @@ class Core
                     );
                 }
             }
+            $this->statement->execute();
         } catch (\PDOException $e) {
             $this->setError(true, $e->getCode(), $e->getMessage());
             $this->logger->alert('Core Db : Run failed');

@@ -490,12 +490,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/pierre-fromager/nymfonya-http-foundation.git",
-                "reference": "e58d71d3434179b6d73613cda5da5fe00991ef80"
+                "reference": "c7fb50a9d5c2fc45794501af6af27bc5f62afaae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pierre-fromager/nymfonya-http-foundation/zipball/e58d71d3434179b6d73613cda5da5fe00991ef80",
-                "reference": "e58d71d3434179b6d73613cda5da5fe00991ef80",
+                "url": "https://api.github.com/repos/pierre-fromager/nymfonya-http-foundation/zipball/c7fb50a9d5c2fc45794501af6af27bc5f62afaae",
+                "reference": "c7fb50a9d5c2fc45794501af6af27bc5f62afaae",
                 "shasum": ""
             },
             "require": {
@@ -539,7 +539,7 @@
                 "foundation",
                 "http"
             ],
-            "time": "2019-11-22T13:05:10+00:00"
+            "time": "2019-11-24T12:28:23+00:00"
         },
         {
             "name": "psr/log",

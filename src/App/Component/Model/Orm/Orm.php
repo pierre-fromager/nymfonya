@@ -101,6 +101,17 @@ class Orm implements IOrm
     }
 
     /**
+     * reset query builder
+     *
+     * @return void
+     */
+    public function resetBuilder(): Orm
+    {
+        $this->queryBuilder = new GenericBuilder();
+        return $this;
+    }
+
+    /**
      * set required columns
      *
      * @param array $columns
@@ -228,6 +239,16 @@ class Orm implements IOrm
     public function getDatabase(): string
     {
         return $this->database;
+    }
+
+    /**
+     * get table name
+     *
+     * @return string
+     */
+    public function getTable(): string
+    {
+        return $this->tablename;
     }
 
     /**

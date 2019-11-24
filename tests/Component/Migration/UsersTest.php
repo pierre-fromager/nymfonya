@@ -1,22 +1,22 @@
 <?php
 
-namespace Tests\Component\Auth\Adapters;
+namespace Tests\Component\Migration;
 
 use PHPUnit\Framework\TestCase as PFT;
 use Nymfonya\Component\Config;
 use Nymfonya\Component\Container;
-use App\Component\Auth\Adapters\Repository as RepositoryAdapter;
+use App\Component\Migration\Users;
+use App\Component\Db\Migration;
 
 /**
- * @covers \App\Component\Auth\Adapters\Repository::<public>
+ * @covers \App\Component\Migration\Users::<public>
  */
-class RepositoryTest extends PFT
+class UsersTest extends PFT
 {
 
     const TEST_ENABLE = true;
-    const CONFIG_PATH = '/../../../../config/';
-    const VALID_LOGIN = 'admin@domain.tld';
-    const VALID_PASSWORD = 'adminadmin';
+    const CONFIG_PATH = '/../../../config/';
+    const PAYLOAD = [0, 'gogo', 'dancer'];
 
     /**
      * config instance
@@ -35,7 +35,7 @@ class RepositoryTest extends PFT
     /**
      * instance
      *
-     * @var RepositoryAdapter
+     * @var Users
      */
     protected $instance;
 
@@ -48,16 +48,6 @@ class RepositoryTest extends PFT
         if (!self::TEST_ENABLE) {
             $this->markTestSkipped('Test disabled.');
         }
-        $this->init();
-    }
-
-     /**
-      * initialize test
-      *
-      * @return void
-      */
-    protected function init()
-    {
         $this->config = new Config(
             Config::ENV_CLI,
             __DIR__ . self::CONFIG_PATH
@@ -65,7 +55,7 @@ class RepositoryTest extends PFT
         $this->container = new Container(
             $this->config->getSettings(Config::_SERVICES)
         );
-        $this->instance = new RepositoryAdapter($this->container);
+        $this->instance = new Users($this->container);
     }
 
     /**
@@ -76,7 +66,7 @@ class RepositoryTest extends PFT
     {
         $this->instance = null;
         $this->config = null;
-        $this->container = null;
+        $this->request = null;
     }
 
     /**
@@ -87,7 +77,7 @@ class RepositoryTest extends PFT
      */
     protected static function getMethod(string $name)
     {
-        $class = new \ReflectionClass(RepositoryAdapter::class);
+        $class = new \ReflectionClass(Users::class);
         $method = $class->getMethod($name);
         $method->setAccessible(true);
         unset($class);
@@ -96,32 +86,49 @@ class RepositoryTest extends PFT
 
     /**
      * testInstance
-     * @covers App\Component\Auth\Adapters\Repository::__construct
+     * @covers App\Component\Migration\Users::__construct
      */
     public function testInstance()
     {
-        $this->assertTrue($this->instance instanceof RepositoryAdapter);
+        $this->assertTrue($this->instance instanceof Users);
     }
 
     /**
-     * testAuthOk
-     * @covers App\Component\Auth\Adapters\Repository::auth
+     * testCanMigrate
+     * @covers App\Component\Migration\Users::canMigrate
      */
-    public function testAuthOk()
+    public function testCanMigrate()
     {
-        $auf = $this->instance->auth(self::VALID_LOGIN, self::VALID_PASSWORD);
-        $this->assertTrue(is_array($auf));
-        $this->assertNotEmpty($auf);
+        $cam = self::getMethod('canMigrate')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertTrue(is_bool($cam));
     }
 
     /**
-     * testAuthNok
-     * @covers App\Component\Auth\Adapters\Repository::auth
+     * testGetSqlCreate
+     * @covers App\Component\Migration\Users::runCreate
      */
-    public function testAuthNok()
+    public function testGetSqlCreate()
     {
-        $auf = $this->instance->auth('login', 'password');
-        $this->assertTrue(is_array($auf));
-        $this->assertEmpty($auf);
+        $gsc = self::getMethod('runCreate')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertTrue($gsc instanceof Migration);
+    }
+
+    /**
+     * testGetSqlInsert
+     * @covers App\Component\Migration\Users::runInsert
+     */
+    public function testGetSqlInsert()
+    {
+        $gsi = self::getMethod('runInsert')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertTrue($gsi instanceof Migration);
     }
 }

@@ -3,6 +3,7 @@
 <phpunit bootstrap="vendor/autoload.php" stopOnFailure="false" colors="true" strict="true">
     <testsuites>
         <testsuite name="all">
+            <file>tests/Component/Migration/UsersTest.php</file>
             <file>tests/Component/Jwt/TokenTest.php</file>
             <file>tests/Component/Cache/Redis/AdapterTest.php</file>
             <file>tests/Component/CryptTest.php</file>
