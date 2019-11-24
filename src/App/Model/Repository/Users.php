@@ -67,18 +67,4 @@ class Users extends Orm implements IOrm
         $this->find(['*'], ['email' => $email]);
         return $this;
     }
-
-    /**
-     * auth from username and password
-     *
-     * @param string $email
-     * @param string $password
-     * @return array
-     */
-    public function auth(string $email, string $password): Users
-    {
-        $where = ['email' => $email];
-        $this->find(['*'], $where);
-        return $this;
-    }
 }

@@ -181,6 +181,19 @@ class AccountsTest extends PFT
     }
 
     /**
+     * testToArray
+     * @covers App\Model\Accounts::toArray
+     */
+    public function testToArray()
+    {
+        $toa = self::getMethod('toArray')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertTrue(is_array($toa));
+    }
+
+    /**
      * testAuthBadLogin
      * @covers App\Model\Accounts::auth
      */

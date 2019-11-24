@@ -19,7 +19,7 @@ class Users extends Migration
     protected $repository;
 
     /**
-     * Undocumented function
+     * instanciate
      *
      * @param Container $container
      */
@@ -45,7 +45,7 @@ class Users extends Migration
     }
 
     /**
-     * sql to create table
+     * create table
      *
      * @return Migration
      */
@@ -66,7 +66,7 @@ class Users extends Migration
     }
 
     /**
-     * sql to insert into table
+     * insert into table
      *
      * @return Migration
      */
@@ -82,7 +82,6 @@ class Users extends Migration
             }, $csvArray);
             foreach ($insertDatas as $data) {
                 $this->repository->resetBuilder();
-
                 $this->repository->insert($data);
                 $this->run(
                     $this->repository->getSql(),
