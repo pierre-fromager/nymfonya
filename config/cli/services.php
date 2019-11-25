@@ -29,5 +29,6 @@ return [
     ],
     \App\Component\Cache\Redis\Adapter::class => [
         Config::class
-    ]
+    ],
+    \App\Component\Db\Pool::class => []
 ];

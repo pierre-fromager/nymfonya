@@ -17,6 +17,7 @@
             <file>tests/Component/Db/Adapter/PdoMysqlTest.php</file>
             <file>tests/Component/Db/FactoryTest.php</file>
             <file>tests/Component/Db/CoreTest.php</file>
+            <file>tests/Component/Db/PoolTest.php</file>
             <file>tests/Middlewares/JwtTest.php</file>
             <file>tests/Middlewares/CorsTest.php</file>
             <file>tests/Middlewares/AfterTest.php</file>

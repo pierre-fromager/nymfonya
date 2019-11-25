@@ -5,10 +5,13 @@ namespace App\Component\Db;
 use \PDO;
 use Nymfonya\Component\Config;
 use Nymfonya\Component\Container;
+use App\Component\Db\Pool;
+use Monolog\Logger;
 
 class Factory
 {
     const _ADAPTER = 'adapter';
+    const LOGGER_PREFIX = 'Db Factory Pool : ';
 
     private $container;
 
@@ -22,9 +25,16 @@ class Factory
     /**
      * connection pool
      *
-     * @var array
+     * @var Pool
      */
-    private $connectionPool;
+    private $pool;
+
+    /**
+     * logger
+     *
+     * @var Logger
+     */
+    private $logger;
 
     /**
      * instanciate factory
@@ -36,6 +46,9 @@ class Factory
         $this->container = $container;
         $configService = $this->container->getService(Config::class);
         $this->config = $configService->getSettings(Config::_DB);
+        $this->logger = $this->container->getService(Logger::class);
+        $this->pool = $this->container->getService(Pool::class);
+        $this->logger->info(self::LOGGER_PREFIX . 'instance ');
     }
 
     /**
@@ -48,11 +61,11 @@ class Factory
     public function getConnection(string $slot, string $dbname): PDO
     {
         $id = $this->identity($slot, $dbname);
-        if (isset($this->connectionPool[$id])) {
-            return $this->connectionPool[$id];
+        if (isset($this->pool[$id])) {
+            return $this->pool[$id];
         }
         $this->connect($slot, $dbname);
-        return $this->connectionPool[$id];
+        return $this->pool[$id];
     }
 
     /**
@@ -64,17 +77,16 @@ class Factory
      */
     protected function connect(string $slot, string $dbname): Factory
     {
-        $this->connectionPool = (false === is_array($this->connectionPool))
-            ? []
-            : $this->connectionPool;
         $params = $this->adapterParams($slot, $dbname);
         try {
             $adapter = new $params[self::_ADAPTER]($dbname, $params);
             $adapter->connect();
             $id = $this->identity($slot, $dbname);
-            $this->connectionPool[$id] = $adapter->getConnection();
+            $this->pool[$id] = $adapter->getConnection();
         } catch (\PDOException $e) {
-            throw new \Exception('Connexion failed', $e->getCode());
+            $exMsg = self::LOGGER_PREFIX .  ' connection failed';
+            $this->logger->warn($exMsg);
+            throw new \Exception($exMsg, $e->getCode());
         }
         return $this;
     }
@@ -94,6 +106,7 @@ class Factory
                 $slot,
                 $dbname
             );
+            $this->logger->warn($exMsg);
             throw new \Exception($exMsg);
         }
         return $this->config[$slot][$dbname];
@@ -109,5 +122,15 @@ class Factory
     protected function identity(string $slot, string $dbname): string
     {
         return sprintf('%s-%s', $slot, $dbname);
+    }
+
+    /**
+     * return pool service
+     *
+     * @return Pool
+     */
+    protected function getPool(): Pool
+    {
+        return $this->pool;
     }
 }

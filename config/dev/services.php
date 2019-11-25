@@ -27,5 +27,6 @@ return [
         [\Monolog\Handler\RotatingFileHandler::class],
         [\Monolog\Processor\WebProcessor::class]
     ],
-    \App\Component\Cache\Redis\Adapter::class => [Config::class]
+    \App\Component\Cache\Redis\Adapter::class => [Config::class],
+    \App\Component\Db\Pool::class => []
 ];
