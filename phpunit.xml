@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<phpunit bootstrap="vendor/autoload.php" stopOnFailure="false" colors="true" strict="true">
+<phpunit bootstrap="vendor/autoload.php" stopOnFailure="true" colors="true" strict="true">
     <testsuites>
         <testsuite name="all">
             <file>tests/Component/Migration/UsersTest.php</file>
@@ -48,4 +48,7 @@
             <directory suffix=".php">./vendor</directory>
         </blacklist>
     </filter>
+    <logging>
+        <log type="testdox-text" target="php://stdout"/>
+    </logging>
 </phpunit>

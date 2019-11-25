@@ -2,7 +2,7 @@
 
 return [
     [
-        'id' => 0,
+        'id' => 1,
         'name' => 'Admin Sys',
         'email' => 'admin@domain.tld',
         'password' => 'adminadmin',
@@ -10,7 +10,7 @@ return [
         'role' => 'admin'
     ],
     [
-        'id' => 1,
+        'id' => 2,
         'name' => 'Classic User',
         'email' => 'user@domain.tld',
         'password' => 'useruser',
@@ -18,7 +18,7 @@ return [
         'role' => 'user'
     ],
     [
-        'id' => 2,
+        'id' => 3,
         'name' => 'Pro User',
         'email' => 'pro@domain.tld',
         'password' => 'propro',

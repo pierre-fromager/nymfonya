@@ -87,10 +87,50 @@ class UsersTest extends PFT
     /**
      * testInstance
      * @covers App\Component\Migration\Users::__construct
+     * @covers App\Component\Db\Migration::__construct
      */
     public function testInstance()
     {
+        $ise0 = self::getMethod('isError')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertFalse($ise0);
         $this->assertTrue($this->instance instanceof Users);
+        $ise1 = self::getMethod('isError')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertFalse($ise1);
+    }
+
+    /**
+     * testDropTable
+     * @covers App\Component\Migration\Users::dropTable
+     */
+    public function testDropTable()
+    {
+        $tae = self::getMethod('tableExists')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertTrue(is_bool($tae));
+        $dropped0 = self::getMethod('dropTable')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertTrue(is_bool($dropped0));
+        $this->assertEquals($tae, $dropped0);
+        $tae1 = self::getMethod('tableExists')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertFalse($tae1);
+        $dropped1 = self::getMethod('dropTable')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertFalse($dropped1);
     }
 
     /**
@@ -99,36 +139,156 @@ class UsersTest extends PFT
      */
     public function testCanMigrate()
     {
+        $ise = self::getMethod('isError')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertFalse($ise);
         $cam = self::getMethod('canMigrate')->invokeArgs(
             $this->instance,
             []
         );
         $this->assertTrue(is_bool($cam));
+        $ise1 = self::getMethod('isError')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertFalse($ise1);
     }
 
     /**
-     * testGetSqlCreate
+     * testRunCreate
      * @covers App\Component\Migration\Users::runCreate
+     * @covers App\Component\Migration\Users::isError
      */
-    public function testGetSqlCreate()
+    public function testRunCreate()
     {
+        $ise = self::getMethod('isError')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertFalse($ise);
+        $drop = self::getMethod('dropTable')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertTrue(is_bool($drop));
+        $tae0 = self::getMethod('tableExists')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertFalse($tae0);
         $gsc = self::getMethod('runCreate')->invokeArgs(
             $this->instance,
             []
         );
         $this->assertTrue($gsc instanceof Migration);
+        $ise1 = self::getMethod('isError')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertFalse($ise1);
+    }
+
+
+    /**
+     * testRunIndex
+     * @covers App\Component\Migration\Users::runIndex
+     * @covers App\Component\Migration\Users::isError
+     */
+    public function testRunIndex()
+    {
+        $ise = self::getMethod('isError')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertFalse($ise);
+        $rui = self::getMethod('runIndex')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertTrue($rui instanceof Migration);
+        
+        $ise1 = self::getMethod('isError')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertFalse($ise1);
     }
 
     /**
-     * testGetSqlInsert
+     * testRunInsert
      * @covers App\Component\Migration\Users::runInsert
      */
-    public function testGetSqlInsert()
+    public function testRunInsert()
     {
         $gsi = self::getMethod('runInsert')->invokeArgs(
             $this->instance,
             []
         );
         $this->assertTrue($gsi instanceof Migration);
+    }
+
+    /**
+     * testGetInsertDatas
+     * @covers App\Component\Migration\Users::getInsertDatas
+     */
+    public function testGetInsertDatas()
+    {
+        $gid = self::getMethod('getInsertDatas')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertTrue(is_array($gid));
+        $this->assertNotEmpty($gid);
+    }
+
+    /**
+     * testTableExists
+     * @covers App\Component\Migration\Users::tableExists
+     */
+    public function testTableExists()
+    {
+        $tae = self::getMethod('tableExists')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertTrue(is_bool($tae));
+    }
+
+    /**
+     * testMigrate
+     * @covers App\Component\Migration\Users::dropTable
+     * @covers App\Component\Migration\Users::migrate
+     */
+    public function testMigrate()
+    {
+        $ise0 = self::getMethod('isError')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertFalse($ise0);
+        $drop = self::getMethod('dropTable')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertTrue(is_bool($drop));
+        $tae0 = self::getMethod('tableExists')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertFalse($tae0);
+        $mig = $this->instance->migrate();
+        $this->assertTrue($mig instanceof Migration);
+        $tae1 = self::getMethod('tableExists')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $ise1 = self::getMethod('isError')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertFalse($ise1);
+        $this->assertTrue($tae1);
     }
 }

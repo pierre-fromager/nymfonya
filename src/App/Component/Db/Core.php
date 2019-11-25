@@ -140,10 +140,12 @@ class Core
                 }
             }
             $this->statement->execute();
+            $this->logger->debug($this->sql);
         } catch (\PDOException $e) {
             $this->setError(true, $e->getCode(), $e->getMessage());
             $this->logger->alert('Core Db : Run failed');
             $this->logger->alert($this->errorMessage);
+            $this->logger->alert($this->sql);
         }
         return $this;
     }

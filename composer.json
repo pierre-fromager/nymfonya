@@ -79,7 +79,7 @@
             "phpdbg -qrr ./vendor/bin/phpunit --coverage-html='./coverage'"
         ],
         "test": [
-            "phpunit --verbose --testsuite all"
+            "phpunit --testsuite all"
         ]
     }
 }

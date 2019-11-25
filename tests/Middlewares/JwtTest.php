@@ -128,12 +128,11 @@ class JwtTest extends PFT
         $mockRequest = $this->createMock(Request::class);
         $mockRequest->method('getUri')->willReturn($uri);
         $mockRequest->method('isCli')->willReturn(true);
-        $mockRequest->method('getHeaders')->willReturn(
-            [
-                JwtMiddleware::_AUTORIZATION => 'Bearer '
-                    . $this->getToken($userPayload)
-            ]
-        );
+        $fakeAuth = [
+            JwtMiddleware::_AUTORIZATION => 'Bearer '
+                . $this->getToken($userPayload)
+        ];
+        $mockRequest->method('getHeaders')->willReturn($fakeAuth);
         return $mockRequest;
     }
 

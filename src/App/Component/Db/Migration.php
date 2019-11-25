@@ -32,7 +32,7 @@ abstract class Migration extends Core
     public function migrate(): Migration
     {
         if ($this->canMigrate()) {
-            $this->runCreate()->runInsert();
+            $this->runCreate()->runInsert()->runIndex();
         }
         return $this;
     }
@@ -57,4 +57,11 @@ abstract class Migration extends Core
      * @return string
      */
     abstract protected function runInsert(): Migration;
+
+    /**
+     * process alter index table
+     *
+     * @return string
+     */
+    abstract protected function runIndex(): Migration;
 }
