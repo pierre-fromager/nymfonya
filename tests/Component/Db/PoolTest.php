@@ -112,7 +112,7 @@ class PoolTest extends PFT
         $this->assertTrue($this->instance instanceof Pool);
         $ara = ['ArrayAccess' => 'ArrayAccess', 'Countable' => 'Countable'];
         $this->assertEquals($ara, class_implements(Pool::class));
-        $this->assertTrue(is_countable($this->instance));
+        $this->assertTrue(\is_countable($this->instance));
         $this->assertFalse(empty($this->instance));
     }
 
