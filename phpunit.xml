@@ -48,7 +48,4 @@
             <directory suffix=".php">./vendor</directory>
         </blacklist>
     </filter>
-    <logging>
-        <log type="testdox-text" target="php://stdout"/>
-    </logging>
 </phpunit>

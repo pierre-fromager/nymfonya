@@ -429,24 +429,27 @@ class JwtTest extends PFT
      */
     public function testIsValidAuthorization()
     {
+        $this->setOutputCallback(function () {
+        });
         $peelReturn = $this->peelLayer();
-        $iva = $this->invokeMethod(
+        $iva0 = $this->invokeMethod(
             $this->layer,
             'isValidAuthorization',
             []
         );
-        $this->assertTrue(is_bool($iva));
-        $this->assertFalse($iva);
+        $this->assertTrue(is_bool($iva0));
+        $this->assertFalse($iva0);
         $this->assertTrue($peelReturn instanceof Container);
+       
         $this->init(true, true);
         $peelReturn = $this->peelLayer();
-        $iva = $this->invokeMethod(
+        $iva1 = $this->invokeMethod(
             $this->layer,
             'isValidAuthorization',
             []
         );
-        $this->assertTrue(is_bool($iva));
-        $this->assertTrue($iva);
+        $this->assertTrue(is_bool($iva1));
+        $this->assertTrue($iva1);
         $this->assertTrue($peelReturn instanceof Container);
     }
 

@@ -75,6 +75,9 @@ class Users implements AuthInterface
      */
     public function getById(int $uid): array
     {
-        return isset($this->accounts[$uid]) ? $this->accounts[$uid] : [];
+        $userById = array_filter($this->accounts, function ($user) use ($uid) {
+            return $user['id'] === $uid;
+        });
+        return $userById;
     }
 }

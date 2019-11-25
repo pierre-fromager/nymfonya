@@ -42,11 +42,11 @@ return [
         ],
     ],    
     Jwt::class => [
-        'enabled' => false,
+        'enabled' => true,
         'prefix' => '/api/v1/',
         'exclude' => [
             'auth/login', 'stat/opcache', 
-            'restful', 'restful/index', 
+           
             'test/pokerelay', 'test/redis'
         ],
     ],

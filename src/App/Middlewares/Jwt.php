@@ -6,6 +6,7 @@ use Nymfonya\Component\Container;
 use Nymfonya\Component\Http\Interfaces\MiddlewareInterface;
 use Nymfonya\Component\Http\Request;
 use App\Component\Jwt\Token;
+use App\Model\Users;
 
 /**
  * App\Middleware\Jwt
@@ -143,7 +144,7 @@ class Jwt implements MiddlewareInterface
      */
     protected function getUser(int $userId): array
     {
-        $authModel = new \App\Model\Users($this->config);
+        $authModel = new Users($this->config);
         $userList = $authModel->getById($userId);
         return isset($userList[0]) ? $userList[0] : $userList;
     }
