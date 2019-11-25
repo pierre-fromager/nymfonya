@@ -165,6 +165,7 @@ final class Restful extends AbstractApi implements IApi, IRestful
             $this->userRepository->insert($this->getParams());
             $this->sql = $this->userRepository->getSql();
             $this->bindValues = $this->userRepository->getBuilderValues();
+            $this->db->run($this->sql, $this->bindValues)->hydrate();
         } catch (\Exception $e) {
             $this->error = true;
             $this->errorMessage = $e->getMessage();
@@ -217,6 +218,7 @@ final class Restful extends AbstractApi implements IApi, IRestful
             $this->userRepository->update($params, [$pk => $pkValue]);
             $this->sql = $this->userRepository->getSql();
             $this->bindValues = $this->userRepository->getBuilderValues();
+            $this->db->run($this->sql, $this->bindValues);
         } catch (\Exception $e) {
             $this->error = true;
             $this->errorMessage = $e->getMessage();
@@ -263,6 +265,7 @@ final class Restful extends AbstractApi implements IApi, IRestful
             $this->userRepository->delete([$pk => $params[$pk]]);
             $this->sql = $this->userRepository->getSql();
             $this->bindValues = $this->userRepository->getBuilderValues();
+            $this->db->run($this->sql, $this->bindValues);
         } catch (\Exception $e) {
             $this->error = true;
             $this->errorMessage = $e->getMessage();
