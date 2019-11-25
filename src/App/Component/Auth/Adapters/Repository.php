@@ -9,6 +9,10 @@ use App\Component\Crypt;
 use App\Model\Repository\Users;
 use App\Component\Db\Core;
 
+/**
+ * Adapter Repository let auth from config accounts entries
+ * Decryption required on password.
+ */
 class Repository implements AdapterInterface
 {
 
@@ -22,6 +26,27 @@ class Repository implements AdapterInterface
     protected $container;
 
     /**
+     * app config
+     *
+     * @var Config
+     */
+    protected $config;
+
+    /**
+     * user repository
+     *
+     * @var Users
+     */
+    protected $userRepo;
+
+    /**
+     * db core instance
+     *
+     * @var Core
+     */
+    protected $dbCore;
+
+    /**
      * instanciate
      *
      * @param Container $container
@@ -29,6 +54,10 @@ class Repository implements AdapterInterface
     public function __construct(Container $container)
     {
         $this->container = $container;
+        $this->userRepo = new Users($this->container);
+        $this->dbCore = new Core($this->container);
+        $this->dbCore->fromOrm($this->userRepo);
+        $this->config = $this->container->getService(Config::class);
     }
 
     /**
@@ -38,28 +67,54 @@ class Repository implements AdapterInterface
      */
     public function auth(string $login, string $password): array
     {
-        $repo = (new Users($this->container))->getByEmail($login);
-        $dbc = new Core($this->container);
-        $dbc
-            ->fromOrm($repo)
-            ->run($repo->getSql(), $repo->getBuilderValues())
+        $this->userRepo->getByEmail($login);
+        $this->dbCore
+            ->run(
+                $this->userRepo->getSql(),
+                $this->userRepo->getBuilderValues()
+            )
             ->hydrate();
-        $result = $dbc->getRowset();
+        $result = $this->dbCore->getRowset();
         if (empty($result)) {
-            unset($repo, $dbc, $result);
             return [];
         }
         $user = $result[0];
-        $config = $this->container->getService(Config::class);
-        $clearPassword = (new Crypt($config))->decrypt(
-            $user[self::_PASSWORD],
-            true
-        );
-        if ($password == $clearPassword) {
-            unset($config, $repo, $dbc, $result);
-            return $user;
+        $clearPassword = $this->decrypt($user[self::_PASSWORD]);
+        return ($password === $clearPassword) ? $user : [];
+    }
+
+    /**
+     * return user by id
+     *
+     * @param integer $id
+     * @return array
+     */
+    public function getById(int $id): array
+    {
+        $this->userRepo->getById($id);
+        $this->dbCore
+            ->run(
+                $this->userRepo->getSql(),
+                $this->userRepo->getBuilderValues()
+            )
+            ->hydrate();
+        $result = $this->dbCore->getRowset();
+        if (empty($result)) {
+            return [];
         }
-        unset($config, $repo, $dbc, $result);
-        return [];
+        $user = $result[0];
+        $user[self::_PASSWORD] = $this->decrypt($user[self::_PASSWORD]);
+        return $user;
+    }
+
+    /**
+     * decrypt content
+     *
+     * @param string $content
+     * @return string
+     */
+    protected function decrypt(string $content): string
+    {
+        return (new Crypt($this->config))->decrypt($content, true);
     }
 }

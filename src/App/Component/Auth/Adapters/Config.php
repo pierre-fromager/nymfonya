@@ -7,6 +7,10 @@ use Nymfonya\Component\Container;
 use App\Component\Auth\AdapterInterface;
 use App\Model\Users;
 
+/**
+ * Adapter Config let auth from config accounts entries
+ * No decryption required on clear password.
+ */
 class Config implements AdapterInterface
 {
 
@@ -18,6 +22,13 @@ class Config implements AdapterInterface
     protected $container;
 
     /**
+     * user model
+     *
+     * @var Users
+     */
+    protected $modelUsers;
+
+    /**
      * instanciate
      *
      * @param Container $container
@@ -25,16 +36,31 @@ class Config implements AdapterInterface
     public function __construct(Container $container)
     {
         $this->container = $container;
+        $this->modelUsers = new Users(
+            $this->container->getService(AppConfig::class)
+        );
     }
 
     /**
      * auth process
      *
+     * @param string $login
+     * @param string $password
      * @return array
      */
     public function auth(string $login, string $password): array
     {
-        $config = $this->container->getService(AppConfig::class);
-        return (new Users($config))->auth($login, $password);
+        return $this->modelUsers->auth($login, $password);
+    }
+
+    /**
+     * get user by id
+     *
+     * @param integer $id
+     * @return array
+     */
+    public function getById(int $id): array
+    {
+        return $this->modelUsers->getById($id);
     }
 }

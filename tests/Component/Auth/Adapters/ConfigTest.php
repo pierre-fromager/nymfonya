@@ -122,4 +122,18 @@ class ConfigTest extends PFT
         $this->assertTrue(is_array($auf));
         $this->assertEmpty($auf);
     }
+
+    /**
+     * testGetById
+     * @covers App\Component\Auth\Adapters\Config::getById
+     */
+    public function testGetById()
+    {
+        $gbi0 = $this->instance->getById(0);
+        $this->assertTrue(is_array($gbi0));
+        $this->assertEmpty($gbi0);
+        $gbi1 = $this->instance->getById(1);
+        $this->assertTrue(is_array($gbi1));
+        $this->assertNotEmpty($gbi1);
+    }
 }

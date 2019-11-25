@@ -13,4 +13,12 @@ interface AuthInterface
      * @return array
      */
     public function auth(string $login, string $password): array;
+
+    /**
+     * getById
+     *
+     * @param integer $id
+     * @return array
+     */
+    public function getById(int $id): array;
 }

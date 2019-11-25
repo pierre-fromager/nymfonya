@@ -51,11 +51,11 @@ class RepositoryTest extends PFT
         $this->init();
     }
 
-     /**
-      * initialize test
-      *
-      * @return void
-      */
+    /**
+     * initialize test
+     *
+     * @return void
+     */
     protected function init()
     {
         $this->config = new Config(
@@ -123,5 +123,33 @@ class RepositoryTest extends PFT
         $auf = $this->instance->auth('login', 'password');
         $this->assertTrue(is_array($auf));
         $this->assertEmpty($auf);
+    }
+
+    /**
+     * testGetById
+     * @covers App\Component\Auth\Adapters\Repository::getById
+     */
+    public function testGetById()
+    {
+        $gbi0 = $this->instance->getById(0);
+        $this->assertTrue(is_array($gbi0));
+        $this->assertEmpty($gbi0);
+        $gbi1 = $this->instance->getById(1);
+        $this->assertTrue(is_array($gbi1));
+        $this->assertNotEmpty($gbi1);
+    }
+
+    /**
+     * testDecrypt
+     * @covers App\Component\Auth\Adapters\Repository::decrypt
+     */
+    public function testDecrypt()
+    {
+        $dec = self::getMethod('decrypt')->invokeArgs(
+            $this->instance,
+            ['AV+AWtXAIhxjrWV61pfvdtCJ8kPeBgqfxJM=']
+        );
+        $this->assertTrue(is_string($dec));
+        $this->assertNotEmpty($dec);
     }
 }

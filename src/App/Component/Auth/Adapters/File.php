@@ -6,6 +6,10 @@ use Nymfonya\Component\Container;
 use App\Component\Auth\AdapterInterface;
 use App\Model\Accounts;
 
+/**
+ * Adapter File let auth from csv file accounts
+ * Decryption required on password.
+ */
 class File implements AdapterInterface
 {
 
@@ -17,6 +21,13 @@ class File implements AdapterInterface
     protected $container;
 
     /**
+     * model accounts
+     *
+     * @var Accounts
+     */
+    protected $modelAccounts;
+
+    /**
      * instanciate
      *
      * @param Container $container
@@ -24,6 +35,7 @@ class File implements AdapterInterface
     public function __construct(Container $container)
     {
         $this->container = $container;
+        $this->modelAccounts = new Accounts($this->container);
     }
 
     /**
@@ -33,9 +45,16 @@ class File implements AdapterInterface
      */
     public function auth(string $login, string $password): array
     {
-        return (new Accounts($this->container))->auth(
-            $login,
-            $password
-        );
+        return $this->modelAccounts->auth($login, $password);
+    }
+
+    /**
+     * return account by id
+     *
+     * @return array
+     */
+    public function getById(int $id): array
+    {
+        return $this->modelAccounts->getById($id);
     }
 }

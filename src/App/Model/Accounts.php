@@ -52,7 +52,6 @@ class Accounts extends AbstractSearch implements AuthInterface
      */
     public function auth(string $login, string $password): array
     {
-        $crypt = new Crypt($this->config);
         $filter =
             '/^(.*),'
             . '(.*),'
@@ -66,11 +65,38 @@ class Accounts extends AbstractSearch implements AuthInterface
             return [];
         }
         $user = $result[0];
-        if ($password == $crypt->decrypt($user[self::_PASSWORD])) {
+        $crypt = new Crypt($this->config);
+        if ($password == $crypt->decrypt($user[self::_PASSWORD], true)) {
             return $user;
         }
         unset($crypt);
         return [];
+    }
+
+    /**
+     * getById
+     *
+     * @return array
+     */
+    public function getById(int $id): array
+    {
+        $filter =
+            '/^(' . $id . '),'
+            . '(.*),'
+            . '(.*),'
+            . '(.*),'
+            . '(.*),'
+            . '(.*)/';
+        $this->setFilter($filter)->readFromStream();
+        $result = $this->get();
+        if (empty($result)) {
+            return [];
+        }
+        $user = $result[0];
+        $crypt = new Crypt($this->config);
+        $clearPassword = $crypt->decrypt($user[self::_PASSWORD], true);
+        $user[self::_PASSWORD] = $clearPassword;
+        return $user;
     }
 
     /**

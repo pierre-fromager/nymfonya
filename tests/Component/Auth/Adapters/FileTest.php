@@ -54,11 +54,11 @@ class FileTest extends PFT
         $this->init();
     }
 
-     /**
-      * initialize test
-      *
-      * @return void
-      */
+    /**
+     * initialize test
+     *
+     * @return void
+     */
     protected function init()
     {
         $this->config = new Config(
@@ -126,5 +126,19 @@ class FileTest extends PFT
         $auf = $this->instance->auth('login', 'password');
         $this->assertTrue(is_array($auf));
         $this->assertEmpty($auf);
+    }
+
+    /**
+     * testGetById
+     * @covers App\Component\Auth\Adapters\File::getById
+     */
+    public function testGetById()
+    {
+        $gbi0 = $this->instance->getById(0);
+        $this->assertTrue(is_array($gbi0));
+        $this->assertEmpty($gbi0);
+        $gbi1 = $this->instance->getById(1);
+        $this->assertTrue(is_array($gbi1));
+        $this->assertNotEmpty($gbi1);
     }
 }

@@ -87,6 +87,16 @@ class Factory implements AdapterInterface
     }
 
     /**
+     * return user by id
+     *
+     * @return array
+     */
+    public function getById(int $id): array
+    {
+        return $this->getAdapter()->getById($id);
+    }
+
+    /**
      * returns alloed adapter list
      *
      * @return array

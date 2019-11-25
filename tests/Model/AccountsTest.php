@@ -234,4 +234,18 @@ class AccountsTest extends PFT
         $this->assertTrue(is_array($aut));
         $this->assertNotEmpty($aut);
     }
+
+    /**
+     * testGetById
+     * @covers App\Model\Accounts::getById
+     */
+    public function testGetById()
+    {
+        $gbi0 = $this->instance->getById(0);
+        $this->assertTrue(is_array($gbi0));
+        $this->assertEmpty($gbi0);
+        $gbi1 = $this->instance->getById(1);
+        $this->assertTrue(is_array($gbi1));
+        $this->assertNotEmpty($gbi1);
+    }
 }
