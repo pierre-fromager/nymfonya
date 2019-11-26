@@ -127,17 +127,6 @@ class TestTest extends PFT
     }
 
     /**
-     * testRedis
-     * @covers App\Controllers\Api\V1\Test::redis
-     */
-    public function testRedis()
-    {
-        $this->assertTrue(
-            $this->instance->redis() instanceof ApiTestControler
-        );
-    }
-
-    /**
      * testPokemonApiRelayNoCache
      * @covers App\Controllers\Api\V1\Test::pokemonApiRelay
      * @covers App\Controllers\Api\V1\Test::apiRelayRequest

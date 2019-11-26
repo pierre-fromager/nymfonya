@@ -8,7 +8,6 @@ use Nymfonya\Component\Http\Request;
 use App\Interfaces\Controllers\IApi;
 use App\Reuse\Controllers\AbstractApi;
 use App\Component\File\Uploader;
-use App\Component\Cache\Redis\Adapter;
 
 final class Test extends AbstractApi implements IApi
 {
@@ -61,44 +60,6 @@ final class Test extends AbstractApi implements IApi
             $uploader->getInfos()
         );
         unset($uploader);
-        return $this;
-    }
-
-    /**
-     * check redis service
-     *
-     * @return Test
-     */
-    final public function redis(): Test
-    {
-        $redisService = $this->getContainer()->getService(Adapter::class);
-        $client = $redisService->getClient();
-        $error = $redisService->isError();
-        $ping = '';
-        $keys = [];
-        if (false === $error) {
-            $client->set('redis-entry-name', 'redis-entry-name-item');
-            $client->lpush('redis-list', 'item0');
-            $client->lpush('redis-list', 'item1');
-            $client->lpush('redis-list', 'item2');
-            $ping = $client->ping();
-            $keys = $client->keys('*');
-        }
-        $resCodeError = $error
-            ? Response::HTTP_INTERNAL_SERVER_ERROR
-            : Response::HTTP_OK;
-        $this->response->setCode($resCodeError)->setContent(
-            [
-                'error' => $error,
-                'errorCode' => $redisService->getErrorCode(),
-                'errorMessage' => $redisService->getErrorMessage(),
-                'datas' => [
-                    'keys' => $keys,
-                    'ping' => $ping,
-                ]
-            ]
-        );
-        unset($redisService, $client);
         return $this;
     }
 

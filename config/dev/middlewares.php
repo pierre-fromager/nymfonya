@@ -46,8 +46,7 @@ return [
         'prefix' => '/api/v1/',
         'exclude' => [
             'auth/login', 'stat/opcache', 
-           
-            'test/pokerelay', 'test/redis'
+            'test/pokerelay', 'stat/redis'
         ],
     ],
     After::class => [

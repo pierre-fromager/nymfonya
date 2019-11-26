@@ -112,4 +112,15 @@ class StatTest extends PFT
             $this->instance->filecache() instanceof ApiStatControler
         );
     }
+
+    /**
+     * testRedis
+     * @covers App\Controllers\Api\V1\Stat::redis
+     */
+    public function testRedis()
+    {
+        $this->assertTrue(
+            $this->instance->redis() instanceof ApiStatControler
+        );
+    }
 }

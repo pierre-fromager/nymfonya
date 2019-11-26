@@ -20,7 +20,7 @@ use OpenApi\Annotations as OA;
 final class Restful extends AbstractApi implements IApi, IRestful
 {
 
-    const _ID='id';
+    const _ID = 'id';
 
     /**
      * core db instance
@@ -162,10 +162,17 @@ final class Restful extends AbstractApi implements IApi, IRestful
         $this->slugs = $slugs;
         $this->bindValues = [];
         try {
-            $this->userRepository->insert($this->getParams());
+            $params = $this->getParams();
+            $pk = $this->userRepository->getPrimary();
+            if (isset($params[$pk])) {
+                unset($params[$pk]);
+            }
+            $this->userRepository->insert($params);
             $this->sql = $this->userRepository->getSql();
             $this->bindValues = $this->userRepository->getBuilderValues();
-            $this->db->run($this->sql, $this->bindValues)->hydrate();
+            if (!empty($params)) {
+                $this->db->run($this->sql, $this->bindValues);
+            }
         } catch (\Exception $e) {
             $this->error = true;
             $this->errorMessage = $e->getMessage();
@@ -210,6 +217,9 @@ final class Restful extends AbstractApi implements IApi, IRestful
         try {
             $params = $this->getParams();
             $pk = $this->userRepository->getPrimary();
+            if (isset($slugs[$pk])) {
+                $params[$pk] = $slugs[$pk];
+            }
             if (false === isset($params[$pk])) {
                 throw new \Exception('Missing primary : ' . $pk);
             }
@@ -259,6 +269,9 @@ final class Restful extends AbstractApi implements IApi, IRestful
         try {
             $params = $this->getParams();
             $pk = $this->userRepository->getPrimary();
+            if (isset($slugs[$pk])) {
+                $params[$pk] = $slugs[$pk];
+            }
             if (false === isset($params[$pk])) {
                 throw new \Exception('Missing primary : ' . $pk);
             }
