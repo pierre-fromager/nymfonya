@@ -1,6 +1,6 @@
 {
     "name": "pier-infor/nymfonya",
-    "description": "Nymfonya Backend App",
+    "description": "Nymfonya Rest App",
     "keywords": [
         "Nymfonya App",
         "backend",
@@ -17,7 +17,7 @@
     ],
     "minimum-stability": "dev",
     "prefer-stable": true,
-    "version": "1.0.3",
+    "version": "1.0.4",
     "type": "project",
     "require": {
         "php": ">=7.0.0",
