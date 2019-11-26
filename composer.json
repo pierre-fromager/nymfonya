@@ -1,5 +1,6 @@
 {
     "name": "pier-infor/nymfonya",
+    "type": "project",
     "description": "Nymfonya Rest App",
     "keywords": [
         "Nymfonya App",
@@ -15,14 +16,11 @@
             "homepage": "https://github.com/pierre-fromager"
         }
     ],
-    "minimum-stability": "dev",
-    "prefer-stable": true,
-    "type": "project",
     "require": {
         "php": ">=7.0.0",
-        "pier-infor/nymfonya-config": "dev-master",
-        "pier-infor/nymfonya-container": "dev-master",
-        "pier-infor/nymfonya-http-foundation": "dev-master",
+        "pier-infor/nymfonya-config": "~1.0",
+        "pier-infor/nymfonya-container": "~1.0",
+        "pier-infor/nymfonya-http-foundation": "~1.0",
         "firebase/php-jwt": "^3.0 || ^4.0 || ^5.0",
         "monolog/monolog": "^1.25",
         "respect/validation": "^1.1",
@@ -80,5 +78,6 @@
         "test": [
             "phpunit --testsuite all"
         ]
-    }
+    },
+    "minimum-stability": "dev"
 }
