@@ -9,8 +9,7 @@ interface DispatcherInterface
 {
 
     const ALL = '*';
-    const ERR_CLOSURE_ARG_MISSING = 'Listener closure required at least one Event argument';
-
+   
     /**
      * subscribe
      *

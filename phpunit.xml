@@ -14,6 +14,7 @@
             <file>tests/Component/Auth/Adapters/RepositoryTest.php</file>
             <file>tests/Component/Auth/Adapters/ConfigTest.php</file>
             <file>tests/Component/File/UploaderTest.php</file>
+            <file>tests/Component/Pubsub/DispatcherTest.php</file>
             <file>tests/Component/Model/OrmTest.php</file>
             <file>tests/Component/Db/Adapter/PdoMysqlTest.php</file>
             <file>tests/Component/Db/FactoryTest.php</file>

@@ -4,6 +4,8 @@ namespace App\Component\Pubsub;
 
 use Closure;
 use Exception;
+use ReflectionParameter;
+use App\Component\Pubsub\EventInterface;
 
 class Dispatcher implements DispatcherInterface
 {
@@ -186,6 +188,9 @@ class Dispatcher implements DispatcherInterface
     {
         $listener = new class ($closure) implements ListenerInterface
         {
+            const ERR_CLOSURE_ARG_MISSING = 'Listener closure required at least one Event argument';
+            const ERR_CLOSURE_ARG_INVALID ='Listener closure arg type should comply EventInterface';
+        
             /**
              * listener as closure
              *
@@ -200,9 +205,17 @@ class Dispatcher implements DispatcherInterface
              */
             public function __construct(Closure $closure)
             {
-                if (func_num_args($closure) === 0) {
+                $params = $this->getClosureParameters($closure);
+                $nbargs = count($params);
+                if ($nbargs === 0) {
                     throw new Exception(
                         self::ERR_CLOSURE_ARG_MISSING
+                    );
+                }
+                $argTypeName = $params[0]->getType()->getName();
+                if ($argTypeName !== EventInterface::class) {
+                    throw new Exception(
+                        self::ERR_CLOSURE_ARG_INVALID
                     );
                 }
                 $this->closure = $closure;
@@ -217,6 +230,20 @@ class Dispatcher implements DispatcherInterface
             public function publish(EventInterface $event)
             {
                 call_user_func($this->closure, $event);
+            }
+
+            /**
+             * return an array of reflexion parameter
+             *
+             * @see https://www.php.net/manual/fr/class.reflectionparameter.php
+             *
+             * @param Closure $closure
+             * @return ReflectionParameter[]
+             */
+            protected function getClosureParameters(Closure $closure): array
+            {
+                $reflection = new \ReflectionFunction($closure);
+                return $reflection->getParameters();
             }
         };
         return $listener;
