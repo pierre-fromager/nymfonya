@@ -217,11 +217,11 @@ class DispatcherTest extends PFT
         };
         $datas = new stdClass;
         $this->assertObjectNotHasAttribute('toHandler', $datas);
-        $this->instance->subscribeClosure($clo);
+        $this->instance->subscribeClosure($clo, $publisherResource);
         $event = new Event($publisherResource, $any, $datas);
         $dah = self::getMethod('dispatchResourcedHandlers')->invokeArgs(
             $this->instance,
-            [$publisherResource,$event]
+            [$publisherResource, $event]
         );
         $this->instance->publish($event);
         $this->assertTrue($dah instanceof Dispatcher);
@@ -245,11 +245,11 @@ class DispatcherTest extends PFT
         };
         $datas = new stdClass;
         $this->assertObjectNotHasAttribute('toHandler', $datas);
-        $this->instance->subscribeClosure($clo);
+        $this->instance->subscribeClosure($clo, $publisherResource, $eventName);
         $event = new Event($publisherResource, $eventName, $datas);
         $dah = self::getMethod('dispatchResourcedEventedHandlers')->invokeArgs(
             $this->instance,
-            [$publisherResource,$eventName,$event]
+            [$publisherResource, $eventName, $event]
         );
         $this->instance->publish($event);
         $this->assertTrue($dah instanceof Dispatcher);
