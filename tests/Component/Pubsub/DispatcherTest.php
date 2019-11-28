@@ -45,8 +45,6 @@ class DispatcherTest extends PFT
     protected function tearDown()
     {
         $this->instance = null;
-        $this->config = null;
-        $this->container = null;
     }
 
     /**
@@ -145,8 +143,8 @@ class DispatcherTest extends PFT
         $this->assertObjectNotHasAttribute('lastname', $datas);
         $this->assertObjectNotHasAttribute('birthday', $datas);
         $eventNamesBirthday = new Event(
-            self::RES_NAME, 
-            self::EVENT_NAME, 
+            self::RES_NAME,
+            self::EVENT_NAME,
             $datas
         );
         $publishRes = $this->instance->publish($eventNamesBirthday);

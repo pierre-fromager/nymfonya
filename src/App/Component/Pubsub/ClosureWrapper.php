@@ -10,7 +10,7 @@ use App\Component\Pubsub\EventInterface;
 
 /**
  * ClosureWrapper
- * 
+ *
  * is a mediator pattern to let closure to comply ListenerInterface.
  */
 class ClosureWrapper extends ListenerAbstract implements ListenerInterface
@@ -54,8 +54,6 @@ class ClosureWrapper extends ListenerAbstract implements ListenerInterface
     /**
      * return an array of reflexion parameter
      *
-     * @see https://www.php.net/manual/fr/class.reflectionparameter.php
-     *
      * @param Closure $closure
      * @return ReflectionParameter[]
      */
@@ -68,6 +66,7 @@ class ClosureWrapper extends ListenerAbstract implements ListenerInterface
     /**
      * return type name for a ReflectionParameter arg
      *
+     * @see https://www.php.net/manual/fr/class.reflectionparameter.php
      * @param ReflectionParameter $arg
      * @return string
      */
