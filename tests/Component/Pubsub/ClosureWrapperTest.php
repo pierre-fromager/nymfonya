@@ -3,13 +3,15 @@
 namespace Tests\Component\Pubsub;
 
 use Exception;
+use stdClass;
+use ReflectionClass;
+use ReflectionParameter;
 use PHPUnit\Framework\TestCase as PFT;
 use App\Component\Pubsub\Event;
 use App\Component\Pubsub\EventInterface;
 use App\Component\Pubsub\ClosureWrapper;
 use App\Component\Pubsub\ListenerInterface;
 use App\Component\Pubsub\ListenerAbstract;
-use stdClass;
 
 /**
  * @covers \App\Component\Pubsub\ClosureWrapper::<public>
@@ -53,6 +55,21 @@ class ClosureWrapperTest extends PFT
     protected function tearDown()
     {
         $this->instance = null;
+    }
+
+    /**
+     * get any method from a class to be invoked whatever the scope
+     *
+     * @param String $name
+     * @return void
+     */
+    protected static function getMethod(string $name)
+    {
+        $class = new ReflectionClass(ClosureWrapper::class);
+        $method = $class->getMethod($name);
+        $method->setAccessible(true);
+        unset($class);
+        return $method;
     }
 
     /**
@@ -128,5 +145,56 @@ class ClosureWrapperTest extends PFT
         $this->assertObjectHasAttribute(self::_EVTNAME, $datas);
         $this->assertTrue(is_string($datas->{self::_EVTNAME}));
         $this->assertEquals(self::_EVTNAME, $datas->{self::_EVTNAME});
+    }
+
+    /**
+     * testGetClosureParameters
+     * @covers App\Component\Pubsub\ClosureWrapper::getClosureParameters
+     */
+    public function testGetClosureParameters()
+    {
+        $clo0 = function (string $s) {
+        };
+        $gcp0 = self::getMethod('getClosureParameters')->invokeArgs(
+            $this->instance,
+            [$clo0]
+        );
+        $this->assertTrue(is_array($gcp0));
+        $this->assertNotEmpty($gcp0);
+        $this->assertTrue($gcp0[0] instanceof ReflectionParameter);
+        $clo1 = function () {
+        };
+        $gcp1 = self::getMethod('getClosureParameters')->invokeArgs(
+            $this->instance,
+            [$clo1]
+        );
+        $this->assertTrue(is_array($gcp1));
+        $this->assertEmpty($gcp1);
+    }
+
+    /**
+     * testGetArgTypeName
+     * @covers App\Component\Pubsub\ClosureWrapper::getClosureParameters
+     * @covers App\Component\Pubsub\ClosureWrapper::getArgTypeName
+     */
+    public function testGetArgTypeName()
+    {
+        $clo0 = function (string $s) {
+        };
+        $gcp0 = self::getMethod('getClosureParameters')->invokeArgs(
+            $this->instance,
+            [$clo0]
+        );
+        $this->assertTrue(is_array($gcp0));
+        $this->assertTrue(count($gcp0) === 1);
+        $this->assertNotEmpty($gcp0);
+        $this->assertTrue($gcp0[0] instanceof ReflectionParameter);
+        $gatn = self::getMethod('getArgTypeName')->invokeArgs(
+            $this->instance,
+            [$gcp0[0]]
+        );
+        $this->assertTrue(is_string($gatn));
+        $this->assertNotEmpty($gatn);
+        $this->assertEquals('string', $gatn);
     }
 }
