@@ -2,11 +2,13 @@
 
 namespace Tests\Component\Pubsub;
 
+use stdClass;
+use ReflectionClass;
 use PHPUnit\Framework\TestCase as PFT;
 use App\Component\Pubsub\Dispatcher;
 use App\Component\Pubsub\Event;
 use App\Component\Pubsub\EventInterface;
-use stdClass;
+use App\Component\Pubsub\ListenerInterface;
 use Tests\Component\Pubsub\EchoListener;
 
 /**
@@ -45,6 +47,21 @@ class DispatcherTest extends PFT
     protected function tearDown()
     {
         $this->instance = null;
+    }
+
+    /**
+     * get any method from a class to be invoked whatever the scope
+     *
+     * @param String $name
+     * @return void
+     */
+    protected static function getMethod(string $name)
+    {
+        $class = new ReflectionClass(Dispatcher::class);
+        $method = $class->getMethod($name);
+        $method->setAccessible(true);
+        unset($class);
+        return $method;
     }
 
     /**
@@ -158,5 +175,84 @@ class DispatcherTest extends PFT
         $this->assertObjectHasAttribute('birthday', $datas);
         $this->assertNotEmpty($datas->birthday);
         $this->assertEquals($datas->birthday, '1971/10/08');
+    }
+
+    /**
+     * testDispatchAllHandlers
+     * @covers App\Component\Pubsub\Dispatcher::subscribeClosure
+     * @covers App\Component\Pubsub\Dispatcher::dispatchAllHandlers
+     */
+    public function testDispatchAllHandlers()
+    {
+        $any = Dispatcher::ANY;
+        $clo = function (EventInterface $event) {
+            $datas = $event->getDatas();
+            $datas->toAll = 'done';
+        };
+        $datas = new stdClass;
+        $this->assertObjectNotHasAttribute('toAll', $datas);
+        $this->instance->subscribeClosure($clo);
+        $event = new Event($any, $any, $datas);
+        $dah = self::getMethod('dispatchAllHandlers')->invokeArgs(
+            $this->instance,
+            [$event]
+        );
+        $this->assertTrue($dah instanceof Dispatcher);
+        $this->assertObjectHasAttribute('toAll', $datas);
+    }
+
+    /**
+     * testDispatchResourcedHandlers
+     * @covers App\Component\Pubsub\Dispatcher::subscribeClosure
+     * @covers App\Component\Pubsub\Dispatcher::dispatchResourcedHandlers
+     */
+    public function testDispatchResourcedHandlers()
+    {
+        $any = Dispatcher::ANY;
+        $publisherResource = 'kernel.request.pre';
+        $clo = function (EventInterface $event) {
+            $datas = $event->getDatas();
+            $datas->toHandler = 'done';
+            $datas->publisher = $event->getResourceName();
+        };
+        $datas = new stdClass;
+        $this->assertObjectNotHasAttribute('toHandler', $datas);
+        $this->instance->subscribeClosure($clo);
+        $event = new Event($publisherResource, $any, $datas);
+        $dah = self::getMethod('dispatchResourcedHandlers')->invokeArgs(
+            $this->instance,
+            [$publisherResource,$event]
+        );
+        $this->instance->publish($event);
+        $this->assertTrue($dah instanceof Dispatcher);
+        $this->assertObjectHasAttribute('toHandler', $datas);
+    }
+
+    /**
+     * testDispatchResourcedEventedHandlers
+     * @covers App\Component\Pubsub\Dispatcher::subscribeClosure
+     * @covers App\Component\Pubsub\Dispatcher::dispatchResourcedEventedHandlers
+     */
+    public function testDispatchResourcedEventedHandlers()
+    {
+        $publisherResource = 'kernel.request';
+        $eventName = 'pre';
+        $clo = function (EventInterface $event) {
+            $datas = $event->getDatas();
+            $datas->toHandler = 'done';
+            $datas->publisher = $event->getResourceName();
+            $datas->eventName = $event->getEventName();
+        };
+        $datas = new stdClass;
+        $this->assertObjectNotHasAttribute('toHandler', $datas);
+        $this->instance->subscribeClosure($clo);
+        $event = new Event($publisherResource, $eventName, $datas);
+        $dah = self::getMethod('dispatchResourcedEventedHandlers')->invokeArgs(
+            $this->instance,
+            [$publisherResource,$eventName,$event]
+        );
+        $this->instance->publish($event);
+        $this->assertTrue($dah instanceof Dispatcher);
+        $this->assertObjectHasAttribute('toHandler', $datas);
     }
 }
