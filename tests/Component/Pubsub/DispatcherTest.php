@@ -58,7 +58,8 @@ class DispatcherTest extends PFT
             self::RES_NAME,
             self::EVENT_NAME
         );
-        $this->assertTrue($sub instanceof Dispatcher);
+        $this->assertTrue(is_string($sub));
+        $this->assertNotEmpty($sub);
     }
 
     /**
@@ -75,6 +76,7 @@ class DispatcherTest extends PFT
             self::RES_NAME,
             self::EVENT_NAME
         );
-        $this->assertTrue($subclo instanceof Dispatcher);
+        $this->assertTrue(is_string($subclo));
+        $this->assertNotEmpty($subclo);
     }
 }

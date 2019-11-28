@@ -4,6 +4,7 @@ namespace App\Component\Pubsub;
 
 use Closure;
 use Exception;
+use ReflectionFunction;
 use ReflectionParameter;
 use App\Component\Pubsub\EventInterface;
 
@@ -33,16 +34,16 @@ class Dispatcher implements DispatcherInterface
      * @param ListenerInterface $listener
      * @param String $resName
      * @param Mixed $event
-     * @return Dispatcher
+     * @return string
      */
     public function subscribe(
         ListenerInterface $listener,
-        $resName = self::ALL,
-        $event = self::ALL
-    ): DispatcherInterface {
-        $hash = $this->hash($listener);
+        $resName = self::ANY,
+        $event = self::ANY
+    ): string {
+        $hash = $listener->hash();
         $this->stack[$resName][$event][$hash] = $listener;
-        return $this;
+        return $hash;
     }
 
     /**
@@ -60,17 +61,17 @@ class Dispatcher implements DispatcherInterface
      * @param Closure $closure
      * @param String $resName
      * @param Mixed $event
-     * @return Dispatcher
+     * @return string
      */
     public function subscribeClosure(
         Closure $closure,
-        $resName = self::ALL,
-        $event = self::ALL
-    ): DispatcherInterface {
+        $resName = self::ANY,
+        $eventName = self::ANY
+    ): string {
         $listener = $this->closureToListener($closure);
-        $hash = $this->hash($listener);
-        $this->stack[$resName][$event][$hash] = $listener;
-        return $this;
+        $hash = $listener->hash();
+        $this->stack[$resName][$eventName][$hash] = $listener;
+        return $hash;
     }
 
     /**
@@ -79,16 +80,19 @@ class Dispatcher implements DispatcherInterface
      * @param ListenerInterface $listener
      * @param String $resName
      * @param Mixed $event
-     * @return Dispatcher
+     * @return boolean
      */
     public function unsubscribe(
         ListenerInterface $listener,
-        $resName = self::ALL,
-        $event = self::ALL
-    ): DispatcherInterface {
-        $hash = $this->hash($listener);
-        unset($this->stack[$resName][$event][$hash]);
-        return $this;
+        $resName = self::ANY,
+        $eventName = self::ANY
+    ): bool {
+        $hash = $listener->hash();
+        if (isset($this->stack[$resName][$eventName][$hash])) {
+            unset($this->stack[$resName][$eventName][$hash]);
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -119,8 +123,8 @@ class Dispatcher implements DispatcherInterface
     protected function dispatchAllHandlers(
         EventInterface $event
     ): DispatcherInterface {
-        if (isset($this->stack[self::ALL][self::ALL])) {
-            foreach ($this->stack[self::ALL][self::ALL] as $listener) {
+        if (isset($this->stack[self::ANY][self::ANY])) {
+            foreach ($this->stack[self::ANY][self::ANY] as $listener) {
                 $listener->publish($event);
             }
         }
@@ -139,8 +143,8 @@ class Dispatcher implements DispatcherInterface
         string $resName,
         EventInterface $event
     ): DispatcherInterface {
-        if (isset($this->stack[$resName][self::ALL])) {
-            foreach ($this->stack[$resName][self::ALL] as $listener) {
+        if (isset($this->stack[$resName][self::ANY])) {
+            foreach ($this->stack[$resName][self::ANY] as $listener) {
                 $listener->publish($event);
             }
         }
@@ -168,17 +172,6 @@ class Dispatcher implements DispatcherInterface
     }
 
     /**
-     * return hash for a listener instance
-     *
-     * @param ListenerInterface $listener
-     * @return string
-     */
-    protected function hash(ListenerInterface $listener): string
-    {
-        return spl_object_hash($listener);
-    }
-
-    /**
      * transform closure to listener
      *
      * @param Closure $closure
@@ -186,7 +179,7 @@ class Dispatcher implements DispatcherInterface
      */
     protected function closureToListener(Closure $closure): ListenerInterface
     {
-        $listener = new class ($closure) implements ListenerInterface
+        $listener = new class ($closure) extends ListenerAbstract implements ListenerInterface
         {
             const ERR_CLOSURE_ARG_MISSING = 'Listener closure required at least one Event argument';
             const ERR_CLOSURE_ARG_INVALID ='Listener closure arg type should comply EventInterface';
@@ -206,8 +199,7 @@ class Dispatcher implements DispatcherInterface
             public function __construct(Closure $closure)
             {
                 $params = $this->getClosureParameters($closure);
-                $nbargs = count($params);
-                if ($nbargs === 0) {
+                if (count($params) === 0) {
                     throw new Exception(
                         self::ERR_CLOSURE_ARG_MISSING
                     );
@@ -242,7 +234,7 @@ class Dispatcher implements DispatcherInterface
              */
             protected function getClosureParameters(Closure $closure): array
             {
-                $reflection = new \ReflectionFunction($closure);
+                $reflection = new ReflectionFunction($closure);
                 return $reflection->getParameters();
             }
         };

@@ -27,4 +27,11 @@ interface EventInterface
      * @return string
      */
     public function getResourceName(): string;
+
+    /**
+     * return datas
+     *
+     * @return mixed
+     */
+    public function getDatas();
 }

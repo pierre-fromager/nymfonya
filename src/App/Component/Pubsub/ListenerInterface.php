@@ -12,4 +12,11 @@ interface ListenerInterface
      * @param EventInterface $event
      */
     public function publish(EventInterface $event);
+    
+    /**
+     * return listener hash string
+     *
+     * @return string
+     */
+    public function hash(): string;
 }

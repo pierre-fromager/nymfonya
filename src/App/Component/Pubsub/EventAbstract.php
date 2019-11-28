@@ -8,19 +8,19 @@ class EventAbstract implements EventInterface
      * The name of the resource publishing this event
      * @var string
      */
-    public $resourceName;
+    protected $resourceName;
 
     /**
      * The name of this event
      * @var string
      */
-    public $eventName;
+    protected $eventName;
 
     /**
      * Any data associated with this event
      * @var mixed
      */
-    public $data;
+    protected $data;
 
     /**
      * @param string $resourceName  name of the publisher
@@ -55,5 +55,15 @@ class EventAbstract implements EventInterface
     public function getResourceName(): string
     {
         return $this->resourceName;
+    }
+
+    /**
+     * return datas
+     *
+     * @return mixed
+     */
+    public function getDatas()
+    {
+        return $this->datas;
     }
 }

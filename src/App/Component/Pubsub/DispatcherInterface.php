@@ -8,7 +8,7 @@ use App\Component\Pubsub\EventInterface;
 interface DispatcherInterface
 {
 
-    const ALL = '*';
+    const ANY = '*';
    
     /**
      * subscribe
@@ -16,13 +16,13 @@ interface DispatcherInterface
      * @param ListenerInterface $listener
      * @param string $resourceName
      * @param string $event
-     * @return DispatcherInterface
+     * @return string
      */
     public function subscribe(
         ListenerInterface $listener,
-        $resourceName = self::ALL,
-        $event = self::ALL
-    ): DispatcherInterface;
+        $resourceName = self::ANY,
+        $event = self::ANY
+    ): string;
 
     /**
      * unsubscribe
@@ -30,13 +30,13 @@ interface DispatcherInterface
      * @param ListenerInterface $listener
      * @param string $resourceName
      * @param string $event
-     * @return DispatcherInterface
+     * @return boolean
      */
     public function unsubscribe(
         ListenerInterface $listener,
-        $resourceName = self::ALL,
-        $event = self::ALL
-    ): DispatcherInterface;
+        $resourceName = self::ANY,
+        $event = self::ANY
+    ): bool;
 
     /**
      * publish

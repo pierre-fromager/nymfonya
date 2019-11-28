@@ -2,7 +2,10 @@
 
 namespace App\Component\Pubsub;
 
-class EchoListener implements ListenerInterface
+/**
+ * dumb echo listener
+ */
+class EchoListener extends ListenerAbstract implements ListenerInterface
 {
 
     /**
