@@ -116,30 +116,49 @@ class DispatcherTest extends PFT
     /**
      * testPublish
      * @covers App\Component\Pubsub\Dispatcher::subscribeClosure
-     * @covers App\Component\Pubsub\Dispatcher::unsubscribe
+     * @covers App\Component\Pubsub\Dispatcher::publish
      */
     public function testPublish()
     {
-        $datas = new stdClass();
-        $datas->firstname = '';
-        $datas->lastname = '';
-        $this->assertEmpty($datas->firstname);
-        $this->assertEmpty($datas->lastname);
-        $this->instance->subscribeClosure(
+        // names closure sub
+        $hClosureNames = $this->instance->subscribeClosure(
             function (EventInterface $event) {
                 $eventDatas = $event->getDatas();
-                $eventDatas->firstname = 'firstname';
-                $eventDatas->lastname = 'lastname';
+                $eventDatas->firstname = 'first name';
+                $eventDatas->lastname = 'last name';
             },
             self::RES_NAME,
             self::EVENT_NAME
         );
-        $event = new Event(self::RES_NAME, self::EVENT_NAME, $datas);
-        $publishRes = $this->instance->publish($event);
+        // birthday closure sub
+        $hClosureBirthday = $this->instance->subscribeClosure(
+            function (EventInterface $event) {
+                $eventDatas = $event->getDatas();
+                $eventDatas->birthday = '1971/10/08';
+            },
+            self::RES_NAME,
+            self::EVENT_NAME
+        );
+        $this->assertNotEquals($hClosureNames, $hClosureBirthday);
+        $datas = new stdClass();
+        $this->assertObjectNotHasAttribute('firstname', $datas);
+        $this->assertObjectNotHasAttribute('lastname', $datas);
+        $this->assertObjectNotHasAttribute('birthday', $datas);
+        $eventNamesBirthday = new Event(
+            self::RES_NAME, 
+            self::EVENT_NAME, 
+            $datas
+        );
+        $publishRes = $this->instance->publish($eventNamesBirthday);
         $this->assertTrue($publishRes instanceof Dispatcher);
+        $this->assertObjectHasAttribute('firstname', $datas);
         $this->assertNotEmpty($datas->firstname);
-        $this->assertEquals($datas->firstname, 'firstname');
+        $this->assertEquals($datas->firstname, 'first name');
+        $this->assertObjectHasAttribute('lastname', $datas);
         $this->assertNotEmpty($datas->lastname);
-        $this->assertEquals($datas->lastname, 'lastname');
+        $this->assertEquals($datas->lastname, 'last name');
+        $this->assertObjectHasAttribute('birthday', $datas);
+        $this->assertNotEmpty($datas->birthday);
+        $this->assertEquals($datas->birthday, '1971/10/08');
     }
 }
