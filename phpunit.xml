@@ -7,6 +7,7 @@
             <file>tests/Component/Jwt/TokenTest.php</file>
             <file>tests/Component/Cache/Redis/AdapterTest.php</file>
             <file>tests/Component/CryptTest.php</file>
+            <file>tests/Component/PkiTest.php</file>
             <file>tests/Component/AuthTest.php</file>
             <file>tests/Component/Auth/FactoryTest.php</file>
             <file>tests/Component/Auth/Adapters/FileTest.php</file>

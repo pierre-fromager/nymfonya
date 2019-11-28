@@ -18,14 +18,14 @@ class Dispatcher implements DispatcherInterface
 
     /**
      * Subscribes the listener to the resource's events.
-     * If $resName is *, 
-     * then the listener will be dispatched when the specified event 
+     * If $resName is *,
+     * then the listener will be dispatched when the specified event
      * is fired.
-     * If $event is *, 
-     * then the listener will be dispatched 
+     * If $event is *,
+     * then the listener will be dispatched
      * for any dispatched event of the specified resource.
-     * If $resName and $event is *, 
-     * the listener will be dispatched 
+     * If $resName and $event is *,
+     * the listener will be dispatched
      * for any dispatched event for any resource.
      *
      * @param ListenerInterface $listener
@@ -45,14 +45,14 @@ class Dispatcher implements DispatcherInterface
 
     /**
      * Subscribes the listener to the resource's events.
-     * If $resName is *, 
-     * then the listener will be dispatched when the specified event 
+     * If $resName is *,
+     * then the listener will be dispatched when the specified event
      * is fired.
-     * If $event is *, 
-     * then the listener will be dispatched 
+     * If $event is *,
+     * then the listener will be dispatched
      * for any dispatched event of the specified resource.
-     * If $resName and $event is *, 
-     * the listener will be dispatched 
+     * If $resName and $event is *,
+     * the listener will be dispatched
      * for any dispatched event for any resource.
      *
      * @param Closure $closure
@@ -90,8 +90,8 @@ class Dispatcher implements DispatcherInterface
     }
 
     /**
-     * Publishes an event to all the listeners 
-     * listening to the specified event 
+     * Publishes an event to all the listeners
+     * listening to the specified event
      * for the specified resource
      *
      * @param EventInterface $event

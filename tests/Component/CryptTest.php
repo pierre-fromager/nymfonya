@@ -26,7 +26,7 @@ class CyptTest extends PFT
     /**
      * instance
      *
-     * @var Token
+     * @var Crypt
      */
     protected $instance;
 

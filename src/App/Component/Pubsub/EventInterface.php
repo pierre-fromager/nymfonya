@@ -7,7 +7,7 @@ interface EventInterface
 
     /**
      * instanciate
-     * 
+     *
      * @param string $resourceName  name of the publisher
      * @param string $eventName     name of the event
      * @param mixed $data           [OPTIONAL] Additional event data
