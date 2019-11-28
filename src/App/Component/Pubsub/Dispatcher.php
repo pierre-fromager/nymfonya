@@ -77,17 +77,16 @@ class Dispatcher implements DispatcherInterface
     /**
      * Unsubscribes the listener from the resource's events
      *
-     * @param ListenerInterface $listener
+     * @param string $hash
      * @param String $resName
      * @param Mixed $event
      * @return boolean
      */
     public function unsubscribe(
-        ListenerInterface $listener,
+        string $hash,
         $resName = self::ANY,
         $eventName = self::ANY
     ): bool {
-        $hash = $listener->hash();
         if (isset($this->stack[$resName][$eventName][$hash])) {
             unset($this->stack[$resName][$eventName][$hash]);
             return true;
@@ -182,8 +181,8 @@ class Dispatcher implements DispatcherInterface
         $listener = new class ($closure) extends ListenerAbstract implements ListenerInterface
         {
             const ERR_CLOSURE_ARG_MISSING = 'Listener closure required at least one Event argument';
-            const ERR_CLOSURE_ARG_INVALID ='Listener closure arg type should comply EventInterface';
-        
+            const ERR_CLOSURE_ARG_INVALID = 'Listener closure arg type should comply EventInterface';
+
             /**
              * listener as closure
              *
@@ -200,15 +199,13 @@ class Dispatcher implements DispatcherInterface
             {
                 $params = $this->getClosureParameters($closure);
                 if (count($params) === 0) {
-                    throw new Exception(
-                        self::ERR_CLOSURE_ARG_MISSING
-                    );
+                    throw new Exception(self::ERR_CLOSURE_ARG_MISSING);
                 }
-                $argTypeName = $params[0]->getType()->getName();
+                $argTypeName = (version_compare(phpversion(), '7.1', '<'))
+                    ? (string) $params[0]->getType()
+                    : $params[0]->getType()->getName();
                 if ($argTypeName !== EventInterface::class) {
-                    throw new Exception(
-                        self::ERR_CLOSURE_ARG_INVALID
-                    );
+                    throw new Exception(self::ERR_CLOSURE_ARG_INVALID);
                 }
                 $this->closure = $closure;
             }

@@ -20,7 +20,7 @@ class EventAbstract implements EventInterface
      * Any data associated with this event
      * @var mixed
      */
-    protected $data;
+    protected $datas;
 
     /**
      * @param string $resourceName  name of the publisher
@@ -30,11 +30,11 @@ class EventAbstract implements EventInterface
     public function __construct(
         string $resourceName,
         string $eventName,
-        $data = null
+        $datas = null
     ) {
         $this->resourceName = $resourceName;
         $this->eventName = $eventName;
-        $this->data = $data;
+        $this->datas = $datas;
     }
 
     /**

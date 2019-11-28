@@ -1,6 +1,10 @@
 <?php
 
-namespace App\Component\Pubsub;
+namespace Tests\Component\Pubsub;
+
+use App\Component\Pubsub\ListenerAbstract;
+use App\Component\Pubsub\ListenerInterface;
+use App\Component\Pubsub\EventInterface;
 
 /**
  * dumb echo listener

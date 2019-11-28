@@ -4,8 +4,10 @@ namespace Tests\Component\Pubsub;
 
 use PHPUnit\Framework\TestCase as PFT;
 use App\Component\Pubsub\Dispatcher;
-use App\Component\Pubsub\EchoListener;
+use App\Component\Pubsub\Event;
 use App\Component\Pubsub\EventInterface;
+use stdClass;
+use Tests\Component\Pubsub\EchoListener;
 
 /**
  * @covers \App\Component\Pubsub\Dispatcher::<public>
@@ -50,25 +52,49 @@ class DispatcherTest extends PFT
     /**
      * testSubscribe
      * @covers App\Component\Pubsub\Dispatcher::subscribe
+     * @covers App\Component\Pubsub\Dispatcher::unsubscribe
      */
     public function testSubscribe()
     {
-        $sub = $this->instance->subscribe(
+        $hashSub = $this->instance->subscribe(
             new EchoListener(),
             self::RES_NAME,
             self::EVENT_NAME
         );
-        $this->assertTrue(is_string($sub));
-        $this->assertNotEmpty($sub);
+        $this->assertTrue(is_string($hashSub));
+        $this->assertNotEmpty($hashSub);
+        $unsubRes = $this->instance->unsubscribe(
+            $hashSub,
+            self::RES_NAME,
+            self::EVENT_NAME
+        );
+        $this->assertTrue(is_bool($unsubRes));
+        $this->assertTrue($unsubRes);
+    }
+
+    /**
+     * testUnsubscribeBad
+     * @covers App\Component\Pubsub\Dispatcher::unsubscribe
+     */
+    public function testUnsubscribeBad()
+    {
+        $unsubBad = $this->instance->unsubscribe(
+            'badhash',
+            self::RES_NAME,
+            self::EVENT_NAME
+        );
+        $this->assertTrue(is_bool($unsubBad));
+        $this->assertFalse($unsubBad);
     }
 
     /**
      * testSubscribeClosure
      * @covers App\Component\Pubsub\Dispatcher::subscribeClosure
+     * @covers App\Component\Pubsub\Dispatcher::unsubscribe
      */
     public function testSubscribeClosure()
     {
-        $subclo = $this->instance->subscribeClosure(
+        $hashSubClo = $this->instance->subscribeClosure(
             function (EventInterface $event) {
                 echo $event->getEventName() . "\n";
                 echo $event->getResourceName() . "\n";
@@ -76,7 +102,44 @@ class DispatcherTest extends PFT
             self::RES_NAME,
             self::EVENT_NAME
         );
-        $this->assertTrue(is_string($subclo));
-        $this->assertNotEmpty($subclo);
+        $this->assertTrue(is_string($hashSubClo));
+        $this->assertNotEmpty($hashSubClo);
+        $unsubRes = $this->instance->unsubscribe(
+            $hashSubClo,
+            self::RES_NAME,
+            self::EVENT_NAME
+        );
+        $this->assertTrue(is_bool($unsubRes));
+        $this->assertTrue($unsubRes);
+    }
+
+    /**
+     * testPublish
+     * @covers App\Component\Pubsub\Dispatcher::subscribeClosure
+     * @covers App\Component\Pubsub\Dispatcher::unsubscribe
+     */
+    public function testPublish()
+    {
+        $datas = new stdClass();
+        $datas->firstname = '';
+        $datas->lastname = '';
+        $this->assertEmpty($datas->firstname);
+        $this->assertEmpty($datas->lastname);
+        $this->instance->subscribeClosure(
+            function (EventInterface $event) {
+                $eventDatas = $event->getDatas();
+                $eventDatas->firstname = 'firstname';
+                $eventDatas->lastname = 'lastname';
+            },
+            self::RES_NAME,
+            self::EVENT_NAME
+        );
+        $event = new Event(self::RES_NAME, self::EVENT_NAME, $datas);
+        $publishRes = $this->instance->publish($event);
+        $this->assertTrue($publishRes instanceof Dispatcher);
+        $this->assertNotEmpty($datas->firstname);
+        $this->assertEquals($datas->firstname, 'firstname');
+        $this->assertNotEmpty($datas->lastname);
+        $this->assertEquals($datas->lastname, 'lastname');
     }
 }
