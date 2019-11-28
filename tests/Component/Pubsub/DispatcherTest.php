@@ -199,6 +199,7 @@ class DispatcherTest extends PFT
         );
         $this->assertTrue($dah instanceof Dispatcher);
         $this->assertObjectHasAttribute('toAll', $datas);
+        $this->assertEquals('done', $datas->toAll);
     }
 
     /**
@@ -214,18 +215,25 @@ class DispatcherTest extends PFT
             $datas = $event->getDatas();
             $datas->toHandler = 'done';
             $datas->publisher = $event->getResourceName();
+            $datas->eventName = $event->getEventName();
         };
         $datas = new stdClass;
         $this->assertObjectNotHasAttribute('toHandler', $datas);
         $this->instance->subscribeClosure($clo, $publisherResource);
         $event = new Event($publisherResource, $any, $datas);
-        $dah = self::getMethod('dispatchResourcedHandlers')->invokeArgs(
-            $this->instance,
-            [$publisherResource, $event]
-        );
+        $dah = self::getMethod('dispatchResourcedHandlers')
+            ->invokeArgs(
+                $this->instance,
+                [$publisherResource, $event]
+            );
         $this->instance->publish($event);
         $this->assertTrue($dah instanceof Dispatcher);
         $this->assertObjectHasAttribute('toHandler', $datas);
+        $this->assertEquals('done', $datas->toHandler);
+        $this->assertObjectHasAttribute('publisher', $datas);
+        $this->assertEquals($publisherResource, $datas->publisher);
+        $this->assertObjectHasAttribute('eventName', $datas);
+        $this->assertEquals($any, $datas->eventName);
     }
 
     /**
@@ -245,14 +253,24 @@ class DispatcherTest extends PFT
         };
         $datas = new stdClass;
         $this->assertObjectNotHasAttribute('toHandler', $datas);
-        $this->instance->subscribeClosure($clo, $publisherResource, $eventName);
-        $event = new Event($publisherResource, $eventName, $datas);
-        $dah = self::getMethod('dispatchResourcedEventedHandlers')->invokeArgs(
-            $this->instance,
-            [$publisherResource, $eventName, $event]
+        $this->instance->subscribeClosure(
+            $clo,
+            $publisherResource,
+            $eventName
         );
+        $event = new Event($publisherResource, $eventName, $datas);
+        $dah = self::getMethod('dispatchResourcedEventedHandlers')
+            ->invokeArgs(
+                $this->instance,
+                [$publisherResource, $eventName, $event]
+            );
         $this->instance->publish($event);
         $this->assertTrue($dah instanceof Dispatcher);
         $this->assertObjectHasAttribute('toHandler', $datas);
+        $this->assertEquals('done', $datas->toHandler);
+        $this->assertObjectHasAttribute('publisher', $datas);
+        $this->assertEquals($publisherResource, $datas->publisher);
+        $this->assertObjectHasAttribute('eventName', $datas);
+        $this->assertEquals($eventName, $datas->eventName);
     }
 }
