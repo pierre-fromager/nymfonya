@@ -8,11 +8,14 @@ use ReflectionFunction;
 use ReflectionParameter;
 use App\Component\Pubsub\EventInterface;
 
+/**
+ * ClosureWrapper
+ * 
+ * is a mediator pattern to let closure to comply ListenerInterface.
+ */
 class ClosureWrapper extends ListenerAbstract implements ListenerInterface
 {
-    const ERR_CLOSURE_ARG_MISSING = 'Listener closure required at least one Event argument';
-    const ERR_CLOSURE_ARG_INVALID = 'Listener closure arg type should comply EventInterface';
-
+    const PHP_VER_REF = '7.1';
     /**
      * listener as closure
      *
@@ -31,10 +34,7 @@ class ClosureWrapper extends ListenerAbstract implements ListenerInterface
         if (count($params) === 0) {
             throw new Exception(self::ERR_CLOSURE_ARG_MISSING);
         }
-        $argTypeName = (version_compare(phpversion(), '7.1', '<'))
-            ? (string) $params[0]->getType()
-            : $params[0]->getType()->getName();
-        if ($argTypeName !== EventInterface::class) {
+        if ($this->getArgTypeName($params[0]) !== EventInterface::class) {
             throw new Exception(self::ERR_CLOSURE_ARG_INVALID);
         }
         $this->closure = $closure;
@@ -63,5 +63,18 @@ class ClosureWrapper extends ListenerAbstract implements ListenerInterface
     {
         $reflection = new ReflectionFunction($closure);
         return $reflection->getParameters();
+    }
+
+    /**
+     * return type name for a ReflectionParameter arg
+     *
+     * @param ReflectionParameter $arg
+     * @return string
+     */
+    protected function getArgTypeName(ReflectionParameter $arg): string
+    {
+        return (version_compare(phpversion(), self::PHP_VER_REF, '<'))
+            ? (string) $arg->getType()
+            : $arg->getType()->getName();
     }
 }
