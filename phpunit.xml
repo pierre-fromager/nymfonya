@@ -16,6 +16,7 @@
             <file>tests/Component/File/UploaderTest.php</file>
             <file>tests/Component/Pubsub/EventAbstractTest.php</file>
             <file>tests/Component/Pubsub/EventTest.php</file>
+            <file>tests/Component/Pubsub/ListenerAbstractTest.php</file>
             <file>tests/Component/Pubsub/DispatcherTest.php</file>
             <file>tests/Component/Pubsub/ClosureWrapperTest.php</file>
             <file>tests/Component/Model/OrmTest.php</file>

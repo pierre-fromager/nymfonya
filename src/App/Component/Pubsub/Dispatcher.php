@@ -31,16 +31,16 @@ class Dispatcher implements DispatcherInterface
      *
      * @param ListenerInterface $listener
      * @param String $resName
-     * @param Mixed $event
+     * @param String $eventName
      * @return string
      */
     public function subscribe(
         ListenerInterface $listener,
         $resName = self::ANY,
-        $event = self::ANY
+        $eventName = self::ANY
     ): string {
         $hash = $listener->hash();
-        $this->stack[$resName][$event][$hash] = $listener;
+        $this->stack[$resName][$eventName][$hash] = $listener;
         return $hash;
     }
 
@@ -58,7 +58,7 @@ class Dispatcher implements DispatcherInterface
      *
      * @param Closure $closure
      * @param String $resName
-     * @param Mixed $event
+     * @param String $eventName
      * @return string
      */
     public function subscribeClosure(
@@ -77,7 +77,7 @@ class Dispatcher implements DispatcherInterface
      *
      * @param string $hash
      * @param String $resName
-     * @param Mixed $event
+     * @param String $eventName
      * @return boolean
      */
     public function unsubscribe(
@@ -98,7 +98,7 @@ class Dispatcher implements DispatcherInterface
      * for the specified resource
      *
      * @param EventInterface $event
-     * @return Dispatcher
+     * @return DispatcherInterface
      */
     public function publish(EventInterface $event): DispatcherInterface
     {
@@ -115,7 +115,7 @@ class Dispatcher implements DispatcherInterface
      * dispatch to all handlers the wildcard handlers
      *
      * @param EventInterface $event
-     * @return void
+     * @return DispatcherInterface
      */
     protected function dispatchAllHandlers(
         EventInterface $event
@@ -134,7 +134,7 @@ class Dispatcher implements DispatcherInterface
      *
      * @param string $resName
      * @param EventInterface $event
-     * @return void
+     * @return DispatcherInterface
      */
     protected function dispatchResourcedHandlers(
         string $resName,
@@ -148,13 +148,14 @@ class Dispatcher implements DispatcherInterface
         return $this;
     }
 
-    /**
-     * dispatch to handlers identified by resource name and event name
-     *
-     * @param string $resName
-     * @param EventInterface $event
-     * @return void
-     */
+     /**
+      * dispatch to handlers identified by resource name and event name
+      *
+      * @param string $resName
+      * @param string $eventName
+      * @param EventInterface $event
+      * @return DispatcherInterface
+      */
     protected function dispatchResourcedEventedHandlers(
         string $resName,
         string $eventName,
