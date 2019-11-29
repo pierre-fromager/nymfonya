@@ -3,7 +3,9 @@
 
 namespace Tests;
 
+//require_once 'vendor/pier-infor/nymfonya-config/tests/ConfigTest.php';
 use Nymfonya\Component\Config\Tests\ConfigTest;
+//use Nymfonya\Component\Container
 
 use App\Config;
 

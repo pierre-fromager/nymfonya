@@ -14,11 +14,6 @@
             <file>tests/Component/Auth/Adapters/RepositoryTest.php</file>
             <file>tests/Component/Auth/Adapters/ConfigTest.php</file>
             <file>tests/Component/File/UploaderTest.php</file>
-            <file>tests/Component/Pubsub/EventAbstractTest.php</file>
-            <file>tests/Component/Pubsub/EventTest.php</file>
-            <file>tests/Component/Pubsub/ListenerAbstractTest.php</file>
-            <file>tests/Component/Pubsub/DispatcherTest.php</file>
-            <file>tests/Component/Pubsub/ClosureWrapperTest.php</file>
             <file>tests/Component/Model/OrmTest.php</file>
             <file>tests/Component/Db/Adapter/PdoMysqlTest.php</file>
             <file>tests/Component/Db/FactoryTest.php</file>
@@ -38,7 +33,7 @@
             <file>tests/Controllers/Api/V1/RestfulTest.php</file>
             <file>tests/Controllers/Api/V1/TestTest.php</file>
             <file>tests/Reuse/Controllers/AbstractApiTest.php</file>
-            <file>tests/ConfigTest.php</file>
+            <file>tests/AppConfigTest.php</file>
             <file>tests/BundleApiTest.php</file>
         </testsuite>
     </testsuites>
