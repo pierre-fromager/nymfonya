@@ -4,6 +4,7 @@
     <testsuites>
         <testsuite name="all">
             <file>tests/Component/Migration/UsersTest.php</file>
+            <file>tests/Component/Console/InputTest.php</file>
             <file>tests/Component/Jwt/TokenTest.php</file>
             <file>tests/Component/Cache/Redis/AdapterTest.php</file>
             <file>tests/Component/CryptTest.php</file>
