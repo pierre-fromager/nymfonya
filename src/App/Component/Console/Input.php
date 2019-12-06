@@ -2,8 +2,6 @@
 
 namespace App\Component\Console;
 
-use Monolog\Handler\StreamHandler;
-
 class Input
 {
 
@@ -145,11 +143,7 @@ class Input
     protected function openStream(): Input
     {
         if (false === $this->streamable()) {
-            $this->streamHandler = fopen(
-                $this->getStreamName(),
-                $this->streamMode,
-                false
-            );
+            $this->streamHandler = fopen($this->getStreamName(), $this->streamMode, false);
         }
         if (false === $this->streamable()) {
             throw new \Exception('Cant open input stream handle');
