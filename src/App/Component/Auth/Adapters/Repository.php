@@ -2,7 +2,7 @@
 
 namespace App\Component\Auth\Adapters;
 
-use Nymfonya\Component\Config;
+use Nymfonya\Component\Config as AppConfig;
 use Nymfonya\Component\Container;
 use App\Component\Auth\AdapterInterface;
 use App\Component\Crypt;
@@ -28,7 +28,7 @@ class Repository implements AdapterInterface
     /**
      * app config
      *
-     * @var Config
+     * @var AppConfig
      */
     protected $config;
 
@@ -57,7 +57,7 @@ class Repository implements AdapterInterface
         $this->userRepo = new Users($this->container);
         $this->dbCore = new Core($this->container);
         $this->dbCore->fromOrm($this->userRepo);
-        $this->config = $this->container->getService(Config::class);
+        $this->config = $this->container->getService(AppConfig::class);
     }
 
     /**
