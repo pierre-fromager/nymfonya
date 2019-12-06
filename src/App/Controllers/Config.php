@@ -2,6 +2,8 @@
 
 namespace App\Controllers;
 
+use App\Component\Console\Input;
+use App\Component\Console\Terminal;
 use App\Interfaces\Controllers\IApi;
 use App\Reuse\Controllers\AbstractApi;
 use Nymfonya\Component\Container;
@@ -93,13 +95,14 @@ final class Config extends AbstractApi implements IApi
      */
     final public function account(): Config
     {
-        $line = 'Undefined function readline';
-        if ($this->hasReadLine()) {
-            //$line = readline("Command: ");
-        }
+        echo "- [enter] to validate\n";
+        echo '- Account name : ';
+        $inputName = new Input(Input::STREAM_STDIN);
+        $inputName->setMaxLength(2);
+        $name = $inputName->value();
         $this->response
             ->setCode(Response::HTTP_OK)
-            ->setContent(['error' => false, 'command' => $line]);
+            ->setContent(['error' => false, 'command' => $name]);
         return $this;
     }
 

@@ -70,8 +70,8 @@ class Input
             fwrite($handle, $forcedValue);
         }
         $value = stream_get_contents(
-            $handle, 
-            $this->getMaxLength(), 
+            $handle,
+            $this->getMaxLength(),
             0
         );
         $this->closeStream();
@@ -87,7 +87,7 @@ class Input
     {
         $this->maxLength = $len;
         return $this;
-    }    
+    }
 
     /**
      * returns stream handler

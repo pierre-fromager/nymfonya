@@ -109,7 +109,7 @@ class InputTest extends PFT
         $gsn = self::getMethod('getStreamName')->invokeArgs($this->instance, []);
         $this->assertTrue(is_string($gsn));
         $this->assertNotEmpty($gsn);
-    }   
+    }
     
     /**
      * testOpenCloseStream
@@ -122,6 +122,5 @@ class InputTest extends PFT
         $this->assertTrue($osm instanceof Input);
         $csm = self::getMethod('closeStream')->invokeArgs($this->instance, []);
         $this->assertTrue($csm instanceof Input);
-    }      
-    
+    }
 }
