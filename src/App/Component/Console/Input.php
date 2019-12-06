@@ -105,7 +105,7 @@ class Input
     /**
      * returns stream handler
      *
-     * @return void
+     * @return resource | null
      */
     protected function getStreamHandler()
     {
