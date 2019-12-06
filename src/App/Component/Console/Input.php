@@ -2,6 +2,8 @@
 
 namespace App\Component\Console;
 
+use Monolog\Handler\StreamHandler;
+
 class Input
 {
 
@@ -61,6 +63,7 @@ class Input
     /**
      * return the input value
      *
+     * @param string $forcedValue
      * @return string
      */
     public function value(string $forcedValue = ''): string
@@ -124,18 +127,32 @@ class Input
     }
 
     /**
+     * return false if streamHandler is not a resource
+     *
+     * @return boolean
+     */
+    protected function streamable(): bool
+    {
+        return is_resource($this->streamHandler);
+    }
+
+    /**
      * open resource
      *
      * @return Input
+     * @throws Exception
      */
     protected function openStream(): Input
     {
-        if (!is_resource($this->streamHandler)) {
+        if (false === $this->streamable()) {
             $this->streamHandler = fopen(
                 $this->getStreamName(),
                 $this->streamMode,
                 false
             );
+        }
+        if (false === $this->streamable()) {
+            throw new \Exception('Cant open input stream handle');
         }
         return $this;
     }
@@ -147,7 +164,7 @@ class Input
      */
     protected function closeStream(): Input
     {
-        if (is_resource($this->streamHandler)) {
+        if ($this->streamable()) {
             fclose($this->streamHandler);
         }
         return $this;
