@@ -21,8 +21,9 @@ class Pool implements ArrayAccess, Countable
     /**
      * Assigns a value to the specified offset
      *
-     * @param string The offset to assign the value to
-     * @param mixed  The value to set
+     * @param string $connexionId
+     * @param resource $connection
+     * @return void
      */
     public function offsetSet($connexionId, $connection)
     {
@@ -34,7 +35,7 @@ class Pool implements ArrayAccess, Countable
     /**
      * Whether or not an offset exists
      *
-     * @param string An offset to check for
+     * @param string $connexionId
      * @return boolean
      */
     public function offsetExists($connexionId)
@@ -45,7 +46,8 @@ class Pool implements ArrayAccess, Countable
     /**
      * Unsets an offset
      *
-     * @param string The offset to unset
+     * @param string $connexionId
+     * @return void
      */
     public function offsetUnset($connexionId)
     {
@@ -57,8 +59,8 @@ class Pool implements ArrayAccess, Countable
     /**
      * Returns the value at specified offset
      *
-     * @param string The offset to retrieve
-     * @return mixed
+     * @param string $connexionId
+     * @return resource | null
      */
     public function offsetGet($connexionId)
     {
@@ -82,7 +84,7 @@ class Pool implements ArrayAccess, Countable
      * and connection is object
      *
      * @param string $connexionId
-     * @param object $connection
+     * @param resource | null $connection
      * @return boolean
      */
     protected function valid($connexionId, $connection): bool
