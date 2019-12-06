@@ -12,6 +12,7 @@ class Input
     const STREAM_MODE_APPEND = 'r+';
     const STREAM_MODE_WRITE = 'w';
     const STREAM_MODE_WRITE_APPEND = 'w+';
+    const DEBUGER = 'phpdbg';
 
     /**
      * streamName
@@ -50,7 +51,9 @@ class Input
         string $streamName = self::STREAM_STDIN,
         string $streamMode = self::STREAM_MODE_WRITE_APPEND
     ) {
-        $this->streamName = $streamName;
+        $this->streamName = (php_sapi_name() == self::DEBUGER)
+            ? self::STREAM_MEMORY
+            : $streamName;
         $this->streamMode = $streamMode;
         $this->setMaxLength(1);
     }
