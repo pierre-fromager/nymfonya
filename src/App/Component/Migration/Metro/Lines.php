@@ -91,12 +91,14 @@ class Lines extends Migration
                 $csvData = $stream->fgetcsv();
                 if (!empty($csvData)) {
                     $data = array_combine(self::MIG_FIELDS, $csvData);
-                    $this->repository->resetBuilder();
-                    $this->repository->insert($data);
-                    $this->run(
-                        $this->repository->getSql(),
-                        $this->repository->getBuilderValues()
-                    );
+                    if (false !== $data) {
+                        $this->repository->resetBuilder();
+                        $this->repository->insert($data);
+                        $this->run(
+                            $this->repository->getSql(),
+                            $this->repository->getBuilderValues()
+                        );
+                    }
                 }
                 unset($csvData);
             }
