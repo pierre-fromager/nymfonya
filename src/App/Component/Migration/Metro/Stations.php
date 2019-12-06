@@ -98,7 +98,7 @@ class Stations extends Migration
                 unset($csvData);
             }
             $stream = null;
-            unset($stream, $lines);
+            unset($stream);
         }
         return $this;
     }

@@ -101,7 +101,7 @@ class Lines extends Migration
                 unset($csvData);
             }
             $stream = null;
-            unset($stream, $lines);
+            unset($stream);
         }
         return $this;
     }
