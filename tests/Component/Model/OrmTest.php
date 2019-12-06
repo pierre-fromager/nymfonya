@@ -540,4 +540,30 @@ class OrmTest extends PFT
         $this->assertNotEmpty($dbname);
         $this->assertEquals('nymfonya', $dbname);
     }
+
+    /**
+     * testGetTable
+     * @covers App\Component\Model\Orm\Orm::getTable
+     */
+    public function testGetTable()
+    {
+        $tableName = $this->instance->getTable();
+        $this->assertTrue(is_string($tableName));
+        $this->assertNotEmpty($tableName);
+        $this->assertEquals('testtable', $tableName);
+    }
+
+    /**
+     * testResetBuilder
+     * @covers App\Component\Model\Orm\Orm::resetBuilder
+     */
+    public function testResetBuilder()
+    {
+        $this->assertTrue(
+            $this->instance->resetBuilder() instanceof Orm
+        );
+        $this->assertTrue(
+            $this->instance->getQueryBuilder() instanceof GenericBuilder
+        );
+    }
 }

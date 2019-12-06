@@ -295,9 +295,9 @@ class Orm implements IOrm
      * query sql string
      * @return string
      */
-    public function getSql(): string
+    public function getSql(bool $reset = true): string
     {
-        return $this->queryBuilder->write($this->query);
+        return $this->queryBuilder->write($this->query, $reset);
     }
 
     /**
