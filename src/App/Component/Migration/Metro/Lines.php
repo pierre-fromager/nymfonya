@@ -79,7 +79,7 @@ class Lines extends Migration
     protected function runInsert(): Migration
     {
         $ml = ini_get(self::MEM_LIM);
-        ini_set(self::MEM_LIM, '8M');
+        //ini_set(self::MEM_LIM, '256M');
         if ($this->tableExists()) {
             $stream = new SplFileObject(
                 __DIR__ . self::CSV_FIXTURE
@@ -106,7 +106,7 @@ class Lines extends Migration
             $stream = null;
             unset($stream, $lines);
         }
-        ini_set(self::MEM_LIM, $ml);
+        //ini_set(self::MEM_LIM, $ml);
         return $this;
     }
 
