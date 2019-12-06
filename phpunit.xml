@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <phpunit bootstrap="vendor/autoload.php" stopOnFailure="true" colors="true" strict="true">
+    <php>
+        <ini name="memory_limit" value="16M" />
+    </php>
     <testsuites>
         <testsuite name="all">
             <file>tests/Component/Migration/UsersTest.php</file>
+            <file>tests/Component/Migration/Metro/LinesTest.php</file>
+            <file>tests/Component/Migration/Metro/StationsTest.php</file>
             <file>tests/Component/Console/InputTest.php</file>
+            <file>tests/Component/Console/FlawTest.php</file>
             <file>tests/Component/Jwt/TokenTest.php</file>
             <file>tests/Component/Cache/Redis/AdapterTest.php</file>
             <file>tests/Component/CryptTest.php</file>
@@ -28,6 +34,8 @@
             <file>tests/Model/AccountsTest.php</file>
             <file>tests/Model/UsersTest.php</file>
             <file>tests/Model/Repository/UsersTest.php</file>
+            <file>tests/Model/Repository/Metro/StationsTest.php</file>
+            <file>tests/Model/Repository/Metro/LinesTest.php</file>
             <file>tests/Controllers/ConfigTest.php</file>
             <file>tests/Controllers/Api/V1/AuthTest.php</file>
             <file>tests/Controllers/Api/V1/StatTest.php</file>
