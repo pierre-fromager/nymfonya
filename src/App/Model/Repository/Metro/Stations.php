@@ -9,6 +9,11 @@ use App\Component\Model\Orm\Orm;
 class Stations extends Orm implements IOrm
 {
 
+    const _LON = 'lon';
+    const _LAT = 'lat';
+    const _NAME = 'name';
+    const _H = 'h';
+
     /**
      * table name
      * @var string

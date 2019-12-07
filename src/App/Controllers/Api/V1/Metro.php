@@ -14,6 +14,11 @@ use App\Component\Filter;
 
 final class Metro extends AbstractApi implements IApi
 {
+    const _NAME = 'name';
+    const _LIMIT = 'limit';
+    const _PAGE = 'page';
+    const _DATAS = 'datas';
+
     /**
      * Lines model
      *
@@ -60,7 +65,7 @@ final class Metro extends AbstractApi implements IApi
         $this->response->setCode(Response::HTTP_OK)->setContent([
             Response::_ERROR => false,
             Response::_ERROR_MSG => '',
-            'datas' => $this->getQueryResults($query)
+            self::_DATAS => $this->getQueryResults($query)
         ]);
         unset($query);
         return $this;
@@ -77,7 +82,7 @@ final class Metro extends AbstractApi implements IApi
         $this->response->setCode(Response::HTTP_OK)->setContent([
             Response::_ERROR => false,
             Response::_ERROR_MSG => '',
-            'datas' => $this->getQueryResults($query)
+            self::_DATAS => $this->getQueryResults($query)
         ]);
         unset($query);
         return $this;
@@ -108,12 +113,13 @@ final class Metro extends AbstractApi implements IApi
     protected function search(Orm &$model): Orm
     {
         $input = $this->getFilteredInput();
-        $name = (isset($input['name']))
-            ? '%' . $input['name'] . '%'
-            : '%';
-        $model->find(['*'], ['src#' => $name]);
-        if (isset($input['limit'])) {
-            $model->getQuery()->limit(0, (int) $input['limit']);
+        $name = (isset($input[self::_NAME]))
+            ? Orm::SQL_WILD . $input[self::_NAME] . Orm::SQL_WILD
+            : Orm::SQL_WILD;
+        $field = ($model instanceof Lines) ? Lines::_SRC : Stations::_NAME;
+        $model->find([Orm::SQL_ALL], [$field . Orm::OP_LIKE => $name]);
+        if (isset($input[self::_LIMIT])) {
+            $model->getQuery()->limit(0, (int) $input[self::_LIMIT]);
         }
         return $model;
     }
@@ -126,9 +132,9 @@ final class Metro extends AbstractApi implements IApi
     protected function getFilteredInput(): array
     {
         return (new Filter($this->getParams(), [
-            'name' => FILTER_SANITIZE_STRING,
-            'limit' => FILTER_SANITIZE_NUMBER_INT,
-            'page' => FILTER_SANITIZE_NUMBER_INT,
+            self::_NAME => FILTER_SANITIZE_STRING,
+            self::_LIMIT => FILTER_SANITIZE_NUMBER_INT,
+            self::_PAGE => FILTER_SANITIZE_NUMBER_INT,
         ]))->process()->toArray();
     }
 }

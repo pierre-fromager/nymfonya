@@ -7,6 +7,8 @@ use Nymfonya\Component\Container;
 interface IOrm
 {
 
+    const SQL_ALL = '*';
+    const SQL_WILD = '%';
     const SQL_STATEMENTS_SELECT = 'select';
     const SQL_STATEMENTS_UPDATE = 'update';
     const SQL_STATEMENTS_INSERT = 'insert';
@@ -17,7 +19,11 @@ interface IOrm
         self::SQL_STATEMENTS_INSERT,
         self::SQL_STATEMENTS_DELETE,
     ];
-    const OPERATORS = ['!', '<', '>', '#'];
+    const OP_NOT = '!';
+    const OP_LT = '<';
+    const OP_GT = '>';
+    const OP_LIKE = '#';
+    const OPERATORS = [self::OP_NOT, self::OP_LT, self::OP_GT, self::OP_LIKE];
 
     public function __construct(Container $container);
 

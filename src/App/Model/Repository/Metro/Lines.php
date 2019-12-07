@@ -9,6 +9,13 @@ use App\Component\Model\Orm\Orm;
 class Lines extends Orm implements IOrm
 {
 
+    const _LIGNES = 'lignes';
+    const _SRC = 'src';
+    const _HSRC = 'hsrc';
+    const _DST = 'dst';
+    const _HDST = 'hdst';
+    const _DIST = 'dist';
+
     /**
      * table name
      * @var string

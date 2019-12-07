@@ -2,7 +2,7 @@
 
 /**
  * Component Filter
- * 
+ *
  * filter an array matching args
  *
  * @author pierrefromager
