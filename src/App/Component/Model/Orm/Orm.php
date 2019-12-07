@@ -262,7 +262,7 @@ class Orm implements IOrm
 
     /**
      * query instance
-     * @return object
+     * @return Select|Update|Insert|Delete
      */
     public function getQuery()
     {
