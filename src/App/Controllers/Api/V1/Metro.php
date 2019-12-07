@@ -11,6 +11,8 @@ use App\Model\Repository\Metro\Stations;
 
 final class Metro extends AbstractApi implements IApi
 {
+    protected $modelLines;
+    protected $modelStations;
 
     /**
      * instanciate
@@ -20,10 +22,12 @@ final class Metro extends AbstractApi implements IApi
     public function __construct(Container $container)
     {
         parent::__construct($container);
+        $this->modelLines = new Lines($container);
+        $this->modelStations = new Stations($container);
     }
 
     /**
-     * jwtaction
+     * search lines
      *
      * @return Test
      */
@@ -31,33 +35,28 @@ final class Metro extends AbstractApi implements IApi
     {
         $this->response->setCode(Response::HTTP_OK)->setContent([
             Response::_ERROR => false,
-            Response::_ERROR_MSG => 'Jwt auth succeeded',
+            Response::_ERROR_MSG => '',
             'datas' => [
-                'user' => $this->request->getSession('auth', 'user')
+                'lines' => []
             ]
         ]);
         return $this;
     }
 
     /**
-     * upload with jwt bearer
+     * search stations
      *
      * @return Test
      */
     final public function stations(): Metro
     {
-        $appPath = dirname(dirname($this->request->getFilename()));
-        $uploader = new Uploader();
-        $uploader
-            ->setTargetPath($appPath . '/assets/upload/')
-            ->process();
-        $resCodeError = $uploader->isError()
-            ? Response::HTTP_INTERNAL_SERVER_ERROR
-            : Response::HTTP_OK;
-        $this->response->setCode($resCodeError)->setContent(
-            $uploader->getInfos()
-        );
-        unset($uploader);
+        $this->response->setCode(Response::HTTP_OK)->setContent([
+            Response::_ERROR => false,
+            Response::_ERROR_MSG => '',
+            'datas' => [
+                'stations' => []
+            ]
+        ]);
         return $this;
     }
 }
