@@ -90,4 +90,26 @@ class MetroTest extends PFT
     {
         $this->assertTrue($this->instance instanceof MetroControler);
     }
+
+    /**
+     * testLines
+     * @covers App\Controllers\Api\V1\Metro::lines
+     */
+    public function testLines()
+    {
+        $this->assertTrue(
+            $this->instance->lines() instanceof MetroControler
+        );
+    }
+
+    /**
+     * testStations
+     * @covers App\Controllers\Api\V1\Metro::stations
+     */
+    public function testStations()
+    {
+        $this->assertTrue(
+            $this->instance->stations() instanceof MetroControler
+        );
+    }
 }
