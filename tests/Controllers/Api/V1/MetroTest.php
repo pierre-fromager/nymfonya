@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase as PFT;
 use Nymfonya\Component\Config;
 use Nymfonya\Component\Container;
 use App\Controllers\Api\V1\Metro as MetroControler;
+use App\Model\Repository\Metro\Lines;
 
 /**
  * @covers \App\Controllers\Api\V1\Metro::<public>
@@ -31,6 +32,13 @@ class MetroTest extends PFT
     protected $container;
 
     /**
+     * lines model
+     *
+     * @var Lines
+     */
+    protected $modelLines;
+
+    /**
      * instance
      *
      * @var MetroControler
@@ -53,6 +61,7 @@ class MetroTest extends PFT
         $this->container = new Container(
             $this->config->getSettings(Config::_SERVICES)
         );
+        $this->modelLines = new Lines($this->container);
         $this->instance = new MetroControler($this->container);
     }
 
@@ -64,6 +73,7 @@ class MetroTest extends PFT
     {
         $this->instance = null;
         $this->container = null;
+        $this->modelLines = null;
         $this->config = null;
     }
 
@@ -111,5 +121,21 @@ class MetroTest extends PFT
         $this->assertTrue(
             $this->instance->stations() instanceof MetroControler
         );
+    }
+
+    /**
+     * testGetQueryResults
+     * @covers App\Controllers\Api\V1\Metro::getQueryResults
+     */
+    public function testGetQueryResults()
+    {
+        $gqr = self::getMethod('getQueryResults')->invokeArgs(
+            $this->instance,
+            [
+                $this->modelLines->find(['*'], [])
+            ]
+        );
+        $this->assertTrue(is_array($gqr));
+        $this->assertNotEmpty($gqr);
     }
 }
