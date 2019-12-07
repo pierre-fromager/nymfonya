@@ -61,7 +61,11 @@ final class Metro extends AbstractApi implements IApi
      */
     final public function lines(): Metro
     {
-        $query = $this->search($this->modelLines);
+        $query = $this->search(
+            $this->getFilteredInput(),
+            $this->modelLines,
+            Lines::_SRC
+        );
         $this->response->setCode(Response::HTTP_OK)->setContent([
             Response::_ERROR => false,
             Response::_ERROR_MSG => '',
@@ -78,7 +82,11 @@ final class Metro extends AbstractApi implements IApi
      */
     final public function stations(): Metro
     {
-        $query = $this->search($this->modelStations);
+        $query = $this->search(
+            $this->getFilteredInput(),
+            $this->modelStations,
+            Stations::_NAME
+        );
         $this->response->setCode(Response::HTTP_OK)->setContent([
             Response::_ERROR => false,
             Response::_ERROR_MSG => '',
@@ -100,26 +108,25 @@ final class Metro extends AbstractApi implements IApi
         return $this->dbCore->fromOrm($query)->run(
             $sql,
             $query->getBuilderValues()
-        )->hydrate()
-            ->getRowset();
+        )->hydrate()->getRowset();
     }
 
     /**
-     * search items from name limiting results amount
+     * search items by search key and value limiting results amount
      *
+     * @param array $inputs
      * @param Orm $model
+     * @param string $searchKey
      * @return Orm
      */
-    protected function search(Orm &$model): Orm
+    protected function search(array $inputs, Orm &$model, string $searchKey): Orm
     {
-        $input = $this->getFilteredInput();
-        $name = (isset($input[self::_NAME]))
-            ? Orm::SQL_WILD . $input[self::_NAME] . Orm::SQL_WILD
+        $searchValue = (isset($inputs[$searchKey]))
+            ? Orm::SQL_WILD . $inputs[$searchKey] . Orm::SQL_WILD
             : Orm::SQL_WILD;
-        $field = ($model instanceof Lines) ? Lines::_SRC : Stations::_NAME;
-        $model->find([Orm::SQL_ALL], [$field . Orm::OP_LIKE => $name]);
-        if (isset($input[self::_LIMIT])) {
-            $model->getQuery()->limit(0, (int) $input[self::_LIMIT]);
+        $model->find([Orm::SQL_ALL], [$searchKey . Orm::OP_LIKE => $searchValue]);
+        if (isset($inputs[self::_LIMIT])) {
+            $model->getQuery()->limit(0, (int) $inputs[self::_LIMIT]);
         }
         return $model;
     }

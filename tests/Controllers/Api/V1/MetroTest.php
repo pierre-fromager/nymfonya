@@ -7,6 +7,8 @@ use Nymfonya\Component\Config;
 use Nymfonya\Component\Container;
 use App\Controllers\Api\V1\Metro as MetroControler;
 use App\Model\Repository\Metro\Lines;
+use App\Model\Repository\Metro\Stations;
+use App\Component\Model\Orm\Orm;
 
 /**
  * @covers \App\Controllers\Api\V1\Metro::<public>
@@ -39,6 +41,13 @@ class MetroTest extends PFT
     protected $modelLines;
 
     /**
+     * stations model
+     *
+     * @var Stations
+     */
+    protected $modelStations;
+
+    /**
      * instance
      *
      * @var MetroControler
@@ -62,6 +71,7 @@ class MetroTest extends PFT
             $this->config->getSettings(Config::_SERVICES)
         );
         $this->modelLines = new Lines($this->container);
+        $this->modelStations = new Stations($this->container);
         $this->instance = new MetroControler($this->container);
     }
 
@@ -132,10 +142,58 @@ class MetroTest extends PFT
         $gqr = self::getMethod('getQueryResults')->invokeArgs(
             $this->instance,
             [
-                $this->modelLines->find(['*'], [])
+                $this->modelLines->find([Orm::SQL_ALL], [])
             ]
         );
         $this->assertTrue(is_array($gqr));
         $this->assertNotEmpty($gqr);
+    }
+
+    /**
+     * testSearch
+     * @covers App\Controllers\Api\V1\Metro::search
+     */
+    public function testSearch()
+    {
+        $query0 = $this->modelLines->find([Orm::SQL_ALL], [
+            $this->modelLines
+        ]);
+        $sea0 = self::getMethod('search')->invokeArgs(
+            $this->instance,
+            [
+                [Lines::_SRC => 'che'], &$query0, Lines::_SRC
+            ]
+        );
+        $this->assertTrue($sea0 instanceof Orm);
+        $query1 = $this->modelStations->find([Orm::SQL_ALL], [
+            $this->modelStations
+        ]);
+        $stationInput =  [
+            MetroControler::_LIMIT => 5,
+            Stations::_NAME => 'che'
+        ];
+        $sea1 = self::getMethod('search')->invokeArgs(
+            $this->instance,
+            [
+                $stationInput, &$query1, Stations::_NAME
+            ]
+        );
+        $this->assertTrue($sea1 instanceof Orm);
+    }
+
+    /**
+     * testGetFilteredInput
+     * @covers App\Controllers\Api\V1\Metro::getFilteredInput
+     */
+    public function testGetFilteredInput()
+    {
+        $query0 = $this->modelLines->find([Orm::SQL_ALL], [
+            $this->modelLines
+        ]);
+        $sea0 = self::getMethod('getFilteredInput')->invokeArgs(
+            $this->instance,
+            [&$query0]
+        );
+        $this->assertTrue(is_array($sea0));
     }
 }
