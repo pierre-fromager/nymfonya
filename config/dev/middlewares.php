@@ -23,9 +23,9 @@ return [
             ]),
             Headers::HEADER_ACA_HEADERS =>  implode(',', [
                 'Access-Control-Allow-Headers', 'Origin', 'Accept',
-                'X-Requested-With', 'Content-Type', 
-                'Access-Control-Request-Method', 
-                'Access-Control-Request-Headers', 
+                'X-Requested-With', 'Content-Type',
+                'Access-Control-Request-Method',
+                'Access-Control-Request-Headers',
                 'Access-Control-Allow-Origin',
                 'Authorization'
             ])
@@ -38,15 +38,17 @@ return [
             '/^(!restful.*)$/',
             '/^(test)\/(.*)$/',
             '/^(auth)\/(.*)$/',
-            '/^(stat)\/(.*)$/'
+            '/^(stat)\/(.*)$/',
+            '/^(metro)\/(.*)$/'
         ],
-    ],    
+    ],
     Jwt::class => [
         'enabled' => true,
         'prefix' => '/api/v1/',
         'exclude' => [
-            'auth/login', 'stat/opcache', 
-            'test/pokerelay', 'stat/redis'
+            'auth/login', 'stat/opcache',
+            'test/pokerelay', 'stat/redis',
+            'metro/lines', 'metro/stations',
         ],
     ],
     After::class => [
