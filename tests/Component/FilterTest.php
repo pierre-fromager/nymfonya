@@ -2,7 +2,6 @@
 
 namespace Tests\Component;
 
-use App\Component\Auth\Adapters\File;
 use PHPUnit\Framework\TestCase as PFT;
 use App\Component\Filter;
 
@@ -14,6 +13,9 @@ class FilterTest extends PFT
 
     const TEST_ENABLE = true;
     const _PREPARE = 'prepare';
+    const _GARBAGE = '\nXz+666\3+8@/n';
+    const _EXPECTED_STRING = '+6663+8';
+    const _EXPECTED_INT = 6663;
 
     /**
      * instance
@@ -21,20 +23,6 @@ class FilterTest extends PFT
      * @var Filter
      */
     protected $instance;
-
-    /**
-     * private key
-     *
-     * @var string
-     */
-    protected $privKey;
-
-    /**
-     * public key
-     *
-     * @var string
-     */
-    protected $pubKey;
 
     /**
      * Sets up the fixture, for example, opens a network connection.
@@ -128,11 +116,9 @@ class FilterTest extends PFT
     public function testPrepare()
     {
 
-        $garbage = '\nXz+666\3+8@/n';
-        $expected = '+6663+8';
-        $expectedInt = 6663;
+        //$expectedInt = 6663;
         $key = 'age';
-        $rawIput = [$key => $garbage];
+        $rawIput = [$key => self::_GARBAGE];
         $filters = [$key => \FILTER_SANITIZE_NUMBER_INT];
         $this->init($rawIput, $filters);
         $prp0 = self::getMethod(self::_PREPARE)->invokeArgs($this->instance, []);
@@ -142,35 +128,33 @@ class FilterTest extends PFT
         $this->assertTrue(is_array($r0));
         $this->assertTrue(isset($r0[$key]));
         $fa0 = $r0[$key];
-        $this->assertEquals($fa0, $expected);
+        $this->assertEquals($fa0, self::_EXPECTED_STRING);
         $iv0 = (int) $fa0;
         $this->assertTrue(is_int($iv0));
-        $this->assertEquals($iv0, $expectedInt);
+        $this->assertEquals($iv0, self::_EXPECTED_INT);
         $myAgeFilter = new class
         {
             /**
-             * custom filter process
+             * custom filter process outputing int
              *
              * @param string $v
-             * @return string
+             * @return int
              */
-            public function process(string $v): string
+            public function process(string $v): int
             {
-                return filter_var($v, \FILTER_SANITIZE_NUMBER_INT);
+                return (int) filter_var($v, \FILTER_SANITIZE_NUMBER_INT);
             }
         };
         $filters = [$key => $myAgeFilter];
         $this->init($rawIput, $filters);
         $prp1 = self::getMethod(self::_PREPARE)->invokeArgs($this->instance, []);
+        $this->assertTrue($prp1 instanceof Filter);
         $this->instance->process();
         $r1 = $this->instance->toArray();
         $this->assertTrue(is_array($r1));
         $this->assertTrue(isset($r1[$key]));
         $fa1 = $r1[$key];
-        $this->assertEquals($fa1, $expected);
-        $iv1 = (int) $fa1;
-        $this->assertTrue(is_int($iv1));
-        $this->assertEquals($iv1, $expectedInt);
-        $this->assertTrue($prp1 instanceof Filter);
+        $this->assertTrue(is_int($fa1));
+        $this->assertEquals($fa1, self::_EXPECTED_INT);
     }
 }
