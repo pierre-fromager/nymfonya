@@ -23,4 +23,8 @@ return [
     /*'/^(api\/v1\/restful)\/(.*?)(\?.*)/', // 3rd group match ?a=1&b=2
     '/^(api\/v1\/restful)\/(.*?)(\/.*)/', // 3rd group match /a/1/b/2
     '/^(api\/v1\/restful)\/(.*)$/', // 1st group match controller 2nd match action*/
+    '/^(api\/v1\/metro)$/', // 1st group match controller with default action
+    '/^(api\/v1\/metro)\/(.*?)(\?.*)/', // 3rd group match ?a=1&b=2
+    '/^(api\/v1\/metro)\/(.*?)(\/.*)/', // 3rd group match /a/1/b/2
+    '/^(api\/v1\/metro)\/(.*)$/', // 1st group match controller 2nd match action
 ];

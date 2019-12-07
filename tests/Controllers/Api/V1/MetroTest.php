@@ -81,7 +81,7 @@ class MetroTest extends PFT
      * get any method from a class to be invoked whatever the scope
      *
      * @param String $name
-     * @return void
+     * @return \ReflectionMethod
      */
     protected static function getMethod(string $name)
     {
