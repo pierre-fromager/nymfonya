@@ -16,9 +16,32 @@ class Filter
     const INPUT_FILTER_OPTIONS = 'options';
     const INPUT_FILTER_PROCESS = 'process';
 
+    /**
+     * filters arguments
+     *
+     * @var array
+     */
     private $filterArgs;
+
+    /**
+     * input raw datas
+     *
+     * @var array
+     */
     private $data;
+
+    /**
+     * prepared datas
+     *
+     * @var array
+     */
     private $prepared;
+
+    /**
+     * processed datas results
+     *
+     * @var array
+     */
     private $result;
 
     /**
@@ -27,10 +50,11 @@ class Filter
      * @param array $data
      * @param array $filterArgs
      */
-    public function __construct(array $data, array $filterArgs)
+    public function __construct(array $data = [], array $filterArgs = [])
     {
         $this->data = $data;
         $this->filterArgs = $filterArgs;
+        $this->result = [];
         return $this;
     }
 
@@ -51,7 +75,7 @@ class Filter
      *
      * @return array
      */
-    public function toArray()
+    public function toArray(): array
     {
         return $this->result;
     }
@@ -67,14 +91,13 @@ class Filter
         foreach ($this->filterArgs as $k => $v) {
             if (is_object($v)) {
                 $this->prepared[$k] = [
-                    self::INPUT_FILTER_FILTER => FILTER_CALLBACK,
+                    self::INPUT_FILTER_FILTER => \FILTER_CALLBACK,
                     self::INPUT_FILTER_OPTIONS => [$v, self::INPUT_FILTER_PROCESS]
                 ];
             } else {
                 $this->prepared[$k] = $v;
             }
         }
-        unset($this->filterArgs);
         return $this;
     }
 }
