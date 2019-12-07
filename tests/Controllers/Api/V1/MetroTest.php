@@ -161,7 +161,7 @@ class MetroTest extends PFT
         $sea0 = self::getMethod('search')->invokeArgs(
             $this->instance,
             [
-                [Lines::_SRC => 'che'], &$query0, Lines::_SRC
+                [Lines::_SRC => 'che'], Lines::_SRC, &$query0
             ]
         );
         $this->assertTrue($sea0 instanceof Orm);
@@ -175,7 +175,7 @@ class MetroTest extends PFT
         $sea1 = self::getMethod('search')->invokeArgs(
             $this->instance,
             [
-                $stationInput, &$query1, Stations::_NAME
+                $stationInput, Stations::_NAME, &$query1
             ]
         );
         $this->assertTrue($sea1 instanceof Orm);

@@ -11,6 +11,7 @@ use App\Model\Repository\Metro\Stations;
 use App\Component\Db\Core;
 use App\Component\Model\Orm\Orm;
 use App\Component\Filter;
+use NilPortugues\Sql\QueryBuilder\Manipulation\Select;
 
 final class Metro extends AbstractApi implements IApi
 {
@@ -63,8 +64,8 @@ final class Metro extends AbstractApi implements IApi
     {
         $query = $this->search(
             $this->getFilteredInput(),
-            $this->modelLines,
-            Lines::_SRC
+            Lines::_SRC,
+            $this->modelLines
         );
         $this->response->setCode(Response::HTTP_OK)->setContent([
             Response::_ERROR => false,
@@ -84,8 +85,8 @@ final class Metro extends AbstractApi implements IApi
     {
         $query = $this->search(
             $this->getFilteredInput(),
-            $this->modelStations,
-            Stations::_NAME
+            Stations::_NAME,
+            $this->modelStations
         );
         $this->response->setCode(Response::HTTP_OK)->setContent([
             Response::_ERROR => false,
@@ -115,18 +116,20 @@ final class Metro extends AbstractApi implements IApi
      * search items by search key and value limiting results amount
      *
      * @param array $inputs
-     * @param Orm $model
      * @param string $searchKey
+     * @param Orm $model
      * @return Orm
      */
-    protected function search(array $inputs, Orm &$model, string $searchKey): Orm
+    protected function search(array $inputs, string $searchKey, Orm &$model): Orm
     {
         $searchValue = (isset($inputs[$searchKey]))
             ? Orm::SQL_WILD . $inputs[$searchKey] . Orm::SQL_WILD
             : Orm::SQL_WILD;
         $model->find([Orm::SQL_ALL], [$searchKey . Orm::OP_LIKE => $searchValue]);
         if (isset($inputs[self::_LIMIT])) {
-            $model->getQuery()->limit(0, (int) $inputs[self::_LIMIT]);
+            if ($model->getQuery() instanceof Select) {
+                $model->getQuery()->limit(0, (int) $inputs[self::_LIMIT]);
+            }
         }
         return $model;
     }
