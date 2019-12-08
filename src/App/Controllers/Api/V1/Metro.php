@@ -109,7 +109,7 @@ final class Metro extends AbstractApi implements IApi
     {
         return $this->dbCore
             ->fromOrm($query)
-            ->run($$query->getSql(), $query->getBuilderValues())
+            ->run($query->getSql(), $query->getBuilderValues())
             ->hydrate()
             ->getRowset();
     }
