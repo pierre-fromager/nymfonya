@@ -92,8 +92,7 @@ class Lines extends Migration
                 if (!empty($csvData)) {
                     $data = array_combine(self::MIG_FIELDS, $csvData);
                     if (false !== $data) {
-                        $this->repository->resetBuilder();
-                        $this->repository->insert($data);
+                        $this->repository->resetBuilder()->insert($data);
                         $this->run(
                             $this->repository->getSql(),
                             $this->repository->getBuilderValues()
@@ -122,7 +121,6 @@ class Lines extends Migration
                 . 'ADD KEY `%s` (`%s`),'
                 . 'ADD KEY `ligne` (`ligne`),'
                 . 'ADD KEY `hsrc` (`hsrc`),'
-                . 'ADD KEY `dst` (`dst`),'
                 . 'ADD KEY `hdst` (`hdst`)',
             $this->repository->getTable(),
             $pkey,

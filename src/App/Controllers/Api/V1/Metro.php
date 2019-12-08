@@ -64,7 +64,8 @@ final class Metro extends AbstractApi implements IApi
     {
         $query = $this->search(
             $this->getFilteredInput(),
-            Lines::_SRC,
+            Lines::_HSRC,
+            '',
             $this->modelLines
         );
         $this->response->setCode(Response::HTTP_OK)->setContent([
@@ -86,6 +87,7 @@ final class Metro extends AbstractApi implements IApi
         $query = $this->search(
             $this->getFilteredInput(),
             Stations::_NAME,
+            Orm::OP_LIKE,
             $this->modelStations
         );
         $this->response->setCode(Response::HTTP_OK)->setContent([
@@ -105,11 +107,11 @@ final class Metro extends AbstractApi implements IApi
      */
     protected function getQueryResults(Orm $query)
     {
-        $sql = $query->getSql();
-        return $this->dbCore->fromOrm($query)->run(
-            $sql,
-            $query->getBuilderValues()
-        )->hydrate()->getRowset();
+        return $this->dbCore
+            ->fromOrm($query)
+            ->run($$query->getSql(), $query->getBuilderValues())
+            ->hydrate()
+            ->getRowset();
     }
 
     /**
@@ -117,18 +119,32 @@ final class Metro extends AbstractApi implements IApi
      *
      * @param array $inputs
      * @param string $searchKey
+     * @param string $operator
      * @param Orm $model
      * @return Orm
      */
-    protected function search(array $inputs, string $searchKey, Orm &$model): Orm
+    protected function search(array $inputs, string $searchKey, string $operator, Orm &$model): Orm
     {
-        $searchValue = (isset($inputs[$searchKey]))
-            ? Orm::SQL_WILD . $inputs[$searchKey] . Orm::SQL_WILD
-            : Orm::SQL_WILD;
-        $model->find([Orm::SQL_ALL], [$searchKey . Orm::OP_LIKE => $searchValue]);
+        $where = [];
+        if (isset($inputs[$searchKey])) {
+            $searchValue = $inputs[$searchKey];
+            if ($operator === Orm::OP_LIKE) {
+                $where = [
+                    $searchKey . $operator => Orm::SQL_WILD . $searchValue . Orm::SQL_WILD
+                ];
+            } else {
+                $where = [$searchKey => $searchValue];
+            }
+        }
+        $model->find([Orm::SQL_ALL], $where);
+        if ([] === $where && !isset($inputs[self::_LIMIT])) {
+            $inputs[self::_LIMIT] = 10;
+        }
         if (isset($inputs[self::_LIMIT])) {
             if ($model->getQuery() instanceof Select) {
-                $model->getQuery()->limit(0, (int) $inputs[self::_LIMIT]);
+                $page = isset($inputs[self::_PAGE]) ? (int) $inputs[self::_PAGE] : 0;
+                $offset = $page * (int) $inputs[self::_LIMIT];
+                $model->getQuery()->limit($offset, (int) $inputs[self::_LIMIT]);
             }
         }
         return $model;
@@ -142,7 +158,8 @@ final class Metro extends AbstractApi implements IApi
     protected function getFilteredInput(): array
     {
         return (new Filter($this->getParams(), [
-            self::_NAME => FILTER_SANITIZE_STRING,
+            Lines::_HSRC => FILTER_SANITIZE_STRING,
+            Stations::_NAME => FILTER_SANITIZE_STRING,
             self::_LIMIT => FILTER_SANITIZE_NUMBER_INT,
             self::_PAGE => FILTER_SANITIZE_NUMBER_INT,
         ]))->process()->toArray();

@@ -89,8 +89,7 @@ class Stations extends Migration
                 if (!empty($csvData)) {
                     $data = array_combine(self::MIG_FIELDS, $csvData);
                     if (false !== $data) {
-                        $this->repository->resetBuilder();
-                        $this->repository->insert($data);
+                        $this->repository->resetBuilder()->insert($data);
                         $this->run(
                             $this->repository->getSql(),
                             $this->repository->getBuilderValues()

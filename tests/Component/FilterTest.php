@@ -115,8 +115,6 @@ class FilterTest extends PFT
      */
     public function testPrepare()
     {
-
-        //$expectedInt = 6663;
         $key = 'age';
         $rawIput = [$key => self::_GARBAGE];
         $filters = [$key => \FILTER_SANITIZE_NUMBER_INT];

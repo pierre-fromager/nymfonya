@@ -155,28 +155,34 @@ class MetroTest extends PFT
      */
     public function testSearch()
     {
+        $h0 = '2eb621e17cbd97b8';
         $query0 = $this->modelLines->find([Orm::SQL_ALL], [
             $this->modelLines
         ]);
+        $lineInput = [Lines::_HSRC => $h0];
         $sea0 = self::getMethod('search')->invokeArgs(
             $this->instance,
-            [
-                [Lines::_SRC => 'che'], Lines::_SRC, &$query0
-            ]
+            [$lineInput, Lines::_HSRC, '', &$query0]
         );
         $this->assertTrue($sea0 instanceof Orm);
+        $this->assertEquals(
+            $query0->getSql(),
+            'SELECT metro_lines.* FROM metro_lines WHERE (metro_lines.hsrc = :v1) ORDER BY metro_lines.id DESC'
+        );
+        $this->assertEquals(
+            $query0->getBuilderValues(),
+            [':v1' => $h0]
+        );
         $query1 = $this->modelStations->find([Orm::SQL_ALL], [
             $this->modelStations
         ]);
         $stationInput =  [
             MetroControler::_LIMIT => 5,
-            Stations::_NAME => 'che'
+            Stations::_NAME => 'che',
         ];
         $sea1 = self::getMethod('search')->invokeArgs(
             $this->instance,
-            [
-                $stationInput, Stations::_NAME, &$query1
-            ]
+            [$stationInput, Stations::_NAME, Orm::OP_LIKE, &$query1]
         );
         $this->assertTrue($sea1 instanceof Orm);
     }
