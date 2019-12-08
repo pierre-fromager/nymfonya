@@ -7,7 +7,7 @@ use App\Component\Console\Process;
 
 /**
  * Console terminal is a terminal for console.
- * 
+ *
  * @todo A lot of stuff
  */
 class Terminal
