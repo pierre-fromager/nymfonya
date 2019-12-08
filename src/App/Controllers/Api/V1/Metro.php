@@ -15,7 +15,7 @@ use NilPortugues\Sql\QueryBuilder\Manipulation\Select;
 
 final class Metro extends AbstractApi implements IApi
 {
-    const _NAME = 'name';
+
     const _LIMIT = 'limit';
     const _PAGE = 'page';
     const _DATAS = 'datas';
@@ -105,7 +105,7 @@ final class Metro extends AbstractApi implements IApi
      * @param Orm $query
      * @return array
      */
-    protected function getQueryResults(Orm $query)
+    protected function getQueryResults(Orm $query): array
     {
         return $this->dbCore
             ->fromOrm($query)

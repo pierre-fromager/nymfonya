@@ -176,15 +176,21 @@ class MetroTest extends PFT
         $query1 = $this->modelStations->find([Orm::SQL_ALL], [
             $this->modelStations
         ]);
-        $stationInput =  [
+        $stationInput0 =  [
             MetroControler::_LIMIT => 5,
             Stations::_NAME => 'che',
         ];
         $sea1 = self::getMethod('search')->invokeArgs(
             $this->instance,
-            [$stationInput, Stations::_NAME, Orm::OP_LIKE, &$query1]
+            [$stationInput0, Stations::_NAME, Orm::OP_LIKE, &$query1]
         );
         $this->assertTrue($sea1 instanceof Orm);
+        $stationInput1 =  [];
+        $sea2 = self::getMethod('search')->invokeArgs(
+            $this->instance,
+            [$stationInput1, Stations::_NAME, Orm::OP_LIKE, &$query1]
+        );
+        $this->assertTrue($sea2 instanceof Orm);
     }
 
     /**
