@@ -128,6 +128,9 @@ class RestfulTest extends PFT
             []
         );
         $this->assertEquals(Response::HTTP_OK, $sco);
+        $this->assertTrue(
+            $this->instance->index(['id' => 1]) instanceof ApiRestfulControler
+        );
     }
 
     /**
@@ -189,6 +192,9 @@ class RestfulTest extends PFT
             []
         );
         $this->assertEquals(Response::HTTP_BAD_REQUEST, $sco);
+        $this->assertTrue(
+            $this->instance->update(['id' => 1]) instanceof ApiRestfulControler
+        );
     }
 
     /**
@@ -230,6 +236,9 @@ class RestfulTest extends PFT
             []
         );
         $this->assertEquals(Response::HTTP_BAD_REQUEST, $sco);
+        $this->assertTrue(
+            $this->instance->delete(['id' => 1]) instanceof ApiRestfulControler
+        );
     }
 
     /**
