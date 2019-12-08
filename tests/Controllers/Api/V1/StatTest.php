@@ -2,10 +2,12 @@
 
 namespace Tests\Controllers\Api\V1;
 
+use App\Component\Cache\Redis\Adapter;
 use PHPUnit\Framework\TestCase as PFT;
 use Nymfonya\Component\Config;
 use Nymfonya\Component\Container;
 use App\Controllers\Api\V1\Stat as ApiStatControler;
+use Nymfonya\Component\Http\Response;
 
 /**
  * @covers \App\Controllers\Api\V1\Stat::<public>
@@ -114,13 +116,32 @@ class StatTest extends PFT
     }
 
     /**
-     * testRedis
+     * testRedisOk
      * @covers App\Controllers\Api\V1\Stat::redis
      */
-    public function testRedis()
+    public function testRedisOk()
     {
         $this->assertTrue(
             $this->instance->redis() instanceof ApiStatControler
+        );
+    }
+
+    /**
+     * testRedisNok
+     * @covers App\Controllers\Api\V1\Stat::redis
+     */
+    public function testRedisNok()
+    {
+        $redisMockService = $this->createMock(Adapter::class);
+        $redisMockService->method('isError')->willReturn(true);
+        $this->container->setService(Adapter::class, $redisMockService);
+        $this->assertTrue(
+            $this->instance->redis() instanceof ApiStatControler
+        );
+        $response = $this->container->getService(Response::class);
+        $this->assertEquals(
+            Response::HTTP_INTERNAL_SERVER_ERROR, 
+            $response->getCode()
         );
     }
 }
