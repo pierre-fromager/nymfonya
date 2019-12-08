@@ -140,7 +140,7 @@ class StatTest extends PFT
         );
         $response = $this->container->getService(Response::class);
         $this->assertEquals(
-            Response::HTTP_INTERNAL_SERVER_ERROR, 
+            Response::HTTP_INTERNAL_SERVER_ERROR,
             $response->getCode()
         );
     }

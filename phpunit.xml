@@ -12,6 +12,7 @@
             <file>tests/Component/Console/InputTest.php</file>
             <file>tests/Component/Console/FlawTest.php</file>
             <file>tests/Component/Console/DimensionsTest.php</file>
+            <file>tests/Component/Console/TerminalTest.php</file>
             <file>tests/Component/Jwt/TokenTest.php</file>
             <file>tests/Component/Cache/Redis/AdapterTest.php</file>
             <file>tests/Component/FilterTest.php</file>
