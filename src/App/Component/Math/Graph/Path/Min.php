@@ -5,6 +5,7 @@ namespace App\Component\Math\Graph\Path;
 /**
  * Find least number of hops between nodes collection.
  * Graph should be considered as oriented.
+ * @author Pierre Fromager <pf@pier-infor.fr>
  */
 class Min
 {

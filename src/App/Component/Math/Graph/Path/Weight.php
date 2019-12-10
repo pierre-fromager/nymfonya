@@ -4,7 +4,7 @@ namespace App\Component\Math\Graph\Path;
 
 /**
  * Dijikstra path search for weighted graph
- *
+ * @author Pierre Fromager <pf@pier-infor.fr>
  */
 class Weight
 {

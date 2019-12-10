@@ -77,7 +77,7 @@ class ProcessTest extends PFT
 
     /**
      * testRun
-     * 
+     *
      * @covers App\Component\Console\Process::setCommand
      * @covers App\Component\Console\Process::run
      */
