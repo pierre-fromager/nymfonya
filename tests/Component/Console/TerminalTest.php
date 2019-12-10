@@ -2,6 +2,7 @@
 
 namespace Tests\Component\Console;
 
+use App\Component\Console\Dimensions;
 use PHPUnit\Framework\TestCase as PFT;
 use App\Component\Console\Terminal;
 
@@ -76,6 +77,21 @@ class TerminalTest extends PFT
             []
         );
         $this->assertTrue($sdi instanceof Terminal);
+    }
+
+    /**
+     * testGetDimensions
+     * @covers App\Component\Console\Terminal::getDimensions
+     */
+    public function testGetDimensions()
+    {
+        $gdi = self::getMethod('getDimensions')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertTrue($gdi instanceof Dimensions);
+        $this->assertTrue(is_int($gdi->width()));
+        $this->assertTrue(is_int($gdi->height()));
     }
 
     /**

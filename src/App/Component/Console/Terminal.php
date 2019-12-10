@@ -13,8 +13,8 @@ use App\Component\Console\Process;
 class Terminal
 {
 
-    const TTY_DIM_COMMAND_0 = 'stty size';
-    const TTY_DIM_COMMAND_1 = 'stty -a | grep rows';
+    const TTY_DIM_COMMAND_0 = "bash -c 'stty size'";
+    const TTY_DIM_COMMAND_1 = "bash -c 'stty -a | grep rows'";
     const _S = ' ';
 
     /**
@@ -25,10 +25,18 @@ class Terminal
     protected $dimensions;
 
     /**
+     * terminal processor
+     *
+     * @var Process
+     */
+    protected $processor;
+
+    /**
      * instanciate
      */
     public function __construct()
     {
+        $this->processor = new Process();
         $this->setDimensions();
     }
 
@@ -40,16 +48,21 @@ class Terminal
     protected function setDimensions(): Terminal
     {
         $this->dimensions = new Dimensions();
+        $this->dimensions->set(0, 0);
         if (!$this->isWindows()) {
-            $matcher = [0,0,0];
+            $matcher = [0, 0, 0];
+            $ttyDims = $this->processor->setCommand(self::TTY_DIM_COMMAND_0)->run();
+            if ($this->processor->isError()) {
+                return $this;
+            }
             //$ttyDims = Process::readFromProcess(self::TTY_DIM_COMMAND_0);
             //echo $ttyDims;die;*/
             //var_dump($ttyDims);
-            $ttyDims  = [];
             if (!empty($ttyDims)) {
                 $matcher = explode(self::_S, self::_S . $ttyDims);
             } else {
                 $ttyDims = Process::readFromProcess(self::TTY_DIM_COMMAND_1);
+                $ttyDims  = 'speed 38400 baud; rows 96; columns 126; line = 0;';
                 //var_dump($ttyDims);
                 if (preg_match('/(\d+)+;.\w{7}.(\d+)+;/', $ttyDims, $matches)) {
                     $matcher = $matches;
@@ -61,6 +74,16 @@ class Terminal
             $this->dimensions->set((int) $matcher[2], (int) $matcher[1]);
         }
         return $this;
+    }
+
+    /**
+     * returns terminal dimensions
+     *
+     * @return Dimensions
+     */
+    protected function getDimensions(): Dimensions
+    {
+        return $this->dimensions;
     }
 
     /**
