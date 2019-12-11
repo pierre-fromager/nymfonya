@@ -139,6 +139,17 @@ class Floydwarshall
     }
 
     /**
+     * return node name from row integer
+     *
+     * @param integer $i
+     * @return string
+     */
+    public function nodeName(int $i): string
+    {
+        return (isset($this->nodeName[$i])) ? $this->nodeName[$i] : '';
+    }
+
+    /**
      * return distance between two nodes identified by row/col couple.
      * if one member of couple is undefined infinite value is returned.
      *

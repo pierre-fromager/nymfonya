@@ -25,6 +25,7 @@ class FloydwarshallTest extends PFT
     /**
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
+     * @todo improve more usecases with various matrice inputs
      */
     protected function setUp()
     {
@@ -145,6 +146,16 @@ class FloydwarshallTest extends PFT
     }
 
     /**
+     * return node name from row integer
+     * @covers App\Component\Math\Graph\Path\Floydwarshall::nodeName
+     */
+    public function testNodeName()
+    {
+        $non = $this->instance->nodeName(0);
+        $this->assertTrue(is_string($non));
+    }
+
+    /**
      * testGetDistance
      * @covers App\Component\Math\Graph\Path\Floydwarshall::process
      * @covers App\Component\Math\Graph\Path\Floydwarshall::getDistance
@@ -191,6 +202,7 @@ class FloydwarshallTest extends PFT
      * testPath
      * @covers App\Component\Math\Graph\Path\Floydwarshall::path
      * @covers App\Component\Math\Graph\Path\Floydwarshall::searchPath
+     * @todo use data provider
      */
     public function testPath()
     {
