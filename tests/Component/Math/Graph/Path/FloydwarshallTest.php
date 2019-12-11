@@ -156,11 +156,15 @@ class FloydwarshallTest extends PFT
         $this->assertTrue(is_float($distAB));
         $this->assertNotEmpty($distAB);
         $expected = 5;
-        $this->assertEquals($expected, $distAB);
-        $distUnkwon = $this->instance->getDistance(0, 10);
-        $this->assertTrue(is_float($distUnkwon));
-        $this->assertNotEmpty($distUnkwon);
-        $this->assertEquals(Floydwarshall::INFINITE, $distUnkwon);
+        $distAC = $this->instance->getDistance(0, 2);
+        $this->assertTrue(is_float($distAC));
+        $this->assertNotEmpty($distAC);
+        $expected = 10;
+        $this->assertEquals($expected, $distAC);
+        $distUnknown = $this->instance->getDistance(0, 10);
+        $this->assertTrue(is_float($distUnknown));
+        $this->assertNotEmpty($distUnknown);
+        $this->assertEquals(Floydwarshall::INFINITE, $distUnknown);
     }
 
     /**
