@@ -131,7 +131,6 @@ class FloydwarshallTest extends PFT
      */
     public function testGetDistances()
     {
-        $inf = Floydwarshall::INFINITE;
         $this->instance->process();
         $mdists = $this->instance->getDistances();
         $this->assertTrue(is_array($mdists));
@@ -143,6 +142,25 @@ class FloydwarshallTest extends PFT
             [10, 05, 00], # c
         ];
         $this->assertEquals($expected, $mdists);
+    }
+
+    /**
+     * testGetDistance
+     * @covers App\Component\Math\Graph\Path\Floydwarshall::process
+     * @covers App\Component\Math\Graph\Path\Floydwarshall::getDistance
+     */
+    public function testGetDistance()
+    {
+        $this->instance->process();
+        $distAB = $this->instance->getDistance(0, 1);
+        $this->assertTrue(is_float($distAB));
+        $this->assertNotEmpty($distAB);
+        $expected = 5;
+        $this->assertEquals($expected, $distAB);
+        $distUnkwon = $this->instance->getDistance(0, 10);
+        $this->assertTrue(is_float($distUnkwon));
+        $this->assertNotEmpty($distUnkwon);
+        $this->assertEquals(Floydwarshall::INFINITE, $distUnkwon);
     }
 
     /**

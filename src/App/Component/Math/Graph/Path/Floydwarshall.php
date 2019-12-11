@@ -3,7 +3,10 @@
 namespace App\Component\Math\Graph\Path;
 
 /**
- * Weighted graph path finder using Floydwarshall method
+ * Weighted graph path finder using Floydwarshall method.
+ * Constructor expects a weighted square matrix
+ * and a nodes name collection to indentify nodes by name if required.
+ *
  * @author Pierre Fromager <pf@pier-infor.fr>
  */
 class Floydwarshall
@@ -133,6 +136,17 @@ class Floydwarshall
     public function getDistances(): array
     {
         return $this->dist;
+    }
+
+    /**
+     * return distance between two nodes identified by row/col couple.
+     * if one member of couple is undefined infinite value is returned.
+     *
+     * @return float
+     */
+    public function getDistance(int $i, int $j): float
+    {
+        return (isset($this->dist[$i][$j])) ? $this->dist[$i][$j] : self::INFINITE;
     }
 
     /**
