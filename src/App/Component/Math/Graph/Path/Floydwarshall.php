@@ -9,6 +9,9 @@ namespace App\Component\Math\Graph\Path;
 class Floydwarshall
 {
 
+    /**
+     * max nodes
+     */
     const INFINITE = 66666;
 
     /**
@@ -42,20 +45,20 @@ class Floydwarshall
     protected $nodenames;
 
     /**
-     * Temporary table for various stuff.
+     * path.
      * @var array
      */
-    protected $tmp;
+    protected $path;
 
     /**
      * instanciate
-     * @param array $graph Graph matrice.
-     * @param array $nodenames Node names as an array.
+     * @param array $weightedMatrix graph weighted square matrice.
+     * @param array $nodenames nodes names as array.
      */
-    public function __construct(array $graph, array $nodenames = [])
+    public function __construct(array $weightedMatrix, array $nodenames = [])
     {
         $this->reset();
-        $this->weights = $graph;
+        $this->weights = $weightedMatrix;
         $this->nodeCount = count($this->weights);
         if (!empty($nodenames) && $this->nodeCount == count($nodenames)) {
             $this->nodenames = $nodenames;
@@ -63,23 +66,11 @@ class Floydwarshall
     }
 
     /**
-     * reset
-     *
-     * @return Floydwarshall
-     */
-    protected function reset(): Floydwarshall
-    {
-        $this->tmp = [];
-        $this->dist = [[]];
-        $this->pred = [[]];
-        return $this;
-    }
-
-    /**
-     * populate then calculate distance and precedence
+     * populate from square matrix then calculate distance and precedence
      */
     public function process(): Floydwarshall
     {
+        $this->reset();
         $this->populate();
         for ($k = 0; $k < $this->nodeCount; $k++) {
             for ($i = 0; $i < $this->nodeCount; $i++) {
@@ -92,6 +83,78 @@ class Floydwarshall
                 }
             }
         }
+        return $this;
+    }
+
+    /**
+     * return path
+     *
+     * @param string $src
+     * @param string $dst
+     * @param boolean $withNames
+     * @return array
+     */
+    public function path(string $src, string $dst, bool $withNames = false): array
+    {
+        $srcIdx = array_search($src, $this->nodenames);
+        $dstIdx = array_search($dst, $this->nodenames);
+        $this->path = [];
+        $this->searchPath($srcIdx, $dstIdx);
+        $path = ($withNames)
+            ? array_map(function ($v) {
+                return $this->nodenames[$v];
+            }, $this->path)
+            : $this->path;
+        return $path;
+    }
+
+    /**
+     * recursive search for node path
+     *
+     * @param integer $i
+     * @param integer $j
+     * @return Floydwarshall
+     */
+    protected function searchPath(int $i, int $j): Floydwarshall
+    {
+        if ($i != $j) {
+            $pred = $this->pred[$i][$j];
+            $this->searchPath($i, $pred);
+        }
+        $this->path[] = $j;
+        return $this;
+    }
+
+    /**
+     * return distance matrix
+     *
+     * @return array
+     */
+    public function getDistances(): array
+    {
+        return $this->dist;
+    }
+
+    /**
+     * return precedence matrix
+     *
+     * @return array
+     */
+    public function getPrecedences(): array
+    {
+        return $this->pred;
+    }
+
+    /**
+     * reset
+     *
+     * @return Floydwarshall
+     */
+    protected function reset(): Floydwarshall
+    {
+        $this->path = [];
+        $this->dist = [[]];
+        $this->pred = [[]];
         return $this;
     }
 
@@ -117,25 +180,5 @@ class Floydwarshall
             }
         }
         return $this;
-    }
-
-    /**
-     * return distance matrix
-     *
-     * @return array
-     */
-    public function getDistances(): array
-    {
-        return $this->dist;
-    }
-
-    /**
-     * return precedence matrix
-     *
-     * @return array
-     */
-    public function getPrecedence(): array
-    {
-        return $this->pred;
     }
 }
