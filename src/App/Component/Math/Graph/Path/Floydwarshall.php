@@ -21,50 +21,50 @@ class Floydwarshall
      * Distances array
      * @var array
      */
-    protected $dist;
+    private $dist;
 
     /**
      * Precedence matrix
      * @var array
      */
-    protected $pred;
+    private $pred;
 
     /**
      * Weights array
      * @var array
      */
-    protected $weights;
+    private $weights;
 
     /**
      * Number of nodes
      * @var integer
      */
-    protected $nodeCount;
+    private $nodeCount;
 
     /**
      * Node names list
      * @var array
      */
-    protected $nodenames;
+    private $nodeNames;
 
     /**
-     * path.
+     * path
      * @var array
      */
-    protected $path;
+    private $path;
 
     /**
      * instanciate
      * @param array $weightedMatrix graph weighted square matrice.
-     * @param array $nodenames nodes names as array.
+     * @param array $nodeNames nodes names as array.
      */
-    public function __construct(array $weightedMatrix, array $nodenames = [])
+    public function __construct(array $weightedMatrix, array $nodeNames = [])
     {
         $this->reset();
         $this->weights = $weightedMatrix;
         $this->nodeCount = count($this->weights);
-        if (!empty($nodenames) && $this->nodeCount == count($nodenames)) {
-            $this->nodenames = $nodenames;
+        if (!empty($nodeNames) && $this->nodeCount == count($nodeNames)) {
+            $this->nodeNames = $nodeNames;
         }
     }
 
@@ -99,13 +99,13 @@ class Floydwarshall
      */
     public function path(string $src, string $dst, bool $withNames = false): array
     {
-        $srcIdx = array_search($src, $this->nodenames);
-        $dstIdx = array_search($dst, $this->nodenames);
+        $srcIdx = array_search($src, $this->nodeNames);
+        $dstIdx = array_search($dst, $this->nodeNames);
         $this->path = [];
         $this->searchPath($srcIdx, $dstIdx);
         $path = ($withNames)
             ? array_map(function ($v) {
-                return $this->nodenames[$v];
+                return $this->nodeNames[$v];
             }, $this->path)
             : $this->path;
         return $path;
@@ -146,7 +146,7 @@ class Floydwarshall
      */
     public function nodeName(int $i): string
     {
-        return (isset($this->nodeName[$i])) ? $this->nodeName[$i] : '';
+        return (isset($this->nodeNames[$i])) ? $this->nodeNames[$i] : '';
     }
 
     /**
