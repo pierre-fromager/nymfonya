@@ -33,5 +33,23 @@ return [
                 \PDO::ATTR_EMULATE_PREPARES => false
             ]
         ]
+    ],
+    'testpgsql' => [
+        'nymfonya' => [
+            'host' => 'localhost',
+            'port' => 5432,
+            'username' => 'travis_pass',
+            'password' => 'some password',
+            'adapter' => App\Component\Db\Adapter\PdoPgsql::class,
+            'options' => []
+        ],
+        'badnymfonya' => [
+            'host' => 'localhost',
+            'port' => 5432,
+            'username' => 'travis_pass',
+            'password' => 'wrong password',
+            'adapter' => App\Component\Db\Adapter\PdoPgsql::class,
+            'options' => []
+        ]
     ]
 ];

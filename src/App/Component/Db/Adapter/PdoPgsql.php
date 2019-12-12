@@ -107,12 +107,10 @@ class PdoPgsql
     protected function dsn(): string
     {
         return sprintf(
-            'pgsql:host=%s;dbname=%s;port=%s;user=%s;password=%s',
+            'pgsql:host=%s;dbname=%s;port=%s',
             $this->host,
             $this->dbname,
-            $this->port,
-            $this->username,
-            $this->password
+            $this->port
         );
     }
 }

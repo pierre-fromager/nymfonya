@@ -42,7 +42,7 @@ before_script:
   # PgSql
   - psql -c 'create database nymfonya;' -U postgres
   - psql -c 'create user travis_pass with password 'some password';' -U postgres
-  - psql -c 'grnt all privileges on database "nymfonya" to travis_pass;' -U postgres
+  - psql -c 'grant all privileges on database "nymfonya" to travis_pass;' -U postgres
 
 script:
   - phpdbg -qrr vendor/bin/phpunit --coverage-clover=coverage.clover
