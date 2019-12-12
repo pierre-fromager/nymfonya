@@ -5,6 +5,7 @@ namespace Tests\Reuse\Controllers;
 use PHPUnit\Framework\TestCase as PFT;
 use Nymfonya\Component\Config;
 use Nymfonya\Component\Container;
+use Nymfonya\Component\Http\Request;
 use App\Reuse\Controllers\AbstractApi;
 
 /**
@@ -128,11 +129,38 @@ class AbstractApiTest extends PFT
      */
     public function testGetContainer()
     {
-        $gc = self::getMethod('getContainer')->invokeArgs(
+        $gco = self::getMethod('getContainer')->invokeArgs(
             $this->instance,
-            [\Monolog\Logger::class]
+            []
         );
-        $this->assertTrue(is_object($gc));
-        $this->assertTrue($gc instanceof Container);
+        $this->assertTrue(is_object($gco));
+        $this->assertTrue($gco instanceof Container);
+    }
+
+    /**
+     * testGetRequest
+     * @covers App\Reuse\Controllers\AbstractApi::getRequest
+     */
+    public function testGetRequest()
+    {
+        $gre = self::getMethod('getRequest')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertTrue(is_object($gre));
+        $this->assertTrue($gre instanceof Request);
+    }
+
+    /**
+     * testGetParams
+     * @covers App\Reuse\Controllers\AbstractApi::getParams
+     */
+    public function testGetParams()
+    {
+        $gpa = self::getMethod('getParams')->invokeArgs(
+            $this->instance,
+            []
+        );
+        $this->assertTrue(is_array($gpa));
     }
 }
