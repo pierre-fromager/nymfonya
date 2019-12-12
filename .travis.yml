@@ -8,6 +8,7 @@ os:
 services:
   - redis-server
   - mysql
+  - postgresql
 
 cache:
   directories:
@@ -33,10 +34,15 @@ install:
   - travis_retry composer install --no-interaction
 
 before_script:
+  # MySql
   - mysql -e 'create database nymfonya DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;'
   - mysql -u root -e "create user 'travis_pass'@'localhost' identified by 'some password';"
   - mysql -u root -e "grant all on nymfonya.* to 'travis_pass'@'localhost';"
   - mysql -u travis_pass -p'some password' -e 'show databases;'
+  # PgSql
+  - psql -c 'create database nymfonya;' -U postgres
+  - psql -c 'create user travis_pass with password 'some password';' -U postgres
+  - psql -c 'grnt all privileges on database "nymfonya" to travis_pass;' -U postgres
 
 script:
   - phpdbg -qrr vendor/bin/phpunit --coverage-clover=coverage.clover
