@@ -40,9 +40,9 @@ before_script:
   - mysql -u root -e "grant all on nymfonya.* to 'travis_pass'@'localhost';"
   - mysql -u travis_pass -p'some password' -e 'show databases;'
   # PgSql
-  - psql -c 'create database nymfonya;' -U postgres
-  - psql -c 'create user travis_pass with password 'some password';' -U postgres
-  - psql -c 'grant all privileges on database "nymfonya" to travis_pass;' -U postgres
+  - psql -c "create database nymfonya;' -U postgres
+  - psql -c "create user travis_pass with password 'some password';" -U postgres
+  - psql -c "grant all privileges on database 'nymfonya' to travis_pass;" -U postgres
 
 script:
   - phpdbg -qrr vendor/bin/phpunit --coverage-clover=coverage.clover
