@@ -153,6 +153,7 @@ class Orm implements IOrm
     {
         $this->where = $where;
         $this->setQuery(new Select());
+        $this->query->setTable($this->tablename);
         if (empty($aliases)) {
             $this->query->count();
         } else {
