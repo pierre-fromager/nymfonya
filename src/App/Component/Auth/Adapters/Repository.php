@@ -16,8 +16,6 @@ use App\Component\Db\Core;
 class Repository implements AdapterInterface
 {
 
-    const _PASSWORD = 'password';
-
     /**
      * container
      *

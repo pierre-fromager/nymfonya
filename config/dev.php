@@ -22,4 +22,5 @@ return [
     ],
     'redis' => include 'dev/redis.php',
     'db' => include 'dev/db.php',
+    'auth' => ['adapter' => App\Component\Auth\Adapters\Repository::class]
 ];

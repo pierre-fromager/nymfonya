@@ -39,11 +39,11 @@ return [
             '/^(test)\/(.*)$/',
             '/^(auth)\/(.*)$/',
             '/^(stat)\/(.*)$/',
-            '/^(metro)\/(.*)$/'
+            '/^(metro)\/(.*)$/',
         ],
     ],
     Jwt::class => [
-        'enabled' => true,
+        'enabled' => false,
         'prefix' => '/api/v1/',
         'exclude' => [
             'auth/login', 'stat/opcache',

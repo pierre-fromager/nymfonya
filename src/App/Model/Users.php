@@ -13,10 +13,7 @@ use App\Component\Auth\AuthInterface;
 class Users implements AuthInterface
 {
 
-    const _ID = 'id';
     const _NAME = 'name';
-    const _EMAIL = 'email';
-    const _PASSWORD = 'password';
     const _ROLE = 'role';
     const _VALID = 'valid';
     const _ACCOUNTS = 'accounts';

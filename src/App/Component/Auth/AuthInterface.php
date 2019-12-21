@@ -4,6 +4,9 @@ namespace App\Component\Auth;
 
 interface AuthInterface
 {
+    const _ID = 'id';
+    const _EMAIL = 'email';
+    const _PASSWORD = 'password';
 
     /**
      * auth

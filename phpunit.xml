@@ -30,6 +30,7 @@
             <file>tests/Component/File/UploaderTest.php</file>
             <file>tests/Component/Model/OrmTest.php</file>
             <file>tests/Component/Db/Adapter/PdoMysqlTest.php</file>
+            <file>tests/Component/Db/Adapter/PdoPgsqlTest.php</file>
             <file>tests/Component/Db/FactoryTest.php</file>
             <file>tests/Component/Db/CoreTest.php</file>
             <file>tests/Component/Db/PoolTest.php</file>

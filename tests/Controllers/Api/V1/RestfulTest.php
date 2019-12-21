@@ -69,7 +69,7 @@ class RestfulTest extends PFT
         if ($withMockRequest) {
             $mockedRequest = $this->createMock(Request::class);
             $mockedRequest->method('getParams')->willReturn(
-                ['id' => 1, 'name' => 'coco']
+                ['id' => 3, 'name' => 'coco']
             );
             $this->container->setService(Request::class, $mockedRequest);
         }
@@ -237,7 +237,7 @@ class RestfulTest extends PFT
         );
         $this->assertEquals(Response::HTTP_BAD_REQUEST, $sco);
         $this->assertTrue(
-            $this->instance->delete(['id' => 1]) instanceof ApiRestfulControler
+            $this->instance->delete(['id' => 3]) instanceof ApiRestfulControler
         );
     }
 

@@ -15,10 +15,7 @@ use App\Component\Crypt;
  */
 class Accounts extends AbstractSearch implements AuthInterface
 {
-    const _ID = 'id';
     const _NAME = 'name';
-    const _EMAIL = 'email';
-    const _PASSWORD = 'password';
     const _STATUS = 'status';
     const _ROLE = 'role';
     const PATH_ASSETS_MODEL = '/../assets/model/';
