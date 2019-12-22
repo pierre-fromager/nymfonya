@@ -25,5 +25,6 @@ return [
     'db' => include 'cli/db.php',
     'auth' => [
         'adapter' => \App\Component\Auth\Adapters\File::class
-    ]
+    ],
+    'mailer' => include 'cli/mailer.php'
 ];
