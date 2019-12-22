@@ -13,12 +13,19 @@ class Smtp
 {
 
     const _MAILER = 'mailer';
+    const _SENDER = 'sender';
     const _SMTP = 'smtp';
     const _HOST = 'host';
     const _PORT = 'port';
     const _USERNAME = 'username';
     const _PASSWORD = 'password';
     const _ENCRYPTION = 'encryption';
+    const _ERROR_PREFIX = 'Mailer Smtp : ';
+    const _ERROR_FROM = 'Missing from';
+    const _ERROR_TO = 'Missing to';
+    const _ERROR_BAD_CONF = 'Missing config mailer entry';
+    const _ERROR_INVALID_CONF = 'Invalid config';
+
 
     /**
      * transport mailer
@@ -71,8 +78,10 @@ class Smtp
     public function __construct(Container $container)
     {
         $config = $container->getService(Config::class);
-        $mailerConfig = $config->getSettings(self::_MAILER);
-        $this->init($mailerConfig[self::_SMTP]);
+        if (false === $config->hasEntry(self::_MAILER)) {
+            throw new Exception($this->exMsg(self::_ERROR_BAD_CONF));
+        }
+        $this->init($config->getSettings(self::_MAILER));
     }
 
     /**
@@ -104,10 +113,17 @@ class Smtp
      *
      * @param string $title
      * @param string $body
+     * @throws Exception
      * @return Smtp
      */
     public function setMessage(string $title, string $body): Smtp
     {
+        if (empty($this->from)) {
+            throw new Exception($this->exMsg(self::_ERROR_FROM));
+        }
+        if (empty($this->to)) {
+            throw new Exception($this->exMsg(self::_ERROR_TO));
+        }
         $this->message = new Swift_Message($title);
         $this->message
             ->setFrom($this->from)
@@ -137,8 +153,19 @@ class Smtp
         return $this;
     }
 
-    protected function init(array $transportConfig): Smtp
+    /**
+     * init default params
+     *
+     * @param array $mailerConfig
+     * @return Smtp
+     */
+    protected function init(array $mailerConfig): Smtp
     {
+        $this->from = (isset($mailerConfig[self::_SENDER]))
+            ? $mailerConfig[self::_SENDER]
+            : [];
+        $this->to = [];
+        $transportConfig = $mailerConfig[self::_SMTP];
         $this->setTransport($transportConfig)->setMailer();
         return $this;
     }
@@ -152,11 +179,13 @@ class Smtp
     protected function setTransport(array $transportConfig): Smtp
     {
         $this->checkConfig($transportConfig);
-        $host = $transportConfig[self::_HOST];
-        $port = $transportConfig[self::_PORT];
-        $username = $transportConfig[self::_USERNAME];
-        $password = $transportConfig[self::_PASSWORD];
-        $encryption = $transportConfig[self::_ENCRYPTION];
+        list($host, $port, $username, $password, $encryption) = [
+            $transportConfig[self::_HOST],
+            $transportConfig[self::_PORT],
+            $transportConfig[self::_USERNAME],
+            $transportConfig[self::_PASSWORD],
+            $transportConfig[self::_ENCRYPTION]
+        ];
         $this->transport = new Swift_SmtpTransport($host, $port, $encryption);
         $this->transport->setUsername($username)->setPassword($password);
         return $this;
@@ -166,6 +195,7 @@ class Smtp
      * check if transport config is ready
      *
      * @param array $transportConfig
+     * @throws Exception
      * @return Smtp
      */
     protected function checkConfig(array $transportConfig): Smtp
@@ -176,7 +206,7 @@ class Smtp
             && isset($transportConfig[self::_PASSWORD])
             && isset($transportConfig[self::_ENCRYPTION]);
         if (false === $isValid) {
-            throw new Exception('Invalid transport config');
+            throw new Exception($this->exMsg(self::_ERROR_INVALID_CONF));
         }
         return $this;
     }
@@ -191,5 +221,16 @@ class Smtp
         $mailSendResult = $this->mailer = new Swift_Mailer($this->transport);
         $this->error = ($mailSendResult === 0);
         return $this;
+    }
+
+    /**
+     * return prefixed exception message
+     *
+     * @param string $errorMessage
+     * @return string
+     */
+    protected function exMsg(string $msg): string
+    {
+        return self::_ERROR_PREFIX . $msg;
     }
 }

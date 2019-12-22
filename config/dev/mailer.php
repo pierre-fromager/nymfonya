@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'sender' => ['sender@smtp.domain.tld' => 'Project admin'],
     'smtp' => [
         'host' => 'smtp.domain.tld',
         'port' => 465,

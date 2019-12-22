@@ -14,6 +14,13 @@ use App\Model\Repository\Users;
 use App\Component\Jwt\Token;
 use App\Component\Auth\Factory;
 use App\Component\Crypt;
+use Egulias\EmailValidator\EmailValidator;
+use Egulias\EmailValidator\Validation\RFCValidation;
+/*use Swift_SmtpTransport;
+use Swift_Mailer;
+use Swift_Message;*/
+use App\Component\Mailer\Smtp;
+use Exception;
 
 final class Auth extends AbstractApi implements IApi
 {
@@ -28,7 +35,7 @@ final class Auth extends AbstractApi implements IApi
     /**
      * user repository
      *
-     * @var UserRepository
+     * @var Users
      */
     protected $userRepository;
 
@@ -168,6 +175,54 @@ final class Auth extends AbstractApi implements IApi
         $this->sql = $this->userRepository->getSql();
         $this->bindValues = $this->userRepository->getBuilderValues();
         $this->db->run($this->sql, $this->bindValues);
+        return $this->setRegistrationResponse(__CLASS__, __FUNCTION__);
+    }
+
+    /**
+     * lost password action
+     *
+     * @Role anonymous
+     * @return Auth
+     */
+    final public function lostpassword(): Auth
+    {
+        $logger = $this->getService(\Monolog\Logger::class);
+        $email = filter_var($this->request->getParam('email'), FILTER_SANITIZE_EMAIL);
+        $validator = new EmailValidator();
+        $isValid = $validator->isValid($email, new RFCValidation());
+        if (false === $isValid) {
+            $this->error = true;
+            $this->errorMessage = 'Invalid email';
+            $logger->warning(__FUNCTION__ . ' Invalid email');
+            return $this->setRegistrationResponse(__CLASS__, __FUNCTION__);
+        }
+        $this->userRepository->getByEmail($email);
+        $this->sql = $this->userRepository->getSql();
+        $this->bindValues = $this->userRepository->getBuilderValues();
+        $this->db->run($this->sql, $this->bindValues)->hydrate();
+        $users = $this->db->getRowset();
+        $emailExists = isset($users[0]);
+        if (false === $emailExists) {
+            $this->error = true;
+            $this->errorMessage = 'Email does not exists';
+            $logger->warning(__FUNCTION__ . $this->errorMessage);
+            return $this->setRegistrationResponse(__CLASS__, __FUNCTION__);
+        }
+        $user = $users[0];
+        try {
+            $mailer = new Smtp($this->getContainer());
+            $mailer
+                ->setTo([$email => $user['name']])
+                ->setMessage('Password retrieval', $user['password'])
+                ->sendMessage();
+            if ($mailer->isError()) {
+                throw new Exception('Lost password : Email was not sent');
+            }
+        } catch (Exception $e) {
+            $this->error = true;
+            $this->errorMessage = $e->getMessage();
+            $logger->error($e);
+        }
         return $this->setRegistrationResponse(__CLASS__, __FUNCTION__);
     }
 
