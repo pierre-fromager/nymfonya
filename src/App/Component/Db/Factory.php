@@ -2,7 +2,7 @@
 
 namespace App\Component\Db;
 
-use \PDO;
+use PDO;
 use Nymfonya\Component\Config;
 use Nymfonya\Component\Container;
 use App\Component\Db\Pool;
@@ -13,6 +13,11 @@ class Factory
     const _ADAPTER = 'adapter';
     const LOGGER_PREFIX = 'Db Factory Pool : ';
 
+    /**
+     * service container
+     *
+     * @var Container
+     */
     private $container;
 
     /**
@@ -79,7 +84,8 @@ class Factory
     {
         $params = $this->adapterParams($slot, $dbname);
         try {
-            $adapter = new $params[self::_ADAPTER]($dbname, $params);
+            $adapterClass = $params[self::_ADAPTER];
+            $adapter = new $adapterClass($dbname, $params);
             $adapter->connect();
             $id = $this->identity($slot, $dbname);
             $this->pool[$id] = $adapter->getConnection();

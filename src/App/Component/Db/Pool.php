@@ -4,6 +4,7 @@ namespace App\Component\Db;
 
 use ArrayAccess;
 use Countable;
+use PDO;
 
 /**
  * Pool is a storage to store object identified by a string key
@@ -22,7 +23,7 @@ class Pool implements ArrayAccess, Countable
      * Assigns a value to the specified offset
      *
      * @param string $connexionId
-     * @param resource $connection
+     * @param PDO $connection
      * @return void
      */
     public function offsetSet($connexionId, $connection)
@@ -60,7 +61,7 @@ class Pool implements ArrayAccess, Countable
      * Returns the value at specified offset
      *
      * @param string $connexionId
-     * @return resource | null
+     * @return PDO | null
      */
     public function offsetGet($connexionId)
     {
@@ -84,7 +85,7 @@ class Pool implements ArrayAccess, Countable
      * and connection is object
      *
      * @param string $connexionId
-     * @param resource | null $connection
+     * @param PDO | null $connection
      * @return boolean
      */
     protected function valid($connexionId, $connection): bool
