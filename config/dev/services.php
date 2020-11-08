@@ -14,7 +14,7 @@ return [
     Router::class => [
         Routes::class,
         Request::class
-    ],
+    ],/*
     \Monolog\Handler\RotatingFileHandler::class => [
         realpath(__DIR__ . '/../../log') . '/devapp.txt',
         0,
@@ -25,6 +25,18 @@ return [
     \Monolog\Logger::class => [
         Config::_NAME,
         [\Monolog\Handler\RotatingFileHandler::class],
+        [\Monolog\Processor\WebProcessor::class]
+    ],*/
+    \Monolog\Handler\SyslogHandler::class => [
+        'nymfonya',
+        'local6',
+        \Monolog\Logger::DEBUG,
+        true,
+        LOG_PID
+    ],
+    \Monolog\Logger::class => [
+        Config::_NAME,
+        [\Monolog\Handler\SyslogHandler::class],
         [\Monolog\Processor\WebProcessor::class]
     ],
     \App\Component\Cache\Redis\Adapter::class => [Config::class],

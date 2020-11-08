@@ -125,6 +125,7 @@ class ConfigTest extends PFT
     /**
      * testAccount
      * @covers App\Controllers\Config::account
+     * @requires PHP 9000
      */
     public function testAccount()
     {
