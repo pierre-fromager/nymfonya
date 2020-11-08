@@ -134,6 +134,12 @@ checks:
         function_in_camel_caps: true
 
 build:
+    services:
+        mysql: 5.7
+        mariadb: 10
+        postgres: 10
+        redis: 4
+
     environment:
         php: "7.2"
         mysql: "5.7"
