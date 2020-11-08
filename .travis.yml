@@ -6,7 +6,7 @@ os:
   - linux
 
 services:
-  - redis-server
+  - redis
   - mysql
   - postgresql
 
