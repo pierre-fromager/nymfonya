@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controllers\Api\V1;
 
 use App\Interfaces\Controllers\IApi;
@@ -99,8 +101,14 @@ final class Auth extends AbstractApi implements IApi
     {
         $config = $this->getService(Config::class);
         $logger = $this->getService(\Monolog\Logger::class);
-        $login = filter_var($this->request->getParam('login'), FILTER_SANITIZE_EMAIL);
-        $password = filter_var($this->request->getParam('password'), FILTER_SANITIZE_STRING);
+        $login = filter_var(
+            $this->request->getParam('login'),
+            FILTER_SANITIZE_EMAIL
+        );
+        $password = filter_var(
+            $this->request->getParam('password'),
+            FILTER_SANITIZE_STRING
+        );
         if (false === $this->isValidLogin($login, $password)) {
             $logger->warning(__FUNCTION__ . ' Invalid arguments');
             return $this->setErrorResponse(
@@ -117,7 +125,7 @@ final class Auth extends AbstractApi implements IApi
                 ->setIssueAtDelay(0)
                 ->setTtl(1200)
                 ->encode(
-                    $user[Factory::_ID],
+                    (int) $user[Factory::_ID],
                     $user[Factory::_EMAIL],
                     $user[Factory::_PASSWORD]
                 );

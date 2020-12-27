@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Middlewares;
 
 use Nymfonya\Component\Http\Interfaces\MiddlewareInterface;
@@ -25,7 +27,7 @@ class After implements MiddlewareInterface
         $this->logger->debug('After middleware');
         $this->response->getHeaderManager()->add(
             self::_SIGN,
-            microtime(true)
+            strval(microtime(true))
         );
         return $res;
     }

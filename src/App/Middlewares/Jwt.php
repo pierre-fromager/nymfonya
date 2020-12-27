@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Middlewares;
 
 use Nymfonya\Component\Container;
@@ -49,7 +51,7 @@ class Jwt implements MiddlewareInterface
         if ($this->enabled) {
             $this->response->getHeaderManager()->add(
                 self::_SIGN,
-                microtime(true)
+                strval(microtime(true))
             );
             if ($this->required()) {
                 if ($this->isValidAuthorization()) {

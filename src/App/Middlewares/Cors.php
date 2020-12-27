@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Middlewares;
 
 use Nymfonya\Component\Http\Request;
@@ -42,7 +44,7 @@ class Cors implements MiddlewareInterface
         if ($this->enabled) {
             $this->response->getHeaderManager()->add(
                 self::_SIGN,
-                microtime(true)
+                strval(microtime(true))
             );
             if ($this->required()) {
                 if (Request::METHOD_OPTIONS == $this->request->getMethod()) {

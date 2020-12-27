@@ -13,6 +13,10 @@ use NilPortugues\Sql\QueryBuilder\Manipulation\Update;
 use NilPortugues\Sql\QueryBuilder\Manipulation\Insert;
 use NilPortugues\Sql\QueryBuilder\Manipulation\Delete;
 use NilPortugues\Sql\QueryBuilder\Syntax\Where;
+use App\Component\Model\Orm\InvalidQueryException;
+use App\Component\Model\Orm\InvalidQueryUpdateException;
+use App\Component\Model\Orm\InvalidQueryInsertException;
+use App\Component\Model\Orm\InvalidQueryDeleteException;
 
 /**
  * @covers \App\Component\Model\Orm\Orm::<public>
@@ -22,6 +26,9 @@ class OrmTest extends PFT
 
     const TEST_ENABLE = true;
     const CONFIG_PATH = '/../../../config/';
+    const DB_NAME = 'covid';
+    const _BUILD = 'build';
+    const GET_WHERE_OPERATOR = 'getWhereOperator';
 
     /**
      * config instance
@@ -48,7 +55,7 @@ class OrmTest extends PFT
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         if (!self::TEST_ENABLE) {
             $this->markTestSkipped('Test disabled.');
@@ -78,7 +85,7 @@ class OrmTest extends PFT
              * database name
              * @var string
              */
-            protected $database = 'nymfonya';
+            protected $database = 'covid';
 
             /**
              * pool slot name
@@ -102,7 +109,7 @@ class OrmTest extends PFT
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->instance = null;
         $this->config = null;
@@ -166,7 +173,7 @@ class OrmTest extends PFT
     {
         $this->assertTrue(
             $this->instance->count(
-                ['id'],
+                ['id' => '*'],
                 ['id' => 'counterId']
             ) instanceof Orm
         );
@@ -178,9 +185,8 @@ class OrmTest extends PFT
      */
     public function testInsert()
     {
-        $this->assertTrue(
-            $this->instance->insert(['stuf' => 'value']) instanceof Orm
-        );
+        $insert = $this->instance->insert(['stuf' => 'value']);
+        $this->assertTrue($insert instanceof Orm);
     }
 
     /**
@@ -189,12 +195,8 @@ class OrmTest extends PFT
      */
     public function testUpdate()
     {
-        $this->assertTrue(
-            $this->instance->update(
-                ['stuf' => 'value'],
-                ['id' => 2]
-            ) instanceof Orm
-        );
+        $update = $this->instance->update(['stuf' => 'value'], ['id' => 2]);
+        $this->assertTrue($update instanceof Orm);
     }
 
     /**
@@ -224,9 +226,8 @@ class OrmTest extends PFT
      */
     public function testGetQueryBuilder()
     {
-        $this->assertTrue(
-            $this->instance->getQueryBuilder() instanceof GenericBuilder
-        );
+        $gqb = $this->instance->getQueryBuilder();
+        $this->assertTrue($gqb instanceof GenericBuilder);
     }
 
     /**
@@ -246,11 +247,9 @@ class OrmTest extends PFT
     public function testBuild()
     {
         $this->instance->find();
-        $build = self::getMethod('build')->invokeArgs(
+        $build = self::getMethod(self::_BUILD)->invokeArgs(
             $this->instance,
-            [
-                'testtable', [], []
-            ]
+            ['testtable', [], []]
         );
         $this->assertTrue($build instanceof Orm);
     }
@@ -261,15 +260,12 @@ class OrmTest extends PFT
      */
     public function testBuildInstanceException()
     {
-        $this->expectException(\Exception::class);
-        $this->expectExceptionMessage(
-            'Build : Invalid query instance'
-        );
-        $build = self::getMethod('build')->invokeArgs(
+        $this->expectException(InvalidQueryException::class);
+        $this->expectExceptionMessage(InvalidQueryException::MSG_INSTANCE);
+        $this->expectExceptionCode(10);
+        $build = self::getMethod(self::_BUILD)->invokeArgs(
             $this->instance,
-            [
-                'testtable', [], []
-            ]
+            ['testtable', [], []]
         );
         $this->assertTrue($build instanceof Orm);
     }
@@ -280,13 +276,12 @@ class OrmTest extends PFT
      */
     public function testBuildInvalidTypeException()
     {
-        $this->expectException(\Exception::class);
-        $this->expectExceptionMessage(
-            'Build : Invalid query type'
-        );
+        $this->expectException(InvalidQueryException::class);
+        $this->expectExceptionMessage(InvalidQueryException::MSG_TYPE);
+        $this->expectExceptionCode(10);
         $mockOrm = $this->createMock(Orm::class);
         $mockOrm->method('getQuery')->willReturn(new \stdClass());
-        self::getMethod('build')->invokeArgs($mockOrm, [
+        self::getMethod(self::_BUILD)->invokeArgs($mockOrm, [
             'testtable', [], []
         ]);
     }
@@ -298,9 +293,10 @@ class OrmTest extends PFT
     public function testBuildUpdateOk()
     {
         $this->instance->setQuery(new Update());
-        $build = self::getMethod('build')->invokeArgs($this->instance, [
-            'tabletest', ['name' => 'test'], ['id' => 1]
-        ]);
+        $build = self::getMethod(self::_BUILD)->invokeArgs(
+            $this->instance,
+            ['tabletest', ['name' => 'test'], ['id' => 1]]
+        );
         $this->assertTrue($build instanceof Orm);
     }
 
@@ -310,14 +306,16 @@ class OrmTest extends PFT
      */
     public function testBuildUpdateEmptyException()
     {
-        $this->expectException(\Exception::class);
+        $this->expectException(InvalidQueryUpdateException::class);
         $this->expectExceptionMessage(
-            'Build : Update requires not empty payload'
+            InvalidQueryUpdateException::MSG_PAYLOAD
         );
+        $this->expectExceptionCode(11);
         $this->instance->setQuery(new Update());
-        self::getMethod('build')->invokeArgs($this->instance, [
-            'tabletest', [], []
-        ]);
+        self::getMethod(self::_BUILD)->invokeArgs(
+            $this->instance,
+            ['tabletest', [], []]
+        );
     }
 
     /**
@@ -326,14 +324,16 @@ class OrmTest extends PFT
      */
     public function testBuildUpdateConditionException()
     {
-        $this->expectException(\Exception::class);
+        $this->expectException(InvalidQueryUpdateException::class);
         $this->expectExceptionMessage(
-            'Build : Update requires at least one condition'
+            InvalidQueryUpdateException::MSG_CONDITION
         );
+        $this->expectExceptionCode(11);
         $this->instance->setQuery(new Update());
-        self::getMethod('build')->invokeArgs($this->instance, [
-            'tabletest', ['id' => 1, 'name' => 'test'], []
-        ]);
+        self::getMethod(self::_BUILD)->invokeArgs(
+            $this->instance,
+            ['tabletest', ['id' => 1, 'name' => 'test'], []]
+        );
     }
 
     /**
@@ -343,9 +343,10 @@ class OrmTest extends PFT
     public function testBuildInsertOk()
     {
         $this->instance->setQuery(new Insert());
-        $build = self::getMethod('build')->invokeArgs($this->instance, [
-            'tabletest', ['name' => 'test'], []
-        ]);
+        $build = self::getMethod(self::_BUILD)->invokeArgs(
+            $this->instance,
+            ['tabletest', ['name' => 'test'], []]
+        );
         $this->assertTrue($build instanceof Orm);
     }
 
@@ -355,14 +356,16 @@ class OrmTest extends PFT
      */
     public function testBuildInsertEmptyException()
     {
-        $this->expectException(\Exception::class);
+        $this->expectException(InvalidQueryInsertException::class);
         $this->expectExceptionMessage(
-            'Build : Insert requires not empty payload'
+            InvalidQueryInsertException::MSG_PAYLOAD
         );
+        $this->expectExceptionCode(12);
         $this->instance->setQuery(new Insert());
-        self::getMethod('build')->invokeArgs($this->instance, [
-            'tabletest', [], []
-        ]);
+        self::getMethod(self::_BUILD)->invokeArgs(
+            $this->instance,
+            ['tabletest', [], []]
+        );
     }
 
     /**
@@ -372,9 +375,10 @@ class OrmTest extends PFT
     public function testBuildDeleteOk()
     {
         $this->instance->setQuery(new Delete());
-        $build = self::getMethod('build')->invokeArgs($this->instance, [
-            'tabletest', [], ['id' => 1]
-        ]);
+        $build = self::getMethod(self::_BUILD)->invokeArgs(
+            $this->instance,
+            ['tabletest', [], ['id' => 1]]
+        );
         $this->assertTrue($build instanceof Orm);
     }
 
@@ -384,12 +388,13 @@ class OrmTest extends PFT
      */
     public function testBuildDeleteConditionException()
     {
-        $this->expectException(\Exception::class);
+        $this->expectException(InvalidQueryDeleteException::class);
         $this->expectExceptionMessage(
-            'Build : Delete requires at least one condition'
+            InvalidQueryDeleteException::MSG_CONDITION
         );
+        $this->expectExceptionCode(13);
         $this->instance->setQuery(new Delete());
-        self::getMethod('build')->invokeArgs($this->instance, [
+        self::getMethod(self::_BUILD)->invokeArgs($this->instance, [
             'tabletest', [], []
         ]);
     }
@@ -417,47 +422,61 @@ class OrmTest extends PFT
     }
 
     /**
+     * testBuildWhereException
+     * @covers App\Component\Model\Orm\Orm::buildWhere
+     */
+    public function testBuildWhereException()
+    {
+        $this->expectException(\Exception::class);
+        $this->instance->setQuery(new Select());
+        self::getMethod('buildWhere')->invokeArgs(
+            $this->instance,
+            [['id']]
+        );
+    }
+
+    /**
      * testGetWhereOperator
      * @covers App\Component\Model\Orm\Orm::getWhereOperator
      */
     public function testGetWhereOperator()
     {
         $key = 'id';
-        $opEqual = self::getMethod('getWhereOperator')->invokeArgs(
+        $opEqual = self::getMethod(self::GET_WHERE_OPERATOR)->invokeArgs(
             $this->instance,
             [&$key, 1]
         );
         $this->assertTrue(is_string($opEqual));
         $this->assertEquals('equals', $opEqual);
-        $opIn = self::getMethod('getWhereOperator')->invokeArgs(
+        $opIn = self::getMethod(self::GET_WHERE_OPERATOR)->invokeArgs(
             $this->instance,
             [&$key, [1, 2, 3]]
         );
         $this->assertTrue(is_string($opIn));
         $this->assertEquals('in', $opIn);
         $key = 'id!';
-        $opNotIn = self::getMethod('getWhereOperator')->invokeArgs(
+        $opNotIn = self::getMethod(self::GET_WHERE_OPERATOR)->invokeArgs(
             $this->instance,
             [&$key, [1, 2, 3]]
         );
         $this->assertTrue(is_string($opNotIn));
         $this->assertEquals('notIn', $opNotIn);
         $key = 'id<';
-        $opLt = self::getMethod('getWhereOperator')->invokeArgs(
+        $opLt = self::getMethod(self::GET_WHERE_OPERATOR)->invokeArgs(
             $this->instance,
             [&$key, 3]
         );
         $this->assertTrue(is_string($opLt));
         $this->assertEquals('lessThan', $opLt);
         $key = 'id>';
-        $opGt = self::getMethod('getWhereOperator')->invokeArgs(
+        $opGt = self::getMethod(self::GET_WHERE_OPERATOR)->invokeArgs(
             $this->instance,
             [&$key, 3]
         );
         $this->assertTrue(is_string($opGt));
         $this->assertEquals('greaterThan', $opGt);
         $key = 'name#';
-        $opLike = self::getMethod('getWhereOperator')->invokeArgs(
+        $opLike = self::getMethod(self::GET_WHERE_OPERATOR)->invokeArgs(
             $this->instance,
             [&$key, 3]
         );
@@ -545,7 +564,7 @@ class OrmTest extends PFT
         $dbname = $this->instance->getDatabase();
         $this->assertTrue(is_string($dbname));
         $this->assertNotEmpty($dbname);
-        $this->assertEquals('nymfonya', $dbname);
+        $this->assertEquals(self::DB_NAME, $dbname);
     }
 
     /**
