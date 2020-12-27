@@ -3,7 +3,7 @@
 namespace Tests\Component\Db\Adapter;
 
 use PHPUnit\Framework\TestCase as PFT;
-use \PDO;
+use PDO;
 use Nymfonya\Component\Config;
 use Nymfonya\Component\Container;
 use App\Component\Db\Adapter\PdoPgsql;

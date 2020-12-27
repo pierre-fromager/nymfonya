@@ -55,7 +55,8 @@ class Users implements AuthInterface
         $acNumber = count($this->accounts);
         for ($c = 0; $c < $acNumber; $c++) {
             $user = $this->accounts[$c];
-            if ($user[self::_EMAIL] === $email
+            if (
+                $user[self::_EMAIL] === $email
                 && $password === $user[self::_PASSWORD]
             ) {
                 return $user;

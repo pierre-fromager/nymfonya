@@ -40,7 +40,7 @@ class Min
      * @param string  $destination
      * @return array
      */
-    public function path(string $origin, string  $destination): array
+    public function path(string $origin, string $destination): array
     {
         // check exists origin destination
         if (!isset($this->graph[$origin]) || !isset($this->graph[$destination])) {

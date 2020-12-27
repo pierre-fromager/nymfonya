@@ -110,7 +110,7 @@ class InputTest extends PFT
         $this->assertTrue(is_string($gsn));
         $this->assertNotEmpty($gsn);
     }
-    
+
     /**
      * testOpenCloseStream
      * @covers App\Component\Console\Input::openStream

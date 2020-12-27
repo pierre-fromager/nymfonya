@@ -6,12 +6,14 @@ use PHPUnit\Framework\TestCase as PFT;
 use Nymfonya\Component\Config;
 use Nymfonya\Component\Container;
 use App\Component\Auth\Adapters\Config as ConfigAdapter;
+use Tests\Fake\Credential;
 
 /**
  * @covers \App\Component\Auth\Adapters\Config::<public>
  */
 class ConfigTest extends PFT
 {
+    use Credential;
 
     const TEST_ENABLE = true;
     const CONFIG_PATH = '/../../../../config/';
@@ -41,7 +43,7 @@ class ConfigTest extends PFT
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         if (!self::TEST_ENABLE) {
             $this->markTestSkipped('Test disabled.');
@@ -70,7 +72,7 @@ class ConfigTest extends PFT
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->instance = null;
         $this->config = null;
@@ -107,7 +109,7 @@ class ConfigTest extends PFT
      */
     public function testAuthOk()
     {
-        $auf = $this->instance->auth('admin@domain.tld', 'adminadmin');
+        $auf = $this->instance->auth($this->loginOk(), $this->passwordOk());
         $this->assertTrue(is_array($auf));
         $this->assertNotEmpty($auf);
     }
@@ -118,7 +120,7 @@ class ConfigTest extends PFT
      */
     public function testAuthNok()
     {
-        $auf = $this->instance->auth('login', 'password');
+        $auf = $this->instance->auth($this->loginKo(), $this->__fakePasswordKo);
         $this->assertTrue(is_array($auf));
         $this->assertEmpty($auf);
     }

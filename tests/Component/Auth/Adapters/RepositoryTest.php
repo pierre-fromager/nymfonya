@@ -6,17 +6,17 @@ use PHPUnit\Framework\TestCase as PFT;
 use Nymfonya\Component\Config;
 use Nymfonya\Component\Container;
 use App\Component\Auth\Adapters\Repository as RepositoryAdapter;
+use Tests\Fake\Credential;
 
 /**
  * @covers \App\Component\Auth\Adapters\Repository::<public>
  */
 class RepositoryTest extends PFT
 {
+    use Credential;
 
     const TEST_ENABLE = true;
     const CONFIG_PATH = '/../../../../config/';
-    const VALID_LOGIN = 'admin@domain.tld';
-    const VALID_PASSWORD = 'adminadmin';
 
     /**
      * config instance
@@ -43,7 +43,7 @@ class RepositoryTest extends PFT
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         if (!self::TEST_ENABLE) {
             $this->markTestSkipped('Test disabled.');
@@ -72,7 +72,7 @@ class RepositoryTest extends PFT
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->instance = null;
         $this->config = null;
@@ -109,7 +109,10 @@ class RepositoryTest extends PFT
      */
     public function testAuthOk()
     {
-        $auf = $this->instance->auth(self::VALID_LOGIN, self::VALID_PASSWORD);
+        $auf = $this->instance->auth(
+            $this->loginOk(),
+            $this->passwordOk()
+        );
         $this->assertTrue(is_array($auf));
         $this->assertNotEmpty($auf);
     }

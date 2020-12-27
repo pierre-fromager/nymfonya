@@ -6,11 +6,10 @@ use App\Interfaces\Controllers\IApi;
 use Nymfonya\Component\Container;
 use Nymfonya\Component\Http\Request;
 use Nymfonya\Component\Http\Response;
-use \Monolog\Logger;
+use Monolog\Logger;
 
 abstract class AbstractApi implements IApi
 {
-
     use \App\Reuse\Controllers\Api\TFileCache;
 
     /**

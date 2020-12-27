@@ -9,6 +9,7 @@ use Nymfonya\Component\Container;
 use Nymfonya\Component\Http\Request;
 use Nymfonya\Component\Http\Response;
 use App\Controllers\Api\V1\Auth as ApiAuthControler;
+use Tests\Fake\Credential;
 
 /**
  * ApiV1ControllerAuthTest
@@ -23,14 +24,11 @@ use App\Controllers\Api\V1\Auth as ApiAuthControler;
  */
 class AuthTest extends PFT
 {
+    use Credential;
 
     const TEST_ENABLE = true;
     const CONFIG_PATH = '/../../../../config/';
     const _LOGIN = 'login';
-    const VALID_LOGIN = 'admin@domain.tld';
-    const VALID_PASSWORD = 'adminadmin';
-    const INVALID_LOGIN = 'badlogin@domain.tld';
-    const INVALID_PASSWORD = 'badpassword';
 
     /**
      * config
@@ -57,7 +55,7 @@ class AuthTest extends PFT
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         if (!self::TEST_ENABLE) {
             $this->markTestSkipped('Test disabled.');
@@ -69,7 +67,7 @@ class AuthTest extends PFT
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->instance = null;
         $this->container = null;
@@ -129,12 +127,12 @@ class AuthTest extends PFT
         $credentialValues = function ($arg0) use ($success) {
             if (!$success) {
                 return ($arg0 == self::_LOGIN)
-                    ? self::INVALID_LOGIN
-                    : self::INVALID_PASSWORD;
+                    ? $this->loginKo()
+                    : $this->passwordKo();
             }
             return ($arg0 == self::_LOGIN)
-                ? self::VALID_LOGIN
-                : self::VALID_PASSWORD;
+                ? $this->loginOk()
+                : $this->passwordOk();
         };
         $mockRequest = $this->createMock(Request::class);
         $mockRequest->method('getMethod')->willReturn(

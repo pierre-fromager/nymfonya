@@ -19,7 +19,7 @@
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
-        "php": ">=7.0.0",
+        "php": ">=7.3.10",
         "pier-infor/nymfonya-config": "^1.0.2",
         "pier-infor/nymfonya-pubsub": "^1.0.1",
         "pier-infor/nymfonya-container": "^1.0.2",
@@ -28,14 +28,16 @@
         "monolog/monolog": "^1.25",
         "zircote/swagger-php": "^3.0",
         "nilportugues/sql-query-builder": "^1.7",
-        "swiftmailer/swiftmailer": "^6.2"
+        "swiftmailer/swiftmailer": "^6.2",
+        "theseer/phpdox": "^0.12.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^6.5",
+        "phpunit/phpunit": "^7.5",
         "squizlabs/php_codesniffer": "*",
-        "friendsofphp/php-cs-fixer": "^2.13",
-        "phploc/phploc": "^4.0",
-        "phpmd/phpmd": "@stable"
+        "friendsofphp/php-cs-fixer": "^2.17",
+        "phploc/phploc": "^5.0",
+        "phpmd/phpmd": "@stable",
+        "phan/phan": "3.x"
     },
     "autoload": {
         "psr-4": {
@@ -58,14 +60,17 @@
         "process-timeout": 0
     },
     "scripts": {
+        "up": [
+            "php /usr/bin/composer update --with-all-dependencies"
+        ],
         "checklint": [
-            "phpcs -e --standard=PSR2 --warning-severity=10 --extensions=php src/* tests/*"
+            "phpcs -e --standard=PSR12 --warning-severity=10 --extensions=php src/* tests/*"
         ],
         "lint": [
-            "phpcbf --standard=PSR2 --warning-severity=10 --extensions=php src/* tests/*"
+            "phpcbf --standard=PSR12 --warning-severity=10 --extensions=php src/* tests/*"
         ],
         "cq": [
-            "phploc -vvv --ansi src/*"
+            "phploc -vvv --ansi src/* --log-xml ./build/logs/phploc.xml"
         ],
         "md": [
             "phpmd ./src text codesize,unusedcode,naming"
@@ -74,13 +79,13 @@
             "php -S localhost:8888 src/index.php"
         ],
         "cov": [
-            "phpunit --coverage-html='./coverage'"
+            "phpdbg -qrr ./vendor/bin/phpunit"
         ],
-        "covdbg": [
-            "phpdbg -qrr ./vendor/bin/phpunit -dmemory_limit=128M --coverage-html='./coverage'"
+        "doc": [
+            "php ./vendor/bin/phpdox"
         ],
-        "test": [
-            "phpunit  --debug --testdox --verbose --testsuite all"
+        "phan": [
+            "php ./vendor/bin/phan"
         ]
     }
 }

@@ -63,7 +63,7 @@ interface IToken
      * @param int $delay
      */
     public function setIssueAtDelay(int $delay): Token;
-    
+
     /**
      * set token ttl
      *

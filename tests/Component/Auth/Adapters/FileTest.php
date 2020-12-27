@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase as PFT;
 use Nymfonya\Component\Config;
 use Nymfonya\Component\Container;
 use App\Component\Auth\Adapters\File as FileAdapter;
+use Tests\Fake\Credential;
 
 /**
  * FileTest
@@ -17,6 +18,7 @@ use App\Component\Auth\Adapters\File as FileAdapter;
  */
 class FileTest extends PFT
 {
+    use Credential;
 
     const TEST_ENABLE = true;
     const CONFIG_PATH = '/../../../../config/';
@@ -46,7 +48,7 @@ class FileTest extends PFT
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         if (!self::TEST_ENABLE) {
             $this->markTestSkipped('Test disabled.');
@@ -75,7 +77,7 @@ class FileTest extends PFT
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->instance = null;
         $this->config = null;
@@ -112,7 +114,10 @@ class FileTest extends PFT
      */
     public function testAuthOk()
     {
-        $auf = $this->instance->auth('admin@domain.tld', 'adminadmin');
+        $auf = $this->instance->auth(
+            $this->loginOk(),
+            $this->passwordOk()
+        );
         $this->assertTrue(is_array($auf));
         $this->assertNotEmpty($auf);
     }

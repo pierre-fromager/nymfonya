@@ -15,7 +15,6 @@ use App\Model\Users;
  */
 class Jwt implements MiddlewareInterface
 {
-
     use \App\Middlewares\Reuse\TInit;
 
     const _SIGN = 'X-Middleware-Jwt';
@@ -167,7 +166,8 @@ class Jwt implements MiddlewareInterface
      */
     protected function required(): bool
     {
-        if ($this->request->isCli()
+        if (
+            $this->request->isCli()
             && $this->request->getMethod() === Request::METHOD_TRACE
         ) {
             return false;

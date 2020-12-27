@@ -135,7 +135,7 @@ class Weight
      * @param string $dst
      * @return Weight
      */
-    protected function init(string $src, string  $dst): Weight
+    protected function init(string $src, string $dst): Weight
     {
         $this->src = $src;
         $this->dst = $dst;

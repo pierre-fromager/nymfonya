@@ -2,7 +2,7 @@
 
 namespace App\Component\Db\Adapter;
 
-use \PDO;
+use PDO;
 
 class PdoMysql
 {

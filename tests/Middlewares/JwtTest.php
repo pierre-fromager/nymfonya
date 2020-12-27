@@ -440,7 +440,7 @@ class JwtTest extends PFT
         $this->assertTrue(is_bool($iva0));
         $this->assertFalse($iva0);
         $this->assertTrue($peelReturn instanceof Container);
-       
+
         $this->init(true, true);
         $peelReturn = $this->peelLayer();
         $iva1 = $this->invokeMethod(

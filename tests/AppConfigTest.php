@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Tests;
 
 //require_once 'vendor/pier-infor/nymfonya-config/tests/ConfigTest.php';

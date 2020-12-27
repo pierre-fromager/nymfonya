@@ -13,7 +13,6 @@ use Nymfonya\Component\Container;
  */
 class Restful implements MiddlewareInterface
 {
-
     use \App\Middlewares\Reuse\TInit;
 
     const _SIGN = 'X-Middleware-Restful';

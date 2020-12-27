@@ -5,17 +5,20 @@ namespace Tests\Model;
 use PHPUnit\Framework\TestCase as PFT;
 use Nymfonya\Component\Config;
 use App\Model\Users;
+use Tests\Fake\Credential;
 
 /**
  * @covers \App\Model\Users::<public>
  */
 class UsersTest extends PFT
 {
+    use Credential;
 
     const TEST_ENABLE = true;
     const CONFIG_PATH = '/../../config/';
+    /*
     const VALID_LOGIN = 'admin@domain.tld';
-    const VALID_PASSWORD = 'adminadmin';
+    const VALID_PASSWORD = 'adminadmin';*/
 
     /**
      * config
@@ -35,7 +38,7 @@ class UsersTest extends PFT
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         if (!self::TEST_ENABLE) {
             $this->markTestSkipped('Test disabled.');
@@ -51,7 +54,7 @@ class UsersTest extends PFT
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->instance = null;
     }
@@ -83,7 +86,10 @@ class UsersTest extends PFT
         $auth0 = $this->instance->auth('', '');
         $this->assertTrue(is_array($auth0));
         $this->assertEmpty($auth0);
-        $auth1 = $this->instance->auth(self::VALID_LOGIN, self::VALID_PASSWORD);
+        $auth1 = $this->instance->auth(
+            $this->loginOk(),
+            $this->passwordOk()
+        );
         $this->assertTrue(is_array($auth1));
         $this->assertNotEmpty($auth1);
     }

@@ -11,7 +11,6 @@ use App\Component\File\Uploader;
 
 final class Test extends AbstractApi implements IApi
 {
-
     use \App\Reuse\Controllers\Api\TRelay;
 
     /**

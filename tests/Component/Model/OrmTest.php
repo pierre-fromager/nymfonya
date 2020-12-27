@@ -3,7 +3,7 @@
 namespace Tests\Component\Model;
 
 use PHPUnit\Framework\TestCase as PFT;
-use \ReflectionMethod;
+use ReflectionMethod;
 use Nymfonya\Component\Config;
 use Nymfonya\Component\Container;
 use App\Component\Model\Orm\Orm;
@@ -285,7 +285,7 @@ class OrmTest extends PFT
             'Build : Invalid query type'
         );
         $mockOrm = $this->createMock(Orm::class);
-        $mockOrm->method('getQuery')->willReturn(new \stdClass);
+        $mockOrm->method('getQuery')->willReturn(new \stdClass());
         self::getMethod('build')->invokeArgs($mockOrm, [
             'testtable', [], []
         ]);

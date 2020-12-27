@@ -208,7 +208,7 @@ class UsersTest extends PFT
             []
         );
         $this->assertTrue($rui instanceof Migration);
-        
+
         $ise1 = self::getMethod('isError')->invokeArgs(
             $this->instance,
             []

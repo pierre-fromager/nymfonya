@@ -14,7 +14,6 @@ use Nymfonya\Component\Container;
  */
 class Cors implements MiddlewareInterface
 {
-
     use \App\Middlewares\Reuse\TInit;
 
     const _PREFLIGHT = 'preflight';
@@ -99,7 +98,7 @@ class Cors implements MiddlewareInterface
      *
      * @return string
      */
-    protected function caUri():string
+    protected function caUri(): string
     {
         return str_replace($this->prefix, '', $this->request->getUri());
     }

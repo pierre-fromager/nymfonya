@@ -6,17 +6,15 @@ use PHPUnit\Framework\TestCase as PFT;
 use Nymfonya\Component\Config;
 use Nymfonya\Component\Container;
 use App\Model\Accounts;
+use Tests\Fake\Credential;
 
 /**
  * @covers \App\Model\Accounts::<public>
  */
 class AccountsTest extends PFT
 {
+    use Credential;
 
-    const GOOD_LOGIN = 'admin@domain.tld';
-    const GOOD_PASSWORD = 'adminadmin';
-    const BAD_LOGIN = 'login';
-    const BAD_PASSWORD = 'password';
     const TEST_ENABLE = true;
     const CONFIG_PATH = '/../../config/';
     const ASSET_PATH = '/../../assets/tests/model/';
@@ -54,7 +52,7 @@ class AccountsTest extends PFT
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         if (!self::TEST_ENABLE) {
             $this->markTestSkipped('Test disabled.');
@@ -76,7 +74,7 @@ class AccountsTest extends PFT
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->instance = null;
         $this->request = null;
@@ -200,8 +198,8 @@ class AccountsTest extends PFT
     public function testAuthBadLogin()
     {
         $aut = $this->instance->auth(
-            self::BAD_LOGIN,
-            self::BAD_PASSWORD
+            $this->loginKo(),
+            $this->passwordKo()
         );
         $this->assertTrue(is_array($aut));
         $this->assertEmpty($aut);
@@ -214,8 +212,8 @@ class AccountsTest extends PFT
     public function testAuthBadPassword()
     {
         $aut = $this->instance->auth(
-            self::GOOD_LOGIN,
-            self::BAD_PASSWORD
+            $this->loginOk(),
+            $this->passwordKo()
         );
         $this->assertTrue(is_array($aut));
         $this->assertEmpty($aut);
@@ -228,8 +226,8 @@ class AccountsTest extends PFT
     public function testAuthOk()
     {
         $aut = $this->instance->auth(
-            self::GOOD_LOGIN,
-            self::GOOD_PASSWORD
+            $this->loginOk(),
+            $this->passwordOk()
         );
         $this->assertTrue(is_array($aut));
         $this->assertNotEmpty($aut);

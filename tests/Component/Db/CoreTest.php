@@ -3,7 +3,7 @@
 namespace Tests\Component\Db;
 
 use PHPUnit\Framework\TestCase as PFT;
-use \PDO;
+use PDO;
 use Nymfonya\Component\Config;
 use Nymfonya\Component\Container;
 use App\Component\Http\Kernel;
