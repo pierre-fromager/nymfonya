@@ -6,7 +6,7 @@
     backupGlobals="false" 
     backupStaticAttributes="false" 
     bootstrap="vendor/autoload.php" 
-    stopOnFailure="true" 
+    stopOnFailure="false" 
     colors="true" 
     verbose="true" 
     beStrictAboutCoversAnnotation="false" 
@@ -23,57 +23,7 @@
     </php>
     <testsuites>
         <testsuite name="all">
-            <file>tests/Component/Migration/UsersTest.php</file>
-            <file>tests/Component/Migration/Metro/LinesTest.php</file>
-            <file>tests/Component/Migration/Metro/StationsTest.php</file>
-            <file>tests/Component/Console/InputTest.php</file>
-            <file>tests/Component/Console/FlawTest.php</file>
-            <file>tests/Component/Console/DimensionsTest.php</file>
-            <file>tests/Component/Console/TerminalTest.php</file>
-            <file>tests/Component/Console/ProcessTest.php</file>
-            <file>tests/Component/Math/Graph/Path/WeightTest.php</file>
-            <file>tests/Component/Math/Graph/Path/MinTest.php</file>
-            <file>tests/Component/Math/Graph/Path/FloydwarshallTest.php</file>
-            <file>tests/Component/Jwt/TokenTest.php</file>
-            <file>tests/Component/Cache/Redis/AdapterTest.php</file>
-            <file>tests/Component/FilterTest.php</file>
-            <file>tests/Component/CryptTest.php</file>
-            <file>tests/Component/PkiTest.php</file>
-            <file>tests/Component/AuthTest.php</file>
-            <file>tests/Component/Auth/FactoryTest.php</file>
-            <file>tests/Component/Auth/Adapters/FileTest.php</file>
-            <file>tests/Component/Auth/Adapters/RepositoryTest.php</file>
-            <file>tests/Component/Auth/Adapters/ConfigTest.php</file>
-            <file>tests/Component/File/UploaderTest.php</file>
-            <file>tests/Component/Model/OrmTest.php</file>
-            <file>tests/Component/Model/InvalidQueryDeleteExceptionTest.php</file>
-            <file>tests/Component/Model/InvalidQueryInsertExceptionTest.php</file>
-            <file>tests/Component/Model/InvalidQueryExceptionTest.php</file>
-            <file>tests/Component/Model/InvalidQueryUpdateExceptionTest.php</file>
-            <file>tests/Component/Db/Adapter/PdoMysqlTest.php</file>
-            <file>tests/Component/Db/Adapter/PdoPgsqlTest.php</file>
-            <file>tests/Component/Db/FactoryTest.php</file>
-            <file>tests/Component/Db/CoreTest.php</file>
-            <file>tests/Component/Db/PoolTest.php</file>
-            <file>tests/Middlewares/JwtTest.php</file>
-            <file>tests/Middlewares/CorsTest.php</file>
-            <file>tests/Middlewares/AfterTest.php</file>
-            <file>tests/Middlewares/RestfulTest.php</file>
-            <file>tests/Model/AbstractSearchTest.php</file>
-            <file>tests/Model/AccountsTest.php</file>
-            <file>tests/Model/UsersTest.php</file>
-            <file>tests/Model/Repository/UsersTest.php</file>
-            <file>tests/Model/Repository/Metro/StationsTest.php</file>
-            <file>tests/Model/Repository/Metro/LinesTest.php</file>
-            <file>tests/Controllers/ConfigTest.php</file>
-            <file>tests/Controllers/Api/V1/AuthTest.php</file>
-            <file>tests/Controllers/Api/V1/StatTest.php</file>
-            <file>tests/Controllers/Api/V1/RestfulTest.php</file>
-            <file>tests/Controllers/Api/V1/TestTest.php</file>
-            <file>tests/Controllers/Api/V1/MetroTest.php</file>
-            <file>tests/Reuse/Controllers/AbstractApiTest.php</file>
-            <file>tests/AppConfigTest.php</file>
-            <file>tests/BundleApiTest.php</file>
+            <directory suffix=".php">./tests/</directory>
         </testsuite>
     </testsuites>
     <logging>
@@ -84,7 +34,7 @@
     </logging>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">src/</directory>
+            <directory suffix=".php">src</directory>
             <exclude>
                 <directory suffix=".php">src/Interfaces/</directory>
                 <directory suffix=".php">vendor/</directory>
