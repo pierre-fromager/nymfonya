@@ -6,7 +6,7 @@ return [
     ],
     'jwt' => [
         // Secret for signing the JWT's, I suggest generate it with base64_encode(openssl_random_pseudo_bytes(64))
-        'secret' => 'qACAXC/FnPbKk2JYQ1/LLFSYcJrmawZ8YAvC2g7dE+z52VWY+u+ziUPC5wp1cLhai1bo5kpFxWFMZXdtci9r6Q==',
+        'secret' => '1+OTJaS7UF3jq263z1eYB1ktIUO09XwDAfm61woFYA8NTnJGZya5/HZYAonT1UCQhiCYdHAw0xxMAuhcDijJnw==',
         'algorithm' => 'HS512',
     ],
     'middlewares' => include 'dev/middlewares.php',
