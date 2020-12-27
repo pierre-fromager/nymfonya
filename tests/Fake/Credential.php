@@ -8,8 +8,8 @@ namespace Tests\Fake;
 trait Credential
 {
 
-    protected $__fakeLoginOk = 'admin@pier-infor.fr';
-    protected $__fakePasswordOk = 'pierre';
+    protected $__fakeLoginOk = 'admin@domain.tld';
+    protected $__fakePasswordOk = 'adminadmin';
     protected $__fakeLoginKo = 'bad@pier-infor.fr';
     protected $__fakePasswordKo = 'badpass';
 
