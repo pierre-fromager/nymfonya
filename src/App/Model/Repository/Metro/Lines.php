@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Model\Repository\Metro;
 
 use Nymfonya\Component\Container;

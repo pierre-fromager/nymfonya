@@ -156,9 +156,8 @@ class MetroTest extends PFT
     public function testSearch()
     {
         $h0 = '2eb621e17cbd97b8';
-        $query0 = $this->modelLines->find([Orm::SQL_ALL], [
-            $this->modelLines
-        ]);
+        $where = ['id' => '*'];
+        $query0 = $this->modelLines->find([Orm::SQL_ALL], $where);
         $lineInput = [Lines::_HSRC => $h0];
         $sea0 = self::getMethod('search')->invokeArgs(
             $this->instance,
@@ -173,9 +172,7 @@ class MetroTest extends PFT
             $query0->getBuilderValues(),
             [':v1' => $h0]
         );
-        $query1 = $this->modelStations->find([Orm::SQL_ALL], [
-            $this->modelStations
-        ]);
+        $query1 = $this->modelStations->find([Orm::SQL_ALL], $where);
         $stationInput0 =  [
             MetroControler::_LIMIT => 5,
             Stations::_NAME => 'che',
@@ -199,9 +196,8 @@ class MetroTest extends PFT
      */
     public function testGetFilteredInput()
     {
-        $query0 = $this->modelLines->find([Orm::SQL_ALL], [
-            $this->modelLines
-        ]);
+        $where = ['id' => '*'];
+        $query0 = $this->modelLines->find([Orm::SQL_ALL], $where);
         $sea0 = self::getMethod('getFilteredInput')->invokeArgs(
             $this->instance,
             [&$query0]

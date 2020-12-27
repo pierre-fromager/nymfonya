@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Reuse\Controllers;
 
 use App\Interfaces\Controllers\IApi;

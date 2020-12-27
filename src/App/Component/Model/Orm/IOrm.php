@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Component\Model\Orm;
 
 use Nymfonya\Component\Container;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Component\Model\Orm;
 
 use Nymfonya\Component\Config;
@@ -9,9 +11,16 @@ use NilPortugues\Sql\QueryBuilder\Manipulation\Select;
 use NilPortugues\Sql\QueryBuilder\Manipulation\Update;
 use NilPortugues\Sql\QueryBuilder\Manipulation\Insert;
 use NilPortugues\Sql\QueryBuilder\Manipulation\Delete;
+use App\Component\Model\Orm\InvalidQueryException;
+use App\Component\Model\Orm\InvalidQueryUpdateException;
+use App\Component\Model\Orm\InvalidQueryInsertException;
+use App\Component\Model\Orm\InvalidQueryDeleteException;
 
 /**
- * Poor man orm
+ * This is a poor man Orm
+ *
+ * @author Pierre Fromager <pf@pier_infor.fr>
+ * @version 1.0
  */
 class Orm implements IOrm
 {
@@ -158,9 +167,9 @@ class Orm implements IOrm
             $this->query->count();
         } else {
             reset($aliases);
-            $fistKey = key($aliases);
-            $aliasValue = $aliases[$fistKey];
-            $this->query->count($fistKey, $aliasValue);
+            $firstKey = key($aliases);
+            $aliasValue = $aliases[$firstKey];
+            $this->query->count($firstKey, $aliasValue);
         }
         return $this->buildWhere($this->where);
     }
@@ -312,14 +321,18 @@ class Orm implements IOrm
     protected function build(string $tablename, array $columns, array $where): Orm
     {
         if (false === is_object($this->getQuery())) {
-            throw new \Exception('Build : Invalid query instance');
+            throw new InvalidQueryException(
+                InvalidQueryException::MSG_INSTANCE
+            );
         }
         $queryClassname = get_class($this->getQuery());
         $allowedClasses = [
             Update::class, Select::class, Delete::class, Insert::class
         ];
         if (false === in_array($queryClassname, $allowedClasses)) {
-            throw new \Exception('Build : Invalid query type');
+            throw new InvalidQueryException(
+                InvalidQueryException::MSG_TYPE
+            );
         }
         $this->query->setTable($tablename);
         switch ($queryClassname) {
@@ -328,29 +341,29 @@ class Orm implements IOrm
                 break;
             case Update::class:
                 if (empty($columns)) {
-                    throw new \Exception(
-                        'Build : Update requires not empty payload'
+                    throw new InvalidQueryUpdateException(
+                        InvalidQueryUpdateException::MSG_PAYLOAD
                     );
                 }
                 if (empty($where)) {
-                    throw new \Exception(
-                        'Build : Update requires at least one condition'
+                    throw new InvalidQueryUpdateException(
+                        InvalidQueryUpdateException::MSG_CONDITION
                     );
                 }
                 $this->query->setValues($columns);
                 break;
             case Insert::class:
                 if (empty($columns)) {
-                    throw new \Exception(
-                        'Build : Insert requires not empty payload'
+                    throw new InvalidQueryInsertException(
+                        InvalidQueryInsertException::MSG_PAYLOAD
                     );
                 }
                 $this->query->setValues($columns);
                 break;
             case Delete::class:
                 if (empty($where)) {
-                    throw new \Exception(
-                        'Build : Delete requires at least one condition'
+                    throw new InvalidQueryDeleteException(
+                        InvalidQueryDeleteException::MSG_CONDITION
                     );
                 }
                 break;
@@ -368,6 +381,11 @@ class Orm implements IOrm
     {
         if (false === empty($where)) {
             foreach ($where as $k => $v) {
+                if (!is_string($k)) {
+                    throw new \Exception(
+                        'Build : Where condition invalid key'
+                    );
+                }
                 $whereOperator = $this->getWhereOperator($k, $v);
                 $this->query->where()->{$whereOperator}($k, $v);
             }
@@ -379,6 +397,7 @@ class Orm implements IOrm
      * check where condition ket values to find operators
      *
      * @param string $whereColumn
+     * @param mixed $value
      * @return string
      */
     protected function getWhereOperator(string &$whereColumn, $value): string
