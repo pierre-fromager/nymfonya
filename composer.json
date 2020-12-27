@@ -67,7 +67,7 @@
             "phpcs -e --standard=PSR12 --warning-severity=10 --extensions=php src/* tests/*"
         ],
         "lint": [
-            "phpcbf --standard=PSR12 --warning-severity=10 --extensions=php src/* tests/*"
+            "/opt/php-7.3.10/bin/php ./vendor/bin/phpcbf --standard=PSR12 --warning-severity=10 --extensions=php src/* tests/*"
         ],
         "cq": [
             "phploc -vvv --ansi src/* --log-xml ./build/logs/phploc.xml"
