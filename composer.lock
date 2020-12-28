@@ -613,26 +613,27 @@
         },
         {
             "name": "pier-infor/nymfonya-config",
-            "version": "1.0.3",
+            "version": "1.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pierre-fromager/nymfonya-config.git",
-                "reference": "e9f22478c30e29c2c6b63c1a497f0da16aa59a85"
+                "reference": "0b9268f1b64b992cb1998a44eea885d1188d3c65"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pierre-fromager/nymfonya-config/zipball/e9f22478c30e29c2c6b63c1a497f0da16aa59a85",
-                "reference": "e9f22478c30e29c2c6b63c1a497f0da16aa59a85",
+                "url": "https://api.github.com/repos/pierre-fromager/nymfonya-config/zipball/0b9268f1b64b992cb1998a44eea885d1188d3c65",
+                "reference": "0b9268f1b64b992cb1998a44eea885d1188d3c65",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.0.0"
+                "php": ">=7.3.10"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.13",
-                "phploc/phploc": "^4.0",
+                "phan/phan": "3.x",
+                "phploc/phploc": "^5.0",
                 "phpmd/phpmd": "@stable",
-                "phpunit/phpunit": "^6.5",
+                "phpunit/phpunit": "^7.5",
                 "squizlabs/php_codesniffer": "*"
             },
             "type": "library",
@@ -664,9 +665,9 @@
             ],
             "support": {
                 "issues": "https://github.com/pierre-fromager/nymfonya-config/issues",
-                "source": "https://github.com/pierre-fromager/nymfonya-config/tree/master"
+                "source": "https://github.com/pierre-fromager/nymfonya-config/tree/1.0.4"
             },
-            "time": "2019-11-29T19:53:34+00:00"
+            "time": "2020-12-28T07:19:02+00:00"
         },
         {
             "name": "pier-infor/nymfonya-container",
