@@ -150,6 +150,9 @@ tools:
         excluded_dirs: [vendor, tests]
 
 build:
+    tests:
+        override:
+            command: "php -v"
     nodes:
         analysis:
             tests:
