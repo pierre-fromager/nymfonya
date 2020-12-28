@@ -133,7 +133,7 @@ class TestTest extends PFT
      */
     public function testPokemonApiRelayNoCache()
     {
-        self::getMethod('clearCache')->invokeArgs($this->instance, []);
+        self::getMethod('clearFileCache')->invokeArgs($this->instance, []);
         $par = self::getMethod('pokemonApiRelay')->invokeArgs(
             $this->instance,
             ['https://pokeapi.co/api/v2/pokemon/ditto/']
@@ -185,11 +185,11 @@ class TestTest extends PFT
 
     /**
      * testGetCachePath
-     * @covers App\Controllers\Api\V1\Test::getCachePath
+     * @covers App\Controllers\Api\V1\Test::getFileCachePath
      */
     public function testGetCachePath()
     {
-        $gcp = self::getMethod('getCachePath')->invokeArgs($this->instance, []);
+        $gcp = self::getMethod('getFileCachePath')->invokeArgs($this->instance, []);
         $this->assertTrue(is_string($gcp));
         $this->assertNotEmpty($gcp);
     }
@@ -207,41 +207,41 @@ class TestTest extends PFT
 
     /**
      * testExpiredSetGetClearCache
-     * @covers App\Controllers\Api\V1\Test::clearCache
-     * @covers App\Controllers\Api\V1\Test::cacheExpired
-     * @covers App\Controllers\Api\V1\Test::setCache
-     * @covers App\Controllers\Api\V1\Test::getCache
+     * @covers App\Controllers\Api\V1\Test::clearFileCache
+     * @covers App\Controllers\Api\V1\Test::cacheFileExpired
+     * @covers App\Controllers\Api\V1\Test::setFileCache
+     * @covers App\Controllers\Api\V1\Test::getFileCache
      */
     public function testExpiredSetGetClearCache()
     {
         $cacheContentString = 'ok content';
         $cc = '';
-        self::getMethod('clearCache')->invokeArgs($this->instance, []);
-        $ce0 = self::getMethod('cacheExpired')->invokeArgs($this->instance, []);
+        self::getMethod('clearFileCache')->invokeArgs($this->instance, []);
+        $ce0 = self::getMethod('cacheFileExpired')->invokeArgs($this->instance, []);
         $this->assertTrue(is_bool($ce0));
         if ($ce0) {
-            self::getMethod('setCache')->invokeArgs(
+            self::getMethod('setFileCache')->invokeArgs(
                 $this->instance,
                 [$cacheContentString]
             );
             $cc = $cacheContentString;
         } else {
-            $cc =  self::getMethod('getCache')->invokeArgs(
+            $cc =  self::getMethod('getFileCache')->invokeArgs(
                 $this->instance,
                 []
             );
         }
         $this->assertEquals($cc, $cacheContentString);
         $cc = '';
-        $ce1 = self::getMethod('cacheExpired')->invokeArgs($this->instance, []);
+        $ce1 = self::getMethod('cacheFileExpired')->invokeArgs($this->instance, []);
         $this->assertTrue(is_bool($ce1));
         if ($ce1) {
-            self::getMethod('setCache')->invokeArgs(
+            self::getMethod('setFileCache')->invokeArgs(
                 $this->instance,
                 [$cacheContentString]
             );
         } else {
-            $cc =  self::getMethod('getCache')->invokeArgs(
+            $cc =  self::getMethod('getFileCache')->invokeArgs(
                 $this->instance,
                 []
             );

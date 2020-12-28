@@ -7,11 +7,10 @@ namespace App\Controllers\Api\V1;
 use Nymfonya\Component\Container;
 use Nymfonya\Component\Http\Response;
 use Nymfonya\Component\Http\Request;
-use App\Interfaces\Controllers\IApi;
-use App\Reuse\Controllers\AbstractApi;
 use App\Component\File\Uploader;
+use App\Reuse\Controllers\Cacheable;
 
-final class Test extends AbstractApi implements IApi
+final class Test extends Cacheable
 {
     use \App\Reuse\Controllers\Api\TRelay;
 
@@ -85,17 +84,17 @@ final class Test extends AbstractApi implements IApi
      */
     protected function pokemonApiRelay(string $url): Test
     {
-        if ($this->cacheExpired()) {
+        if ($this->cacheFileExpired()) {
             $apiHeaders = [
                 'Accept: application/json',
                 //'Authorization: Bearer ' . $this->token
             ];
             $this->apiRelayRequest(Request::METHOD_GET, $url, $apiHeaders);
             if ($this->apiRelayHttpCode === Response::HTTP_OK) {
-                $this->setCache($this->apiRelayResponse);
+                $this->setFileCache($this->apiRelayResponse);
             }
         } else {
-            $this->apiRelayResponse = $this->getCache();
+            $this->apiRelayResponse = $this->getFileCache();
             $this->apiRelayHttpCode = Response::HTTP_OK;
         }
         $statusCode = ($this->apiRelayHttpCode == Response::HTTP_OK)

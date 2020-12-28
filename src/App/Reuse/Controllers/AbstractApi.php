@@ -12,7 +12,6 @@ use Monolog\Logger;
 
 abstract class AbstractApi implements IApi
 {
-    use \App\Reuse\Controllers\Api\TFileCache;
 
     /**
      * request

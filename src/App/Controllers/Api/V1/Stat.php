@@ -6,11 +6,10 @@ namespace App\Controllers\Api\V1;
 
 use Nymfonya\Component\Http\Response;
 use Nymfonya\Component\Container;
-use App\Interfaces\Controllers\IApi;
-use App\Reuse\Controllers\AbstractApi;
 use App\Component\Cache\Redis\Adapter;
+use App\Reuse\Controllers\Cacheable;
 
-final class Stat extends AbstractApi implements IApi
+final class Stat extends Cacheable
 {
 
     const _SCRIPTS = 'scripts';
@@ -84,7 +83,7 @@ final class Stat extends AbstractApi implements IApi
      */
     final public function filecache(): Stat
     {
-        $path = realpath($this->getCachePath());
+        $path = realpath($this->getFileCachePath());
         $files = glob($path . '/*');
         $this->response
             ->setCode(Response::HTTP_OK)

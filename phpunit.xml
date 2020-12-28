@@ -73,6 +73,7 @@
             <file>tests/Controllers/Api/V1/TestTest.php</file>
             <file>tests/Controllers/Api/V1/MetroTest.php</file>
             <file>tests/Reuse/Controllers/AbstractApiTest.php</file>
+            <file>tests/Reuse/Controllers/CacheableTest.php</file>
             <file>tests/AppConfigTest.php</file>
             <file>tests/BundleApiTest.php</file>
         </testsuite>

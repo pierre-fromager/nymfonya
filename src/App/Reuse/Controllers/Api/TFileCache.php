@@ -15,7 +15,7 @@ trait TFileCache
      *
      * @return boolean
      */
-    protected function cacheExpired(): bool
+    protected function cacheFileExpired(): bool
     {
         $this->cacheFilename = $this->getCacheFilename();
         return (file_exists($this->cacheFilename) === false)
@@ -28,9 +28,9 @@ trait TFileCache
      *
      * @return string
      */
-    protected function getCache(): string
+    protected function getFileCache(): string
     {
-        return file_get_contents($this->cacheFilename);
+        return file_get_contents($this->getCacheFilename());
     }
 
     /**
@@ -39,10 +39,10 @@ trait TFileCache
      * @param string $content
      * @return integer
      */
-    protected function setCache(string $content): int
+    protected function setFileCache(string $content): int
     {
         return file_put_contents(
-            $this->cacheFilename,
+            $this->getCacheFilename(),
             $content,
             LOCK_EX
         );
@@ -54,7 +54,7 @@ trait TFileCache
      * @param bool $fromRequest
      * @return void
      */
-    protected function clearCache(bool $fromRequest = false)
+    protected function clearFileCache(bool $fromRequest = false)
     {
         if ($fromRequest) {
             $filename = $this->getCacheFilename();
@@ -62,7 +62,7 @@ trait TFileCache
                 @unlink($filename);
             }
         } else {
-            $files = glob($this->getCachePath() . '*');
+            $files = glob($this->getFileCachePath() . '*');
             $fileList = is_array($files)
                 ? array_filter($files, 'is_file')
                 : [];
@@ -80,7 +80,7 @@ trait TFileCache
      */
     protected function getCacheFilename(): string
     {
-        $path = $this->getCachePath();
+        $path = $this->getFileCachePath();
         if (!file_exists($path)) {
             mkdir($path);
         }
@@ -93,7 +93,7 @@ trait TFileCache
      *
      * @return string
      */
-    protected function getCachePath(): string
+    protected function getFileCachePath(): string
     {
         return dirname($this->request->getFilename()) . '/../cache/';
     }
