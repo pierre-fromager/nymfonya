@@ -12,7 +12,7 @@ use App\Model\Repository\Metro\Stations;
 /**
  * @covers \App\Model\Repository\Metro\Stations::<public>
  */
-class UsersTest extends PFT
+class StationsTest extends PFT
 {
 
     const TEST_ENABLE = true;

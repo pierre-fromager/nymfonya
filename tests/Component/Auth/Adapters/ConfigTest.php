@@ -103,7 +103,7 @@ class ConfigTest extends PFT
         $this->assertTrue($this->instance instanceof ConfigAdapter);
     }
 
- /**
+    /**
      * testAuthOk
      * @covers App\Component\Auth\Adapters\Config::auth
      */

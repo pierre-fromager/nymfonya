@@ -9,7 +9,7 @@ use App\Component\Crypt;
 /**
  * @covers \App\Component\Crypt::<public>
  */
-class CyptTest extends PFT
+class CryptTest extends PFT
 {
 
     const TEST_ENABLE = true;
