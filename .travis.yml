@@ -45,8 +45,8 @@ before_script:
   - psql -c "GRANT ALL PRIVILEGES ON DATABASE nymfonya to travis_pass;" -U postgres
 
 script:
-  - phpdbg -qrr vendor/bin/phpunit --coverage-clover=coverage.clover
+  - phpdbg -qrr vendor/bin/phpunit
 
 after_success:
   - wget https://scrutinizer-ci.com/ocular.phar
-  - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
+  - php ocular.phar code-coverage:upload --format=php-clover build/logs/coverage.clover
