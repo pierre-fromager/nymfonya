@@ -163,16 +163,16 @@
         },
         {
             "name": "egulias/email-validator",
-            "version": "2.1.24",
+            "version": "2.1.25",
             "source": {
                 "type": "git",
                 "url": "https://github.com/egulias/EmailValidator.git",
-                "reference": "ca90a3291eee1538cd48ff25163240695bd95448"
+                "reference": "0dbf5d78455d4d6a41d186da50adc1122ec066f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/ca90a3291eee1538cd48ff25163240695bd95448",
-                "reference": "ca90a3291eee1538cd48ff25163240695bd95448",
+                "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/0dbf5d78455d4d6a41d186da50adc1122ec066f4",
+                "reference": "0dbf5d78455d4d6a41d186da50adc1122ec066f4",
                 "shasum": ""
             },
             "require": {
@@ -219,7 +219,7 @@
             ],
             "support": {
                 "issues": "https://github.com/egulias/EmailValidator/issues",
-                "source": "https://github.com/egulias/EmailValidator/tree/2.1.24"
+                "source": "https://github.com/egulias/EmailValidator/tree/2.1.25"
             },
             "funding": [
                 {
@@ -227,7 +227,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2020-11-14T15:56:27+00:00"
+            "time": "2020-12-29T14:50:06+00:00"
         },
         {
             "name": "firebase/php-jwt",
@@ -671,28 +671,30 @@
         },
         {
             "name": "pier-infor/nymfonya-container",
-            "version": "1.0.3",
+            "version": "1.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pierre-fromager/nymfonya-container.git",
-                "reference": "c5523763c26a623e0719248221812986596603d3"
+                "reference": "cddc79562d51ab17808ecb10aef7377f8f1bc32a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pierre-fromager/nymfonya-container/zipball/c5523763c26a623e0719248221812986596603d3",
-                "reference": "c5523763c26a623e0719248221812986596603d3",
+                "url": "https://api.github.com/repos/pierre-fromager/nymfonya-container/zipball/cddc79562d51ab17808ecb10aef7377f8f1bc32a",
+                "reference": "cddc79562d51ab17808ecb10aef7377f8f1bc32a",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.0.0",
-                "pier-infor/nymfonya-config": "~1.0.2"
+                "php": ">=7.3.10",
+                "pier-infor/nymfonya-config": "^1.0.2"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^2.13",
-                "phploc/phploc": "^4.0",
+                "friendsofphp/php-cs-fixer": "^2.17",
+                "phan/phan": "3.x",
+                "phploc/phploc": "^5.0",
                 "phpmd/phpmd": "@stable",
-                "phpunit/phpunit": "^6.5",
-                "squizlabs/php_codesniffer": "*"
+                "phpunit/phpunit": "^7.5",
+                "squizlabs/php_codesniffer": "*",
+                "theseer/phpdox": "^0.12.0"
             },
             "type": "library",
             "autoload": {
@@ -723,36 +725,38 @@
             ],
             "support": {
                 "issues": "https://github.com/pierre-fromager/nymfonya-container/issues",
-                "source": "https://github.com/pierre-fromager/nymfonya-container/tree/1.0.3"
+                "source": "https://github.com/pierre-fromager/nymfonya-container/tree/1.0.4"
             },
-            "time": "2019-11-29T16:00:07+00:00"
+            "time": "2020-12-29T05:51:52+00:00"
         },
         {
             "name": "pier-infor/nymfonya-http-foundation",
-            "version": "1.0.3",
+            "version": "1.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pierre-fromager/nymfonya-http-foundation.git",
-                "reference": "e40312dfa54210caddd3b8492bbc6b317e279441"
+                "reference": "157dcff24149fe4e6b43aa2ba8629ce8a671f259"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pierre-fromager/nymfonya-http-foundation/zipball/e40312dfa54210caddd3b8492bbc6b317e279441",
-                "reference": "e40312dfa54210caddd3b8492bbc6b317e279441",
+                "url": "https://api.github.com/repos/pierre-fromager/nymfonya-http-foundation/zipball/157dcff24149fe4e6b43aa2ba8629ce8a671f259",
+                "reference": "157dcff24149fe4e6b43aa2ba8629ce8a671f259",
                 "shasum": ""
             },
             "require": {
                 "monolog/monolog": "^1.25",
-                "php": ">=7.0.0",
+                "php": ">=7.3.10",
                 "pier-infor/nymfonya-config": "~1.0.2",
                 "pier-infor/nymfonya-container": "~1.0.3",
-                "pier-infor/nymfonya-pubsub": "~1.0.0"
+                "pier-infor/nymfonya-pubsub": "~1.0.0",
+                "theseer/phpdox": "^0.12.0"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^2.13",
-                "phploc/phploc": "^4.0",
+                "friendsofphp/php-cs-fixer": "^2.17",
+                "phan/phan": "3.x",
+                "phploc/phploc": "^5.0",
                 "phpmd/phpmd": "@stable",
-                "phpunit/phpunit": "^6.5",
+                "phpunit/phpunit": "^7.5",
                 "squizlabs/php_codesniffer": "*"
             },
             "type": "library",
@@ -785,33 +789,35 @@
             ],
             "support": {
                 "issues": "https://github.com/pierre-fromager/nymfonya-http-foundation/issues",
-                "source": "https://github.com/pierre-fromager/nymfonya-http-foundation/tree/master"
+                "source": "https://github.com/pierre-fromager/nymfonya-http-foundation/tree/1.0.4"
             },
-            "time": "2019-11-29T17:05:34+00:00"
+            "time": "2020-12-30T05:23:10+00:00"
         },
         {
             "name": "pier-infor/nymfonya-pubsub",
-            "version": "1.0.1",
+            "version": "1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pierre-fromager/nymfonya-pubsub.git",
-                "reference": "cbfa3784134699dcf3c0c016e7b3f7465c30a684"
+                "reference": "6a7f7566eb2a5415b9d66f69c9e3c6e6a4bb7474"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pierre-fromager/nymfonya-pubsub/zipball/cbfa3784134699dcf3c0c016e7b3f7465c30a684",
-                "reference": "cbfa3784134699dcf3c0c016e7b3f7465c30a684",
+                "url": "https://api.github.com/repos/pierre-fromager/nymfonya-pubsub/zipball/6a7f7566eb2a5415b9d66f69c9e3c6e6a4bb7474",
+                "reference": "6a7f7566eb2a5415b9d66f69c9e3c6e6a4bb7474",
                 "shasum": ""
             },
             "require": {
-                "php": ">=7.0.0"
+                "php": ">=7.3.10"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^2.13",
-                "phploc/phploc": "^4.0",
+                "friendsofphp/php-cs-fixer": "^2.17",
+                "phan/phan": "3.x",
+                "phploc/phploc": "^5.0",
                 "phpmd/phpmd": "@stable",
-                "phpunit/phpunit": "^6.5",
-                "squizlabs/php_codesniffer": "*"
+                "phpunit/phpunit": "^7.5",
+                "squizlabs/php_codesniffer": "*",
+                "theseer/phpdox": "^0.12.0"
             },
             "type": "library",
             "autoload": {
@@ -842,9 +848,9 @@
             ],
             "support": {
                 "issues": "https://github.com/pierre-fromager/nymfonya-pubsub/issues",
-                "source": "https://github.com/pierre-fromager/nymfonya-pubsub/tree/1.0.1"
+                "source": "https://github.com/pierre-fromager/nymfonya-pubsub/tree/1.0.3"
             },
-            "time": "2019-11-29T16:20:57+00:00"
+            "time": "2020-12-29T06:43:51+00:00"
         },
         {
             "name": "psr/log",
