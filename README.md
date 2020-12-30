@@ -2,7 +2,7 @@
 
 is not a Symfony app...¯\\_(ツ)_/¯  
 
-[![TravsisBadgeBuild](https://api.travis-ci.org/pierre-fromager/nymfonya.svg?branch=master)](https://travis-ci.org/pierre-fromager/nymfonya)
+[![TravsisBadgeBuild](https://api.travis-ci.com/pierre-fromager/nymfonya.svg?branch=master)](https://travis-ci.com/pierre-fromager/nymfonya)
 [![CoverageCi](https://scrutinizer-ci.com/g/pierre-fromager/nymfonya/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/pierre-fromager/nymfonya/)
 [![ScrutinizerCq](https://scrutinizer-ci.com/g/pierre-fromager/nymfonya/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/pierre-fromager/nymfonya/)
 [![Latest Stable Version](https://poser.pugx.org/pier-infor/nymfonya/v/stable)](https://packagist.org/packages/pier-infor/nymfonya)
