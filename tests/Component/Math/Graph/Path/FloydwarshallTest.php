@@ -27,7 +27,7 @@ class FloydwarshallTest extends PFT
      * This method is called before a test is executed.
      * @todo improve more usecases with various matrice inputs
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         if (!self::TEST_ENABLE) {
             $this->markTestSkipped('Test disabled.');
@@ -72,7 +72,7 @@ class FloydwarshallTest extends PFT
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->instance = null;
     }

@@ -150,6 +150,8 @@ tools:
         excluded_dirs: [vendor, tests]
 
 build:
+    environment:
+        php: "7.3"
     tests:
         override:
             command: "php -v"

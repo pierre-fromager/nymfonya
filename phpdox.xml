@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <phpdox xmlns="http://xml.phpdox.net/config" silent="false">
     <bootstrap />
-    <project name="Covid" source="${basedir}/src" workdir="${basedir}/build/logs/phpdox/xml">
+    <project name="Nymfonya" source="${basedir}/src" workdir="${basedir}/build/logs/phpdox/xml">
 
         <collector publiconly="false" backend="parser" encoding="auto">
             <include mask="*.php" />

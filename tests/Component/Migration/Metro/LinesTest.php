@@ -43,7 +43,7 @@ class LinesTest extends PFT
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         if (!self::TEST_ENABLE) {
             $this->markTestSkipped('Test disabled.');
@@ -63,7 +63,7 @@ class LinesTest extends PFT
      * This method is called after a test is executed.
      * @see https://kriswallsmith.net/post/18029585104/faster-phpunit#_=_
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->instance = null;
         $this->config = null;
